@@ -9,8 +9,8 @@ public class RenderItemFrame extends Render {
 	private final RenderBlocks renderBlocksInstance = new RenderBlocks();
 	private Icon field_94147_f;
 
-	public void func_94143_a(IconRegister par1IconRegister) {
-		this.field_94147_f = par1IconRegister.func_94245_a("itemframe_back");
+	public void updateIcons(IconRegister par1IconRegister) {
+		this.field_94147_f = par1IconRegister.registerIcon("itemframe_back");
 	}
 
 	public void func_82404_a(EntityItemFrame par1EntityItemFrame, double par2, double par4, double par6, float par8, float par9) {
@@ -32,7 +32,7 @@ public class RenderItemFrame extends Render {
 	 */
 	private void renderFrameItemAsBlock(EntityItemFrame par1EntityItemFrame) {
 		GL11.glPushMatrix();
-		this.renderManager.renderEngine.func_98187_b("/terrain.png");
+		this.renderManager.renderEngine.bindTexture("/terrain.png");
 		GL11.glRotatef(par1EntityItemFrame.rotationYaw, 0.0F, 1.0F, 0.0F);
 		Block var2 = Block.planks;
 		float var3 = 0.0625F;
@@ -109,7 +109,7 @@ public class RenderItemFrame extends Render {
 			}
 
 			if (var3.getEntityItem().getItem() == Item.map) {
-				this.renderManager.renderEngine.func_98187_b("/misc/mapbg.png");
+				this.renderManager.renderEngine.bindTexture("/misc/mapbg.png");
 				Tessellator var4 = Tessellator.instance;
 				GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
 				GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
@@ -130,26 +130,26 @@ public class RenderItemFrame extends Render {
 					this.renderManager.itemRenderer.mapItemRenderer.renderMap((EntityPlayer)null, this.renderManager.renderEngine, var6);
 				}
 			} else {
-				TextureCompass var10;
+				TextureCompass var9;
 
 				if (var3.getEntityItem().getItem() == Item.compass) {
-					var10 = TextureCompass.field_94243_h;
-					double var9 = var10.field_94244_i;
-					double var7 = var10.field_94242_j;
-					var10.field_94244_i = 0.0D;
-					var10.field_94242_j = 0.0D;
-					var10.func_94241_a(par1EntityItemFrame.worldObj, par1EntityItemFrame.posX, par1EntityItemFrame.posZ, (double)MathHelper.wrapAngleTo180_float((float)(180 + par1EntityItemFrame.hangingDirection * 90)), false, true);
-					var10.field_94244_i = var9;
-					var10.field_94242_j = var7;
+					var9 = TextureCompass.compassTexture;
+					double var10 = var9.currentAngle;
+					double var7 = var9.angleDelta;
+					var9.currentAngle = 0.0D;
+					var9.angleDelta = 0.0D;
+					var9.updateCompass(par1EntityItemFrame.worldObj, par1EntityItemFrame.posX, par1EntityItemFrame.posZ, (double)MathHelper.wrapAngleTo180_float((float)(180 + par1EntityItemFrame.hangingDirection * 90)), false, true);
+					var9.currentAngle = var10;
+					var9.angleDelta = var7;
 				}
 
-				RenderItem.field_82407_g = true;
+				RenderItem.renderInFrame = true;
 				RenderManager.instance.renderEntityWithPosYaw(var3, 0.0D, 0.0D, 0.0D, 0.0F, 0.0F);
-				RenderItem.field_82407_g = false;
+				RenderItem.renderInFrame = false;
 
 				if (var3.getEntityItem().getItem() == Item.compass) {
-					var10 = TextureCompass.field_94243_h;
-					var10.func_94219_l();
+					var9 = TextureCompass.compassTexture;
+					var9.updateAnimation();
 				}
 			}
 

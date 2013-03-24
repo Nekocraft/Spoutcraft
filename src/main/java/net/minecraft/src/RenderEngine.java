@@ -43,10 +43,10 @@ public class RenderEngine {
 
 	/** Missing texture image */
 	private BufferedImage missingTextureImage = new BufferedImage(64, 64, 2);
-	private final TextureMap field_94154_l;
-	private final TextureMap field_94155_m;
-	private int field_94153_n;
-	
+	private final TextureMap textureMapBlocks;
+	private final TextureMap textureMapItems;
+	private int boundTexture;
+
 	//Spout start
 	public ITexturePack oldPack = null;
 	//Spout end
@@ -72,13 +72,13 @@ public class RenderEngine {
 		}
 
 		var3.dispose();
-		this.field_94154_l = new TextureMap(0, "terrain", "textures/blocks/", this.missingTextureImage);
-		this.field_94155_m = new TextureMap(1, "items", "textures/items/", this.missingTextureImage);
+		this.textureMapBlocks = new TextureMap(0, "terrain", "textures/blocks/", this.missingTextureImage);
+		this.textureMapItems = new TextureMap(1, "items", "textures/items/", this.missingTextureImage);
 	}
 
 	public int[] getTextureContents(String par1Str) {
 		ITexturePack var2 = this.texturePack.getSelectedTexturePack();
-		int[] var3 = (int[]) this.textureContentsMap.get(par1Str);
+		int[] var3 = (int[])this.textureContentsMap.get(par1Str);
 
 		if (var3 != null) {
 			return var3;
@@ -119,30 +119,30 @@ public class RenderEngine {
 		}
 	}
 
-	public void func_98187_b(String par1Str) {
+	public void bindTexture(String par1Str) {
 		this.bindTexture(this.getTexture(par1Str));
 	}
 
 	public void bindTexture(int par1) {
-		if (par1 != this.field_94153_n) {
+		if (par1 != this.boundTexture) {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, par1);
-			this.field_94153_n = par1;
+			this.boundTexture = par1;
 		}
 	}
 
-	public void func_98185_a() {
-		this.field_94153_n = -1;
+	public void resetBoundTexture() {
+		this.boundTexture = -1;
 	}
 
-	public int getTexture(String par1Str) { //Spout private -> public
+	private int getTexture(String par1Str) {
 		if (par1Str.equals("/terrain.png")) {
-			this.field_94154_l.func_94246_d().func_94277_a(0);
-			return this.field_94154_l.func_94246_d().func_94282_c();
+			this.textureMapBlocks.getTexture().bindTexture(0);
+			return this.textureMapBlocks.getTexture().getGlTextureId();
 		} else if (par1Str.equals("/gui/items.png")) {
-			this.field_94155_m.func_94246_d().func_94277_a(0);
-			return this.field_94155_m.func_94246_d().func_94282_c();
+			this.textureMapItems.getTexture().bindTexture(0);
+			return this.textureMapItems.getTexture().getGlTextureId();
 		} else {
-			Integer var2 = (Integer) this.textureMap.get(par1Str);
+			Integer var2 = (Integer)this.textureMap.get(par1Str);
 
 			if (var2 != null) {
 				return var2.intValue();
@@ -184,8 +184,7 @@ public class RenderEngine {
 	}
 
 	/**
-	 * Copy the supplied image onto a newly-allocated OpenGL texture, returning
-	 * the allocated texture name
+	 * Copy the supplied image onto a newly-allocated OpenGL texture, returning the allocated texture name
 	 */
 	public int allocateAndSetupTexture(BufferedImage par1BufferedImage) {
 		int var2 = GLAllocation.generateTextureNames();
@@ -198,12 +197,10 @@ public class RenderEngine {
 	 * Copy the supplied image onto the specified OpenGL texture
 	 */
 	public void setupTexture(BufferedImage par1BufferedImage, int par2) {
-		if (par1BufferedImage != null) {
-			this.func_98184_a(par1BufferedImage, par2, false, false);
-		}
+		this.setupTextureExt(par1BufferedImage, par2, false, false);
 	}
 
-	public void func_98184_a(BufferedImage par1BufferedImage, int par2, boolean par3, boolean par4) {
+	public void setupTextureExt(BufferedImage par1BufferedImage, int par2, boolean par3, boolean par4) {
 		if (MipmapHelper.currentLevel == 0) {
 			if (par1BufferedImage == null) {
 				return;
@@ -233,14 +230,14 @@ public class RenderEngine {
 		par1BufferedImage.getRGB(0, 0, var5, var6, var7, 0, var5);
 
 		if (this.options != null && this.options.anaglyph) {
-			var7 = this.func_98186_a(var7);
+			var7 = this.colorToAnaglyph(var7);
 		}
 
 		this.imageData = TexturePackAPI.getIntBuffer(this.imageData, var7);
 		GL11.glTexImage2D(GL11.GL_TEXTURE_2D, MipmapHelper.currentLevel, GL11.GL_RGBA, var5, var6, 0, GL12.GL_BGRA, GL12.GL_UNSIGNED_INT_8_8_8_8_REV, this.imageData);
 	}
 
-	private int[] func_98186_a(int[] par1ArrayOfInteger) {
+	private int[] colorToAnaglyph(int[] par1ArrayOfInteger) {
 		int[] var2 = new int[par1ArrayOfInteger.length];
 
 		for (int var3 = 0; var3 < par1ArrayOfInteger.length; ++var3) {
@@ -265,7 +262,7 @@ public class RenderEngine {
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
 
 		if (this.options != null && this.options.anaglyph) {
-			par1ArrayOfInteger = this.func_98186_a(par1ArrayOfInteger);
+			par1ArrayOfInteger = this.colorToAnaglyph(par1ArrayOfInteger);
 		}
 
 		this.imageData = TexturePackAPI.getIntBuffer(this.imageData, par1ArrayOfInteger);
@@ -281,13 +278,11 @@ public class RenderEngine {
 	}
 
 	/**
-	 * Takes a URL of a downloadable image and the name of the local image to be
-	 * used as a fallback. If the image has been downloaded, returns the GL
-	 * texture of the downloaded image, otherwise returns the GL texture of the
-	 * fallback image.
+	 * Takes a URL of a downloadable image and the name of the local image to be used as a fallback.  If the image has been
+	 * downloaded, returns the GL texture of the downloaded image, otherwise returns the GL texture of the fallback image.
 	 */
 	public int getTextureForDownloadableImage(String par1Str, String par2Str) {
-		ThreadDownloadImageData var3 = (ThreadDownloadImageData) this.urlToImageDataMap.get(par1Str);
+		ThreadDownloadImageData var3 = (ThreadDownloadImageData)this.urlToImageDataMap.get(par1Str);
 
 		if (var3 != null && var3.image != null && !var3.textureSetupComplete) {
 			if (var3.textureName < 0) {
@@ -310,12 +305,11 @@ public class RenderEngine {
 	}
 
 	/**
-	 * Return a ThreadDownloadImageData instance for the given URL. If it does
-	 * not already exist, it is created and uses the passed ImageBuffer. If it
-	 * does, its reference count is incremented.
+	 * Return a ThreadDownloadImageData instance for the given URL.  If it does not already exist, it is created and uses
+	 * the passed ImageBuffer.  If it does, its reference count is incremented.
 	 */
 	public ThreadDownloadImageData obtainImageData(String par1Str, IImageBuffer par2IImageBuffer) {
-		ThreadDownloadImageData var3 = (ThreadDownloadImageData) this.urlToImageDataMap.get(par1Str);
+		ThreadDownloadImageData var3 = (ThreadDownloadImageData)this.urlToImageDataMap.get(par1Str);
 
 		if (var3 == null) {
 			this.urlToImageDataMap.put(par1Str, new ThreadDownloadImageData(par1Str, par2IImageBuffer));
@@ -327,11 +321,10 @@ public class RenderEngine {
 	}
 
 	/**
-	 * Decrements the reference count for a given URL, deleting the image data
-	 * if the reference count hits 0
+	 * Decrements the reference count for a given URL, deleting the image data if the reference count hits 0
 	 */
 	public void releaseImageData(String par1Str) {
-		ThreadDownloadImageData var2 = (ThreadDownloadImageData) this.urlToImageDataMap.get(par1Str);
+		ThreadDownloadImageData var2 = (ThreadDownloadImageData)this.urlToImageDataMap.get(par1Str);
 
 		if (var2 != null) {
 			--var2.referenceCount;
@@ -364,42 +357,41 @@ public class RenderEngine {
 
 	public void updateDynamicTextures() {
 		CTMUtils.updateAnimations();
-		this.field_94154_l.func_94248_c();
-		this.field_94155_m.func_94248_c();
+		this.textureMapBlocks.updateAnimations();
+		this.textureMapItems.updateAnimations();
 		CustomAnimation.updateAll();
 	}
 
 	/**
-	 * Call setupTexture on all currently-loaded textures again to account for
-	 * changes in rendering options
+	 * Call setupTexture on all currently-loaded textures again to account for changes in rendering options
 	 */
 	public void refreshTextures() {
 		TexturePackChangeHandler.beforeChange1();
 		ITexturePack var1 = this.texturePack.getSelectedTexturePack();
-		this.func_94152_c();
+		this.refreshTextureMaps();
 		Iterator var2 = this.textureNameToImageMap.getKeySet().iterator();
 		BufferedImage var4;
 
 		while (var2.hasNext()) {
-			int var3 = ((Integer) var2.next()).intValue();
-			var4 = (BufferedImage) this.textureNameToImageMap.lookup(var3);
+			int var3 = ((Integer)var2.next()).intValue();
+			var4 = (BufferedImage)this.textureNameToImageMap.lookup(var3);
 			this.setupTexture(var4, var3);
 		}
 
 		ThreadDownloadImageData var10;
 
 		for (var2 = this.urlToImageDataMap.values().iterator(); var2.hasNext(); var10.textureSetupComplete = false) {
-			var10 = (ThreadDownloadImageData) var2.next();
+			var10 = (ThreadDownloadImageData)var2.next();
 		}
 
 		var2 = this.textureMap.keySet().iterator();
 		String var11;
 
 		while (var2.hasNext()) {
-			var11 = (String) var2.next();
+			var11 = (String)var2.next();
 
 			try {
-				int var12 = ((Integer) this.textureMap.get(var11)).intValue();
+				int var12 = ((Integer)this.textureMap.get(var11)).intValue();
 				boolean var6 = var11.startsWith("%blur%");
 
 				if (var6) {
@@ -422,24 +414,23 @@ public class RenderEngine {
 		var2 = this.textureContentsMap.keySet().iterator();
 
 		while (var2.hasNext()) {
-			var11 = (String) var2.next();
+			var11 = (String)var2.next();
 
 			try {
 				var4 = TexturePackAPI.getImage(this, var1, var11);
-				this.getImageContents(var4, (int[]) this.textureContentsMap.get(var11));
+				this.getImageContents(var4, (int[])this.textureContentsMap.get(var11));
 			} catch (Exception var8) {
 				var8.printStackTrace();
 			}
 		}
 
-		Minecraft.getMinecraft().fontRenderer.func_98304_a();
-		Minecraft.getMinecraft().standardGalacticFontRenderer.func_98304_a();
+		Minecraft.getMinecraft().fontRenderer.readFontData();
+		Minecraft.getMinecraft().standardGalacticFontRenderer.readFontData();
 		TexturePackChangeHandler.afterChange1();
 	}
 
 	/**
-	 * Returns a BufferedImage read off the provided input stream. Args:
-	 * inputStream
+	 * Returns a BufferedImage read off the provided input stream.  Args: inputStream
 	 */
 	private BufferedImage readTextureImage(InputStream par1InputStream) throws IOException {
 		if (par1InputStream == null) {
@@ -451,21 +442,21 @@ public class RenderEngine {
 		}
 	}
 
-	public void func_94152_c() {
+	public void refreshTextureMaps() {
 		TexturePackAPI.enableTextureBorder = true;
-		this.field_94154_l.func_94247_b();
+		this.textureMapBlocks.refreshTextures();
 		TexturePackAPI.enableTextureBorder = false;
-		this.field_94155_m.func_94247_b();
+		this.textureMapItems.refreshTextures();
 	}
 
-	public Icon func_96448_c(int par1) {
+	public Icon getMissingIcon(int par1) {
 		switch (par1) {
 			case 0:
-				return this.field_94154_l.func_96455_e();
+				return this.textureMapBlocks.getMissingIcon();
 
 			case 1:
 			default:
-				return this.field_94155_m.func_96455_e();
+				return this.textureMapItems.getMissingIcon();
 		}
 	}
 }

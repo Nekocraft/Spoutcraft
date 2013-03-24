@@ -12,7 +12,7 @@ public class TextureClock extends TextureStitched {
 		FancyDial.setup(this);
 	}
 
-	public void func_94219_l() {
+	public void updateAnimation() {
 		Minecraft var1 = Minecraft.getMinecraft();
 		double var2 = 0.0D;
 
@@ -50,13 +50,13 @@ public class TextureClock extends TextureStitched {
 		if (!FancyDial.update(this)) {
 			int var6;
 
-			for (var6 = (int)((this.field_94239_h + 1.0D) * (double)this.field_94226_b.size()) % this.field_94226_b.size(); var6 < 0; var6 = (var6 + this.field_94226_b.size()) % this.field_94226_b.size()) {
+			for (var6 = (int)((this.field_94239_h + 1.0D) * (double)this.textureList.size()) % this.textureList.size(); var6 < 0; var6 = (var6 + this.textureList.size()) % this.textureList.size()) {
 				;
 			}
 
-			if (var6 != this.field_94222_f) {
-				this.field_94222_f = var6;
-				this.field_94228_a.func_94281_a(this.field_94224_d, this.field_94225_e, (Texture)this.field_94226_b.get(this.field_94222_f), this.field_94227_c);
+			if (var6 != this.frameCounter) {
+				this.frameCounter = var6;
+				this.textureSheet.copyFrom(this.originX, this.originY, (Texture)this.textureList.get(this.frameCounter), this.rotated);
 			}
 		}
 	}

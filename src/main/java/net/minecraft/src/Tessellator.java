@@ -178,7 +178,7 @@ public class Tessellator {
 			if (this.vertexCount > 0) {
 				// MCPatcher Start
 				if (this.textureMap != null) {
-					GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureMap.func_94246_d().func_94282_c());
+					GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureMap.getTexture().getGlTextureId());
 				}
 				// MCPatcher End
 

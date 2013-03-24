@@ -69,7 +69,7 @@ public class TexturePackCustom extends TexturePackImplementation {
 		}
 	}
 
-	public boolean func_94180_h() {
+	public boolean isCompatible() {
 		try {
 			this.openTexturePackFile();
 			Enumeration var1 = this.texturePackZipFile.entries();
@@ -87,10 +87,5 @@ public class TexturePackCustom extends TexturePackImplementation {
 
 		boolean var4 = this.func_98140_c("terrain.png") || this.func_98140_c("gui/items.png");
 		return !var4;
-	}
-
-	@Override
-	public boolean func_94179_g() {
-		return true;
 	}
 }
