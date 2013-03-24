@@ -1393,7 +1393,7 @@ public abstract class EntityLiving extends Entity {
 		par1NBTTagCompound.setShort("HurtTime", (short)this.hurtTime);
 		par1NBTTagCompound.setShort("DeathTime", (short)this.deathTime);
 		par1NBTTagCompound.setShort("AttackTime", (short)this.attackTime);
-		par1NBTTagCompound.setBoolean("CanPickUpLoot", this.func_98052_bS());
+		par1NBTTagCompound.setBoolean("CanPickUpLoot", this.canPickUpLoot());
 		par1NBTTagCompound.setBoolean("PersistenceRequired", this.persistenceRequired);
 		NBTTagList var2 = new NBTTagList();
 
@@ -1449,7 +1449,7 @@ public abstract class EntityLiving extends Entity {
 		this.hurtTime = par1NBTTagCompound.getShort("HurtTime");
 		this.deathTime = par1NBTTagCompound.getShort("DeathTime");
 		this.attackTime = par1NBTTagCompound.getShort("AttackTime");
-		this.func_98053_h(par1NBTTagCompound.getBoolean("CanPickUpLoot"));
+		this.setCanPickUpLoot(par1NBTTagCompound.getBoolean("CanPickUpLoot"));
 		this.persistenceRequired = par1NBTTagCompound.getBoolean("PersistenceRequired");
 
 		if (par1NBTTagCompound.hasKey("CustomName") && par1NBTTagCompound.getString("CustomName").length() > 0) {
@@ -1598,7 +1598,7 @@ public abstract class EntityLiving extends Entity {
 		this.worldObj.theProfiler.endSection();
 		this.worldObj.theProfiler.startSection("looting");
 
-		if (!this.worldObj.isRemote && this.func_98052_bS() && !this.dead && this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
+		if (!this.worldObj.isRemote && this.canPickUpLoot() && !this.dead && this.worldObj.getGameRules().getGameRuleBooleanValue("mobGriefing")) {
 			List var2 = this.worldObj.getEntitiesWithinAABB(EntityItem.class, this.boundingBox.expand(1.0D, 0.0D, 1.0D));
 			Iterator var12 = var2.iterator();
 
@@ -1609,7 +1609,7 @@ public abstract class EntityLiving extends Entity {
 				if (!var4.isDead && var4.getEntityItem()!= null) {
 					ItemStack var13 = var4.getEntityItem();
 				// Spout End
-					int var6 = func_82159_b(var13);
+					int var6 = getArmorPosition(var13);
 
 					if (var6 > -1) {
 						boolean var14 = true;
@@ -2043,17 +2043,28 @@ public abstract class EntityLiving extends Entity {
 			Integer var2 = (Integer)var1.next();
 			PotionEffect var3 = (PotionEffect)this.activePotionsMap.get(var2);
 
-			if (!var3.onUpdate(this)) {
-				if (!this.worldObj.isRemote) {
-					var1.remove();
-					this.onFinishedPotionEffect(var3);
-				}
-			} else if (var3.getDuration() % 600 == 0) {
-				this.onChangedPotionEffect(var3);
+			try {
+				if (!var3.onUpdate(this)) {
+					if (!this.worldObj.isRemote) {
+						var1.remove();
+						this.onFinishedPotionEffect(var3);
+					}
+				} else if (var3.getDuration() % 600 == 0) {
+					this.onChangedPotionEffect(var3);
+				}				
+			} catch (Throwable var11) {
+				CrashReport var5 = CrashReport.makeCrashReport(var11, "Ticking mob effect instance");
+				CrashReportCategory var6 = var5.makeCategory("Mob effect being ticked");
+				var6.addCrashSectionCallable("Effect Name", new CallableEffectName(this, var3));
+				var6.addCrashSectionCallable("Effect ID", new CallableEffectID(this, var3));
+				var6.addCrashSectionCallable("Effect Duration", new CallableEffectDuration(this, var3));
+				var6.addCrashSectionCallable("Effect Amplifier", new CallableEffectAmplifier(this, var3));
+				var6.addCrashSectionCallable("Effect is Splash", new CallableEffectIsSplash(this, var3));
+				var6.addCrashSectionCallable("Effect is Ambient", new CallableEffectIsAmbient(this, var3));
+				throw new ReportedException(var5); 
 			}
-		}
 
-		int var11;
+		int var12;
 
 		if (this.potionsNeedUpdate) {
 			if (!this.worldObj.isRemote) {
@@ -2062,9 +2073,9 @@ public abstract class EntityLiving extends Entity {
 					this.dataWatcher.updateObject(8, Integer.valueOf(0));
 					this.setHasActivePotion(false);
 				} else {
-					var11 = PotionHelper.calcPotionLiquidColor(this.activePotionsMap.values());
+					var12 = PotionHelper.calcPotionLiquidColor(this.activePotionsMap.values());
 					this.dataWatcher.updateObject(9, Byte.valueOf((byte)(PotionHelper.func_82817_b(this.activePotionsMap.values()) ? 1 : 0)));
-					this.dataWatcher.updateObject(8, Integer.valueOf(var11));
+					this.dataWatcher.updateObject(8, Integer.valueOf(var12));
 					this.setHasActivePotion(this.isPotionActive(Potion.invisibility.id));
 				}
 			}
@@ -2072,10 +2083,10 @@ public abstract class EntityLiving extends Entity {
 			this.potionsNeedUpdate = false;
 		}
 
-		var11 = this.dataWatcher.getWatchableObjectInt(8);
-		boolean var12 = this.dataWatcher.getWatchableObjectByte(9) > 0;
+		var12 = this.dataWatcher.getWatchableObjectInt(8);
+		boolean var13 = this.dataWatcher.getWatchableObjectByte(9) > 0;
 
-		if (var11 > 0) {
+		if (var12 > 0) {
 			boolean var4 = false;
 
 			if (!this.getHasActivePotion()) {
@@ -2084,15 +2095,15 @@ public abstract class EntityLiving extends Entity {
 				var4 = this.rand.nextInt(15) == 0;
 			}
 
-			if (var12) {
+			if (var13) {
 				var4 &= this.rand.nextInt(5) == 0;
 			}
 
-			if (var4 && var11 > 0) {
-				double var5 = (double)(var11 >> 16 & 255) / 255.0D;
-				double var7 = (double)(var11 >> 8 & 255) / 255.0D;
-				double var9 = (double)(var11 >> 0 & 255) / 255.0D;
-				this.worldObj.spawnParticle(var12 ? "mobSpellAmbient" : "mobSpell", this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width, this.posY + this.rand.nextDouble() * (double)this.height - (double)this.yOffset, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width, var5, var7, var9);
+			if (var4 && var12 > 0) {
+				double var14 = (double)(var12 >> 16 & 255) / 255.0D;
+				double var7 = (double)(var12 >> 8 & 255) / 255.0D;
+				double var9 = (double)(var12 >> 0 & 255) / 255.0D;
+				this.worldObj.spawnParticle(var13 ? "mobSpellAmbient" : "mobSpell", this.posX + (this.rand.nextDouble() - 0.5D) * (double)this.width, this.posY + this.rand.nextDouble() * (double)this.height - (double)this.yOffset, this.posZ + (this.rand.nextDouble() - 0.5D) * (double)this.width, var14, var7, var9);
 			}
 		}
 	}
@@ -2387,7 +2398,7 @@ public abstract class EntityLiving extends Entity {
 		}
 	}
 
-	public static int func_82159_b(ItemStack par0ItemStack) {
+	public static int getArmorPosition(ItemStack par0ItemStack) {
 		if (par0ItemStack.itemID != Block.pumpkin.blockID && par0ItemStack.itemID != Item.skull.itemID) {
 			if (par0ItemStack.getItem() instanceof ItemArmor) {
 				switch (((ItemArmor)par0ItemStack.getItem()).armorType) {
@@ -2624,11 +2635,11 @@ public abstract class EntityLiving extends Entity {
 		this.equipmentDropChances[par1] = par2;
 	}
 
-	public boolean func_98052_bS() {
+	public boolean canPickUpLoot() {
 		return this.canPickUpLoot;
 	}
 
-	public void func_98053_h(boolean par1) {
+	public void setCanPickUpLoot(boolean par1) {
 		this.canPickUpLoot = par1;
 	}
 

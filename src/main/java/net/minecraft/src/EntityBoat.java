@@ -362,9 +362,9 @@ public class EntityBoat extends Entity {
 						int var22 = this.worldObj.getBlockId(var27, var21, var19);
 
 						if (var22 == Block.snow.blockID) {
-							this.worldObj.func_94571_i(var27, var21, var19);
+							this.worldObj.setBlockToAir(var27, var21, var19);
 						} else if (var22 == Block.waterlily.blockID) {
-							this.worldObj.func_94578_a(var27, var21, var19, true);
+							this.worldObj.setBlockToAir(var27, var21, var19, true);
 						}
 					}
 				}

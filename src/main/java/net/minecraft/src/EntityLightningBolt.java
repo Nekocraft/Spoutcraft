@@ -32,7 +32,7 @@ public class EntityLightningBolt extends EntityWeatherEffect {
 			int var10 = MathHelper.floor_double(par6);
 
 			if (par1World.getBlockId(var8, var9, var10) == 0 && Block.fire.canPlaceBlockAt(par1World, var8, var9, var10)) {
-				par1World.func_94575_c(var8, var9, var10, Block.fire.blockID);
+				par1World.setBlock(var8, var9, var10, Block.fire.blockID);
 			}
 
 			for (var8 = 0; var8 < 4; ++var8) {
@@ -41,7 +41,7 @@ public class EntityLightningBolt extends EntityWeatherEffect {
 				int var11 = MathHelper.floor_double(par6) + this.rand.nextInt(3) - 1;
 
 				if (par1World.getBlockId(var9, var10, var11) == 0 && Block.fire.canPlaceBlockAt(par1World, var9, var10, var11)) {
-					par1World.func_94575_c(var9, var10, var11, Block.fire.blockID);
+					par1World.setBlock(var9, var10, var11, Block.fire.blockID);
 				}
 			}
 		}
@@ -74,7 +74,7 @@ public class EntityLightningBolt extends EntityWeatherEffect {
 					int var3 = MathHelper.floor_double(this.posZ);
 
 					if (this.worldObj.getBlockId(var1, var2, var3) == 0 && Block.fire.canPlaceBlockAt(this.worldObj, var1, var2, var3)) {
-						this.worldObj.func_94575_c(var1, var2, var3, Block.fire.blockID);
+						this.worldObj.setBlock(var1, var2, var3, Block.fire.blockID);
 					}
 				}
 			}

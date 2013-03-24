@@ -72,15 +72,15 @@ public class EffectRenderer {
 				switch (var8) {
 					case 0:
 					default:
-						this.renderer.func_98187_b("/particles.png");
+						this.renderer.bindTexture("/particles.png");
 						break;
 
 					case 1:
-						this.renderer.func_98187_b("/terrain.png");
+						this.renderer.bindTexture("/terrain.png");
 						break;
 
 					case 2:
-						this.renderer.func_98187_b("/gui/items.png");
+						this.renderer.bindTexture("/gui/items.png");
 				}
 
 				Tessellator var9 = Tessellator.instance;

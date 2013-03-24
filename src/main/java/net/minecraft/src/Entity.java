@@ -200,7 +200,7 @@ public abstract class Entity {
 	public int dimension;
 	protected int field_82152_aq;
 	private boolean invulnerable;
-	private UUID field_96093_i;
+	private UUID entityUniqueID;
 	// Spout Start
 	public boolean partiallyInWater = false;
 	public org.spoutcraft.client.entity.CraftEntity spoutEnty;
@@ -244,7 +244,7 @@ public abstract class Entity {
 		this.addedToChunk = false;
 		this.field_82152_aq = 0;
 		this.invulnerable = false;
-		this.field_96093_i = UUID.randomUUID();
+		this.entityUniqueID = UUID.randomUUID();
 		this.myEntitySize = EnumEntitySize.SIZE_2;
 		this.worldObj = par1World;
 		this.setPosition(0.0D, 0.0D, 0.0D);
@@ -1309,8 +1309,8 @@ public abstract class Entity {
 			// Spout End
 			par1NBTTagCompound.setBoolean("Invulnerable", this.invulnerable);
 			par1NBTTagCompound.setInteger("PortalCooldown", this.timeUntilPortal);
-			par1NBTTagCompound.setLong("UUIDMost", this.field_96093_i.getMostSignificantBits());
-			par1NBTTagCompound.setLong("UUIDLeast", this.field_96093_i.getLeastSignificantBits());
+			par1NBTTagCompound.setLong("UUIDMost", this.entityUniqueID.getMostSignificantBits());
+			par1NBTTagCompound.setLong("UUIDLeast", this.entityUniqueID.getLeastSignificantBits()); 
 			this.writeEntityToNBT(par1NBTTagCompound);
 
 			if (this.ridingEntity != null) {
@@ -1366,7 +1366,7 @@ public abstract class Entity {
 			this.timeUntilPortal = par1NBTTagCompound.getInteger("PortalCooldown");
 
 			if (par1NBTTagCompound.hasKey("UUIDMost") && par1NBTTagCompound.hasKey("UUIDLeast")) {
-				this.field_96093_i = new UUID(par1NBTTagCompound.getLong("UUIDMost"), par1NBTTagCompound.getLong("UUIDLeast"));
+				this.entityUniqueID = new UUID(par1NBTTagCompound.getLong("UUIDMost"), par1NBTTagCompound.getLong("UUIDLeast"));
 			}
 
 			this.setPosition(this.posX, this.posY, this.posZ);

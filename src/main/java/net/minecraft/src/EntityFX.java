@@ -1,8 +1,8 @@
 package net.minecraft.src;
 
 public class EntityFX extends Entity {
-	protected int field_94054_b;
-	protected int field_94055_c;
+	protected int particleTextureIndexX;
+	protected int particleTextureIndexY; 
 	protected float particleTextureJitterX;
 	protected float particleTextureJitterY;
 	// Spout Start - protected to public
@@ -145,17 +145,17 @@ public class EntityFX extends Entity {
 	}
 
 	public void renderParticle(Tessellator par1Tessellator, float par2, float par3, float par4, float par5, float par6, float par7) {
-		float var8 = (float)this.field_94054_b / 16.0F;
+		float var8 = (float)this.particleTextureIndexX / 16.0F;
 		float var9 = var8 + 0.0624375F;
-		float var10 = (float)this.field_94055_c / 16.0F;
+		float var10 = (float)this.particleTextureIndexY / 16.0F;
 		float var11 = var10 + 0.0624375F;
 		float var12 = 0.1F * this.particleScale;
 
 		if (this.particleTextureIndex != null) {
-			var8 = this.particleTextureIndex.func_94209_e();
-			var9 = this.particleTextureIndex.func_94212_f();
-			var10 = this.particleTextureIndex.func_94206_g();
-			var11 = this.particleTextureIndex.func_94210_h();
+			 var8 = this.particleTextureIndex.getMinU();
+			 var9 = this.particleTextureIndex.getMaxU();
+			 var10 = this.particleTextureIndex.getMinV();
+			 var11 = this.particleTextureIndex.getMaxV(); 
 		}
 
 		float var13 = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)par2 - interpPosX);
@@ -202,13 +202,13 @@ public class EntityFX extends Entity {
 		if (this.getFXLayer() != 0) {
 			throw new RuntimeException("Invalid call to Particle.setMiscTex");
 		} else {
-			this.field_94054_b = par1 % 16;
-			this.field_94055_c = par1 / 16;
+			this.particleTextureIndexX = par1 % 16;
+			this.particleTextureIndexY = par1 / 16; 
 		}
 	}
 
-	public void func_94053_h() {
-		++this.field_94054_b;
+	public void nextTextureIndexX() {
+		++this.particleTextureIndexX; 
 	}
 
 	/**

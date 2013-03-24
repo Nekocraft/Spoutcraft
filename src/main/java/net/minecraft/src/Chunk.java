@@ -80,7 +80,9 @@ public class Chunk {
 	 * chunk is sent to a client, and never set to false.
 	 */
 	public boolean sendUpdates;
-	public int field_82912_p;
+	
+	 /** Lowest value in the heightmap. */
+	public int heightMapMinimum; 
 
 	/**
 	 * Contains the current round-robin relight check index, and is implied as the relight check location as well.
@@ -107,7 +109,7 @@ public class Chunk {
 		this.hasEntities = false;
 		this.lastSaveTime = 0L;
 		this.sendUpdates = false;
-		this.field_82912_p = 0;
+		this.heightMapMinimum = 0;
 		this.queuedLightChecks = 4096;
 		this.field_76653_p = false;
 		this.entityLists = new List[16];
@@ -224,7 +226,7 @@ public class Chunk {
 	 */
 	public void generateSkylightMap() {
 		int var1 = this.getTopFilledSegment();
-		this.field_82912_p = Integer.MAX_VALUE;
+		this.heightMapMinimum = Integer.MAX_VALUE;
 		int var2;
 		int var3;
 
@@ -244,8 +246,8 @@ public class Chunk {
 
 						this.heightMap[var3 << 4 | var2] = var4;
 
-						if (var4 < this.field_82912_p) {
-							this.field_82912_p = var4;
+						if (var4 < this.heightMapMinimum) {
+							this.heightMapMinimum = var4;
 						}
 					}
 
@@ -306,10 +308,10 @@ public class Chunk {
 						int var3 = this.getHeightValue(var1, var2);
 						int var4 = this.xPosition * 16 + var1;
 						int var5 = this.zPosition * 16 + var2;
-						int var6 = this.worldObj.func_82734_g(var4 - 1, var5);
-						int var7 = this.worldObj.func_82734_g(var4 + 1, var5);
-						int var8 = this.worldObj.func_82734_g(var4, var5 - 1);
-						int var9 = this.worldObj.func_82734_g(var4, var5 + 1);
+						int var6 = this.worldObj.getChunkHeightMapMinimum(var4 - 1, var5);
+						int var7 = this.worldObj.getChunkHeightMapMinimum(var4 + 1, var5);
+						int var8 = this.worldObj.getChunkHeightMapMinimum(var4, var5 - 1);
+						int var9 = this.worldObj.getChunkHeightMapMinimum(var4, var5 + 1); 
 
 						if (var7 < var6) {
 							var6 = var7;
@@ -440,8 +442,8 @@ public class Chunk {
 				var12 = var4;
 			}
 
-			if (var8 < this.field_82912_p) {
-				this.field_82912_p = var8;
+			if (var8 < this.heightMapMinimum) {
+				this.heightMapMinimum = var8;
 			}
 
 			if (!this.worldObj.provider.hasNoSky) {
@@ -680,7 +682,7 @@ public class Chunk {
 		int var3 = MathHelper.floor_double(par1Entity.posZ / 16.0D);
 
 		if (var2 != this.xPosition || var3 != this.zPosition) {
-			this.worldObj.func_98180_V().func_98232_c("Wrong location! " + par1Entity);
+			this.worldObj.getWorldLogAgent().func_98232_c("Wrong location! " + par1Entity);
 			Thread.dumpStack();
 		}
 

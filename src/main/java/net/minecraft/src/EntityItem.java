@@ -213,7 +213,7 @@ public class EntityItem extends Entity {
 	public boolean attackEntityFrom(DamageSource par1DamageSource, int par2) {
 		if (this.isEntityInvulnerable()) {
 			return false;
-		} else if (this.getEntityItem() != null && this.getEntityItem().itemID == Item.netherStar.itemID && par1DamageSource.func_94541_c()) {
+		} else if (this.getEntityItem() != null && this.getEntityItem().itemID == Item.netherStar.itemID && par1DamageSource.isExplosion()) {
 			return false;
 		} else {
 			this.setBeenAttacked();
@@ -322,7 +322,7 @@ public class EntityItem extends Entity {
 
 		if (var1 == null) {
 			if (this.worldObj != null) {
-				this.worldObj.func_98180_V().func_98232_c("Item entity " + this.entityId + " has no item?!");
+				this.worldObj.getWorldLogAgent().func_98232_c("Item entity " + this.entityId + " has no item?!");
 			}
 
 			return new ItemStack(Block.stone);
