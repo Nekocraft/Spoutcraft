@@ -204,7 +204,7 @@ public class ItemInWorldManager {
 			var4.onBlockHarvested(this.theWorld, par1, par2, par3, var5, this.thisPlayerMP);
 		}
 
-		boolean var6 = this.theWorld.func_94571_i(par1, par2, par3);
+		boolean var6 = this.theWorld.setBlockToAir(par1, par2, par3);
 
 		if (var4 != null && var6) {
 			var4.onBlockDestroyedByPlayer(this.theWorld, par1, par2, par3, var5);

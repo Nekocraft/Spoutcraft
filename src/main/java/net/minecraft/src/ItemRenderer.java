@@ -73,12 +73,10 @@ public class ItemRenderer {
 		}
 
 		if (!custom) {
-			if (par2ItemStack.itemID < 256) {
-				//GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/terrain.png"));
-				this.mc.renderEngine.func_98187_b("/terrain.png");
+			if (par2ItemStack.itemID < 256) {			
+				this.mc.renderEngine.bindTexture("/terrain.png");
 			} else {
-				this.mc.renderEngine.func_98187_b("/gui/items.png");
-				//GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTexture("/gui/items.png"));
+				this.mc.renderEngine.bindTexture("/gui/items.png");				
 			}
 		}
 
@@ -95,10 +93,10 @@ public class ItemRenderer {
                 return;
             }
 
-			float var6 = var4.func_94209_e();
-			float var7 = var4.func_94212_f();
-			float var8 = var4.func_94206_g();
-			float var9 = var4.func_94210_h();
+            float var6 = var4.getMinU();
+			float var7 = var4.getMaxU();
+			float var8 = var4.getMinV();
+			float var9 = var4.getMaxV();
 			float var10 = 0.0F;
 			float var11 = 0.3F;
 			if (custom){
@@ -120,12 +118,12 @@ public class ItemRenderer {
 				ColorizeBlock.colorizeWaterBlockGL(par2ItemStack.itemID);
 			}
 						
-			renderItemIn2D(var5, var7, var8, var6, var9, var4.func_94213_j(), var4.func_94208_k(), 0.0625F);
+			renderItemIn2D(var5, var7, var8, var6, var9, var4.getSheetWidth(), var4.getSheetHeight(), 0.0625F);
 			
 			if (par2ItemStack != null && par2ItemStack.hasEffect() && par3 == 0) {
 				GL11.glDepthFunc(GL11.GL_EQUAL);
 				GL11.glDisable(GL11.GL_LIGHTING);
-				this.mc.renderEngine.func_98187_b("%blur%/misc/glint.png");
+				this.mc.renderEngine.bindTexture("%blur%/misc/glint.png");
 				GL11.glEnable(GL11.GL_BLEND);
 				GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_ONE);
 				float var13 = 0.76F;
@@ -312,7 +310,7 @@ public class ItemRenderer {
 			GL11.glRotatef(var20 * -85.0F, 0.0F, 0.0F, 1.0F);
 			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTextureForDownloadableImage(this.mc.thePlayer.skinUrl, this.mc.thePlayer.getTexture()));
-			this.mc.renderEngine.func_98185_a();
+			this.mc.renderEngine.resetBoundTexture();
 
 			for (var9 = 0; var9 < 2; ++var9) {
 				int var22 = var9 * 2 - 1;
@@ -343,7 +341,7 @@ public class ItemRenderer {
 			GL11.glTranslatef(-1.0F, -1.0F, 0.0F);
 			var13 = 0.015625F;
 			GL11.glScalef(var13, var13, var13);
-			this.mc.renderEngine.func_98187_b("/misc/mapbg.png");
+			this.mc.renderEngine.bindTexture("/misc/mapbg.png");
 			Tessellator var28 = Tessellator.instance;
 			GL11.glNormal3f(0.0F, 0.0F, -1.0F);
 			var28.startDrawingQuads();
@@ -472,7 +470,7 @@ public class ItemRenderer {
 			GL11.glRotatef(var10 * 70.0F, 0.0F, 1.0F, 0.0F);
 			GL11.glRotatef(-var21 * 20.0F, 0.0F, 0.0F, 1.0F);
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.mc.renderEngine.getTextureForDownloadableImage(this.mc.thePlayer.skinUrl, this.mc.thePlayer.getTexture()));
-			this.mc.renderEngine.func_98185_a();
+			this.mc.renderEngine.resetBoundTexture();
 			GL11.glTranslatef(-1.0F, 3.6F, 3.5F);
 			GL11.glRotatef(120.0F, 0.0F, 0.0F, 1.0F);
 			GL11.glRotatef(200.0F, 1.0F, 0.0F, 0.0F);
@@ -500,7 +498,7 @@ public class ItemRenderer {
 		GL11.glDisable(GL11.GL_ALPHA_TEST);		
 
 		if (this.mc.thePlayer.isBurning()) {
-			this.mc.renderEngine.func_98187_b("/terrain.png");			
+			this.mc.renderEngine.bindTexture("/terrain.png");			
 			this.renderFireInFirstPerson(par1);
 		}
 
@@ -508,7 +506,7 @@ public class ItemRenderer {
 			int var2 = MathHelper.floor_double(this.mc.thePlayer.posX);
 			int var3 = MathHelper.floor_double(this.mc.thePlayer.posY);
 			int var4 = MathHelper.floor_double(this.mc.thePlayer.posZ);
-			this.mc.renderEngine.func_98187_b("/terrain.png");
+			this.mc.renderEngine.bindTexture("/terrain.png");
 			int var5 = this.mc.theWorld.getBlockId(var2, var3, var4);
 
 			if (this.mc.theWorld.isBlockNormalCube(var2, var3, var4)) {
@@ -534,7 +532,7 @@ public class ItemRenderer {
 		}
 
 		if (this.mc.thePlayer.isInsideOfMaterial(Material.water)) {
-			this.mc.renderEngine.func_98187_b("/misc/water.png");
+			this.mc.renderEngine.bindTexture("/misc/water.png");
 			this.renderWarpedTextureOverlay(par1);
 		}
 
@@ -554,10 +552,10 @@ public class ItemRenderer {
 		float var7 = -1.0F;
 		float var8 = 1.0F;
 		float var9 = -0.5F;
-		float var10 = par2Icon.func_94209_e();
-		float var11 = par2Icon.func_94212_f();
-		float var12 = par2Icon.func_94206_g();
-		float var13 = par2Icon.func_94210_h();
+		float var10 = par2Icon.getMinU();
+		float var11 = par2Icon.getMaxU();
+		float var12 = par2Icon.getMinV();
+		float var13 = par2Icon.getMaxV();
 		var3.startDrawingQuads();
 		var3.addVertexWithUV((double)var5, (double)var7, (double)var9, (double)var11, (double)var13);
 		var3.addVertexWithUV((double)var6, (double)var7, (double)var9, (double)var10, (double)var13);
@@ -611,10 +609,10 @@ public class ItemRenderer {
 		for (int var4 = 0; var4 < 2; ++var4) {
 			GL11.glPushMatrix();
 			Icon var5 = Block.fire.func_94438_c(1);
-			float var6 = var5.func_94209_e();
-			float var7 = var5.func_94212_f();
-			float var8 = var5.func_94206_g();
-			float var9 = var5.func_94210_h();
+			float var6 = var5.getMinU();
+			float var7 = var5.getMaxU();
+			float var8 = var5.getMinV();
+			float var9 = var5.getMaxV();
 			float var10 = (0.0F - var3) / 2.0F;
 			float var11 = var10 + var3;
 			float var12 = 0.0F - var3 / 2.0F;

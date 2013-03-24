@@ -57,7 +57,7 @@ public abstract class InventoryEffectRenderer extends GuiContainer {
 				PotionEffect var7 = (PotionEffect)var6.next();
 				Potion var8 = Potion.potionTypes[var7.getPotionID()];
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-				this.mc.renderEngine.func_98187_b("/gui/inventory.png");
+				this.mc.renderEngine.bindTexture("/gui/inventory.png");
 				this.drawTexturedModalRect(var1, var2, 0, 166, 140, 32);
 
 				if (var8.hasStatusIcon()) {

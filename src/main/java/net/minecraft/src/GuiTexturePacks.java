@@ -45,7 +45,7 @@ public class GuiTexturePacks extends GuiScreen {
 			if (par1GuiButton.id == 5) {
 				if (Minecraft.getOs() == EnumOS.MACOS) {
 					try {
-						this.mc.func_98033_al().func_98233_a(this.fileLocation);
+						this.mc.getLogAgent().logInfo(this.fileLocation);
 						Runtime.getRuntime().exec(new String[] {"/usr/bin/open", this.fileLocation});
 						return;
 					} catch (IOException var7) {
@@ -74,7 +74,7 @@ public class GuiTexturePacks extends GuiScreen {
 				}
 
 				if (var8) {
-					this.mc.func_98033_al().func_98233_a("Opening via system class!");
+					this.mc.getLogAgent().logInfo("Opening via system class!");
 					Sys.openURL("file://" + this.fileLocation);
 				}
 			} else if (par1GuiButton.id == 6) {

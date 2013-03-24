@@ -22,7 +22,10 @@ public class ItemBlock extends Item {
 		return this.blockID;
 	}
 
-	public int func_94901_k() {
+	/**
+	 * Returns 0 for /terrain.png, 1 for /gui/items.png
+	 */
+	public int getSpriteNumber() {
 		return Block.blocksList[this.blockID].func_94327_t_() != null ? 1 : 0;
 	}
 
@@ -80,7 +83,7 @@ public class ItemBlock extends Item {
 			int var13 = this.getMetadata(par1ItemStack.getItemDamage());
 			int var14 = Block.blocksList[this.blockID].onBlockPlaced(par3World, par4, par5, par6, par7, par8, par9, par10, var13);
 
-			if (par3World.setBlockAndMetadataWithNotify(par4, par5, par6, this.blockID, var14, 3)) {
+			if (par3World.setBlock(par4, par5, par6, this.blockID, var14, 3)) {
 				if (par3World.getBlockId(par4, par5, par6) == this.blockID) {
 					Block.blocksList[this.blockID].onBlockPlacedBy(par3World, par4, par5, par6, par2EntityPlayer, par1ItemStack);
 					Block.blocksList[this.blockID].onPostBlockPlaced(par3World, par4, par5, par6, var14);
@@ -165,11 +168,11 @@ public class ItemBlock extends Item {
 		Block.blocksList[this.blockID].getSubBlocks(par1, par2CreativeTabs, par3List);
 	}
 
-	public void func_94581_a(IconRegister par1IconRegister) {
+	public void updateIcons(IconRegister par1IconRegister) {
 		String var2 = Block.blocksList[this.blockID].func_94327_t_();
 
 		if (var2 != null) {
-			this.field_94588_b = par1IconRegister.func_94245_a(var2);
+			this.field_94588_b = par1IconRegister.registerIcon(var2);
 		}
 	}
 

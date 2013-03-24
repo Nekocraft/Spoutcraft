@@ -393,7 +393,7 @@ public abstract class GuiContainer extends GuiScreen {
 				
 		if (var15.getItemStack() == null && this.theSlot != null && this.theSlot.getHasStack()) {
 			ItemStack var19 = this.theSlot.getStack();
-			this.drawItemStackTooltip(var19, par1 - var4 + 8, par2 - var5 + 8);
+			this.drawItemStackTooltip(var19, par1, par2);
 		}
 
 		GL11.glPopMatrix();
@@ -408,7 +408,7 @@ public abstract class GuiContainer extends GuiScreen {
 		this.zLevel = 200.0F;
 		itemRenderer.zLevel = 200.0F;
 		itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.renderEngine, par1ItemStack, par2, par3);
-		itemRenderer.func_94148_a(this.fontRenderer, this.mc.renderEngine, par1ItemStack, par2, par3 - (this.draggedStack == null ? 0 : 8), par4Str);
+		itemRenderer.renderItemStack(this.fontRenderer, this.mc.renderEngine, par1ItemStack, par2, par3 - (this.draggedStack == null ? 0 : 8), par4Str);
 		this.zLevel = 0.0F;
 		itemRenderer.zLevel = 0.0F;
 	}
@@ -579,8 +579,8 @@ public abstract class GuiContainer extends GuiScreen {
 
 			if (var9 != null) {
 				GL11.glDisable(GL11.GL_LIGHTING);
-				this.mc.renderEngine.func_98187_b("/gui/items.png");
-				this.func_94065_a(var2, var3, var9, 16, 16);
+				this.mc.renderEngine.bindTexture("/gui/items.png");
+				this.drawTexturedModelRectFromIcon(var2, var3, var9, 16, 16); 
 				GL11.glEnable(GL11.GL_LIGHTING);
 				var6 = true;
 			}
@@ -593,7 +593,7 @@ public abstract class GuiContainer extends GuiScreen {
 
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
 			itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.renderEngine, var4, var2, var3);
-			itemRenderer.func_94148_a(this.fontRenderer, this.mc.renderEngine, var4, var2, var3, var8);
+			itemRenderer.renderItemStack(this.fontRenderer, this.mc.renderEngine, var4, var2, var3, var8);
 		}
 
 		itemRenderer.zLevel = 0.0F;

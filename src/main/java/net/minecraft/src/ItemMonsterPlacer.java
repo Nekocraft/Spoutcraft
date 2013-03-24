@@ -5,7 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class ItemMonsterPlacer extends Item {
-	private Icon field_94593_a;
+	private Icon theIcon;
 
 	public ItemMonsterPlacer(int par1) {
 		super(par1);
@@ -39,7 +39,7 @@ public class ItemMonsterPlacer extends Item {
 	 * Gets an icon index based on an item's damage value and the given render pass
 	 */
 	public Icon getIconFromDamageForRenderPass(int par1, int par2) {
-		return par2 > 0 ? this.field_94593_a : super.getIconFromDamageForRenderPass(par1, par2);
+		return par2 > 0 ? this.theIcon : super.getIconFromDamageForRenderPass(par1, par2);
 	}
 
 	/**
@@ -116,8 +116,8 @@ public class ItemMonsterPlacer extends Item {
 		}
 	}
 
-	public void func_94581_a(IconRegister par1IconRegister) {
-		super.func_94581_a(par1IconRegister);
-		this.field_94593_a = par1IconRegister.func_94245_a("monsterPlacer_overlay");
+	public void updateIcons(IconRegister par1IconRegister) {
+		super.updateIcons(par1IconRegister);
+		this.theIcon = par1IconRegister.registerIcon("monsterPlacer_overlay");
 	}
 }

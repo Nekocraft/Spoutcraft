@@ -156,21 +156,21 @@ public class ItemArmor extends Item {
 		return this.material.getArmorCraftingMaterial() == par2ItemStack.itemID ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
 	}
 
-	public void func_94581_a(IconRegister par1IconRegister) {
-		super.func_94581_a(par1IconRegister);
+	public void updateIcons(IconRegister par1IconRegister) {
+		super.updateIcons(par1IconRegister);
 
 		if (this.material == EnumArmorMaterial.CLOTH) {
-			this.field_94605_cw = par1IconRegister.func_94245_a(field_94606_cu[this.armorType]);
+			this.field_94605_cw = par1IconRegister.registerIcon(field_94606_cu[this.armorType]);
 		}
 
-		this.field_94604_cx = par1IconRegister.func_94245_a(field_94603_a[this.armorType]);
+		this.field_94604_cx = par1IconRegister.registerIcon(field_94603_a[this.armorType]);
 	}
 
 	/**
 	 * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
 	 */
 	public ItemStack onItemRightClick(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer) {
-		int var4 = EntityLiving.func_82159_b(par1ItemStack) - 1;
+		int var4 = EntityLiving.getArmorPosition(par1ItemStack) - 1;
 		ItemStack var5 = par3EntityPlayer.getCurrentArmor(var4);
 
 		if (var5 == null) {
