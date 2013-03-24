@@ -239,7 +239,7 @@ public class EntityRenderer {
 	public void getMouseOver(float par1) {
 		if (this.mc.renderViewEntity != null) {
 			if (this.mc.theWorld != null) {
-				this.mc.field_96291_i = null;
+				this.mc.pointedEntityLiving = null;
 				double var2 = (double)this.mc.playerController.getBlockReachDistance();
 				this.mc.objectMouseOver = this.mc.renderViewEntity.rayTrace(var2, par1);
 				double var4 = var2;
@@ -295,7 +295,7 @@ public class EntityRenderer {
 					this.mc.objectMouseOver = new MovingObjectPosition(this.pointedEntity);
 
 					if (this.pointedEntity instanceof EntityLiving) {
-						this.mc.field_96291_i = (EntityLiving)this.pointedEntity;
+						this.mc.pointedEntityLiving = (EntityLiving)this.pointedEntity;
 					}
 				}
 			}
@@ -665,7 +665,7 @@ public class EntityRenderer {
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_CLAMP);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		this.mc.renderEngine.func_98185_a();
+		this.mc.renderEngine.resetBoundTexture();
 		OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit);
 	}
 
@@ -1059,7 +1059,7 @@ public class EntityRenderer {
 			this.mc.mcProfiler.endStartSection("prepareterrain");
 			this.setupFog(0, par1);
 			GL11.glEnable(GL11.GL_FOG);
-			this.mc.renderEngine.func_98187_b("/terrain.png");
+			this.mc.renderEngine.bindTexture("/terrain.png");
 			RenderHelper.disableStandardItemLighting();
 			this.mc.mcProfiler.endStartSection("terrain");
 			var5.sortAndRender(var4, 0, (double)par1);
@@ -1099,7 +1099,7 @@ public class EntityRenderer {
 			this.setupFog(0, par1);
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glDisable(GL11.GL_CULL_FACE);
-			this.mc.renderEngine.func_98187_b("/terrain.png");
+			this.mc.renderEngine.bindTexture("/terrain.png");
 
 			if (this.mc.gameSettings.fancyGraphics) {
 				this.mc.mcProfiler.endStartSection("water");
@@ -1316,7 +1316,7 @@ public class EntityRenderer {
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			GL11.glAlphaFunc(GL11.GL_GREATER, 0.01F);
-			this.mc.renderEngine.func_98187_b("/environment/snow.png");
+			this.mc.renderEngine.bindTexture("/environment/snow.png");
 			double var9 = var41.lastTickPosX + (var41.posX - var41.lastTickPosX) * (double)par1;
 			double var11 = var41.lastTickPosY + (var41.posY - var41.lastTickPosY) * (double)par1;
 			double var13 = var41.lastTickPosZ + (var41.posZ - var41.lastTickPosZ) * (double)par1;
@@ -1380,7 +1380,7 @@ public class EntityRenderer {
 									}
 
 									var18 = 0;
-									this.mc.renderEngine.func_98187_b("/environment/rain.png");
+									this.mc.renderEngine.bindTexture("/environment/rain.png");
 									var8.startDrawingQuads();
 								}
 
@@ -1404,7 +1404,7 @@ public class EntityRenderer {
 									}
 
 									var18 = 1;
-									this.mc.renderEngine.func_98187_b("/environment/snow.png");
+									this.mc.renderEngine.bindTexture("/environment/snow.png");
 									var8.startDrawingQuads();
 								}
 

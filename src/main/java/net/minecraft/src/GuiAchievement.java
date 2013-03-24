@@ -143,7 +143,7 @@ public class GuiAchievement extends Gui {
 				int var6 = 0 - (int)(var3 * 36.0D);
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 				GL11.glEnable(GL11.GL_TEXTURE_2D);
-				this.theGame.renderEngine.func_98187_b("/achievement/bg.png");
+				this.theGame.renderEngine.bindTexture("/achievement/bg.png");
 				GL11.glDisable(GL11.GL_LIGHTING);
 				this.drawTexturedModalRect(var5, var6, 96, 202, 160, 32);
 

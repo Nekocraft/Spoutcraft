@@ -43,7 +43,7 @@ public class FontRenderer {
 	 * shadows.
 	 */
 	private int[] colorCode = new int[32];
-	private final String field_98307_f;
+	private final String fontTextureName;
 
 	/**
 	 * The currently bound GL texture ID. Avoids unnecessary glBindTexture() for the same texture if it's already bound.
@@ -108,15 +108,15 @@ public class FontRenderer {
 
 	FontRenderer() {
 		this.renderEngine = null;
-		this.field_98307_f = null;
+		this.fontTextureName = null;
 	}
 
 	public FontRenderer(GameSettings par1GameSettings, String par2Str, RenderEngine par3RenderEngine, boolean par4) {
-		this.field_98307_f = par2Str;
+		this.fontTextureName = par2Str;
 		this.renderEngine = par3RenderEngine;
 		this.unicodeFlag = par4;
-		this.func_98304_a();
-		par3RenderEngine.func_98187_b(par2Str);
+		 this.readFontData();
+		 par3RenderEngine.bindTexture(par2Str); 
 
 		for (int var5 = 0; var5 < 32; ++var5) {
 			int var6 = (var5 >> 3 & 1) * 85;
@@ -147,12 +147,12 @@ public class FontRenderer {
 		}
 	}
 
-	public void func_98304_a() {
-		this.func_98306_d();
-		this.func_98305_c(this.field_98307_f);
+	public void readFontData() {
+		this.readGlyphSizes();
+		this.readFontTexture(this.fontTextureName); 
 	}
 
-	private void func_98305_c(String par1Str) {
+	private void readFontTexture(String par1Str) {
 		BufferedImage var2;
 
 		try {
@@ -168,7 +168,7 @@ public class FontRenderer {
 		this.charWidthf = FontUtils.computeCharWidths(this, par1Str, var2, var5, this.charWidth);
 	}
 
-	private void func_98306_d() {
+	private void readGlyphSizes() {
 		try {
 			InputStream var1 = Minecraft.getMinecraft().texturePackList.getSelectedTexturePack().getResourceAsStream("/font/glyph_sizes.bin");
 			var1.read(this.glyphWidth);
@@ -192,7 +192,7 @@ public class FontRenderer {
 		float var3 = (float)(par1 % 16 * 8);
 		float var4 = (float)(par1 / 16 * 8);
 		float var5 = par2 ? 1.0F : 0.0F;
-		this.renderEngine.func_98187_b(this.field_98307_f);		
+		this.renderEngine.bindTexture(this.fontTextureName);		
 		float var6 = (float)this.charWidth[par1] - 0.01F;
 		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
 		GL11.glTexCoord2f(var3 / 128.0F, var4 / 128.0F);
@@ -212,7 +212,7 @@ public class FontRenderer {
 	 */
 	private void loadGlyphTexture(int par1) {
 		String var2 = String.format("/font/glyph_%02X.png", new Object[] {Integer.valueOf(par1)});
-		this.renderEngine.func_98187_b(var2);
+		this.renderEngine.bindTexture(var2);
 	}
 
 	/**
