@@ -1054,8 +1054,7 @@ public class RenderGlobal implements IWorldAccess {
 			// Spout Start
 			if (SpoutClient.getInstance().getSkyManager().isSunVisible()) {
 				if (SpoutClient.getInstance().getSkyManager().getSunTextureUrl() == null || CustomTextureManager.getTexturePathFromUrl(SpoutClient.getInstance().getSkyManager().getSunTextureUrl()) == null) {
-			//GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture("/terrain/sun.png"));
-				this.renderEngine.func_98187_b(SkyRenderer.setupCelestialObject("/environment/sun.png"));
+				this.renderEngine.bindTexture(SkyRenderer.setupCelestialObject("/environment/sun.png"));
 			} else {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture(CustomTextureManager.getTexturePathFromUrl(SpoutClient.getInstance().getSkyManager().getSunTextureUrl())));
 			}
@@ -1074,8 +1073,7 @@ public class RenderGlobal implements IWorldAccess {
 			// Spout Start
 			if (SpoutClient.getInstance().getSkyManager().isMoonVisible()) {
 			if (SpoutClient.getInstance().getSkyManager().getMoonTextureUrl() == null || CustomTextureManager.getTexturePathFromUrl(SpoutClient.getInstance().getSkyManager().getMoonTextureUrl()) == null) {
-			//GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture("/terrain/moon_phases.png"));
-				this.renderEngine.func_98187_b(SkyRenderer.setupCelestialObject("/environment/moon_phases.png"));
+				this.renderEngine.bindTexture(SkyRenderer.setupCelestialObject("/environment/moon_phases.png"));
 			} else {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture(CustomTextureManager.getTexturePathFromUrl(SpoutClient.getInstance().getSkyManager().getMoonTextureUrl())));
 			}
