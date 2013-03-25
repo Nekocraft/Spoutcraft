@@ -17,6 +17,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<minecraftVersion>1.5.1</minecraftVersion>
+		<minecraft_Version>1_5_1</minecraft_Version>
 		<lwjglVersion>2.4</lwjglVersion>
 		<mcpVersion>744</mcpVersion>
 		<buildNumber>0</buildNumber>
@@ -195,7 +196,7 @@
 									</runIf>
 									<targetPath>${project.basedir}/jars/bin</targetPath>
 									<destFileName>minecraft.jar</destFileName>
-									<file>http://assets.minecraft.net/1_5/minecraft.jar</file>
+									<file>http://assets.minecraft.net/${minecraft_Version}/minecraft.jar</file>
 								</resource>
 								<!-- Download remaining dependencies -->
 								<resource>
