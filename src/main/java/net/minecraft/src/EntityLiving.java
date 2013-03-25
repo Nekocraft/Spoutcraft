@@ -2051,7 +2051,7 @@ public abstract class EntityLiving extends Entity {
 					}
 				} else if (var3.getDuration() % 600 == 0) {
 					this.onChangedPotionEffect(var3);
-				}				
+				}
 			} catch (Throwable var11) {
 				CrashReport var5 = CrashReport.makeCrashReport(var11, "Ticking mob effect instance");
 				CrashReportCategory var6 = var5.makeCategory("Mob effect being ticked");
@@ -2061,8 +2061,9 @@ public abstract class EntityLiving extends Entity {
 				var6.addCrashSectionCallable("Effect Amplifier", new CallableEffectAmplifier(this, var3));
 				var6.addCrashSectionCallable("Effect is Splash", new CallableEffectIsSplash(this, var3));
 				var6.addCrashSectionCallable("Effect is Ambient", new CallableEffectIsAmbient(this, var3));
-				throw new ReportedException(var5); 
+				throw new ReportedException(var5);
 			}
+		}
 
 		int var12;
 
@@ -2402,17 +2403,17 @@ public abstract class EntityLiving extends Entity {
 		if (par0ItemStack.itemID != Block.pumpkin.blockID && par0ItemStack.itemID != Item.skull.itemID) {
 			if (par0ItemStack.getItem() instanceof ItemArmor) {
 				switch (((ItemArmor)par0ItemStack.getItem()).armorType) {
-					case 0:
-						return 4;
+				case 0:
+					return 4;
 
-					case 1:
-						return 3;
+				case 1:
+					return 3;
 
-					case 2:
-						return 2;
+				case 2:
+					return 2;
 
-					case 3:
-						return 1;
+				case 3:
+					return 1;
 				}
 			}
 
@@ -2427,60 +2428,60 @@ public abstract class EntityLiving extends Entity {
 	 */
 	public static Item getArmorItemForSlot(int par0, int par1) {
 		switch (par0) {
-			case 4:
-				if (par1 == 0) {
-					return Item.helmetLeather;
-				} else if (par1 == 1) {
-					return Item.helmetGold;
-				} else if (par1 == 2) {
-					return Item.helmetChain;
-				} else if (par1 == 3) {
-					return Item.helmetSteel;
-				} else if (par1 == 4) {
-					return Item.helmetDiamond;
-				}
+		case 4:
+			if (par1 == 0) {
+				return Item.helmetLeather;
+			} else if (par1 == 1) {
+				return Item.helmetGold;
+			} else if (par1 == 2) {
+				return Item.helmetChain;
+			} else if (par1 == 3) {
+				return Item.helmetSteel;
+			} else if (par1 == 4) {
+				return Item.helmetDiamond;
+			}
 
-			case 3:
-				if (par1 == 0) {
-					return Item.plateLeather;
-				} else if (par1 == 1) {
-					return Item.plateGold;
-				} else if (par1 == 2) {
-					return Item.plateChain;
-				} else if (par1 == 3) {
-					return Item.plateSteel;
-				} else if (par1 == 4) {
-					return Item.plateDiamond;
-				}
+		case 3:
+			if (par1 == 0) {
+				return Item.plateLeather;
+			} else if (par1 == 1) {
+				return Item.plateGold;
+			} else if (par1 == 2) {
+				return Item.plateChain;
+			} else if (par1 == 3) {
+				return Item.plateSteel;
+			} else if (par1 == 4) {
+				return Item.plateDiamond;
+			}
 
-			case 2:
-				if (par1 == 0) {
-					return Item.legsLeather;
-				} else if (par1 == 1) {
-					return Item.legsGold;
-				} else if (par1 == 2) {
-					return Item.legsChain;
-				} else if (par1 == 3) {
-					return Item.legsSteel;
-				} else if (par1 == 4) {
-					return Item.legsDiamond;
-				}
+		case 2:
+			if (par1 == 0) {
+				return Item.legsLeather;
+			} else if (par1 == 1) {
+				return Item.legsGold;
+			} else if (par1 == 2) {
+				return Item.legsChain;
+			} else if (par1 == 3) {
+				return Item.legsSteel;
+			} else if (par1 == 4) {
+				return Item.legsDiamond;
+			}
 
-			case 1:
-				if (par1 == 0) {
-					return Item.bootsLeather;
-				} else if (par1 == 1) {
-					return Item.bootsGold;
-				} else if (par1 == 2) {
-					return Item.bootsChain;
-				} else if (par1 == 3) {
-					return Item.bootsSteel;
-				} else if (par1 == 4) {
-					return Item.bootsDiamond;
-				}
+		case 1:
+			if (par1 == 0) {
+				return Item.bootsLeather;
+			} else if (par1 == 1) {
+				return Item.bootsGold;
+			} else if (par1 == 2) {
+				return Item.bootsChain;
+			} else if (par1 == 3) {
+				return Item.bootsSteel;
+			} else if (par1 == 4) {
+				return Item.bootsDiamond;
+			}
 
-			default:
-				return null;
+		default:
+			return null;
 		}
 	}
 

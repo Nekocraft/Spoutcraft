@@ -2243,7 +2243,7 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
 
 		while (var19.hasNext()) {
 			String var14 = (String)var19.next();
-			getMinecraft().getLogAgent()().logInfo(var14);
+			getMinecraft().getLogAgent().logInfo(var14);
 		}
 
 		var18.start();
