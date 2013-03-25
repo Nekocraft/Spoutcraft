@@ -32,12 +32,5 @@ public class TexturePackFolder extends TexturePackImplementation {
 		boolean var2 = var1.exists() && var1.isDirectory();
 		boolean var3 = this.func_98140_c("terrain.png") || this.func_98140_c("gui/items.png");
 		return var2 || !var3;
-	}
-
-	// MCPatcher Start
-	@Override
-	public boolean func_94179_g() {
-		return true;
-	}
-	// MCPatcher End
+	}	
 }

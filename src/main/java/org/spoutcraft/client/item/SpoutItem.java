@@ -122,7 +122,7 @@ public class SpoutItem extends Item {
 			int var13 = this.getMetadata(item.getItemDamage());
 			int var14 = Block.blocksList[id].onBlockPlaced(world, x, y, z, side, xOffset, yOffset, zOffset, var13);
 
-			if (world.setBlockAndMetadataWithNotify(x, y, z, id, var14, 3)) {
+			if (world.setBlock(x, y, z, id, var14, 3)) {
 				if (world.getBlockId(x, y, z) == id) {
 					Block.blocksList[this.itemID].onBlockPlacedBy(world, x, y, z, player, item);
 					Block.blocksList[this.itemID].onPostBlockPlaced(world, x, y, z, var14);

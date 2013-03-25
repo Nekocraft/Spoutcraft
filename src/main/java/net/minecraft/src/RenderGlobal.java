@@ -996,7 +996,7 @@ public class RenderGlobal implements IWorldAccess {
 			float var12;
 
 			// MCPatcher Start
-			if (var22 != null && Configuration.isSky()) {
+			if (var24 != null && Configuration.isSky()) {
 			// MCPatcher End
 				GL11.glDisable(GL11.GL_TEXTURE_2D);
 				GL11.glShadeModel(GL11.GL_SMOOTH);
@@ -1111,7 +1111,7 @@ public class RenderGlobal implements IWorldAccess {
 			double var25 = this.mc.thePlayer.getPosition(par1).yCoord - this.theWorld.getHorizon();
 
 			// Spout Start - Added stars condition
-			if (var21 < 0.0D && Configuration.isStars()) {
+			if (var25 < 0.0D && Configuration.isStars()) {
 			// Spout End
 				GL11.glPushMatrix();
 				GL11.glTranslatef(0.0F, 12.0F, 0.0F);

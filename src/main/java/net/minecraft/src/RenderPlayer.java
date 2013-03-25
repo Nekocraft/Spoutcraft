@@ -395,16 +395,16 @@ public class RenderPlayer extends RenderLiving {
 				GL11.glRotatef(-100.0F, 1.0F, 0.0F, 0.0F);
 				GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
 				// Spout Start
-			} else if (Item.itemsList[var25.itemID].isFull3D() || var25.itemID == Item.flint.itemID && MaterialData.getCustomItem(var25.getItemDamage()) instanceof org.spoutcraft.api.material.Tool) {
+			} else if (Item.itemsList[var21.itemID].isFull3D() || var21.itemID == Item.flint.itemID && MaterialData.getCustomItem(var21.getItemDamage()) instanceof org.spoutcraft.api.material.Tool) {
 				// Spout End
 				var7 = 0.625F;
 
-				if (Item.itemsList[var25.itemID].shouldRotateAroundWhenRendering()) {
+				if (Item.itemsList[var21.itemID].shouldRotateAroundWhenRendering()) {
 					GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);
 					GL11.glTranslatef(0.0F, -0.125F, 0.0F);
 				}
 
-				if (par1EntityPlayer.getItemInUseCount() > 0 && var27 == EnumAction.block) {
+				if (par1EntityPlayer.getItemInUseCount() > 0 && var23 == EnumAction.block) {
 					GL11.glTranslatef(0.05F, 0.0F, -0.1F);
 					GL11.glRotatef(-50.0F, 0.0F, 1.0F, 0.0F);
 					GL11.glRotatef(-10.0F, 1.0F, 0.0F, 0.0F);

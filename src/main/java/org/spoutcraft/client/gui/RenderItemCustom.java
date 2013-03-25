@@ -35,13 +35,13 @@ public class RenderItemCustom extends RenderItem {
 	}
 
 	@Override
-	public void renderTexturedQuads(int par1, int par2, Icon par3Icon, int par4, int par5) {
+	public void renderIcon(int par1, int par2, Icon par3Icon, int par4, int par5) {
 		Tessellator var6 = Tessellator.instance;
 		var6.startDrawingQuads();
-		var6.addVertexWithUV((double)(par1 + 0), (double)(par2 + par5) * height, (double)this.zLevel, (double)par3Icon.func_94209_e(), (double)par3Icon.func_94210_h());
-		var6.addVertexWithUV((double)(par1 + par4) * height, (double)(par2 + par5), (double)this.zLevel, (double)par3Icon.func_94212_f(), (double)par3Icon.func_94210_h());
-		var6.addVertexWithUV((double)(par1 + par4) * height, (double)(par2 + 0), (double)this.zLevel, (double)par3Icon.func_94212_f(), (double)par3Icon.func_94206_g());
-		var6.addVertexWithUV((double)(par1 + 0), (double)(par2 + 0), (double)this.zLevel, (double)par3Icon.func_94209_e(), (double)par3Icon.func_94206_g());
+		var6.addVertexWithUV((double)(par1 + 0), (double)(par2 + par5) * height, (double)this.zLevel, (double)par3Icon.getMinU(), (double)par3Icon.getMaxV());
+		var6.addVertexWithUV((double)(par1 + par4) * height, (double)(par2 + par5), (double)this.zLevel, (double)par3Icon.getMaxU(), (double)par3Icon.getMaxV());
+		var6.addVertexWithUV((double)(par1 + par4) * height, (double)(par2 + 0), (double)this.zLevel, (double)par3Icon.getMaxU(), (double)par3Icon.getMinV());
+		var6.addVertexWithUV((double)(par1 + 0), (double)(par2 + 0), (double)this.zLevel, (double)par3Icon.getMinU(), (double)par3Icon.getMinV());
 		var6.draw();
 	}
 

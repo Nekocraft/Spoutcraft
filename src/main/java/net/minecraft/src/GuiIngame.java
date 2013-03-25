@@ -1,6 +1,8 @@
 package net.minecraft.src;
 
 import java.awt.Color;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import net.minecraft.client.Minecraft;
@@ -87,14 +89,12 @@ public class GuiIngame extends Gui {
 			}
 		}
 		GL11.glBlendFunc(770, 771);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-		//GL11.glBindTexture(3553 /* GL_TEXTURE_2D */, this.mc.renderEngine.getTexture("/gui/gui.png"));
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);		
 		this.mc.renderEngine.bindTexture("/gui/gui.png");
 		InventoryPlayer var11 = this.mc.thePlayer.inventory;
 		this.zLevel = -90.0F;
 		this.drawTexturedModalRect(screenWidth / 2 - 91, screenHeight - 22, 0, 0, 182, 22);
-		this.drawTexturedModalRect(screenWidth / 2 - 91 - 1 + var11.currentItem * 20, screenHeight - 22 - 1, 0, 22, 24, 22);
-		//GL11.glBindTexture(3553 /* GL_TEXTURE_2D */, this.mc.renderEngine.getTexture("/gui/icons.png"));
+		this.drawTexturedModalRect(screenWidth / 2 - 91 - 1 + var11.currentItem * 20, screenHeight - 22 - 1, 0, 22, 24, 22);		
 		this.mc.renderEngine.bindTexture("/gui/icons.png");
 		GL11.glEnable(3042 /* GL_BLEND */);
 		GL11.glBlendFunc(775, 769);
@@ -171,7 +171,7 @@ public class GuiIngame extends Gui {
 			this.mc.mcProfiler.startSection("debug");
 			GL11.glPushMatrix();
 			if (Configuration.getFastDebug() != 2) {
-				font.drawStringWithShadow("Minecraft 1.5.1 (" + this.mc.debug + ")", 2, 2, 16777215);
+				font.drawStringWithShadow("Minecraft 1.5 (" + this.mc.debug + ")", 2, 2, 16777215);
 				font.drawStringWithShadow(this.mc.debugInfoRenders(), 2, 12, 16777215);
 				font.drawStringWithShadow(this.mc.getEntityDebug(), 2, 22, 16777215);
 				font.drawStringWithShadow(this.mc.debugInfoEntities(), 2, 32, 16777215);
@@ -252,15 +252,7 @@ public class GuiIngame extends Gui {
 
 				this.mc.mcProfiler.endSection();
 			}
-			
-			ScoreObjective var42 = this.mc.theWorld.getScoreboard().func_96539_a(1);
-
-			if (var42 != null) {
-				this.func_96136_a(var42, var7, var6, var8);
-			}
 		}
-		
-		
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glDisable(GL11.GL_ALPHA_TEST);
@@ -270,74 +262,60 @@ public class GuiIngame extends Gui {
 		this.persistantChatGUI.drawChat(this.updateCounter);
 		this.mc.mcProfiler.endSection();
 		GL11.glPopMatrix();
-		var42 = this.mc.theWorld.getScoreboard().func_96539_a(0);
 
-		if (this.mc.gameSettings.keyBindPlayerList.pressed && (!this.mc.isIntegratedServerRunning() || this.mc.thePlayer.sendQueue.playerInfoList.size() > 1 || var42 != null)) {
+		if (this.mc.gameSettings.keyBindPlayerList.pressed && (!this.mc.isIntegratedServerRunning() || this.mc.thePlayer.sendQueue.playerInfoList.size() > 1)) {
 			this.mc.mcProfiler.startSection("playerList");
-			NetClientHandler var39 = this.mc.thePlayer.sendQueue;
-			List var41 = var39.playerInfoList;
-			var38 = var39.currentServerMaxPlayers;
-			var37 = var38;
+			NetClientHandler var37 = this.mc.thePlayer.sendQueue;
+			List var39 = var37.playerInfoList;
+			int var13 = var37.currentServerMaxPlayers;
+			int var40 = var13;
 
-			for (var16 = 1; var37 > 20; var37 = (var38 + var16 - 1) / var16) {
-				++var16;
+			int var38;
+			for (var38 = 1; var40 > 20; var40 = (var13 + var38 - 1) / var38) {
+				++var38;
 			}
 
-			var17 = 300 / var16;
+			int var16 = 300 / var38;
 
-			if (var17 > 150) {
-				var17 = 150;
+			if (var16 > 150) {
+				var16 = 150;
 			}
 
-			var18 = (var6 - var16 * var17) / 2;
-			byte var45 = 10;
-			drawRect(var18 - 1, var45 - 1, var18 + var17 * var16, var45 + 9 * var37, Integer.MIN_VALUE);
+			var17 = (screenWidth - var38 * var16) / 2;
+			byte var44 = 10;
+			drawRect(var17 - 1, var44 - 1, var17 + var16 * var38, var44 + 9 * var40, Integer.MIN_VALUE);
 
-			for (var20 = 0; var20 < var38; ++var20) {
-				var47 = var18 + var20 % var16 * var17;
-				var22 = var45 + var20 / var16 * 9;
-				drawRect(var47, var22, var47 + var17 - 1, var22 + 8, 553648127);
+			for (int var19 = 0; var19 < var13; ++var19) {
+				int var20 = var17 + var19 % var38 * var16;
+				int var47 = var44 + var19 / var38 * 9;
+				drawRect(var20, var47, var20 + var16 - 1, var47 + 8, 553648127);
 				GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 				GL11.glEnable(GL11.GL_ALPHA_TEST);
 
-				if (var20 < var41.size()) {
-					GuiPlayerInfo var49 = (GuiPlayerInfo)var41.get(var20);
-					ScorePlayerTeam var48 = this.mc.theWorld.getScoreboard().func_96509_i(var49.name);
-					String var53 = ScorePlayerTeam.func_96667_a(var48, var49.name);
-					var8.drawStringWithShadow(var53, var47, var22, 16777215);
+				if (var19 < var39.size()) {
+					GuiPlayerInfo var46 = (GuiPlayerInfo)var39.get(var19);
+					font.drawStringWithShadow(var46.name, var20, var47, 16777215);
+					this.mc.renderEngine.bindTexture(this.mc.renderEngine.getTexture("/gui/icons.png"));
+					byte var50 = 0;
+					boolean var48 = false;
+					byte var49;
 
-					if (var42 != null) {
-						var26 = var47 + var8.getStringWidth(var53) + 5;
-						var50 = var47 + var17 - 12 - 5;
-
-						if (var50 - var26 > 5) {
-							Score var56 = var42.func_96682_a().func_96529_a(var49.name, var42);
-							String var57 = EnumChatFormatting.YELLOW + "" + var56.func_96652_c();
-							var8.drawStringWithShadow(var57, var50 - var8.getStringWidth(var57), var22, 16777215);
-						}
-					}
-
-					GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-					this.mc.renderEngine.bindTexture("/gui/icons.png");
-					byte var55 = 0;
-					boolean var54 = false;
-
-					if (var49.responseTime < 0) {
-						var27 = 5;
-					} else if (var49.responseTime < 150) {
-						var27 = 0;
-					} else if (var49.responseTime < 300) {
-						var27 = 1;
-					} else if (var49.responseTime < 600) {
-						var27 = 2;
-					} else if (var49.responseTime < 1000) {
-						var27 = 3;
+					if (var46.responseTime < 0) {
+						var49 = 5;
+					} else if (var46.responseTime < 150) {
+						var49 = 0;
+					} else if (var46.responseTime < 300) {
+						var49 = 1;
+					} else if (var46.responseTime < 600) {
+						var49 = 2;
+					} else if (var46.responseTime < 1000) {
+						var49 = 3;
 					} else {
-						var27 = 4;
+						var49 = 4;
 					}
 
 					this.zLevel += 100.0F;
-					this.drawTexturedModalRect(var47 + var17 - 12, var22, 0 + var55 * 10, 176 + var27 * 8, 10, 8);
+					this.drawTexturedModalRect(var20 + var16 - 12, var47, 0 + var50 * 10, 176 + var49 * 8, 10, 8);
 					this.zLevel -= 100.0F;
 				}
 			}
@@ -390,7 +368,7 @@ public class GuiIngame extends Gui {
 			}
 		}
 	}
-
+	
 	/**
 	 * Renders dragon's (boss) health on the HUD
 	 */
@@ -413,7 +391,7 @@ public class GuiIngame extends Gui {
 
 			String var8 = BossStatus.bossName;
 			var1.drawStringWithShadow(var8, var3 / 2 - var1.getStringWidth(var8) / 2, var7 - 10, 16777215);
-			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);			
+			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			this.mc.renderEngine.bindTexture("/gui/icons.png");
 		}
 	}

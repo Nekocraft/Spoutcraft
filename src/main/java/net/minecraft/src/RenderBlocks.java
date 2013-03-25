@@ -8,6 +8,9 @@ import com.prupe.mcpatcher.mod.RenderPass;
 import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
+//Spout Start
+import org.spoutcraft.client.config.Configuration;
+//Spout End
 
 public class RenderBlocks {
 
@@ -275,6 +278,10 @@ public class RenderBlocks {
 	/** Blue color value for the top right corner */
 	private float colorBlueTopRight;
 
+	// Spout Start
+	public short[] customIds = null;
+	// Spout End
+	
 	public RenderBlocks(IBlockAccess par1IBlockAccess) {
 		this.blockAccess = par1IBlockAccess;
 		this.minecraftRB = Minecraft.getMinecraft();
@@ -3312,7 +3319,13 @@ public class RenderBlocks {
 	/**
 	 * Utility function to draw crossed swuares
 	 */
+	// Spout Start
 	public void drawCrossedSquares(Block par1Block, int par2, double par3, double par5, double par7, float par9) {
+		drawCrossedSquares(par1Block, par2, par3, par5, par7, par9, false);
+	}
+
+	public void drawCrossedSquares(Block par1Block, int par2, double par3, double par5, double par7, float par9, boolean customUV) {
+		// Spout End
 		Tessellator var10 = Tessellator.instance;
 		Icon var11 = this.getBlockIconFromSideAndMetadata(par1Block, 0, par2);
 
@@ -3333,6 +3346,14 @@ public class RenderBlocks {
 			double var24 = par3 + 0.5D + var20;
 			double var26 = par7 + 0.5D - var20;
 			double var28 = par7 + 0.5D + var20;
+			// Spout Start
+			if (customUV) {
+				var12 = 1;
+				var14 = 0;
+				var16 = 1;
+				var18 = 0;
+			}
+			// Spout End
 			var10.addVertexWithUV(var22, par5 + (double)par9, var26, var12, var14);
 			var10.addVertexWithUV(var22, par5 + 0.0D, var26, var12, var18);
 			var10.addVertexWithUV(var24, par5 + 0.0D, var28, var16, var18);
@@ -3840,7 +3861,9 @@ public class RenderBlocks {
 			var8 = var11;
 		}
 
-		return Minecraft.isAmbientOcclusionEnabled() && Block.lightValue[par1Block.blockID] == 0 ? (this.partialRenderBounds ? this.func_102027_b(par1Block, par2, par3, par4, var6, var7, var8) : this.renderStandardBlockWithAmbientOcclusion(par1Block, par2, par3, par4, var6, var7, var8)) : this.renderStandardBlockWithColorMultiplier(par1Block, par2, par3, par4, var6, var7, var8);
+		// Spout Start
+		return Configuration.ambientOcclusion && Block.lightValue[par1Block.blockID] == 0 ? this.renderStandardBlockWithAmbientOcclusion(par1Block, par2, par3, par4, var6, var7, var8) : this.renderStandardBlockWithColorMultiplier(par1Block, par2, par3, par4, var6, var7, var8);
+		// Spout End
 	}
 
 	/**

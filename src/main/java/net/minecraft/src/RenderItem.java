@@ -281,7 +281,7 @@ public class RenderItem extends Render {
 				// Spout End
 
 				GL11.glColor4f(par5, par6, par7, 1.0F);
-				ItemRenderer.renderItemIn2D(var8, var10, var11, var9, var12, par2Icon.func_94213_j(), par2Icon.func_94208_k(), var16);
+				ItemRenderer.renderItemIn2D(var8, var10, var11, var9, var12, par2Icon.getSheetWidth(), par2Icon.getSheetHeight(), var16);
 
 				if (var18 != null && var18.hasEffect()) {
 					GL11.glDepthFunc(GL11.GL_EQUAL);
@@ -431,7 +431,7 @@ public class RenderItem extends Render {
 						GL11.glColor4f(var12, var13, var14, 1.0F);
 					}
 
-					this.renderTexturedQuads(par4, par5, var10, 16, 16);
+					this.renderIcon(par4, par5, var10, 16, 16);
 				}
 
 				GL11.glEnable(GL11.GL_LIGHTING);
@@ -451,7 +451,7 @@ public class RenderItem extends Render {
 				var18 = (float)(var9 >> 8 & 255) / 255.0F;
 				var12 = (float)(var9 & 255) / 255.0F;
 
-				if (this.field_77024_a) {
+				if (this.renderWithColor) {
 					GL11.glColor4f(var17, var18, var12, 1.0F);
 				}
 
@@ -465,7 +465,7 @@ public class RenderItem extends Render {
 				tes.addVertexWithUV((double)(par4 + 0), (double)(par5 + 0), (double)0, 0, 1);
 				tes.draw();
 				} else					
-					this.renderTexturedQuads(par4, par5, var8, 16, 16);
+					this.renderIcon(par4, par5, var8, 16, 16);
 				// Spout End
 				GL11.glEnable(GL11.GL_LIGHTING);
 			}
