@@ -134,7 +134,7 @@ public class TextureMap implements IconRegister {
 
 				try {
 					InputStream var16 = var14.func_98137_a("/" + var13, var15);
-					Minecraft.getMinecraft().getLogAgent().logInfo("Found animation info for: " + var13);
+					//Minecraft.getMinecraft().getLogAgent().logInfo("Found animation info for: " + var13);
 					var11.readAnimationInfo(new BufferedReader(new InputStreamReader(var16)));
 				} catch (IOException var17) {
 					;

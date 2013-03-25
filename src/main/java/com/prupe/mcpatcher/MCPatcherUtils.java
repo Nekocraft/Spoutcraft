@@ -75,12 +75,12 @@ public class MCPatcherUtils {
 	static File getDefaultGameDir() {
 		String var0 = System.getProperty("os.name").toLowerCase();
 		String var1 = null;
-		String var2 = ".minecraft";
+		String var2 = ".spoutcraft";
 
 		if (var0.contains("win")) {
 			var1 = System.getenv("APPDATA");
 		} else if (var0.contains("mac")) {
-			var2 = "Library/Application Support/minecraft";
+			var2 = "Library/Application Support/spoutcraft";
 		}
 
 		if (var1 == null) {
@@ -92,9 +92,9 @@ public class MCPatcherUtils {
 
 	static boolean setGameDir(File var0) {
 		if (var0 != null && var0.isDirectory() && (new File(var0, "bin/lwjgl.jar")).exists() && (new File(var0, "resources")).isDirectory()) {
-			minecraftDir = var0.getAbsoluteFile();
+			minecraftDir = var0.getAbsoluteFile();			
 		} else {
-			minecraftDir = null;
+			minecraftDir = null;			
 		}
 
 		return true;
@@ -336,9 +336,9 @@ public class MCPatcherUtils {
 
 		if (isGame) {
 			if (!setGameDir(new File(".")) && !setGameDir(getDefaultGameDir())) {
-				directoryStr = String.format("Current directory: %s", new Object[] {(new File(".")).getAbsolutePath()});
+				//directoryStr = String.format("Current directory: %s", new Object[] {(new File(".")).getAbsolutePath()});
 			} else {
-				directoryStr = String.format("Game directory:    %s", new Object[] {minecraftDir.getPath()});
+				//directoryStr = String.format("Game directory:    %s", new Object[] {minecraftDir.getPath()});
 			}
 		}
 	}
