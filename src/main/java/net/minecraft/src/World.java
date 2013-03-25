@@ -3517,7 +3517,7 @@ public abstract class World implements IBlockAccess {
 			if (var8 != 0) {
 				Block var9 = Block.blocksList[var8];
 
-				if (Block.field_94346_cn.func_94487_f(var8)) {
+				if (Block.redstoneComparatorIdle.func_94487_f(var8)) {
 					var9.onNeighborBlockChange(this, var6, par2, var7, par4);
 				} else if (Block.isNormalCube(var8)) {
 					var6 += Direction.offsetX[var5];
@@ -3525,7 +3525,7 @@ public abstract class World implements IBlockAccess {
 					var8 = this.getBlockId(var6, par2, var7);
 					var9 = Block.blocksList[var8];
 
-					if (Block.field_94346_cn.func_94487_f(var8)) {
+					if (Block.redstoneComparatorIdle.func_94487_f(var8)) {
 						var9.onNeighborBlockChange(this, var6, par2, var7, par4);
 					}
 				}

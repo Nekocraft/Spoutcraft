@@ -6,7 +6,7 @@
 	<name>Spoutcraft</name>
 	<groupId>org.spoutcraft</groupId>
 	<artifactId>spoutcraft</artifactId>
-	<version>1.5-SNAPSHOT</version>
+	<version>1.5.1-SNAPSHOT</version>
 	<url>http://www.spout.org</url>
 	<inceptionYear>2011</inceptionYear>
 	<description>Spoutcraft is a modified Minecraft client, which is accessible via the Spoutcraft Launcher, that boosts increased FPS, HD textures/fonts,
@@ -16,9 +16,9 @@
 	<!-- Build properties -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<minecraftVersion>1.5</minecraftVersion>
+		<minecraftVersion>1.5.1</minecraftVersion>
 		<lwjglVersion>2.4</lwjglVersion>
-		<mcpVersion>742</mcpVersion>
+		<mcpVersion>744</mcpVersion>
 		<buildNumber>0</buildNumber>
 	</properties>
 
