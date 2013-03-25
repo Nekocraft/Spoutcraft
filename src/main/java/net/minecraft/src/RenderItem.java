@@ -16,11 +16,11 @@ public class RenderItem extends Render {
 
 	/** The RNG used in RenderItem (for bobbing itemstacks on the ground) */
 	private Random random = new Random();
-	public boolean field_77024_a = true;
+	public boolean renderWithColor = true;
 
 	/** Defines the zLevel of rendering of item on GUI. */
 	public float zLevel = 0.0F;
-	public static boolean field_82407_g = false;
+	public static boolean renderInFrame = false;
 
 	public RenderItem() {
 		this.shadowSize = 0.15F;
@@ -115,11 +115,11 @@ public class RenderItem extends Render {
 				float var18;
 				float var20;
 
-				if (var10.func_94608_d() == 0 && Block.blocksList[var10.itemID] != null && RenderBlocks.renderItemIn3d(Block.blocksList[var10.itemID].getRenderType())) {
+				if (var10.getItemSpriteNumber() == 0 && Block.blocksList[var10.itemID] != null && RenderBlocks.renderItemIn3d(Block.blocksList[var10.itemID].getRenderType())) {
 					Block var21 = Block.blocksList[var10.itemID];
 					GL11.glRotatef(var12, 0.0F, 1.0F, 0.0F);
 
-					if (field_82407_g) {
+					if (renderInFrame) {
 						GL11.glScalef(1.25F, 1.25F, 1.25F);
 						GL11.glTranslatef(0.0F, 0.05F, 0.0F);
 						GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
@@ -153,7 +153,7 @@ public class RenderItem extends Render {
 					float var16;
 
 					if (var10.getItem().requiresMultipleRenderPasses()) {
-						if (field_82407_g) {
+						if (renderInFrame) {
 							GL11.glScalef(0.5128205F, 0.5128205F, 0.5128205F);
 							GL11.glTranslatef(0.0F, -0.05F, 0.0F);
 						} else {
@@ -167,7 +167,7 @@ public class RenderItem extends Render {
 							Icon var15 = var10.getItem().getIconFromDamageForRenderPass(var10.getItemDamage(), var14);
 							var16 = 1.0F;
 
-							if (this.field_77024_a) {
+							if (this.renderWithColor) {
 								var17 = Item.itemsList[var10.itemID].getColorFromItemStack(var10, var14);
 								var18 = (float)(var17 >> 16 & 255) / 255.0F;
 								var19 = (float)(var17 >> 8 & 255) / 255.0F;
@@ -179,7 +179,7 @@ public class RenderItem extends Render {
 							}
 						}
 					} else {
-						if (field_82407_g) {
+						if (renderInFrame) {
 							GL11.glScalef(0.5128205F, 0.5128205F, 0.5128205F);
 							GL11.glTranslatef(0.0F, -0.05F, 0.0F);
 						} else {
@@ -188,13 +188,13 @@ public class RenderItem extends Render {
 
 						Icon var23 = var10.getIconIndex();
 
-						if (var10.func_94608_d() == 0) {
+						if (var10.getItemSpriteNumber() == 0) {
 							this.loadTexture("/terrain.png");
 						} else {
 							this.loadTexture("/gui/items.png");
 						}
 
-						if (this.field_77024_a) {
+						if (this.renderWithColor) {
 							int var22 = Item.itemsList[var10.itemID].getColorFromItemStack(var10, 0);
 							var16 = (float)(var22 >> 16 & 255) / 255.0F;
 							float var26 = (float)(var22 >> 8 & 255) / 255.0F;
@@ -220,13 +220,13 @@ public class RenderItem extends Render {
 		Tessellator var8 = Tessellator.instance;
 
 		if (par2Icon == null) {
-			par2Icon = this.renderManager.renderEngine.func_96448_c(par1EntityItem.getEntityItem().func_94608_d());
+			par2Icon = this.renderManager.renderEngine.getMissingIcon(par1EntityItem.getEntityItem().getItemSpriteNumber());
 		}
 
-		float var9 = par2Icon.func_94209_e();
-		float var10 = par2Icon.func_94212_f();
-		float var11 = par2Icon.func_94206_g();
-		float var12 = par2Icon.func_94210_h();
+		float var9 = par2Icon.getMinU();
+		float var10 = par2Icon.getMaxU();
+		float var11 = par2Icon.getMinV();
+		float var12 = par2Icon.getMaxV();
 		float var13 = 1.0F;
 		float var14 = 0.5F;
 		float var15 = 0.25F;
@@ -243,7 +243,7 @@ public class RenderItem extends Render {
 		if (this.renderManager.options.fancyGraphics) {
 			GL11.glPushMatrix();
 
-			if (field_82407_g) {
+			if (renderInFrame) {
 				GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
 			} else {
 				GL11.glRotatef((((float)par1EntityItem.age + par4) / 20.0F + par1EntityItem.hoverStart) * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
@@ -286,7 +286,7 @@ public class RenderItem extends Render {
 				if (var18 != null && var18.hasEffect()) {
 					GL11.glDepthFunc(GL11.GL_EQUAL);
 					GL11.glDisable(GL11.GL_LIGHTING);
-					this.renderManager.renderEngine.func_98187_b("%blur%/misc/glint.png");
+					this.renderManager.renderEngine.bindTexture("%blur%/misc/glint.png");
 					GL11.glEnable(GL11.GL_BLEND);
 					GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_ONE);
 					float var21 = 0.76F;
@@ -326,7 +326,7 @@ public class RenderItem extends Render {
 					GL11.glTranslatef(var17, var24, var25);
 				}
 
-				if (!field_82407_g) {
+				if (!renderInFrame) {
 					GL11.glRotatef(180.0F - this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
 				}
 
@@ -386,7 +386,7 @@ public class RenderItem extends Render {
 		if (design != null && custom) {
 			design.renderItemOnHUD((float)(par4 - 2), (float)(par5 + 3), -3.0F + this.zLevel);
 		} else if (var6 < 256 && RenderBlocks.renderItemIn3d(Block.blocksList[var6].getRenderType())) {
-			par2RenderEngine.func_98187_b("/terrain.png");
+			par2RenderEngine.bindTexture("/terrain.png");
 			Block var15 = Block.blocksList[var6];
 			GL11.glPushMatrix();
 			GL11.glTranslatef((float)(par4 - 2), (float)(par5 + 3), -3.0F + this.zLevel);
@@ -400,12 +400,14 @@ public class RenderItem extends Render {
 			var12 = (float)(var16 >> 8 & 255) / 255.0F;
 			var13 = (float)(var16 & 255) / 255.0F;
 
-			if (this.field_77024_a) {
+			if (this.renderWithColor) {
 				GL11.glColor4f(var18, var12, var13, 1.0F);
 			}
-
+			
+			//this.renderIcon(par4, par5, var10, 16, 16); //TODO:
+			
 			GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
-			this.itemRenderBlocks.useInventoryTint = this.field_77024_a;
+			this.itemRenderBlocks.useInventoryTint = this.renderWithColor;
 			this.itemRenderBlocks.renderBlockAsItem(var15, var7, 1.0F);
 			this.itemRenderBlocks.useInventoryTint = true;
 			GL11.glPopMatrix();
@@ -415,7 +417,7 @@ public class RenderItem extends Render {
 			if (Item.itemsList[var6].requiresMultipleRenderPasses()) {
 				GL11.glDisable(GL11.GL_LIGHTING);
 				if (!custom) {
-					par2RenderEngine.func_98187_b("/gui/items.png");
+					par2RenderEngine.bindTexture("/gui/items.png");
 				}
 
 				for (var9 = 0; var9 <= 1; ++var9) {
@@ -425,7 +427,7 @@ public class RenderItem extends Render {
 					var13 = (float)(var11 >> 8 & 255) / 255.0F;
 					float var14 = (float)(var11 & 255) / 255.0F;
 
-					if (this.field_77024_a) {
+					if (this.renderWithColor) {
 						GL11.glColor4f(var12, var13, var14, 1.0F);
 					}
 
@@ -437,10 +439,10 @@ public class RenderItem extends Render {
 				GL11.glDisable(GL11.GL_LIGHTING);
 
 				if (var6 < 256) {
-					par2RenderEngine.func_98187_b("/terrain.png");
+					par2RenderEngine.bindTexture("/terrain.png");
 				} else {
 					if (!custom) {
-						par2RenderEngine.func_98187_b("/gui/items.png");
+						par2RenderEngine.bindTexture("/gui/items.png");
 					}
 				}
 
@@ -483,12 +485,12 @@ public class RenderItem extends Render {
 				GL11.glDepthFunc(GL11.GL_GREATER);
 				GL11.glDisable(GL11.GL_LIGHTING);
 				GL11.glDepthMask(false);
-				par2RenderEngine.func_98187_b("%blur%/misc/glint.png");
+				par2RenderEngine.bindTexture("%blur%/misc/glint.png");
 				this.zLevel -= 50.0F;
 				GL11.glEnable(GL11.GL_BLEND);
 				GL11.glBlendFunc(GL11.GL_DST_COLOR, GL11.GL_DST_COLOR);
 				GL11.glColor4f(0.5F, 0.25F, 0.8F, 1.0F);
-				this.func_77018_a(par4 * 431278612 + par5 * 32178161, par4 - 2, par5 - 2, 20, 20);
+				this.renderGlint(par4 * 431278612 + par5 * 32178161, par4 - 2, par5 - 2, 20, 20);
 				GL11.glDisable(GL11.GL_BLEND);
 				GL11.glDepthMask(true);
 				this.zLevel += 50.0F;
@@ -498,7 +500,7 @@ public class RenderItem extends Render {
 		}
 	}
 
-	private void func_77018_a(int par1, int par2, int par3, int par4, int par5) {
+	private void renderGlint(int par1, int par2, int par3, int par4, int par5) {
 		for (int var6 = 0; var6 < 2; ++var6) {
 			if (var6 == 0) {
 				GL11.glBlendFunc(GL11.GL_SRC_COLOR, GL11.GL_ONE);
@@ -533,10 +535,10 @@ public class RenderItem extends Render {
 	 * specified position.
 	 */
 	public void renderItemOverlayIntoGUI(FontRenderer par1FontRenderer, RenderEngine par2RenderEngine, ItemStack par3ItemStack, int par4, int par5) {
-		this.func_94148_a(par1FontRenderer, par2RenderEngine, par3ItemStack, par4, par5, (String)null);
+		this.renderItemStack(par1FontRenderer, par2RenderEngine, par3ItemStack, par4, par5, (String)null);
 	}
 
-	public void func_94148_a(FontRenderer par1FontRenderer, RenderEngine par2RenderEngine, ItemStack par3ItemStack, int par4, int par5, String par6Str) {
+	public void renderItemStack(FontRenderer par1FontRenderer, RenderEngine par2RenderEngine, ItemStack par3ItemStack, int par4, int par5, String par6Str) {
 		if (par3ItemStack != null) {
 			if (par3ItemStack.stackSize > 1 || par6Str != null) {
 				String var7 = par6Str == null ? String.valueOf(par3ItemStack.stackSize) : par6Str;
@@ -601,22 +603,16 @@ public class RenderItem extends Render {
 		par1Tessellator.draw();
 	}
 
-	/**
-	 * Adds a textured quad to the tesselator at the specified position with the specified texture coords, width and
-	 * height. Args: x, y, u, v, width, height
-	 */
-	// Spout Start
-	public void renderTexturedQuads(int par1, int par2, Icon par3Icon, int par4, int par5) { // De-obfuscate Method, was func_94149_a
-	// Spout End
+	public void renderIcon(int par1, int par2, Icon par3Icon, int par4, int par5) {
 		Tessellator var6 = Tessellator.instance;
 		var6.startDrawingQuads();
-		var6.addVertexWithUV((double)(par1 + 0), (double)(par2 + par5), (double)this.zLevel, (double)par3Icon.func_94209_e(), (double)par3Icon.func_94210_h());
-		var6.addVertexWithUV((double)(par1 + par4), (double)(par2 + par5), (double)this.zLevel, (double)par3Icon.func_94212_f(), (double)par3Icon.func_94210_h());
-		var6.addVertexWithUV((double)(par1 + par4), (double)(par2 + 0), (double)this.zLevel, (double)par3Icon.func_94212_f(), (double)par3Icon.func_94206_g());
-		var6.addVertexWithUV((double)(par1 + 0), (double)(par2 + 0), (double)this.zLevel, (double)par3Icon.func_94209_e(), (double)par3Icon.func_94206_g());
+		var6.addVertexWithUV((double)(par1 + 0), (double)(par2 + par5), (double)this.zLevel, (double)par3Icon.getMinU(), (double)par3Icon.getMaxV());
+		var6.addVertexWithUV((double)(par1 + par4), (double)(par2 + par5), (double)this.zLevel, (double)par3Icon.getMaxU(), (double)par3Icon.getMaxV());
+		var6.addVertexWithUV((double)(par1 + par4), (double)(par2 + 0), (double)this.zLevel, (double)par3Icon.getMaxU(), (double)par3Icon.getMinV());
+		var6.addVertexWithUV((double)(par1 + 0), (double)(par2 + 0), (double)this.zLevel, (double)par3Icon.getMinU(), (double)par3Icon.getMinV());
 		var6.draw();
 	}
-
+	
 	/**
 	 * Actually renders the given argument. This is a synthetic bridge method, always casting down its argument and then
 	 * handing it off to a worker function which does the actual work. In all probabilty, the class Render is generic

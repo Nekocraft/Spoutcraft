@@ -109,8 +109,8 @@ public class ItemStack {
 		return this.getItem().getIconIndex(this);
 	}
 
-	public int func_94608_d() {
-		return this.getItem().func_94901_k();
+	public int getItemSpriteNumber() {
+		return this.getItem().getSpriteNumber();
 	}
 
 	public boolean tryPlaceItemIntoWorld(EntityPlayer par1EntityPlayer, World par2World, int par3, int par4, int par5, int par6, float par7, float par8, float par9) {

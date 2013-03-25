@@ -25,7 +25,7 @@ public abstract class Render {
 	 * loads the specified texture
 	 */
 	protected void loadTexture(String par1Str) {
-		this.renderManager.renderEngine.func_98187_b(par1Str);
+		this.renderManager.renderEngine.bindTexture(par1Str);
 	}
 
 	/**
@@ -39,7 +39,7 @@ public abstract class Render {
 
 		if (var4 >= 0) {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, var4);
-			var3.func_98185_a();
+			var3.resetBoundTexture();
 			return true;
 		} else {
 			return false;
@@ -79,10 +79,10 @@ public abstract class Render {
 				var19 = var10;
 			}
 
-			float var20 = var19.func_94209_e();
-			float var21 = var19.func_94206_g();
-			float var22 = var19.func_94212_f();
-			float var23 = var19.func_94210_h();
+			float var20 = var19.getMinU();
+			float var21 = var19.getMinV();
+			float var22 = var19.getMaxU();
+			float var23 = var19.getMaxV();
 
 			if (var18 / 2 % 2 == 0) {
 				float var24 = var22;
@@ -114,7 +114,7 @@ public abstract class Render {
 	private void renderShadow(Entity par1Entity, double par2, double par4, double par6, float par8, float par9) {
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		this.renderManager.renderEngine.func_98187_b("%clamp%/misc/shadow.png");
+		this.renderManager.renderEngine.bindTexture("%clamp%/misc/shadow.png");
 		World var10 = this.getWorldFromRenderManager();
 		GL11.glDepthMask(false);
 		float var11 = this.shadowSize;
@@ -311,5 +311,5 @@ public abstract class Render {
 		return this.renderManager.getFontRenderer();
 	}
 	
-	public void func_94143_a(IconRegister par1IconRegister) {}
+	public void updateIcons(IconRegister par1IconRegister) {}
 }

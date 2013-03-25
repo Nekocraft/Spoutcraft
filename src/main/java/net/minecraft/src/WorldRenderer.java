@@ -167,7 +167,7 @@ public class WorldRenderer {
 			HashSet tileRenderers = new HashSet();
 			tileRenderers.addAll(this.tileEntityRenderers);
 			this.tileEntityRenderers.clear();
-			ChunkCache chunkCache = new ChunkCache(this.worldObj, x - 1, y - 1, z - 1, sizeXOffset + 1, sizeYOffset + 1, sizeZOffset + 1);
+			ChunkCache chunkCache = new ChunkCache(this.worldObj, x - 1, y - 1, z - 1, sizeXOffset + 1, sizeYOffset + 1, sizeZOffset + 1, 1);			
 
 			if (!chunkCache.extendedLevelsInChunkCache()) {
 				++chunksUpdated;

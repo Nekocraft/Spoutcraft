@@ -86,7 +86,7 @@ public class NetClientHandler extends NetHandler {
  		if (address.isUnresolved()) {
  			throw new UnknownHostException(address.getHostName());
  		}
- 		this.netManager = new TcpConnection(par1Minecraft.func_98033_al(), new Socket(address.getAddress(), address.getPort()), "Client", this);
+ 		this.netManager = new TcpConnection(par1Minecraft.getLogAgent(), new Socket(address.getAddress(), address.getPort()), "Client", this);
 
  		org.spoutcraft.client.gui.error.GuiConnectionLost.lastServerIp = par2Str;
  		org.spoutcraft.client.gui.error.GuiConnectionLost.lastServerPort = par3;
@@ -98,7 +98,7 @@ public class NetClientHandler extends NetHandler {
 
 	public NetClientHandler(Minecraft par1Minecraft, IntegratedServer par2IntegratedServer) throws IOException {
 		this.mc = par1Minecraft;
-		this.netManager = new MemoryConnection(par1Minecraft.func_98033_al(), this);
+		this.netManager = new MemoryConnection(par1Minecraft.getLogAgent(), this);
 		par2IntegratedServer.getServerListeningThread().func_71754_a((MemoryConnection)this.netManager, par1Minecraft.session.username);
 	}
 
@@ -187,7 +187,7 @@ public class NetClientHandler extends NetHandler {
 	public void handleLogin(Packet1Login par1Packet1Login) {
 		this.mc.playerController = new PlayerControllerMP(this.mc, this);
 		this.mc.statFileWriter.readStat(StatList.joinMultiplayerStat, 1);
-		this.worldClient = new WorldClient(this, new WorldSettings(0L, par1Packet1Login.gameType, false, par1Packet1Login.hardcoreMode, par1Packet1Login.terrainType), par1Packet1Login.dimension, par1Packet1Login.difficultySetting, this.mc.mcProfiler, this.mc.func_98033_al());
+		this.worldClient = new WorldClient(this, new WorldSettings(0L, par1Packet1Login.gameType, false, par1Packet1Login.hardcoreMode, par1Packet1Login.terrainType), par1Packet1Login.dimension, par1Packet1Login.difficultySetting, this.mc.mcProfiler, this.mc.getLogAgent());
 		this.worldClient.isRemote = true;
 		this.mc.loadWorld(this.worldClient);
 		this.mc.thePlayer.dimension = par1Packet1Login.dimension;
@@ -819,8 +819,8 @@ public class NetClientHandler extends NetHandler {
 	public void handleRespawn(Packet9Respawn par1Packet9Respawn) {
 		if (par1Packet9Respawn.respawnDimension != this.mc.thePlayer.dimension) {
 			this.doneLoadingTerrain = false;
-			Scoreboard var2 = this.worldClient.func_96441_U();
-			this.worldClient = new WorldClient(this, new WorldSettings(0L, par1Packet9Respawn.gameType, false, this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled(), par1Packet9Respawn.terrainType), par1Packet9Respawn.respawnDimension, par1Packet9Respawn.difficulty, this.mc.mcProfiler, this.mc.func_98033_al());
+			Scoreboard var2 = this.worldClient.getScoreboard();
+			this.worldClient = new WorldClient(this, new WorldSettings(0L, par1Packet9Respawn.gameType, false, this.mc.theWorld.getWorldInfo().isHardcoreModeEnabled(), par1Packet9Respawn.terrainType), par1Packet9Respawn.respawnDimension, par1Packet9Respawn.difficulty, this.mc.mcProfiler, this.mc.getLogAgent());
 			this.worldClient.func_96443_a(var2);
 			this.worldClient.isRemote = true;
 			this.mc.loadWorld(this.worldClient);
@@ -1147,7 +1147,7 @@ public class NetClientHandler extends NetHandler {
 		if (par1Packet131MapData.itemID == Item.map.itemID) {
 			ItemMap.getMPMapData(par1Packet131MapData.uniqueID, this.mc.theWorld).updateMPMapData(par1Packet131MapData.itemData);
 		} else {
-			this.mc.func_98033_al().func_98236_b("Unknown itemid: " + par1Packet131MapData.uniqueID);
+			this.mc.getLogAgent().logWarning("Unknown itemid: " + par1Packet131MapData.uniqueID);
 		}
 	}
 
@@ -1287,7 +1287,7 @@ public class NetClientHandler extends NetHandler {
 	}
 
 	public void func_96436_a(Packet206SetObjective par1Packet206SetObjective) {
-		Scoreboard var2 = this.worldClient.func_96441_U();
+		Scoreboard var2 = this.worldClient.getScoreboard();
 		ScoreObjective var3;
 
 		if (par1Packet206SetObjective.field_96483_c == 0) {
@@ -1305,7 +1305,7 @@ public class NetClientHandler extends NetHandler {
 	}
 
 	public void func_96437_a(Packet207SetScore par1Packet207SetScore) {
-		Scoreboard var2 = this.worldClient.func_96441_U();
+		Scoreboard var2 = this.worldClient.getScoreboard();
 		ScoreObjective var3 = var2.func_96518_b(par1Packet207SetScore.field_96486_b);
 
 		if (par1Packet207SetScore.field_96485_d == 0) {
@@ -1317,7 +1317,7 @@ public class NetClientHandler extends NetHandler {
 	}
 
 	public void func_96438_a(Packet208SetDisplayObjective par1Packet208SetDisplayObjective) {
-		Scoreboard var2 = this.worldClient.func_96441_U();
+		Scoreboard var2 = this.worldClient.getScoreboard();
 
 		if (par1Packet208SetDisplayObjective.field_96480_b.length() == 0) {
 			var2.func_96530_a(par1Packet208SetDisplayObjective.field_96481_a, (ScoreObjective)null);
@@ -1328,7 +1328,7 @@ public class NetClientHandler extends NetHandler {
 	}
 
 	public void func_96435_a(Packet209SetPlayerTeam par1Packet209SetPlayerTeam) {
-		Scoreboard var2 = this.worldClient.func_96441_U();
+		Scoreboard var2 = this.worldClient.getScoreboard();
 		ScorePlayerTeam var3;
 
 		if (par1Packet209SetPlayerTeam.field_96489_f == 0) {
