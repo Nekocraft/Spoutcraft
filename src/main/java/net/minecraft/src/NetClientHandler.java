@@ -163,7 +163,7 @@ public class NetClientHandler extends NetHandler {
 	 */
 	private String sendSessionRequest(String par1Str, String par2Str, String par3Str) {
 		try {
-			URL var4 = new URL("http://session.minecraft.net/game/joinserver.jsp?user=" + urlEncode(par1Str) + "&sessionId=" + urlEncode(par2Str) + "&serverId=" + urlEncode(par3Str));
+			URL var4 = new URL(MySkinConfig.getLoginUrl(urlEncode(par1Str),urlEncode(par2Str),urlEncode(par3Str)));
 			BufferedReader var5 = new BufferedReader(new InputStreamReader(var4.openStream()));
 			String var6 = var5.readLine();
 			var5.close();

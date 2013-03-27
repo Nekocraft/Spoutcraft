@@ -283,7 +283,7 @@ public class EntityPlayerSP extends EntityPlayer {
 	}
 
 	public void updateCloak() {
-		this.playerCloakUrl = "http://skins.minecraft.net/MinecraftCloaks/" + StringUtils.stripControlCodes(this.username) + ".png";
+		this.playerCloakUrl = MySkinConfig.getCloaksUrl(StringUtils.stripControlCodes(this.username));
 		this.cloakUrl = this.playerCloakUrl;
 	}
 
