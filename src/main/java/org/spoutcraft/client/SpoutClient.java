@@ -196,10 +196,10 @@ public class SpoutClient extends PropertyObject implements Client {
 	}
 
 	public net.minecraft.src.World getRawWorld() {
-		if (getHandle() == null || getHandle().thePlayer == null) {
+		if (getHandle() == null) {
 			return null;
 		}
-		return getHandle().thePlayer.worldObj;
+		return getHandle().theWorld;
 	}
 
 	public boolean isSkyCheat() {
