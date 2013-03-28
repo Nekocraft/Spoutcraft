@@ -124,10 +124,10 @@ public class RenderEngine {
 	}
 
 	public void bindTexture(int par1) {
-		if (par1 != this.boundTexture) {
+		//if (par1 != this.boundTexture) {
 			GL11.glBindTexture(GL11.GL_TEXTURE_2D, par1);
 			this.boundTexture = par1;
-		}
+		//}
 	}
 
 	public void resetBoundTexture() {
