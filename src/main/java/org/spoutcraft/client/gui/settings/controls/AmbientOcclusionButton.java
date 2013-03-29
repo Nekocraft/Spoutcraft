@@ -36,6 +36,7 @@ public class AmbientOcclusionButton extends AutomatedCheckBox {
 		Configuration.write();
 
 		if (Minecraft.theMinecraft.theWorld != null) {
+			Minecraft.theMinecraft.renderGlobal.prepareAO();
 			Minecraft.theMinecraft.renderGlobal.loadRenderers();
 		}
 	}
