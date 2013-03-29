@@ -21,11 +21,15 @@ import net.minecraft.src.Stitcher;
 import net.minecraft.src.Tessellator;
 import net.minecraft.src.Texture;
 import net.minecraft.src.TextureMap;
+// Spout Start
+import org.spoutcraft.client.config.Configuration;
+// Spout End
+
 
 public class CTMUtils {
-	private static final boolean enableStandard = Config.getBoolean("Connected Textures", "standard", true);
-	private static final boolean enableNonStandard = Config.getBoolean("Connected Textures", "nonStandard", true);
-	private static final boolean enableGrass = Config.getBoolean("Connected Textures", "grass", false);
+	private static final boolean enableStandard = Configuration.isConnectedTextures();
+	private static final boolean enableNonStandard = Configuration.isConnectedTextures();
+	private static final boolean enableGrass = Configuration.isFancyGrass();
 	private static final int splitTextures = Config.getInt("Connected Textures", "splitTextures", 1);
 	private static final int maxRecursion = Config.getInt("Connected Textures", "maxRecursion", 4);
 	static final int BLOCK_ID_LOG = 17;
