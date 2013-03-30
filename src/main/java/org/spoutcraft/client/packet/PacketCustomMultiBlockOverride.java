@@ -58,7 +58,7 @@ public class PacketCustomMultiBlockOverride implements CompressablePacket {
 
 	public void run(int playerId) {
 		ByteBuffer result = ByteBuffer.allocate(data.length).put(data);
-		SpoutcraftChunk chunk = Spoutcraft.getChunk(chunkX, chunkZ);
+		SpoutcraftChunk chunk = Spoutcraft.getChunk(SpoutClient.getInstance().getRawWorld(), chunkX, chunkZ);
 		for (int i = 0; i < data.length / 7; i++) {
 			int index = i * 7;
 			int x = result.get(index) + chunkX * 16;

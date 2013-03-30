@@ -146,6 +146,10 @@ public class GuiContainerCreative extends InventoryEffectRenderer {
 
 						return;
 					}
+					
+					if (par3 == -1) {
+						return;  //TODO: This should not be needed.
+					}
 
 					if (var7 != null && var8 != null && var7.isItemEqual(var8)) {
 						if (par3 == 0) {

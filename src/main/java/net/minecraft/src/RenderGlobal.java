@@ -2301,5 +2301,18 @@ public class RenderGlobal implements IWorldAccess {
 		}
 
 	}
+	
+	public void prepareAO() {
+		if (this.occlusionEnabled && Configuration.ambientOcclusion) {	
+			byte var3 = 64;
+			byte var4 = 64;
+			this.occlusionResult.clear();
+			this.glOcclusionQueryBase = GLAllocation.createDirectIntBuffer(var3 * var3 * var4);
+			this.glOcclusionQueryBase.clear();
+			this.glOcclusionQueryBase.position(0);
+			this.glOcclusionQueryBase.limit(var3 * var3 * var4);
+			ARBOcclusionQuery.glGenQueriesARB(this.glOcclusionQueryBase);
+		}
+	}
 	// Spout End
 }

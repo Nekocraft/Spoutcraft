@@ -127,7 +127,7 @@ public class SpoutItem extends Item {
 					Block.blocksList[this.itemID].onBlockPlacedBy(world, x, y, z, player, item);
 					Block.blocksList[this.itemID].onPostBlockPlaced(world, x, y, z, var14);
 				}
-				Spoutcraft.getChunkAt(x, y, z).setCustomBlockId(x, y, z, (short) block.getCustomId());
+				Spoutcraft.getChunkAt(world, x, y, z).setCustomBlockId(x, y, z, (short) block.getCustomId());
 
 				world.playSoundEffect((double) ((float) x + 0.5F), (double) ((float) y + 0.5F), (double) ((float) z + 0.5F), var12.stepSound.getPlaceSound(), (var12.stepSound.getVolume() + 1.0F) / 2.0F, var12.stepSound.getPitch() * 0.8F);
 				--item.stackSize;

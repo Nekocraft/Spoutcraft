@@ -29,6 +29,7 @@ import net.minecraft.src.Tessellator;
 import net.minecraft.src.World;
 
 import org.spoutcraft.api.block.design.GenericBlockDesign;
+import org.spoutcraft.client.SpoutClient;
 
 public class CustomEntityDiggingFX extends EntityDiggingFX {
 	private Texture textureBinding = null;
@@ -40,7 +41,7 @@ public class CustomEntityDiggingFX extends EntityDiggingFX {
 	}
 
 	public void renderParticle(Tessellator var1, float var2, float var3, float var4, float var5, float var6, float var7) {
-		GL11.glBindTexture(3553 /*GL_TEXTURE_2D*/, textureBinding.getTextureID());
+		SpoutClient.getHandle().renderEngine.bindTexture(textureBinding.getTextureID());
 		Tessellator var10 = Tessellator.instance;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		var10.startDrawingQuads();

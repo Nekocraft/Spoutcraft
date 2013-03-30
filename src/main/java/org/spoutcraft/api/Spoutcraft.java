@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.logging.Logger;
 
 import net.minecraft.src.Chunk;
+import net.minecraft.src.World;
 
 import org.spoutcraft.api.Client.Mode;
 import org.spoutcraft.api.gui.MinecraftFont;
@@ -173,12 +174,12 @@ public final class Spoutcraft {
 		return client.hasPermission(permission);
 	}
 
-	public static SpoutcraftChunk getChunkAt(int x, int y, int z) {
-		return getChunk(x / 16, z / 16);
+	public static SpoutcraftChunk getChunkAt(World world, int x, int y, int z) {
+		return getChunk(world, x / 16, z / 16);
 	}
 
-	public static SpoutcraftChunk getChunk(int chunkX, int chunkZ) {
-		Chunk chunk = client.getRawWorld().getChunkFromChunkCoords(chunkX, chunkZ);
+	public static SpoutcraftChunk getChunk(World world, int chunkX, int chunkZ) {
+		Chunk chunk = world.getChunkFromChunkCoords(chunkX, chunkZ);
 		if (chunk != null) {
 			return chunk.spoutChunk;
 		}

@@ -192,23 +192,14 @@ public class MCPatcherUtils {
 	public static void setVersions(String var0, String var1) {
 		minecraftVersion = var0;
 		patcherVersion = var1;
-		System.out.println();
-		System.out.printf("MCPatcherUtils initialized:\n", new Object[0]);
-		System.out.printf("Minecraft version: %s\n", new Object[] {var0});
-		System.out.printf("MCPatcher version: %s\n", new Object[] {var1});
-		System.out.println(directoryStr);
-		System.out.printf("Max heap memory:   %.1fMB\n", new Object[] {Float.valueOf((float)Runtime.getRuntime().maxMemory() / 1048576.0F)});
-
+		
 		try {
 			Class var2 = Class.forName("sun.misc.VM");
 			Method var3 = var2.getDeclaredMethod("maxDirectMemory", new Class[0]);
-			long var4 = ((Long)var3.invoke((Object)null, new Object[0])).longValue();
-			System.out.printf("Max direct memory: %.1fMB\n", new Object[] {Float.valueOf((float)var4 / 1048576.0F)});
+			long var4 = ((Long)var3.invoke((Object)null, new Object[0])).longValue();			
 		} catch (Throwable var6) {
 			var6.printStackTrace();
-		}
-
-		System.out.println();
+		}		
 	}
 
 	public static Minecraft getMinecraft() {

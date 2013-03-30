@@ -115,8 +115,8 @@ public class FontRenderer {
 		this.fontTextureName = par2Str;
 		this.renderEngine = par3RenderEngine;
 		this.unicodeFlag = par4;
-		 this.readFontData();
-		 par3RenderEngine.bindTexture(par2Str); 
+		this.readFontData();
+		par3RenderEngine.bindTexture(par2Str); 
 
 		for (int var5 = 0; var5 < 32; ++var5) {
 			int var6 = (var5 >> 3 & 1) * 85;

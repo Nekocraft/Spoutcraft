@@ -872,7 +872,7 @@ public abstract class GuiContainer extends GuiScreen {
 					if (var9) {
 						this.field_94075_K = var4 != null && var4.getHasStack() ? var4.getStack() : null;
 					}
-
+					// TODO: Problem with Creative Inventory Stacks starts here.
 					this.handleMouseClick(var4, var8, par3, var9 ? 1 : 0);
 				}
 			}
