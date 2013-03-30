@@ -652,7 +652,7 @@ public class Block {
 				int x = (int) target.getX();
 				int y = (int) target.getY();
 				int z = (int) target.getZ();
-				SpoutcraftChunk chunk = Spoutcraft.getChunkAt(x, y, z);
+				SpoutcraftChunk chunk = Spoutcraft.getChunkAt(entityhuman.worldObj, x, y, z);
 				short customId = chunk.getCustomBlockId(x, y, z);
 				if (customId > 0) {
 					CustomBlock b = MaterialData.getCustomBlock(customId);

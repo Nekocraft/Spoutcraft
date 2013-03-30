@@ -9,12 +9,17 @@ import net.minecraft.src.EntityFX;
 import net.minecraft.src.EntityFireworkOverlayFX;
 import net.minecraft.src.EntityFireworkSparkFX;
 import org.lwjgl.opengl.GL11;
+// Spout Start
+import org.spoutcraft.client.config.Configuration;
+// Spout End
 
 public class FireworksHelper {
 	private static final int LIT_LAYER = 3;
 	private static final int EXTRA_LAYER = 4;
 	private static final String PARTICLES_PROPERTIES = "/particles.properties";
-	private static final boolean enable = Config.getBoolean("Better Skies", "brightenFireworks", true);
+	// Spout Start
+	private static final boolean enable = Configuration.isFancyClouds();
+	// Spout End
 	private static BlendMethod blendMethod;
 
 	public static int getFXLayer(EntityFX var0) {

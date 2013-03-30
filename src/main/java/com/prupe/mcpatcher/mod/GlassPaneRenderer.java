@@ -6,9 +6,14 @@ import net.minecraft.src.Block;
 import net.minecraft.src.Icon;
 import net.minecraft.src.RenderBlocks;
 import net.minecraft.src.Tessellator;
+// Spout Start
+import org.spoutcraft.client.config.Configuration;
+// Spout End
 
 public class GlassPaneRenderer {
-	private static final boolean enable = Config.getBoolean("Connected Textures", "glassPane", true);
+	// Spout Start
+	private static final boolean enable = Configuration.isConnectedTextures();
+	// Spout End
 	public static boolean active;
 	private static final Icon[] icons = new Icon[6];
 	private static Tessellator tessellator;

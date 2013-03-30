@@ -184,7 +184,7 @@ public class WorldRenderer {
 				hitTextures.add("/terrain.png");
 				hitTexturesPlugins.add("");
 
-				SpoutcraftChunk sChunk = Spoutcraft.getChunkAt(posX, posY, posZ);
+				SpoutcraftChunk sChunk = Spoutcraft.getChunkAt(worldObj, posX, posY, posZ);
 				short[] customBlockIds = sChunk.getCustomBlockIds();
 				byte[] customBlockData = sChunk.getCustomBlockData();
 				blockRenderer.customIds = customBlockIds;

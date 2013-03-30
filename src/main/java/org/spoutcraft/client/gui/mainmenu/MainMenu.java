@@ -207,7 +207,7 @@ public class MainMenu extends GuiScreen {
 		multiplayer = new GenericButton(translate.translateKey("menu.multiplayer"));
 		multiplayer.setGeometry(width - 110, height - 130, 100, 20);
 
-		textures = new GenericButton(translate.translateKey("menu.mods"));
+		textures = new GenericButton(translate.translateKey("options.texture.pack"));
 		textures.setGeometry(width - 110, height - 105, 100, 20);
 
 		buildNumber = new GenericLabel(SpoutClient.getClientVersion());
