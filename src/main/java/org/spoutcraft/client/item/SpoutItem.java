@@ -124,8 +124,8 @@ public class SpoutItem extends Item {
 
 			if (world.setBlock(x, y, z, id, var14, 3)) {
 				if (world.getBlockId(x, y, z) == id) {
-					Block.blocksList[this.itemID].onBlockPlacedBy(world, x, y, z, player, item);
-					Block.blocksList[this.itemID].onPostBlockPlaced(world, x, y, z, var14);
+					Block.blocksList[id].onBlockPlacedBy(world, x, y, z, player, item);
+					Block.blocksList[id].onPostBlockPlaced(world, x, y, z, var14);
 				}
 				Spoutcraft.getChunkAt(world, x, y, z).setCustomBlockId(x, y, z, (short) block.getCustomId());
 
