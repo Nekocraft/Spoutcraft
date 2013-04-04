@@ -138,6 +138,7 @@ public class Tessellator {
 
 	/** The size of the buffers used (in integers). */
 	// MCPatcher Start - private to public
+	public int texture; 
 	public int bufferSize;
 	public TextureMap textureMap;
 	public Map children;
@@ -177,8 +178,10 @@ public class Tessellator {
 
 			if (this.vertexCount > 0) {
 				// MCPatcher Start
-				if (this.textureMap != null) {
+				if (this.textureMap != null && this.texture == 0) {
 					GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureMap.getTexture().getGlTextureId());
+				} else if (this.texture > 0) {
+					GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.texture);					
 				}
 				// MCPatcher End
 
