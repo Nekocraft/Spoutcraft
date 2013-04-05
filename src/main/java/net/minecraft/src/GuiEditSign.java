@@ -149,7 +149,8 @@ public class GuiEditSign extends GuiScreen {
 			}
 		}
 
-		if ((allowedCharacters.indexOf(par1) > -1 || par1 > 32) && this.entitySign.signText[this.editLine].length() < 15) { // Enter
+        // Chinese Input Start (Thanks to sunny00123!)
+		if ((allowedCharacters.indexOf(par1) >= 0 || par1 > 32) && this.entitySign.signText[this.editLine].length() < 15) { // Enter
 			String line = entitySign.signText[editLine];
 
 			// Prevent out of bounds on the substring call
@@ -168,6 +169,7 @@ public class GuiEditSign extends GuiScreen {
 			endColumnStart++;
 			editColumn = endColumnStart;
 		}
+		// Chinese Input End
 
 		if (par2 == 211) { // Delete
 			String line = entitySign.signText[editLine];

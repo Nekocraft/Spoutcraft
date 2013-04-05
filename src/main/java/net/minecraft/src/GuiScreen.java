@@ -748,13 +748,24 @@ public class GuiScreen extends Gui {
 		}
 		if (!handled) {
 			// Start of vanilla code - got wrapped with this if
-			if (Keyboard.getEventKeyState()) {
-				if (Keyboard.getEventKey() == 87) {
+			// Chinese Input Start (Thanks to sunny00123!)
+			int var1 = Keyboard.getEventKey();
+            char var2 = Keyboard.getEventCharacter();
+			if (Keyboard.getEventKeyState() || var2>32) {
+				if (var2>128){
+				    Keyboard.next();
+					var2=(new String(new byte[] { (byte) var2, (byte) Keyboard.getEventCharacter() })).charAt(0);
+				}
+				if (var1 == 87) {
 					this.mc.toggleFullscreen();
 					return;
 				}
-				this.keyTyped(Keyboard.getEventCharacter(), Keyboard.getEventKey());
+				if (isMacOs && var1 == 28 && var2 == 0) {
+                    var1 = 29;
+                }
+				this.keyTyped(var2, var1);
 			}
+			// Chinese Input End
 			// End of vanilla code
 		}
 		// Spout End
