@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GLContext;
 // MCPatcher Start
 import com.prupe.mcpatcher.mod.TessellatorUtils;
+import org.spoutcraft.client.SpoutClient;
 // MCPatcher End
 
 public class Tessellator {
@@ -138,7 +139,7 @@ public class Tessellator {
 
 	/** The size of the buffers used (in integers). */
 	// MCPatcher Start - private to public
-	public int texture; 
+	public int texture; //Spout Keep this in. 
 	public int bufferSize;
 	public TextureMap textureMap;
 	public Map children;
@@ -177,13 +178,13 @@ public class Tessellator {
 			this.isDrawing = false;
 
 			if (this.vertexCount > 0) {
-				// MCPatcher Start
-				if (this.textureMap != null && this.texture == 0) {
+				// MCPatcher && Spout Start
+				if (this.textureMap != null && SpoutClient.getHandle().renderEngine.boundTexture <= 0) {
 					GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureMap.getTexture().getGlTextureId());
 				} else if (this.texture > 0) {
 					GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.texture);					
 				}
-				// MCPatcher End
+				// MCPatcher && Spout End
 
 				this.intBuffer.clear();
 				this.intBuffer.put(this.rawBuffer, 0, this.rawBufferIndex);

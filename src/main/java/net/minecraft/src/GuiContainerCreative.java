@@ -63,7 +63,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer {
 		par4 = par2 == -999 && par4 == 0 ? 4 : par4;
 		ItemStack var7;
 		InventoryPlayer var10;
-
+		
 		if (par1Slot == null && selectedTabIndex != CreativeTabs.tabInventory.getTabIndex() && par4 != 5) {
 			var10 = this.mc.thePlayer.inventory;
 
@@ -146,11 +146,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer {
 
 						return;
 					}
-					
-					if (par3 == -1) {
-						return;  //TODO: This should not be needed.
-					}
-
+				
 					if (var7 != null && var8 != null && var7.isItemEqual(var8)) {
 						if (par3 == 0) {
 							if (var5) {

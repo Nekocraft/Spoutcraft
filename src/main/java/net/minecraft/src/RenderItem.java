@@ -9,6 +9,7 @@ import org.newdawn.slick.opengl.Texture;
 import org.spoutcraft.api.block.design.BlockDesign;
 import org.spoutcraft.api.material.MaterialData;
 import org.spoutcraft.client.io.CustomTextureManager;
+import org.spoutcraft.client.SpoutClient;
 //Spout End
 
 public class RenderItem extends Render {
@@ -85,7 +86,7 @@ public class RenderItem extends Render {
 					if (textureURI != null) {
 						Texture texture = CustomTextureManager.getTextureFromUrl(item.getAddon(), textureURI);
 						if (texture != null) {
-							GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getTextureID());
+							SpoutClient.getHandle().renderEngine.bindTexture(texture.getTextureID());
 							custom = true;
 						}
 					}
@@ -369,7 +370,7 @@ public class RenderItem extends Render {
 				if (textureURI != null) {
 					Texture texture = CustomTextureManager.getTextureFromUrl(item.getAddon(), textureURI);
 					if (texture != null) {
-						GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getTextureID());
+						SpoutClient.getHandle().renderEngine.bindTexture(texture.getTextureID());
 						custom = true;
 					}
 				}
