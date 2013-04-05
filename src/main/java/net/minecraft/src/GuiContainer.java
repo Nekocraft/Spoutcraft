@@ -392,8 +392,8 @@ public abstract class GuiContainer extends GuiScreen {
 		}
 
 		if (var15.getItemStack() == null && this.theSlot != null && this.theSlot.getHasStack()) {
-			ItemStack var19 = this.theSlot.getStack();
-			this.drawItemStackTooltip(var19, par1, par2);
+			ItemStack var19 = this.theSlot.getStack();			
+			this.drawItemStackTooltip(var19, par1 - var4 + 8, par2 - var5 + 8);
 		}
 
 		GL11.glPopMatrix();
@@ -783,7 +783,7 @@ public abstract class GuiContainer extends GuiScreen {
 			}
 		}
 	}
-	
+
 	private boolean func_92031_b(Slot par1Slot) {
 		boolean var2 = par1Slot == null || !par1Slot.getHasStack();
 
