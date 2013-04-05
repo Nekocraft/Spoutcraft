@@ -139,6 +139,7 @@ public class Tessellator {
 
 	/** The size of the buffers used (in integers). */
 	// MCPatcher Start - private to public
+	public int texture; //Spout Keep this in. 
 	public int bufferSize;
 	public TextureMap textureMap;
 	public Map children;
