@@ -45,10 +45,9 @@ public class RenderEngine {
 	private BufferedImage missingTextureImage = new BufferedImage(64, 64, 2);
 	private final TextureMap textureMapBlocks;
 	private final TextureMap textureMapItems;
-	private int boundTexture;
-
 	//Spout start
 	public ITexturePack oldPack = null;
+	public int boundTexture;
 	//Spout end
 
 	public RenderEngine(TexturePackList par1TexturePackList, GameSettings par2GameSettings) {
