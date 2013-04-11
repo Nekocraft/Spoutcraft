@@ -40,7 +40,7 @@ public class Configuration {
 	private static boolean fancyBiomeColors = false;
 	private static boolean waterBiomeColors = true;
 	private static float brightnessSlider = 1F;
-
+	public static boolean chatColorAssist = false;
 	private static boolean fancyClouds = false;
 	private static boolean fancyFog = false;
 	private static boolean fancyGraphics = false;
@@ -95,6 +95,7 @@ public class Configuration {
 	private static boolean randomMobTextures = true;
 	public static boolean ambientOcclusion = false;
 	private static boolean serverTexturePromptsEnabled = true;
+	public static int aaSampling = 0;
 
 	// Config specific
 	private static transient Map<String, Object> defaultSettings = new HashMap<String, Object>();
@@ -725,5 +726,44 @@ public class Configuration {
 			write();
 		}
 	}
+	
+	public static void setAASampling() {
+		if (aaSampling == 0) {
+			aaSampling = 2;
+			return;
+		}
+		
+		if (aaSampling == 2) {
+			aaSampling = 4;
+			return;
+		}
+		
+		if (aaSampling == 4) {
+			aaSampling = 6;
+			return;
+		}
+		
+		if (aaSampling == 6) {
+			aaSampling = 8;
+			return;
+		}
+		
+		if (aaSampling == 8) {
+			aaSampling = 0;
+			return;
+		}
+	}
 
+	public static int getAASampling() {
+		return aaSampling;
+	}
+	
+	public static boolean isShowingChatColorAssist() {
+		return chatColorAssist;
+	}
+	
+	public static synchronized void setChatColorAssist(boolean chatColorAssist) {
+		Configuration.chatColorAssist = chatColorAssist;
+		onPropertyChange();
+	}
 }

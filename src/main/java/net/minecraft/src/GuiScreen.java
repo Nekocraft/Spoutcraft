@@ -615,7 +615,6 @@ public class GuiScreen extends Gui {
 		}
 	}
 
-
 	protected void handleScroll(int x, int y, int scroll) {
 		Orientation axis = Orientation.VERTICAL;
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {

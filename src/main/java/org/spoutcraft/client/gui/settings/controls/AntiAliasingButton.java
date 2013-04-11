@@ -17,21 +17,29 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.spoutcraft.client.entity;
+package org.spoutcraft.client.gui.settings.controls;
 
-public abstract class AbstractProjectile extends CraftEntity {
-	private boolean doesBounce;
+import net.minecraft.client.Minecraft;
 
-	public AbstractProjectile(net.minecraft.src.Entity entity) {
-		super(entity);
-		doesBounce = false;
+import org.spoutcraft.api.player.RenderDistance;
+import org.spoutcraft.client.SpoutClient;
+import org.spoutcraft.client.config.Configuration;
+
+public class AntiAliasingButton extends AutomatedButton {
+	public int aaSampling = Configuration.getAASampling();
+	public AntiAliasingButton() {
+		setTooltip("Anti-Aliasing \n Changing requires complete restart.");
 	}
 
-	public boolean doesBounce() {
-		return doesBounce;
+	@Override
+	public String getText() {
+		return "Anti-Aliasing (Samples): " + Configuration.getAASampling();
 	}
 
-	public void setBounce(boolean doesBounce) {
-		this.doesBounce = doesBounce;
+	@Override
+	public void onButtonClick() {
+		Configuration.setAASampling();		
+		Configuration.write();
+		
 	}
 }

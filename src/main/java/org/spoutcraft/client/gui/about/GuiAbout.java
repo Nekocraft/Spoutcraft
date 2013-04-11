@@ -274,14 +274,14 @@ public class GuiAbout extends GuiScreen {
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glDepthMask(false);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			GL11.glTranslatef(beastNodeX, beastNodeY, 0); // moves texture into place
+			GL11.glTranslatef(beastNodeX, beastNodeY, 0); // Moves texture into place
 			SpoutClient.getHandle().renderEngine.bindTexture(beastNodeLogo.getTextureID());
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 			Tessellator tessellator = Tessellator.instance;
 			//GL11.glScalef(0.5f, 0.5f, 0.5f);
 			tessellator.startDrawingQuads();
-			tessellator.addVertexWithUV(0.0D, 33, -90, 0.0D, 0.0D); // draw corners
+			tessellator.addVertexWithUV(0.0D, 33, -90, 0.0D, 0.0D); // Draw corners
 			tessellator.addVertexWithUV(147, 33, -90, beastNodeLogo.getWidth(), 0.0D);
 			tessellator.addVertexWithUV(147, 0.0D, -90, beastNodeLogo.getWidth(), beastNodeLogo.getHeight());
 			tessellator.addVertexWithUV(0.0D, 0.0D, -90, 0.0D, beastNodeLogo.getHeight());
@@ -300,14 +300,14 @@ public class GuiAbout extends GuiScreen {
 			GL11.glEnable(GL11.GL_BLEND);
 			GL11.glDepthMask(false);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			GL11.glTranslatef(minecraftBizX, minecraftBizY, 0); // moves texture into place			
+			GL11.glTranslatef(minecraftBizX, minecraftBizY, 0); // Moves texture into place
 			SpoutClient.getHandle().renderEngine.bindTexture(minecraftBizLogo.getTextureID());
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 			Tessellator tessellator = Tessellator.instance;
 			//GL11.glScalef(0.5f, 0.5f, 0.5f);
 			tessellator.startDrawingQuads();
-			tessellator.addVertexWithUV(0.0D, 33, -90, 0.0D, 0.0D); // draw corners
+			tessellator.addVertexWithUV(0.0D, 33, -90, 0.0D, 0.0D); // Draw corners
 			tessellator.addVertexWithUV(147, 33, -90, minecraftBizLogo.getWidth(), 0.0D);
 			tessellator.addVertexWithUV(147, 0.0D, -90, minecraftBizLogo.getWidth(), minecraftBizLogo.getHeight());
 			tessellator.addVertexWithUV(0.0D, 0.0D, -90, 0.0D, minecraftBizLogo.getHeight());
@@ -339,7 +339,7 @@ public class GuiAbout extends GuiScreen {
 		GL11.glDisable(2929 /*GL_DEPTH_TEST*/);
 		this.overlayBackground(0, 30, 255, 255);
 		this.overlayBackground(this.height - 50, this.height, 255, 255);
-		drawCenteredString(this.fontRenderer, "About", this.width / 2, 16, 0xffffff);	
+		drawCenteredString(this.fontRenderer, "About", this.width / 2, 16, 0xffffff);
 		SpoutClient.getHandle().renderEngine.bindTexture("/title/mclogo.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		GL11.glPushMatrix();
@@ -356,13 +356,13 @@ public class GuiAbout extends GuiScreen {
 			GL11.glDepthMask(false);
 			GL11.glEnable(3008 /*GL_ALPHA_TEST*/);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-			GL11.glTranslatef((this.width - 140), (this.height - 45), 0); // moves texture into place			
+			GL11.glTranslatef((this.width - 140), (this.height - 45), 0); // Moves texture into place
 			SpoutClient.getHandle().renderEngine.bindTexture(spoutcraftTexture.getTextureID());
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_NEAREST);
 			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
 			Tessellator tessellator = Tessellator.instance;
 			tessellator.startDrawingQuads();
-			tessellator.addVertexWithUV(0.0D, 32, -90, 0.0D, 0.0D); // draw corners
+			tessellator.addVertexWithUV(0.0D, 32, -90, 0.0D, 0.0D); // Draw corners
 			tessellator.addVertexWithUV(128, 32, -90, spoutcraftTexture.getWidth(), 0.0D);
 			tessellator.addVertexWithUV(128, 0.0D, -90, spoutcraftTexture.getWidth(), spoutcraftTexture.getHeight());
 			tessellator.addVertexWithUV(0.0D, 0.0D, -90, 0.0D, spoutcraftTexture.getHeight());

@@ -14,6 +14,7 @@ import org.newdawn.slick.opengl.Texture;
 import org.spoutcraft.api.block.design.BlockDesign;
 import org.spoutcraft.api.material.MaterialData;
 import org.spoutcraft.client.io.CustomTextureManager;
+import org.spoutcraft.client.SpoutClient;
 //Spout End
 
 public class ItemRenderer {
@@ -65,7 +66,7 @@ public class ItemRenderer {
 				if (textureURI != null) {
 					Texture texture = CustomTextureManager.getTextureFromUrl(item.getAddon(), textureURI);
 					if (texture != null) {
-						GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.getTextureID());
+						SpoutClient.getHandle().renderEngine.bindTexture(texture.getTextureID());
 						custom = true;
 					}
 				}
@@ -73,10 +74,10 @@ public class ItemRenderer {
 		}
 
 		if (!custom) {
-			if (par2ItemStack.itemID < 256) {			
+			if (par2ItemStack.itemID < 256) {
 				this.mc.renderEngine.bindTexture("/terrain.png");
 			} else {
-				this.mc.renderEngine.bindTexture("/gui/items.png");				
+				this.mc.renderEngine.bindTexture("/gui/items.png");
 			}
 		}
 
@@ -84,26 +85,26 @@ public class ItemRenderer {
 			design.renderItemstack(null, -0.5F, -0.5F, -0.5F, 0, 1F, rand);
 		}
 		else if(var4block != null && RenderBlocks.renderItemIn3d(var4block.getRenderType())) {
-			this.renderBlocksInstance.renderBlockAsItem(Block.blocksList[par2ItemStack.itemID], par2ItemStack.getItemDamage(), 1.0F);			
+			this.renderBlocksInstance.renderBlockAsItem(Block.blocksList[par2ItemStack.itemID], par2ItemStack.getItemDamage(), 1.0F);
 		} else {
 			Tessellator var5 = Tessellator.instance;
-			 Icon var4 = par1EntityLiving.getItemIcon(par2ItemStack, par3);
-            if (var4 == null) {
-                GL11.glPopMatrix();
-                return;
-            }
+			Icon var4 = par1EntityLiving.getItemIcon(par2ItemStack, par3);
+			if (var4 == null) {
+				GL11.glPopMatrix();
+				return;
+			}
 
-            float var6 = var4.getMinU();
+			float var6 = var4.getMinU();
 			float var7 = var4.getMaxU();
 			float var8 = var4.getMinV();
 			float var9 = var4.getMaxV();
 			float var10 = 0.0F;
 			float var11 = 0.3F;
 			if (custom){
-				var7 = 0;
+				var6 = 0;
+				var7 = 1;
 				var8 = 1;
-				var9 = 1;
-				var10 = 0;
+				var9 = 0;
 			}
 			// Spout end
 			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -113,13 +114,13 @@ public class ItemRenderer {
 			GL11.glRotatef(50.0F, 0.0F, 1.0F, 0.0F);
 			GL11.glRotatef(335.0F, 0.0F, 0.0F, 1.0F);
 			GL11.glTranslatef(-0.9375F, -0.0625F, 0.0F);
-			
+
 			if (par2ItemStack != null) {
 				ColorizeBlock.colorizeWaterBlockGL(par2ItemStack.itemID);
 			}
-						
+
 			renderItemIn2D(var5, var7, var8, var6, var9, var4.getSheetWidth(), var4.getSheetHeight(), 0.0625F);
-			
+
 			if (par2ItemStack != null && par2ItemStack.hasEffect() && par3 == 0) {
 				GL11.glDepthFunc(GL11.GL_EQUAL);
 				GL11.glDisable(GL11.GL_LIGHTING);
@@ -235,7 +236,7 @@ public class ItemRenderer {
 
 		par0Tessellator.draw();
 	}
-	
+
 	/**
 	 * Renders the active item in the player's hand when in first person mode. Args: partialTickTime
 	 */
@@ -488,17 +489,17 @@ public class ItemRenderer {
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		RenderHelper.disableStandardItemLighting();
 	}
-	
+
 	// MCPatcher End
 
 	/**
 	 * Renders all the overlays that are in first person mode. Args: partialTickTime
 	 */
 	public void renderOverlays(float par1) {
-		GL11.glDisable(GL11.GL_ALPHA_TEST);		
+		GL11.glDisable(GL11.GL_ALPHA_TEST);
 
 		if (this.mc.thePlayer.isBurning()) {
-			this.mc.renderEngine.bindTexture("/terrain.png");			
+			this.mc.renderEngine.bindTexture("/terrain.png");
 			this.renderFireInFirstPerson(par1);
 		}
 
@@ -538,7 +539,7 @@ public class ItemRenderer {
 
 		GL11.glEnable(GL11.GL_ALPHA_TEST);
 	}
-	
+
 	/**
 	 * Renders the texture of the block the player is inside as an overlay. Args: partialTickTime, blockTextureIndex
 	 */

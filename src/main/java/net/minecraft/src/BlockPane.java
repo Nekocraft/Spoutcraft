@@ -183,7 +183,7 @@ public class BlockPane extends Block {
 	 * the only chance you get to register icons.
 	 */
 	public void registerIcons(IconRegister par1IconRegister) {
-	    this.blockIcon = par1IconRegister.registerIcon(this.field_94402_c);
-	    this.theIcon = par1IconRegister.registerIcon(this.sideTextureIndex); 
+		this.blockIcon = par1IconRegister.registerIcon(this.field_94402_c);
+		this.theIcon = par1IconRegister.registerIcon(this.sideTextureIndex); 
 	}
 }

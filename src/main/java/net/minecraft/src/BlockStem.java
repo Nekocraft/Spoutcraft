@@ -246,8 +246,8 @@ public class BlockStem extends BlockFlower {
 	 * the only chance you get to register icons.
 	 */
 	public void registerIcons(IconRegister par1IconRegister) {
-	    this.blockIcon = par1IconRegister.registerIcon("stem_straight");
-	    this.theIcon = par1IconRegister.registerIcon("stem_bent"); 
+		this.blockIcon = par1IconRegister.registerIcon("stem_straight");
+		this.theIcon = par1IconRegister.registerIcon("stem_bent"); 
 	}
 
 	public Icon func_94368_p() {

@@ -92,9 +92,9 @@ public class MCPatcherUtils {
 
 	static boolean setGameDir(File var0) {
 		if (var0 != null && var0.isDirectory() && (new File(var0, "bin/lwjgl.jar")).exists() && (new File(var0, "resources")).isDirectory()) {
-			minecraftDir = var0.getAbsoluteFile();			
+			minecraftDir = var0.getAbsoluteFile();
 		} else {
-			minecraftDir = null;			
+			minecraftDir = null;
 		}
 
 		return true;
@@ -192,14 +192,14 @@ public class MCPatcherUtils {
 	public static void setVersions(String var0, String var1) {
 		minecraftVersion = var0;
 		patcherVersion = var1;
-		
+
 		try {
 			Class var2 = Class.forName("sun.misc.VM");
 			Method var3 = var2.getDeclaredMethod("maxDirectMemory", new Class[0]);
-			long var4 = ((Long)var3.invoke((Object)null, new Object[0])).longValue();			
+			long var4 = ((Long)var3.invoke((Object)null, new Object[0])).longValue();
 		} catch (Throwable var6) {
 			var6.printStackTrace();
-		}		
+		}
 	}
 
 	public static Minecraft getMinecraft() {

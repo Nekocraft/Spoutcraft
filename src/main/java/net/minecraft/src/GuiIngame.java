@@ -89,12 +89,12 @@ public class GuiIngame extends Gui {
 			}
 		}
 		GL11.glBlendFunc(770, 771);
-		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);		
+		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.renderEngine.bindTexture("/gui/gui.png");
 		InventoryPlayer var11 = this.mc.thePlayer.inventory;
 		this.zLevel = -90.0F;
 		this.drawTexturedModalRect(screenWidth / 2 - 91, screenHeight - 22, 0, 0, 182, 22);
-		this.drawTexturedModalRect(screenWidth / 2 - 91 - 1 + var11.currentItem * 20, screenHeight - 22 - 1, 0, 22, 24, 22);		
+		this.drawTexturedModalRect(screenWidth / 2 - 91 - 1 + var11.currentItem * 20, screenHeight - 22 - 1, 0, 22, 24, 22);
 		this.mc.renderEngine.bindTexture("/gui/icons.png");
 		GL11.glEnable(3042 /* GL_BLEND */);
 		GL11.glBlendFunc(775, 769);
@@ -186,7 +186,7 @@ public class GuiIngame extends Gui {
 				this.drawString(font, var45, screenWidth - font.getStringWidth(var45) - 2, 12, 14737632);
 				int var47 = MathHelper.floor_double(this.mc.thePlayer.posX);
 				int var22 = MathHelper.floor_double(this.mc.thePlayer.posY);
-				int var23 = MathHelper.floor_double(this.mc.thePlayer.posZ);				
+				int var23 = MathHelper.floor_double(this.mc.thePlayer.posZ);
 				if(SpoutClient.getInstance().isCoordsCheat()) {
 					this.drawString(font, String.format("x: %.5f (%d) // c: %d (%d)", new Object[] {Double.valueOf(this.mc.thePlayer.posX), Integer.valueOf(var47), Integer.valueOf(var47 >> 4), Integer.valueOf(var47 & 15)}), 2, 64, 14737632);
 					this.drawString(font, String.format("y: %.3f (feet pos, %.3f eyes pos)", new Object[] {Double.valueOf(this.mc.thePlayer.boundingBox.minY), Double.valueOf(this.mc.thePlayer.posY)}), 2, 72, 14737632);
@@ -194,7 +194,7 @@ public class GuiIngame extends Gui {
 					int var24 = MathHelper.floor_double((double)(this.mc.thePlayer.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 					this.drawString(font, "f: " + var24 + " (" + Direction.directions[var24] + ") / " + MathHelper.wrapAngleTo180_float(this.mc.thePlayer.rotationYaw), 2, 88, 14737632);
 				}
-				
+
 				if (this.mc.theWorld != null && this.mc.theWorld.blockExists(var47, var22, var23)) {
 					Chunk var48 = this.mc.theWorld.getChunkFromBlockCoords(var47, var23);
 					this.drawString(font, "lc: " + (var48.getTopFilledSegment() + 15) + " b: " + var48.getBiomeGenForWorldCoords(var47 & 15, var23 & 15, this.mc.theWorld.getWorldChunkManager()).biomeName + " bl: " + var48.getSavedLightValue(EnumSkyBlock.Block, var47 & 15, var22, var23 & 15) + " sl: " + var48.getSavedLightValue(EnumSkyBlock.Sky, var47 & 15, var22, var23 & 15) + " rl: " + var48.getBlockLightValue(var47 & 15, var22, var23 & 15, 0), 2, 96, 14737632);
@@ -368,7 +368,7 @@ public class GuiIngame extends Gui {
 			}
 		}
 	}
-	
+
 	/**
 	 * Renders dragon's (boss) health on the HUD
 	 */

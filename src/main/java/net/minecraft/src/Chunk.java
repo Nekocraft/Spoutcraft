@@ -80,8 +80,8 @@ public class Chunk {
 	 * chunk is sent to a client, and never set to false.
 	 */
 	public boolean sendUpdates;
-	
-	 /** Lowest value in the heightmap. */
+
+	/** Lowest value in the heightmap. */
 	public int heightMapMinimum; 
 
 	/**

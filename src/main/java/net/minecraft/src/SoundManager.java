@@ -409,7 +409,7 @@ public class SoundManager {
 	}
 
 	/**
-	 * Replaces the original playSound method 
+	 * Replaces the original playSound method
 	 * @param s - effect name.
 	 * @param f - x
 	 * @param f1 - y
@@ -429,7 +429,7 @@ public class SoundManager {
 		}
 
 		SoundPoolEntry soundpoolentry;
-		
+
 		if (variationId > -1) {
 			soundpoolentry = soundPoolSounds.getSoundFromSoundPool(s, variationId);
 		} else {
@@ -439,7 +439,7 @@ public class SoundManager {
 		if (soundpoolentry != null && f3 > 0.0F) {
 			latestSoundID = (latestSoundID + 1) % 256;
 			String s1;
-	
+
 			if (variationId == -1) {
 				s1 = (new StringBuilder()).append("sound_").append(latestSoundID).toString();
 			} else {

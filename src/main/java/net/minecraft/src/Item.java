@@ -257,7 +257,7 @@ public class Item {
 	public final Icon getIconIndex(ItemStack par1ItemStack) {
 		return CITUtils.getIcon(this.getIconFromDamage(par1ItemStack.getItemDamage()), this, par1ItemStack);
 	}
-	
+
 	/**
 	 * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
 	 * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
@@ -381,7 +381,6 @@ public class Item {
 	public boolean shouldRotateAroundWhenRendering() {
 		return false;
 	}
-
 
 	/**
 	 * Sets the unlocalized name of this item to the string passed as the parameter, prefixed by "item."
@@ -521,7 +520,7 @@ public class Item {
 	 */
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4) {}
 
-	public String getItemDisplayName(ItemStack par1ItemStack) {		
+	public String getItemDisplayName(ItemStack par1ItemStack) {
 		return ("" + StringTranslate.getInstance().translateNamedKey(this.getLocalizedName(par1ItemStack))).trim();
 	}
 
@@ -616,7 +615,7 @@ public class Item {
 	public void updateIcons(IconRegister par1IconRegister) {
 		this.iconIndex = par1IconRegister.registerIcon(this.unlocalizedName);
 	}
-	
+
 	static {
 		StatList.initStats();
 	}

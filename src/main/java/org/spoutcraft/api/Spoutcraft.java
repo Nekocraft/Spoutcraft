@@ -175,7 +175,7 @@ public final class Spoutcraft {
 	}
 
 	public static SpoutcraftChunk getChunkAt(World world, int x, int y, int z) {
-		return getChunk(world, x / 16, z / 16);
+		return getChunk(world, x >> 4, z >> 4);
 	}
 
 	public static SpoutcraftChunk getChunk(World world, int chunkX, int chunkZ) {

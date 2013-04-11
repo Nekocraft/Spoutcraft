@@ -100,7 +100,7 @@ public abstract class GuiContainer extends GuiScreen {
 		this.guiLeft = (this.width - this.xSize) / 2;
 		this.guiTop = (this.height - this.ySize) / 2;
 
-		// Spout Start		
+		// Spout Start
 		if (Spoutcraft.hasPermission("spout.plugin.sortinventory")) {
 			orderByAlphabet = new GenericButton("A-Z");
 			orderById = new GenericButton("Id");
@@ -110,13 +110,13 @@ public abstract class GuiContainer extends GuiScreen {
 
 			if (type == ScreenType.PLAYER_INVENTORY) {
 				if (!this.mc.thePlayer.getActivePotionEffects().isEmpty()) {
-					orderByAlphabet.setGeometry((guiLeft+146), (guiTop+65), 27, 13);		
+					orderByAlphabet.setGeometry((guiLeft+146), (guiTop+65), 27, 13);
 					orderById.setGeometry((guiLeft+176), (guiTop+65), 22, 13);
 				} else {
-					orderByAlphabet.setGeometry((guiLeft+86), (guiTop+65), 27, 13);		
+					orderByAlphabet.setGeometry((guiLeft+86), (guiTop+65), 27, 13);
 					orderById.setGeometry((guiLeft+116), (guiTop+65), 22, 13);
 				}
-			} else if (type == ScreenType.CHEST_INVENTORY) {				
+			} else if (type == ScreenType.CHEST_INVENTORY) {
 				orderByAlphabet.setGeometry((guiLeft+115), (guiTop+3), 27, 12);
 				orderById.setGeometry((guiLeft+145), (guiTop+3), 22, 12);
 			}
@@ -139,7 +139,6 @@ public abstract class GuiContainer extends GuiScreen {
 		GL11.glEnable(GL11.GL_LIGHTING);
 		GL11.glEnable(GL11.GL_DEPTH_TEST);
 	}
-
 
 	public void buttonClicked(Button btn) {
 		if (btn == orderByAlphabet || btn == orderById) {
@@ -392,7 +391,7 @@ public abstract class GuiContainer extends GuiScreen {
 		}
 
 		if (var15.getItemStack() == null && this.theSlot != null && this.theSlot.getHasStack()) {
-			ItemStack var19 = this.theSlot.getStack();			
+			ItemStack var19 = this.theSlot.getStack();
 			this.drawItemStackTooltip(var19, par1 - var4 + 8, par2 - var5 + 8);
 		}
 
@@ -580,7 +579,7 @@ public abstract class GuiContainer extends GuiScreen {
 			if (var9 != null) {
 				GL11.glDisable(GL11.GL_LIGHTING);
 				this.mc.renderEngine.bindTexture("/gui/items.png");
-				this.drawTexturedModelRectFromIcon(var2, var3, var9, 16, 16); 
+				this.drawTexturedModelRectFromIcon(var2, var3, var9, 16, 16);
 				GL11.glEnable(GL11.GL_LIGHTING);
 				var6 = true;
 			}
@@ -727,7 +726,6 @@ public abstract class GuiContainer extends GuiScreen {
 			}
 		}
 	}
-
 
 	/**
 	 * Called when the mouse is moved or a mouse button is released.  Signature: (mouseX, mouseY, which) which==-1 is

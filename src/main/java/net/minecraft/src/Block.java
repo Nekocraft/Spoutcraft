@@ -103,7 +103,6 @@ public class Block {
 	public static final Block blockGold = (new BlockOreStorage(41)).setHardness(3.0F).setResistance(10.0F).setStepSound(soundMetalFootstep).getIndirectPowerOutput("blockGold");
 	public static final Block blockSteel = (new BlockOreStorage(42)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundMetalFootstep).getIndirectPowerOutput("blockIron");
 
-
 	/** stoneDoubleSlab */
 	public static final BlockHalfSlab stoneDoubleSlab = (BlockHalfSlab)(new BlockStep(43, true)).setHardness(2.0F).setResistance(10.0F).setStepSound(soundStoneFootstep).getIndirectPowerOutput("stoneSlab");
 
@@ -231,7 +230,6 @@ public class Block {
 	public static final Block stairCompactNetherQuartz = (new BlockStairs(156, blockNetherQuartz, 0)).getIndirectPowerOutput("stairsQuartz");
 	public static final Block railActivator = (new BlockRailPowered(157)).setHardness(0.7F).setStepSound(soundMetalFootstep).getIndirectPowerOutput("activatorRail");
 	public static final Block dropper = (new BlockDropper(158)).setHardness(3.5F).setStepSound(soundStoneFootstep).getIndirectPowerOutput("dropper");
-
 
 	/**
 	 * The index of the texture to be displayed for this block. May vary based on graphics settings. Mostly seems to come
@@ -1095,8 +1093,8 @@ public class Block {
 
 	/**
 	 * Returns the indirect signal strength being outputted by the given block in the *opposite* of the given direction.
-     * Args: World, X, Y, Z, direction. If isBlockNormalCube returns true, standard redstone propagation rules will apply
-     * instead and this will not be called. 
+	 * Args: World, X, Y, Z, direction. If isBlockNormalCube returns true, standard redstone propagation rules will apply
+	 * instead and this will not be called. 
 	 */
 	public Block getIndirectPowerOutput(String par1Str) {
 		this.unlocalizedName = par1Str;
@@ -1117,9 +1115,9 @@ public class Block {
 		return "tile." + this.unlocalizedName;
 	}
 
-	 /**
-	  * Returns the unlocalized name without the tile. prefix. Caution: client-only.
-      */
+	/**
+	 * Returns the unlocalized name without the tile. prefix. Caution: client-only.
+	 */
 	public String getUnlocalizedName2() { 
 		return this.unlocalizedName;
 	}
@@ -1241,19 +1239,19 @@ public class Block {
 		return this.blockID == par1;
 	}
 
-	 /**
-	  * Static version of isAssociatedBlockID.
-	  */
+	/**
+	 * Static version of isAssociatedBlockID.
+	 */
 	public static boolean isAssociatedBlockID(int par0, int par1) {
-	   return par0 == par1 ? true : (par0 != 0 && par1 != 0 && blocksList[par0] != null && blocksList[par1] != null ? blocksList[par0].isAssociatedBlockID(par1) : false);
+		return par0 == par1 ? true : (par0 != 0 && par1 != 0 && blocksList[par0] != null && blocksList[par1] != null ? blocksList[par0].isAssociatedBlockID(par1) : false);
 	} 
 
-	  /**
-	   * If this returns true, then comparators facing away from this block will use the value from
-	   * getComparatorInputOverride instead of the actual redstone signal strength.
-	   */
+	/**
+	 * If this returns true, then comparators facing away from this block will use the value from
+	 * getComparatorInputOverride instead of the actual redstone signal strength.
+	 */
 	public boolean hasComparatorInputOverride() {
-	     return false;
+		return false;
 	} 
 
 	/**
@@ -1261,7 +1259,7 @@ public class Block {
 	 * strength when this block inputs to a comparator.
 	 */
 	public int getComparatorInputOverride(World par1World, int par2, int par3, int par4, int par5) {
-	     return 0;
+		return 0;
 	} 
 
 	/**
@@ -1269,7 +1267,7 @@ public class Block {
 	 * the only chance you get to register icons.
 	 */
 	public void registerIcons(IconRegister par1IconRegister) {
-	    this.blockIcon = par1IconRegister.registerIcon(this.unlocalizedName);
+		this.blockIcon = par1IconRegister.registerIcon(this.unlocalizedName);
 	} 
 
 	public String func_94327_t_() {

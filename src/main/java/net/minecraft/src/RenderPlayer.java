@@ -167,7 +167,7 @@ public class RenderPlayer extends RenderLiving {
 	 */
 	protected void renderName(EntityPlayer par1EntityPlayer, double par2, double par4, double par6) {
 		if (!par1EntityPlayer.getHasActivePotion()) {
-			if(Minecraft.isGuiEnabled() && (par1EntityPlayer != this.renderManager.livingPlayer || (Minecraft.theMinecraft.gameSettings.thirdPersonView != 0 && Minecraft.theMinecraft.currentScreen == null))) {	
+			if(Minecraft.isGuiEnabled() && (par1EntityPlayer != this.renderManager.livingPlayer || (Minecraft.theMinecraft.gameSettings.thirdPersonView != 0 && Minecraft.theMinecraft.currentScreen == null))) {
 				float var8 = 1.6F;
 				float var9 = 0.016666668F * var8;
 				double var10 = par1EntityPlayer.getDistanceSqToEntity(this.renderManager.livingPlayer);
@@ -175,7 +175,7 @@ public class RenderPlayer extends RenderLiving {
 
 				if (var10 < (double)(var12 * var12)) {
 					String title = null;
-					VIP vip = par1EntityPlayer.vip;				
+					VIP vip = par1EntityPlayer.vip;
 					if (vip != null) {
 						title = vip.getTitle();
 					} else {
@@ -202,9 +202,9 @@ public class RenderPlayer extends RenderLiving {
 
 							if (!par1EntityPlayer.isSneaking()) {
 								if (par1EntityPlayer.isPlayerSleeping()) {
-									this.renderLivingLabel(par1EntityPlayer, title, par2, par4 - 1.5D, par6, 64);								
+									this.renderLivingLabel(par1EntityPlayer, title, par2, par4 - 1.5D, par6, 64);
 								} else {
-									this.renderLivingLabel(par1EntityPlayer, title, par2, par4, par6, 64);									
+									this.renderLivingLabel(par1EntityPlayer, title, par2, par4, par6, 64);
 									// TODO: Adapation needed.
 									/*if (color != -1) {
 									this.renderLivingLabel(var1, title, var2, var4, var6, 64, color, color);

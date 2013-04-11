@@ -116,7 +116,7 @@ public class FontRenderer {
 		this.renderEngine = par3RenderEngine;
 		this.unicodeFlag = par4;
 		this.readFontData();
-		par3RenderEngine.bindTexture(par2Str); 
+		par3RenderEngine.bindTexture(par2Str);
 
 		for (int var5 = 0; var5 < 32; ++var5) {
 			int var6 = (var5 >> 3 & 1) * 85;
@@ -149,7 +149,7 @@ public class FontRenderer {
 
 	public void readFontData() {
 		this.readGlyphSizes();
-		this.readFontTexture(this.fontTextureName); 
+		this.readFontTexture(this.fontTextureName);
 	}
 
 	private void readFontTexture(String par1Str) {
@@ -177,7 +177,6 @@ public class FontRenderer {
 		}
 	}
 
-	
 	/**
 	 * Pick how to render a single character and return the width used.
 	 */
@@ -192,7 +191,7 @@ public class FontRenderer {
 		float var3 = (float)(par1 % 16 * 8);
 		float var4 = (float)(par1 / 16 * 8);
 		float var5 = par2 ? 1.0F : 0.0F;
-		this.renderEngine.bindTexture(this.fontTextureName);		
+		this.renderEngine.bindTexture(this.fontTextureName);
 		float var6 = (float)this.charWidth[par1] - 0.01F;
 		GL11.glBegin(GL11.GL_TRIANGLE_STRIP);
 		GL11.glTexCoord2f(var3 / 128.0F, var4 / 128.0F);
@@ -806,5 +805,5 @@ public class FontRenderer {
 	 */
 	public boolean getBidiFlag() {
 		return this.bidiFlag;
-	}	
+	}
 }

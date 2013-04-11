@@ -17,21 +17,21 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.spoutcraft.client.entity;
+package org.spoutcraft.client.gui.settings.controls;
 
-public abstract class AbstractProjectile extends CraftEntity {
-	private boolean doesBounce;
+import org.spoutcraft.api.gui.GenericCheckBox;
+import org.spoutcraft.client.config.Configuration;
 
-	public AbstractProjectile(net.minecraft.src.Entity entity) {
-		super(entity);
-		doesBounce = false;
+public class ChatColorAssistButton extends GenericCheckBox {
+	public ChatColorAssistButton() {
+		super("Chat Colors Assistant");
+		setChecked(Configuration.isShowingChatColorAssist());
+		setTooltip("Displays helpful guide for Chat formatting codes.");
 	}
 
-	public boolean doesBounce() {
-		return doesBounce;
-	}
-
-	public void setBounce(boolean doesBounce) {
-		this.doesBounce = doesBounce;
+	@Override
+	public void onButtonClick() {
+		Configuration.setChatColorAssist(!Configuration.isShowingChatColorAssist());
+		Configuration.write();
 	}
 }

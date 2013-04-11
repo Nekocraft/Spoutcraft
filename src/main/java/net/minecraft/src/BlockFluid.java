@@ -506,10 +506,10 @@ public abstract class BlockFluid extends Block {
 		}
 	}
 
-	 /**
-	  * When this method is called, your block should register all the icons it needs with the given IconRegister. This is
-	  * the only chance you get to register icons.
-	  */
+	/**
+	 * When this method is called, your block should register all the icons it needs with the given IconRegister. This is
+	 * the only chance you get to register icons.
+	 */
 	public void registerIcons(IconRegister par1IconRegister) { 
 		if (this.blockMaterial == Material.lava) {
 			this.theIcon = new Icon[] {par1IconRegister.registerIcon("lava"), par1IconRegister.registerIcon("lava_flow")}; 

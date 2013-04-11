@@ -1169,7 +1169,7 @@ public class RenderGlobal implements IWorldAccess {
 		if (!SpoutClient.getInstance().getSkyManager().isCloudsVisible() || !Configuration.isSky()) {
 			return;
 		}
-		if (this.mc.theWorld.provider.isSurfaceWorld()) {			
+		if (this.mc.theWorld.provider.isSurfaceWorld()) {
 			if (ColorizeWorld.drawFancyClouds(this.mc.gameSettings.fancyGraphics)) {
 		// Spout End
 				this.renderCloudsFancy(par1);
@@ -1814,7 +1814,7 @@ public class RenderGlobal implements IWorldAccess {
 				double var22 = 6D;
 				if (!org.spoutcraft.client.config.Configuration.isFancyParticles()) {
 					var22 = 16.0D;
-				} 
+				}
 				// Spout End
 
 				if (var15 * var15 + var17 * var17 + var19 * var19 > var22 * var22) {
@@ -2301,9 +2301,9 @@ public class RenderGlobal implements IWorldAccess {
 		}
 
 	}
-	
+
 	public void prepareAO() {
-		if (this.occlusionEnabled && Configuration.ambientOcclusion) {	
+		if (this.occlusionEnabled && Configuration.ambientOcclusion) {
 			byte var3 = 64;
 			byte var4 = 64;
 			this.occlusionResult.clear();

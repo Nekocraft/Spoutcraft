@@ -294,7 +294,7 @@ public class TexturePackList {
 			} finally {
 				MCPatcherUtils.close(var4);
 			}
-		}	
+		}
 		return var1 > 0 ? var1 : 16; */
 	}
 	// Spout End

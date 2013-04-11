@@ -222,6 +222,6 @@ public class GenericTextField extends GenericControl implements TextField {
 	}
 
 	@Override
-	public void onTextFieldChange() {		
+	public void onTextFieldChange() {
 	}
 }

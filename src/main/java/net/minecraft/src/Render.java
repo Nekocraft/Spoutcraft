@@ -106,7 +106,6 @@ public abstract class Render {
 		GL11.glEnable(GL11.GL_LIGHTING);
 	}
 
-
 	/**
 	 * Renders the entity shadows at the position, shadow alpha and partialTickTime. Args: entity, x, y, z, shadowAlpha,
 	 * partialTickTime
@@ -310,6 +309,6 @@ public abstract class Render {
 	public FontRenderer getFontRendererFromRenderManager() {
 		return this.renderManager.getFontRenderer();
 	}
-	
+
 	public void updateIcons(IconRegister par1IconRegister) {}
 }

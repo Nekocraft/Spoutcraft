@@ -139,7 +139,7 @@ public class Tessellator {
 
 	/** The size of the buffers used (in integers). */
 	// MCPatcher Start - private to public
-	public int texture; //Spout Keep this in. 
+	public int texture; //Spout Keep this in.
 	public int bufferSize;
 	public TextureMap textureMap;
 	public Map children;
@@ -182,7 +182,7 @@ public class Tessellator {
 				if (this.textureMap != null && SpoutClient.getHandle().renderEngine.boundTexture <= 0) {
 					GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.textureMap.getTexture().getGlTextureId());
 				} else if (this.texture > 0) {
-					GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.texture);					
+					GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.texture);
 				}
 				// MCPatcher && Spout End
 

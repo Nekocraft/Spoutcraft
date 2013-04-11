@@ -802,7 +802,6 @@ public class EntityRenderer {
 		}
 	}
 
-
 	/**
 	 * Gets the night vision brightness
 	 */
@@ -958,7 +957,7 @@ public class EntityRenderer {
 					throw new ReportedException(var10);
 				}
 
-				if (this.mc.currentScreen!= null) {				
+				if (this.mc.currentScreen!= null) {
 					this.mc.currentScreen.drawScreenPre(var16, var17, par1);
 				} else {
 					System.out.println("SpoutDebug:  CurrentScreen was null prior to trying to drawScreenPre");
@@ -996,7 +995,7 @@ public class EntityRenderer {
 		this.mc.mcProfiler.endStartSection("center");
 
 		// Spout Start
-		for (int var13 = 0; var13 < (this.mc.gameSettings.anaglyph ? 2 : 1); ++var13) {		
+		for (int var13 = 0; var13 < (this.mc.gameSettings.anaglyph ? 2 : 1); ++var13) {
 		// Spout End
 			if (this.mc.gameSettings.anaglyph) {
 				anaglyphField = var13;

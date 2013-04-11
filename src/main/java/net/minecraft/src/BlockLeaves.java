@@ -308,10 +308,10 @@ public class BlockLeaves extends BlockLeavesBase {
 		return new ItemStack(this.blockID, 1, par1 & 3);
 	}
 
-	 /**
-	  * When this method is called, your block should register all the icons it needs with the given IconRegister. This is
-	  * the only chance you get to register icons.
-	  */
+	/**
+	 * When this method is called, your block should register all the icons it needs with the given IconRegister. This is
+	 * the only chance you get to register icons.
+	 */
 	public void registerIcons(IconRegister par1IconRegister) { 
 		for (int var2 = 0; var2 < field_94396_b.length; ++var2) {
 			this.iconArray[var2] = new Icon[field_94396_b[var2].length];

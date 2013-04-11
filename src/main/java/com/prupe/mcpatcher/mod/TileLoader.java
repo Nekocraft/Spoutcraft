@@ -43,7 +43,7 @@ public class TileLoader {
 			return overrideTextureName;
 		}
 	}
-	
+
 	static BufferedImage generateDebugTexture(String var0, int var1, int var2, boolean var3) {
 		BufferedImage var4 = new BufferedImage(var1, var2, 2);
 		Graphics var5 = var4.getGraphics();

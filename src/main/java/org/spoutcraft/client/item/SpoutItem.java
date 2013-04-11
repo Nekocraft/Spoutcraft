@@ -110,7 +110,7 @@ public class SpoutItem extends Item {
 		}
 
 		int id = block.getBlockId();
-		
+
 		if (item.stackSize == 0) {
 			return false;
 		} else if (!player.canPlayerEdit(x, y, z, side, item)) {

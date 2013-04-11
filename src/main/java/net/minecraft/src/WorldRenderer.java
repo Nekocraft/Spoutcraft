@@ -167,7 +167,7 @@ public class WorldRenderer {
 			HashSet tileRenderers = new HashSet();
 			tileRenderers.addAll(this.tileEntityRenderers);
 			this.tileEntityRenderers.clear();
-			ChunkCache chunkCache = new ChunkCache(this.worldObj, x - 1, y - 1, z - 1, sizeXOffset + 1, sizeYOffset + 1, sizeZOffset + 1, 1);			
+			ChunkCache chunkCache = new ChunkCache(this.worldObj, x - 1, y - 1, z - 1, sizeXOffset + 1, sizeYOffset + 1, sizeZOffset + 1, 1);
 
 			if (!chunkCache.extendedLevelsInChunkCache()) {
 				++chunksUpdated;
@@ -186,7 +186,7 @@ public class WorldRenderer {
 
 				SpoutcraftChunk sChunk = Spoutcraft.getChunkAt(worldObj, posX, posY, posZ);
 				short[] customBlockIds = sChunk.getCustomBlockIds();
-				byte[] customBlockData = sChunk.getCustomBlockData();				 
+				byte[] customBlockData = sChunk.getCustomBlockData();
 				blockRenderer.customIds = customBlockIds;
 
 				for (int renderPass = 0; renderPass < limit; ++renderPass) {
@@ -281,7 +281,7 @@ public class WorldRenderer {
 												continue;
 											}
 										// Do not render if we are not using the terrain.png and can't find a valid texture for this custom block
-										} else if (currentTexture != 0) {											
+										} else if (currentTexture != 0) {
 											continue;
 										}
 

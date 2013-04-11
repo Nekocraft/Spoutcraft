@@ -52,7 +52,7 @@ public class Colorizer {
 	}
 
 	private static void reloadColorProperties() {
-		TexturePackAPI.getProperties("/color.properties", properties);		
+		TexturePackAPI.getProperties("/color.properties", properties);
 	}
 
 	static String getStringKey(String[] var0, int var1) {

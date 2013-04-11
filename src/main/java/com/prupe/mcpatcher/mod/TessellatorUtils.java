@@ -31,7 +31,7 @@ public class TessellatorUtils {
 				if (var4 == null) {
 					var4 = var2.toString();
 				}
-				
+
 				var3 = new Tessellator(2097152);
 				copyFields(var0, var3, true);
 				var3.textureMap = var2;

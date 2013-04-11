@@ -19,7 +19,6 @@
  */
 package org.spoutcraft.api.block.design;
 
-
 public class GenericCubeBlockDesign extends GenericBlockDesign {
 	/**
 	 * Creates a basic cube custom block model

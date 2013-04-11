@@ -267,7 +267,7 @@ public class BlockRedstoneWire extends Block {
 	 * otherwise. Signature: (world, x, y, z, strength)
 	 */
 	// Spout Start - private to public
-	public int getMaxCurrentStrength(World par1World, int par2, int par3, int par4, int par5) {	
+	public int getMaxCurrentStrength(World par1World, int par2, int par3, int par4, int par5) {
 	// Spout End
 		if (par1World.getBlockId(par2, par3, par4) != this.blockID) {
 			return par5;
@@ -456,11 +456,11 @@ public class BlockRedstoneWire extends Block {
 	 * the only chance you get to register icons.
 	 */
 	public void registerIcons(IconRegister par1IconRegister) {
-	    this.field_94413_c = par1IconRegister.registerIcon("redstoneDust_cross");
-	    this.field_94410_cO = par1IconRegister.registerIcon("redstoneDust_line");
-	    this.field_94411_cP = par1IconRegister.registerIcon("redstoneDust_cross_overlay");
-	    this.field_94412_cQ = par1IconRegister.registerIcon("redstoneDust_line_overlay");
-	    this.blockIcon = this.field_94413_c; 
+		this.field_94413_c = par1IconRegister.registerIcon("redstoneDust_cross");
+		this.field_94410_cO = par1IconRegister.registerIcon("redstoneDust_line");
+		this.field_94411_cP = par1IconRegister.registerIcon("redstoneDust_cross_overlay");
+		this.field_94412_cQ = par1IconRegister.registerIcon("redstoneDust_line_overlay");
+		this.blockIcon = this.field_94413_c; 
 	}
 
 	public static Icon func_94409_b(String par0Str) {

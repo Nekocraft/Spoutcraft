@@ -23,7 +23,6 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 
-
 import org.apache.commons.io.FileUtils;
 
 import net.minecraft.client.Minecraft;
@@ -157,6 +156,7 @@ public class GuiTexturePacks extends GuiScreen {
 			buttonSelect.setEnabled(true);
 			if (current) {
 				buttonSelect.setText(t.translateKey("spout.texturepack.preview.button", "Preview"));
+				buttonSelect.setEnabled(false);
 				updateScreen();
 			} else {
 				buttonSelect.setText(t.translateKey("spout.texturepack.select", "Select"));

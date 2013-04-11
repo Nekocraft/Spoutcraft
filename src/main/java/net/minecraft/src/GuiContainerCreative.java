@@ -63,7 +63,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer {
 		par4 = par2 == -999 && par4 == 0 ? 4 : par4;
 		ItemStack var7;
 		InventoryPlayer var10;
-		
+
 		if (par1Slot == null && selectedTabIndex != CreativeTabs.tabInventory.getTabIndex() && par4 != 5) {
 			var10 = this.mc.thePlayer.inventory;
 
@@ -146,7 +146,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer {
 
 						return;
 					}
-				
+
 					if (var7 != null && var8 != null && var7.isItemEqual(var8)) {
 						if (par3 == 0) {
 							if (var5) {
@@ -366,7 +366,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer {
 
 		super.mouseMovedOrUp(par1, par2, par3);
 	}
-	
+
 	/**
 	 * returns (if you are not on the inventoryTab) and (the flag isn't set) and( you have more than 1 page of items)
 	 */
@@ -739,7 +739,6 @@ public class GuiContainerCreative extends InventoryEffectRenderer {
 		}
 		this.mc.renderEngine.bindTexture(this.mc.renderEngine.getTexture("/gui/allitems.png"));
 		byte var9 = 32;
-
 
 		int startY = 0;
 		int diff = 75;

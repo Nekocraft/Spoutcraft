@@ -77,24 +77,23 @@ public class NetClientHandler extends NetHandler {
 		this(par1Minecraft, par2Str, par3, null); //Spout
 	}
 
-    public NetClientHandler(Minecraft par1Minecraft, String par2Str, int par3, GuiScreen par4GuiScreen) throws IOException
-    {
-        this.mc = par1Minecraft;
-        this.field_98183_l = par4GuiScreen;
-        // Spout Start
- 		InetSocketAddress address = NetworkUtils.resolve(par2Str, par3);
- 		if (address.isUnresolved()) {
- 			throw new UnknownHostException(address.getHostName());
- 		}
- 		this.netManager = new TcpConnection(par1Minecraft.getLogAgent(), new Socket(address.getAddress(), address.getPort()), "Client", this);
+	public NetClientHandler(Minecraft par1Minecraft, String par2Str, int par3, GuiScreen par4GuiScreen) throws IOException {
+		this.mc = par1Minecraft;
+		this.field_98183_l = par4GuiScreen;
+		// Spout Start
+		InetSocketAddress address = NetworkUtils.resolve(par2Str, par3);
+		if (address.isUnresolved()) {
+			throw new UnknownHostException(address.getHostName());
+		}
+		this.netManager = new TcpConnection(par1Minecraft.getLogAgent(), new Socket(address.getAddress(), address.getPort()), "Client", this);
 
- 		org.spoutcraft.client.gui.error.GuiConnectionLost.lastServerIp = par2Str;
- 		org.spoutcraft.client.gui.error.GuiConnectionLost.lastServerPort = par3;
+		org.spoutcraft.client.gui.error.GuiConnectionLost.lastServerIp = par2Str;
+		org.spoutcraft.client.gui.error.GuiConnectionLost.lastServerPort = par3;
 
- 		ClientPlayer.getInstance().resetMainScreen();
- 		SpoutClient.getInstance().setSpoutActive(false);
- 		// Spout End
-    }
+		ClientPlayer.getInstance().resetMainScreen();
+		SpoutClient.getInstance().setSpoutActive(false);
+		// Spout End
+	}
 
 	public NetClientHandler(Minecraft par1Minecraft, IntegratedServer par2IntegratedServer) throws IOException {
 		this.mc = par1Minecraft;
@@ -163,7 +162,7 @@ public class NetClientHandler extends NetHandler {
 	 */
 	private String sendSessionRequest(String par1Str, String par2Str, String par3Str) {
 		try {
-			URL var4 = new URL(MySkinConfig.getLoginUrl(urlEncode(par1Str),urlEncode(par2Str),urlEncode(par3Str)));
+			URL var4 = new URL("http://session.minecraft.net/game/joinserver.jsp?user=" + urlEncode(par1Str) + "&sessionId=" + urlEncode(par2Str) + "&serverId=" + urlEncode(par3Str));
 			BufferedReader var5 = new BufferedReader(new InputStreamReader(var4.openStream()));
 			String var6 = var5.readLine();
 			var5.close();

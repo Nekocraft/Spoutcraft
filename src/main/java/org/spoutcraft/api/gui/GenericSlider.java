@@ -99,7 +99,6 @@ public class GenericSlider extends GenericControl implements Slider {
 	}
 
 	public void onSliderDrag(float oldPos, float newPos) {
-		
 	}
 
 	@Override

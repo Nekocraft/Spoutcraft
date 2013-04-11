@@ -281,7 +281,7 @@ public class RenderBlocks {
 	// Spout Start
 	public short[] customIds = null;
 	// Spout End
-	
+
 	public RenderBlocks(IBlockAccess par1IBlockAccess) {
 		this.blockAccess = par1IBlockAccess;
 		this.minecraftRB = Minecraft.getMinecraft();

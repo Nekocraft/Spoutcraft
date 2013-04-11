@@ -43,7 +43,6 @@ public class GenericBlockDesign implements BlockDesign {
 	protected float highYBound;
 	protected float highZBound;
 
-
 	protected String textureURL;
 	protected String textureAddon;
 

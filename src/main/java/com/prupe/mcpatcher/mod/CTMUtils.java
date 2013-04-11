@@ -25,7 +25,6 @@ import net.minecraft.src.TextureMap;
 import org.spoutcraft.client.config.Configuration;
 // Spout End
 
-
 public class CTMUtils {
 	private static final boolean enableStandard = Configuration.isConnectedTextures();
 	private static final boolean enableNonStandard = Configuration.isConnectedTextures();
