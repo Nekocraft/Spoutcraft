@@ -596,8 +596,8 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
 		if (minecraftDir == null) {
 			// Spout Start
 			String workingDirName = "minecraft";
-			if (spoutcraftLauncher)
-				workingDirName = "spoutcraft";
+			// if (spoutcraftLauncher)
+			// 	workingDirName = "spoutcraft";
 			if (portable) {
 				File portableDir = new File(workingDirName);
 				if (portableDir.exists() || portableDir.mkdirs()) {

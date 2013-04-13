@@ -75,7 +75,7 @@ public class MCPatcherUtils {
 	static File getDefaultGameDir() {
 		String var0 = System.getProperty("os.name").toLowerCase();
 		String var1 = null;
-		String var2 = ".spoutcraft";
+		String var2 = ".minecraft";
 
 		if (var0.contains("win")) {
 			var1 = System.getenv("APPDATA");
