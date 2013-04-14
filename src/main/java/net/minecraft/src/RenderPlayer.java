@@ -143,116 +143,13 @@ public class RenderPlayer extends RenderLiving {
 		if (!AccessoryHandler.isHandled(par1EntityPlayer.username)) {
 			AccessoryHandler.addVIPAccessoriesFor(par1EntityPlayer);
 		}
-
-		VIP vip = par1EntityPlayer.vip;
-		if (vip != null) {
-			float s = vip.getScale();
-			GL11.glPushMatrix();
-			GL11.glTranslated(0, (s - 1) * 1.6, 0);
-			GL11.glScalef(s, s, s);
-			super.doRenderLiving(par1EntityPlayer, par2, var14, par6, par8, par9);
-			GL11.glPopMatrix();
-		} else {
+		
 		super.doRenderLiving(par1EntityPlayer, par2, var14, par6, par8, par9);
-		}
 		// Spout End
 		this.modelArmorChestplate.aimedBow = this.modelArmor.aimedBow = this.modelBipedMain.aimedBow = false;
 		this.modelArmorChestplate.isSneak = this.modelArmor.isSneak = this.modelBipedMain.isSneak = false;
 		this.modelArmorChestplate.heldItemRight = this.modelArmor.heldItemRight = this.modelBipedMain.heldItemRight = 0;
 	}
-
-	// Spout Start
-	/**
-	 * Used to render a player's name above their head
-	 */
-	protected void renderName(EntityPlayer par1EntityPlayer, double par2, double par4, double par6) {
-		if (!par1EntityPlayer.getHasActivePotion()) {
-			if(Minecraft.isGuiEnabled() && (par1EntityPlayer != this.renderManager.livingPlayer || (Minecraft.theMinecraft.gameSettings.thirdPersonView != 0 && Minecraft.theMinecraft.currentScreen == null))) {
-				float var8 = 1.6F;
-				float var9 = 0.016666668F * var8;
-				double var10 = par1EntityPlayer.getDistanceSqToEntity(this.renderManager.livingPlayer);
-				float var12 = par1EntityPlayer.isSneaking() ? 32.0F : 64.0F;
-
-				if (var10 < (double)(var12 * var12)) {
-					String title = null;
-					VIP vip = par1EntityPlayer.vip;
-					if (vip != null) {
-						title = vip.getTitle();
-					} else {
-						title = par1EntityPlayer.displayName;
-					}
-					float alpha = 0.25F;
-					// If a plugin hasn't set a title, use the easter egg title (if one exists)
-					/*if (EasterEggs.getEasterEggTitle(var1.username) != null && color == -1) {
-					title = EasterEggs.getEasterEggTitle(var1.username);
-					alpha = 0.0F;
-				}*/
-					if (!title.equals("[hide]")) {
-						String lines[] = title.split("\\n");
-						double y = par4;
-						for (int line = 0; line < lines.length; line++) {
-							title = lines[line];
-							par4 = y + (0.275D * (lines.length - line - 1));
-
-							if (AccessoryHandler.hasAccessory(par1EntityPlayer.username, AccessoryType.NOTCHHAT)) {
-								par4 = par4 + 0.275d;
-							} else if (AccessoryHandler.hasAccessory(par1EntityPlayer.username, AccessoryType.TOPHAT)) {
-								par4 = par4 + 0.5d;
-							}
-
-							if (!par1EntityPlayer.isSneaking()) {
-								if (par1EntityPlayer.isPlayerSleeping()) {
-									this.renderLivingLabel(par1EntityPlayer, title, par2, par4 - 1.5D, par6, 64);
-								} else {
-									this.renderLivingLabel(par1EntityPlayer, title, par2, par4, par6, 64);
-									// TODO: Adapation needed.
-									/*if (color != -1) {
-									this.renderLivingLabel(var1, title, var2, var4, var6, 64, color, color);
-								} else {
-									this.renderLivingLabel(par1EntityPlayer, title, par2, par4, par6, 64);
-								}*/
-								}
-							} else {
-								title = org.bukkit.ChatColor.stripColor(title); //strip colors when sneaking
-								FontRenderer var14 = this.getFontRendererFromRenderManager();
-								GL11.glPushMatrix();
-								GL11.glTranslatef((float)par2 + 0.0F, (float)par4 + 2.3F, (float)par6);
-								GL11.glNormal3f(0.0F, 1.0F, 0.0F);
-								GL11.glRotatef(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-								GL11.glRotatef(this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-								GL11.glScalef(-var9, -var9, var9);
-								GL11.glDisable(GL11.GL_LIGHTING);
-								GL11.glTranslatef(0.0F, 0.25F / var9, 0.0F);
-								GL11.glDepthMask(false);
-
-								GL11.glEnable(GL11.GL_BLEND);
-								GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-								Tessellator var15 = Tessellator.instance;
-								GL11.glDisable(GL11.GL_TEXTURE_2D);
-								var15.startDrawingQuads();
-								int var16 = var14.getStringWidth(title) / 2;
-								var15.setColorRGBA_F(0.0F, 0.0F, 0.0F, 0.25F);
-								var15.addVertex((double)(-var16 - 1), -1.0D, 0.0D);
-								var15.addVertex((double)(-var16 - 1), 8.0D, 0.0D);
-								var15.addVertex((double)(var16 + 1), 8.0D, 0.0D);
-								var15.addVertex((double)(var16 + 1), -1.0D, 0.0D);
-								var15.draw();
-								GL11.glEnable(GL11.GL_TEXTURE_2D);
-								GL11.glDepthMask(true);
-								var14.drawString(title, -var14.getStringWidth(title) / 2, 0, 553648127);
-								GL11.glEnable(GL11.GL_LIGHTING);
-
-								GL11.glDisable(GL11.GL_BLEND);
-								GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-								GL11.glPopMatrix();
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-	// Spout End
 
 	/**
 	 * Method for adding special render rules
@@ -452,6 +349,12 @@ public class RenderPlayer extends RenderLiving {
 
 	protected void renderPlayerScale(EntityPlayer par1EntityPlayer, float par2) {
 		float var3 = 0.9375F;
+		// Spout Start
+		VIP vip = par1EntityPlayer.vip;
+		if (vip != null) {
+			var3 = vip.getScale();
+		}
+		// Spout End
 		GL11.glScalef(var3, var3, var3);
 	}
 
