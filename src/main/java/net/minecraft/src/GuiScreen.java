@@ -746,15 +746,32 @@ public class GuiScreen extends Gui {
 			}
 		}
 		if (!handled) {
-			// Start of vanilla code - got wrapped with this if
+			// Start of Nekocraft-patched Code
 			if (Keyboard.getEventKeyState()) {
-				if (Keyboard.getEventKey() == 87) {
+				int eventkey = Keyboard.getEventKey();
+				char eventchar = Keyboard.getEventCharacter();
+				if (eventkey == 87) {
 					this.mc.toggleFullscreen();
 					return;
 				}
-				this.keyTyped(Keyboard.getEventCharacter(), Keyboard.getEventKey());
+				if (gui.isMacOs && eventkey == 28 && eventchar == 0) {
+						eventkey = 29;
+				}
+				if (eventchar > 0x7F && eventchar <= 0xFF && Keyboard.next()){
+					int eventkey2 = Keyboard.getEventKey();
+					char eventchar2 = Keyboard.getEventCharacter();
+					try{
+						c2 = new String(new byte[]{ (byte) c, (byte) c2 },"GBK");
+						this.keyTyped(eventkey, eventchar2);
+					}catch(Throwable t){
+						this.keyTyped(eventkey, eventchar);
+						this.keyTyped(eventkey2, eventchar2);
+					}
+					return;
+				}
+				this.keyTyped(eventkey, eventchar);
 			}
-			// End of vanilla code
+			// End of Nekocraft-patched code
 		}
 		// Spout End
 	}
