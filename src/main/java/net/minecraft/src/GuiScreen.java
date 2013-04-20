@@ -748,28 +748,30 @@ public class GuiScreen extends Gui {
 		if (!handled) {
 			// Start of Nekocraft-patched Code
 			if (Keyboard.getEventKeyState()) {
-				int eventkey = Keyboard.getEventKey();
-				char eventchar = Keyboard.getEventCharacter();
-				if (eventkey == 87) {
-					this.mc.toggleFullscreen();
-					return;
-				}
-				if (gui.isMacOs && eventkey == 28 && eventchar == 0) {
-						eventkey = 29;
-				}
-				if (eventchar > 0x7F && eventchar <= 0xFF && Keyboard.next()){
-					int eventkey2 = Keyboard.getEventKey();
-					char eventchar2 = Keyboard.getEventCharacter();
-					try{
-						c2 = new String(new byte[]{ (byte) c, (byte) c2 },"GBK");
-						this.keyTyped(eventkey, eventchar2);
-					}catch(Throwable t){
-						this.keyTyped(eventkey, eventchar);
-						this.keyTyped(eventkey2, eventchar2);
+				do {
+					int eventkey = Keyboard.getEventKey();
+					char eventchar = Keyboard.getEventCharacter();
+					if (eventkey == 87) {
+						this.mc.toggleFullscreen();
+						return;
 					}
-					return;
-				}
-				this.keyTyped(eventkey, eventchar);
+					if (this.isMacOs && eventkey == 28 && eventchar == 0) {
+							eventkey = 29;
+					}
+					if (eventchar > 0x7F && eventchar <= 0xFF && Keyboard.next()){
+						int eventkey2 = Keyboard.getEventKey();
+						char eventchar2 = Keyboard.getEventCharacter();
+						try{
+							eventchar2 = new String(new byte[]{ (byte) eventchar, (byte) eventchar2 },"GBK").charAt(0);
+							this.keyTyped(eventchar2, eventkey);
+						}catch(Throwable t){
+							this.keyTyped(eventchar, eventkey);
+							this.keyTyped(eventchar2, eventkey2);
+						}
+						return;
+					}
+					this.keyTyped(eventchar, eventkey);
+				} while (Keyboard.next());
 			}
 			// End of Nekocraft-patched code
 		}
