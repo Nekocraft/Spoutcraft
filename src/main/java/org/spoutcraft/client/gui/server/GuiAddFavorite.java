@@ -74,7 +74,7 @@ public class GuiAddFavorite extends GuiScreen {
 
 		updateItem();
 
-		labelTitle = new GenericLabel("Server Name");
+		labelTitle = new GenericLabel("服务器名称");
 		labelTitle.setHeight(11).setWidth(250).setX(left).setY(top);
 		getScreen().attachWidget("Spoutcraft", labelTitle);
 		top+=13;
@@ -85,7 +85,7 @@ public class GuiAddFavorite extends GuiScreen {
 		getScreen().attachWidget("Spoutcraft", textTitle);
 		top+=25;
 
-		labelIp = new GenericLabel("Server Address");
+		labelIp = new GenericLabel("服务器地址");
 		labelIp.setHeight(11).setWidth(250).setX(left).setY(top);
 		getScreen().attachWidget("Spoutcraft", labelIp);
 		top+=13;
@@ -99,15 +99,15 @@ public class GuiAddFavorite extends GuiScreen {
 		textIp.setText(item.getIp() + (item.getPort() != ServerItem.DEFAULT_PORT ? ":" + item.getPort() : ""));
 		top+=25;
 
-		buttonClear = new GenericButton("Clear");
+		buttonClear = new GenericButton("清空");
 		buttonClear.setWidth(100).setHeight(20).setX(textIp.getX()).setY(top);
 		getScreen().attachWidget("Spoutcraft", buttonClear);
 
-		buttonDone = new GenericButton("Done");
+		buttonDone = new GenericButton("完成");
 		buttonDone.setWidth(200).setHeight(20).setX(width - 205).setY(height - 25);
 		getScreen().attachWidget("Spoutcraft", buttonDone);
 
-		buttonCancel = new GenericButton("Cancel");
+		buttonCancel = new GenericButton("取消");
 		buttonCancel.setWidth(200).setHeight(20).setX(width - 205 - 205).setY(height - 25);
 		getScreen().attachWidget("Spoutcraft", buttonCancel);
 

@@ -49,19 +49,19 @@ public class GuiFavorites extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		labelTitle = new GenericLabel("Favorite Servers");
+		labelTitle = new GenericLabel("收藏的服务器");
 		labelTitle.setY(12).setX(width / 2 - mc.fontRenderer.getStringWidth(labelTitle.getText()) / 2);
 		labelTitle.setHeight(15).setWidth(mc.fontRenderer.getStringWidth(labelTitle.getText()) / 2);
 		getScreen().attachWidget("Spoutcraft", labelTitle);
 
 		buttonMoveUp = new GenericButton("/\\");
-		buttonMoveUp.setTooltip("Move Item Up");
+		buttonMoveUp.setTooltip("往上移动");
 		buttonMoveUp.setX(5).setY(5);
 		buttonMoveUp.setHeight(20).setWidth(20);
 		getScreen().attachWidget("Spoutcraft", buttonMoveUp);
 
 		buttonMoveDown = new GenericButton("\\/");
-		buttonMoveDown.setTooltip("Move Item Down");
+		buttonMoveDown.setTooltip("往下移动");
 		buttonMoveDown.setX(25).setY(5);
 		buttonMoveDown.setHeight(20).setWidth(20);
 		getScreen().attachWidget("Spoutcraft", buttonMoveDown);
@@ -93,21 +93,21 @@ public class GuiFavorites extends GuiScreen {
 		textQuickJoin.setText(text);
 		getScreen().attachWidget("Spoutcraft", textQuickJoin);
 
-		buttonQuickJoin = new GenericButton("Quick Join");
+		buttonQuickJoin = new GenericButton("快速加入");
 		buttonQuickJoin.setX(right).setY(top).setWidth(cellWidth).setHeight(20);
 		getScreen().attachWidget("Spoutcraft", buttonQuickJoin);
 
 		top += 25;
 
-		buttonJoin = new GenericButton("Join Server");
+		buttonJoin = new GenericButton("加入服务器");
 		buttonJoin.setX(right).setY(top).setWidth(cellWidth).setHeight(20);
 		getScreen().attachWidget("Spoutcraft", buttonJoin);
 
-		buttonAdd = new GenericButton("Add Favorite");
+		buttonAdd = new GenericButton("加入收藏");
 		buttonAdd.setX(center).setY(top).setWidth(cellWidth).setHeight(20);
 		getScreen().attachWidget("Spoutcraft", buttonAdd);
 
-		buttonEdit = new GenericButton("Edit");
+		buttonEdit = new GenericButton("编辑");
 		buttonEdit.setX(left).setY(top).setWidth(cellWidth).setHeight(20);
 		getScreen().attachWidget("Spoutcraft", buttonEdit);
 
@@ -117,12 +117,12 @@ public class GuiFavorites extends GuiScreen {
 		buttonDelete.setX(left).setY(top).setWidth(cellWidth).setHeight(20);
 		getScreen().attachWidget("Spoutcraft", buttonDelete);
 
-		buttonServerList = new GenericButton("Server List");
+		buttonServerList = new GenericButton("服务器列表");
 		buttonServerList.setX(center).setY(top).setWidth(cellWidth)
 				.setHeight(20);
 		getScreen().attachWidget("Spoutcraft", buttonServerList);
 
-		buttonMainMenu = new GenericButton("Main Menu");
+		buttonMainMenu = new GenericButton("主菜单");
 		buttonMainMenu.setX(right).setY(top).setWidth(cellWidth).setHeight(20);
 		getScreen().attachWidget("Spoutcraft", buttonMainMenu);
 		refresh();
@@ -183,7 +183,7 @@ public class GuiFavorites extends GuiScreen {
 				item = (ServerItem) model.getItem(view.getSelectedRow());
 			}
 			if (item != null) {
-				SpoutClient.getInstance().getServerManager().join(item, this, "Favorites");
+				SpoutClient.getInstance().getServerManager().join(item, this, "收藏夹");
 			} else {
 				// Just in case something weird happens
 				updateButtons();
@@ -237,7 +237,7 @@ public class GuiFavorites extends GuiScreen {
 				int port = split.length > 1 ? Integer.parseInt(split[1]) : ServerItem.DEFAULT_PORT;
 				SpoutClient.getHandle().gameSettings.lastServer = adress.replace(":", "_");
 				SpoutClient.getHandle().gameSettings.saveOptions();
-				SpoutClient.getInstance().getServerManager().join(ip, port, this, "Favorites");
+				SpoutClient.getInstance().getServerManager().join(ip, port, this, "收藏夹");
 			}
 		} catch (Exception e) {
 		}
@@ -264,11 +264,11 @@ public class GuiFavorites extends GuiScreen {
 
 		if (model.isPolling()) {
 			buttonRefresh.setEnabled(false);
-			buttonRefresh.setText("Polling...");
+			buttonRefresh.setText("探测中...");
 			buttonRefresh.setDisabledColor(new Color(0f, 0f, 1f));
 		} else {
 			buttonRefresh.setEnabled(true);
-			buttonRefresh.setText("Refresh");
+			buttonRefresh.setText("刷新");
 		}
 		
 		if (view.getSelectedItem() instanceof ServerItem) {

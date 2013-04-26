@@ -26,7 +26,7 @@ public class DeleteFavoriteButton extends SafeButton {
 
 	public DeleteFavoriteButton(GuiFavorites parent) {
 		this.parent = parent;
-		setText("Delete");
+		setText("删除");
 	}
 
 	@Override

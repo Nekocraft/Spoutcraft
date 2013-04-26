@@ -27,7 +27,7 @@ import org.spoutcraft.client.gui.database.AbstractAPIModel;
 import org.spoutcraft.client.gui.database.UrlElement;
 
 public class AccessTypeFilter extends GenericComboBox implements UrlElement {
-	private String[] strings = { "All", "Open", "Whitelisted", "Graylisted", "Blacklisted"};
+	private String[] strings = { "全部", "开放", "白名单", "灰名单", "黑名单"};
 	private int [] ids = {-1, 0, 1, 2, 3};
 	AbstractAPIModel model;
 
@@ -60,6 +60,6 @@ public class AccessTypeFilter extends GenericComboBox implements UrlElement {
 
 	@Override
 	public String getText() {
-		return "Access: " + super.getText();
+		return "验证: " + super.getText();
 	}
 }

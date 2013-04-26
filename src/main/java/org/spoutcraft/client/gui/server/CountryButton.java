@@ -34,7 +34,7 @@ public class CountryButton extends GenericComboBox implements UrlElement {
 		countries.add("All");
 		countries.addAll(model.getCountries());
 		setItems(countries);
-		setText("Country");
+		setText("国家");
 	}
 
 	public boolean isActive() {

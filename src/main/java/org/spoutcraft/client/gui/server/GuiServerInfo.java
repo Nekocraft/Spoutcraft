@@ -84,7 +84,7 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		buttonRefresh = new GenericButton();
 		getScreen().attachWidget("Spoutcraft", buttonRefresh);
 
-		buttonAddFavorite = new GenericButton("Add Favorite");
+		buttonAddFavorite = new GenericButton("加入收藏夹");
 		getScreen().attachWidget("Spoutcraft", buttonAddFavorite);
 
 		buttonJoin = new GenericButton("Join");
@@ -98,10 +98,10 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		labelTitle = new GenericLabel(item.getTitle());
 		getScreen().attachWidget("Spoutcraft", labelTitle);
 
-		buttonOpenBrowser = new GenericButton("More Info...");
+		buttonOpenBrowser = new GenericButton("更多信息...");
 		getScreen().attachWidget("Spoutcraft", buttonOpenBrowser);
 
-		labelCategoryLabel = new GenericLabel("Category");
+		labelCategoryLabel = new GenericLabel("分类");
 		content.attachWidget("Spoutcraft", labelCategoryLabel);
 		labels.add(labelCategoryLabel);
 
@@ -109,7 +109,7 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		labelCategory.setTextColor(new Color(0xffaaaaaa));
 		content.attachWidget("Spoutcraft", labelCategory);
 
-		labelMCVersionLabel = new GenericLabel("Minecraft Version");
+		labelMCVersionLabel = new GenericLabel("Minecraft 版本");
 		content.attachWidget("Spoutcraft", labelMCVersionLabel);
 		labels.add(labelMCVersionLabel);
 
@@ -117,20 +117,20 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		labelMCVersion.setTextColor(new Color(0xffaaaaaa));
 		content.attachWidget("Spoutcraft", labelMCVersion);
 
-		labelAccessLabel = new GenericLabel("Access Type");
+		labelAccessLabel = new GenericLabel("验证类型");
 		content.attachWidget("Spoutcraft", labelAccessLabel);
 		labels.add(labelAccessLabel);
 
-		String access = "Open";
+		String access = "开放";
 		switch(item.accessType) {
 			case ServerItem.WHITELIST:
-				access = "Whitelist";
+				access = "白名单";
 				break;
 			case ServerItem.GRAYLIST:
-				access = "Graylist";
+				access = "灰名单";
 				break;
 			case ServerItem.BLACKLIST:
-				access = "Blacklist";
+				access = "黑名单";
 				break;
 		}
 		labelAccess = new GenericLabel(access);
@@ -141,7 +141,7 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		labelAddress.setTextColor(new Color(0xffaaaaaa));
 		content.attachWidget("Spoutcraft", labelAddress);
 
-		labelAddressLabel = new GenericLabel("Address");
+		labelAddressLabel = new GenericLabel("IP");
 		content.attachWidget("Spoutcraft", labelAddressLabel);
 		labels.add(labelAddressLabel);
 
@@ -158,7 +158,7 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		labelDescription.setTextColor(new Color(0xffaaaaaa));
 		labelDescription.setWrapLines(true);
 
-		labelPlayersLabel = new GenericLabel("Players");
+		labelPlayersLabel = new GenericLabel("玩家");
 		content.attachWidget("Spoutcraft", labelPlayersLabel);
 		labels.add(labelPlayersLabel);
 
@@ -166,9 +166,9 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		labelPlayers.setTextColor(new Color(0xffaaaaaa));
 		content.attachWidget("Spoutcraft", labelPlayers);
 
-		linkForum = new LinkButton("Go to Forum", "");
+		linkForum = new LinkButton("论坛", "");
 		getScreen().attachWidget("Spoutcraft", linkForum);
-		linkSite = new LinkButton("Go to Website", "");
+		linkSite = new LinkButton("网站", "");
 		getScreen().attachWidget("Spoutcraft", linkSite);
 
 		labelSpoutcraftLabel = new GenericLabel("Spoutcraft");
@@ -249,14 +249,14 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		boolean updating = loadThread != null;
 		buttonRefresh.setEnabled(!updating);
 		if (updating) {
-			buttonRefresh.setText("Loading...");
+			buttonRefresh.setText("获取中...");
 		} else {
-			buttonRefresh.setText("Refresh");
+			buttonRefresh.setText("刷新");
 		}
 
 		buttonAddFavorite.setEnabled(!SpoutClient.getInstance().getServerManager().getFavorites().containsSever(item));
 		if (!buttonAddFavorite.isEnabled()) {
-			buttonAddFavorite.setTooltip("You already have this server in your favorites");
+			buttonAddFavorite.setTooltip("已经添加过这个服务器");
 		} else {
 			buttonAddFavorite.setTooltip("");
 		}
@@ -432,7 +432,7 @@ public class GuiServerInfo extends GuiSpoutScreen {
 				linkSite.setUrl(URLDecoder.decode((String) i.get("site"), "UTF-8"));
 				linkForum.setUrl(URLDecoder.decode((String) i.get("forumurl"), "UTF-8"));
 				boolean spoutcraft = i.get("spoutcraft").equals("1");
-				labelSpoutcraft.setText(spoutcraft ? "Required" : "Not Required");
+				labelSpoutcraft.setText(spoutcraft ? "必须" : "可选");
 				labelMCVersion.setText(URLDecoder.decode((String) i.get("mcversion"), "UTF-8"));
 				labelCategory.setText(URLDecoder.decode((String) i.get("category"), "UTF-8"));
 				if (i.containsKey("gallery")) {

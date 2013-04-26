@@ -171,13 +171,13 @@ public class ServerItem implements ListWidgetItem {
 		} else if (!showPingWhilePolling) {
 			switch (getPing()) {
 				case PollResult.PING_UNKNOWN:
-					sMotd = ChatColor.RED + "Unknown Host!";
+					sMotd = ChatColor.RED + "无法解析的域名!";
 					break;
 				case PollResult.PING_TIMEOUT:
-					sMotd = ChatColor.RED + "Operation timed out!";
+					sMotd = ChatColor.RED + "连接超时!";
 					break;
 				case PollResult.PING_BAD_MESSAGE:
-					sMotd = ChatColor.RED + "Bad Message (Server version likely outdated)!";
+					sMotd = ChatColor.RED + "服务器版本太旧!";
 					break;
 				default:
 					sMotd = ChatColor.GREEN + getMotd();
