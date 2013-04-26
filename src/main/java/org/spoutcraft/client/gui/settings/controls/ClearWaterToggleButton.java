@@ -28,16 +28,16 @@ import org.spoutcraft.client.config.Configuration;
 
 public class ClearWaterToggleButton extends GenericCheckBox {
 	public ClearWaterToggleButton() {
-		super("Clear Water");
+		super("清澈的水");
 		setChecked(Configuration.isClearWater());
 		setEnabled(SpoutClient.getInstance().isClearWaterCheat());
-		setTooltip("Clear Water\nOFF - (default) standard water view\nON - can see deeper through water, no longer obscures vision\nClear water is very resource demanding!");
+		setTooltip("清澈的水\n关闭 - （默认）标准的水景\n - 清澈的水可以看到更深的水，不再掩盖视力\n清除水需要大量资源！");
 	}
 
 	@Override
 	public String getTooltip() {
 		if (!isEnabled()) {
-			return "This option is not allowed by your server, it is considered cheating.";
+			return "此选项在服务器不被允许，它被视为作弊.";
 		}
 		return super.getTooltip();
 	}

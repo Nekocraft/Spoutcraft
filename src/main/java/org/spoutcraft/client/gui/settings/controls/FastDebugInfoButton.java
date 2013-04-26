@@ -24,15 +24,18 @@ import org.spoutcraft.client.config.Configuration;
 
 public class FastDebugInfoButton extends GenericButton {
 	public FastDebugInfoButton() {
-		setTooltip("Fast Debug Info\nFancy - default debug info screen, slower\nFast - debug info screen without lagometer, faster\nFPS Only - Shows only the frames per second, hiding debug information.");
+		setTooltip("快速调试信息\n" +
+				"完整 - 默认调试信息屏幕，速度较慢\n" +
+				"快速 - 调试信息屏没有lagmeter，更快\n" +
+				"FPS - 仅显示帧每秒，隐藏的调试信息.");
 	}
 
 	@Override
 	public String getText() {
 		switch (Configuration.getFastDebug()) {
-			case 0: return "Debug Info: Fancy";
-			case 1: return "Debug Info: Fast";
-			case 2: return "Debug Info: FPS Only";
+			case 0: return "调试信息: 完整";
+			case 1: return "调试信息: 快速";
+			case 2: return "调试信息: FPS";
 		}
 		return "Unknown State: " + Configuration.getFastDebug();
 	}

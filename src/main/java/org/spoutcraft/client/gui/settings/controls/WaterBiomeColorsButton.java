@@ -26,9 +26,11 @@ import org.spoutcraft.client.config.Configuration;
 
 public class WaterBiomeColorsButton extends GenericCheckBox {
 	public WaterBiomeColorsButton() {
-		super("Water Biome Colors");
+		super("水生物群落颜色的");
 		this.setChecked(Configuration.isWaterBiomeColors());
-		setTooltip("Water Biome Colors\nOn - water will have colors adjusted for biomes\nOff - vanilla water colors.");
+		setTooltip("水生物群落颜色的\n" +
+				"开 - 水的颜色将有调整生物群落\n" +
+				"关 - 默认水的颜色。");
 	}
 
 	@Override

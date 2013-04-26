@@ -28,12 +28,16 @@ import org.spoutcraft.client.config.Configuration;
 public class RenderDistanceButton extends AutomatedButton {
 	RenderDistance distance = RenderDistance.getRenderDistanceFromValue(Configuration.getRenderDistance());
 	public RenderDistanceButton() {
-		setTooltip("Visible distance\nFar - 256m (slower\nNormal - 128m\nShort - 64m (faster)\nTiny - 32m (fastest)");
+		setTooltip("可视距离\n" +
+				"远东 - 256M（慢\n" +
+				"普通 - 128M\n" +
+				"短 - 64（快）\n" +
+				"微小 - 32（最快）");
 	}
 
 	@Override
 	public String getText() {
-		return "Render Distance: " + distance.toString();
+		return "可视距离: " + distance.toString();
 	}
 
 	@Override

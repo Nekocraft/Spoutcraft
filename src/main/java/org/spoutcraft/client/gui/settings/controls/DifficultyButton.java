@@ -25,36 +25,37 @@ import org.spoutcraft.api.gui.GenericButton;
 
 public class DifficultyButton extends GenericButton {
 	public DifficultyButton() {
-		super("Difficulty");
-		setTooltip("Difficulty\nControls the difficulty of the game.");
+		super("难度");
+		setTooltip("难度\n" +
+				"控制游戏的难度.");
 	}
 
 	@Override
 	public String getText() {
 		if (Minecraft.theMinecraft.theWorld != null && Minecraft.theMinecraft.theWorld.getWorldInfo().isHardcoreModeEnabled()) {
-			return "Difficulty: Hardcore";
+			return "难度: 极限";
 		}
 		String difficulty;
 		switch(Minecraft.theMinecraft.gameSettings.difficulty) {
-			case 0: difficulty = "Peaceful"; break;
-			case 1: difficulty = "Easy"; break;
-			case 2: difficulty = "Normal"; break;
-			case 3: difficulty = "Hard"; break;
-			default: difficulty = "Unknown"; break;
+			case 0: difficulty = "和平"; break;
+			case 1: difficulty = "简单"; break;
+			case 2: difficulty = "普通"; break;
+			case 3: difficulty = "困难"; break;
+			default: difficulty = "未知"; break;
 		}
-		return "Difficulty: " + difficulty;
+		return "难度: " + difficulty;
 	}
 
 	@Override
 	public String getTooltip() {
 		if (Minecraft.theMinecraft.theWorld == null) {
-			return "Can not change difficulty outside of the game";
+			return "不能改变游戏之外的难度";
 		}
 		if (!Minecraft.theMinecraft.isSingleplayer()) {
-			return "Can not change difficulty in multiplayer";
+			return "无法更改多人难度";
 		}
 		if (Minecraft.theMinecraft.theWorld.getWorldInfo().isHardcoreModeEnabled()) {
-			return "Can not change difficulty in hardcore mode";
+			return "在极限模式无法改变难度";
 		}
 		return super.getTooltip();
 	}

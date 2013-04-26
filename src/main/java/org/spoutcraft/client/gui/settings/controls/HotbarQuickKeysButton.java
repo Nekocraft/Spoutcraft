@@ -24,9 +24,11 @@ import org.spoutcraft.client.config.Configuration;
 
 public class HotbarQuickKeysButton extends GenericCheckBox {
 	public HotbarQuickKeysButton() {
-		super("Num Keys Switch Items");
+		super("数字键切换项目");
 		setChecked(Configuration.isHotbarQuickKeysEnabled());
-		setTooltip("The 0-9 keys switch through the hotbar items\nOFF - 0-9 keys do not switch through hotbar items\nON - (Default) 0-9 keys switch through hotbar items");
+		setTooltip("0-9键切换快捷栏项目\n" +
+				"OFF - 0-9键不通过切换快捷栏项目\n" +
+				"ON - （默认）0-9键开关通过快捷栏项目");
 	}
 
 	@Override

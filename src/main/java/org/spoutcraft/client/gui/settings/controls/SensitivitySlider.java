@@ -25,9 +25,10 @@ import org.spoutcraft.api.gui.GenericSlider;
 
 public class SensitivitySlider extends GenericSlider {
 	public SensitivitySlider() {
-		super("Sensitivity");
+		super("灵敏度");
 		setSliderPosition(Minecraft.theMinecraft.gameSettings.mouseSensitivity);
-		setTooltip("Sensitivity\nAdjusts the sensitivity of the mouse in game.");
+		setTooltip("灵敏度\n" +
+				"调整在游戏中的鼠标的灵敏度。");
 	}
 
 	@Override

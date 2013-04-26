@@ -26,9 +26,13 @@ import org.spoutcraft.client.config.Configuration;
 
 public class BrightnessSlider extends GenericSlider {
 	public BrightnessSlider() {
-		super("Brightness");
+		super("亮度");
 		setSliderPosition(Configuration.getBrightnessSlider());
-		setTooltip("Increases the brightness of darker objects\nOFF - standard brightness\n100% - maximum brightness for darker objects\nThis options does not change the brightness of\nfully black objects");
+		setTooltip("增加亮度较暗的物体\n" +
+                "OFF - 标准亮度\n" +
+                "100% - 最大亮度较暗的对象\n" +
+                "此选项不改变\n" +
+                "全黑色物体的亮度");
 	}
 
 	@Override
@@ -40,11 +44,11 @@ public class BrightnessSlider extends GenericSlider {
 
 	public String getText() {
 		if (getSliderPosition() == 0F) {
-			return "Brightness: Moody";
+			return "亮度: 昏暗";
 		}
 		if (getSliderPosition() == 1F) {
-			return "Brightness: Bright";
+			return "亮度: 明亮";
 		}
-		return "Brightness: " + (int)(this.getSliderPosition() * 100) + "%";
+		return "亮度: " + (int)(this.getSliderPosition() * 100) + "%";
 	}
 }

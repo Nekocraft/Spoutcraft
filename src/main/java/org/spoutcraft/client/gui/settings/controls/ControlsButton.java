@@ -28,8 +28,9 @@ import org.spoutcraft.client.gui.controls.GuiControls;
 public class ControlsButton extends GenericButton {
 	GuiScreen parent;
 	public ControlsButton(GuiScreen parent) {
-		super("Controls");
-		setTooltip("Controls\nAdd, modify, or remove keybindings");
+		super("控制");
+		setTooltip("控制\n" +
+				"添加，修改或删除键绑定");
 		this.parent = parent;
 	}
 

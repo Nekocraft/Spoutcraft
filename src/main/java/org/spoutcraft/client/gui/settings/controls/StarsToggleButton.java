@@ -25,10 +25,12 @@ import org.spoutcraft.client.config.Configuration;
 
 public class StarsToggleButton extends GenericCheckBox {
 	public StarsToggleButton() {
-		super("Stars");
+		super("星星");
 		setChecked(Configuration.isStars());
 		setEnabled(SpoutClient.getInstance().isStarsCheat());
-		setTooltip("Stars\nON - stars are visible, slower\nOFF  - stars are not visible, faster");
+		setTooltip("星星\n" +
+				"ON - 星星是可见的，慢\n" +
+				"OFF - 星星是不可见的，快");
 	}
 
 	@Override

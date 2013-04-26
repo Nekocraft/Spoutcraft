@@ -26,9 +26,12 @@ import org.spoutcraft.client.config.Configuration;
 
 public class SmoothLightingSlider extends GenericSlider {
 	public SmoothLightingSlider() {
-		super("Smooth Lighting");
+		super("平滑光照");
 		setSliderPosition(Configuration.getSmoothLighting());
-		setTooltip("Smooth lighting\nOFF - no smooth lighting (faster)\n1% - light smooth lighting (slower)\n100% - dark smooth lighting (slower)");
+		setTooltip("平滑光照\n" +
+				"关 - 没有平滑光照（更快）\n" +
+				"1％ - 光线平滑光照（较慢）\n" +
+				"100％ - 暗的平滑光照（较慢）");
 	}
 
 	@Override
@@ -42,6 +45,6 @@ public class SmoothLightingSlider extends GenericSlider {
 	}
 
 	public String getText() {
-		return "Smooth Lighting: " + (int)(this.getSliderPosition() * 100) + "%";
+		return "平滑光照: " + (int)(this.getSliderPosition() * 100) + "%";
 	}
 }

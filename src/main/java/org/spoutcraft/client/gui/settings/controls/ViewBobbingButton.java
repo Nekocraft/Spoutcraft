@@ -26,9 +26,9 @@ import org.spoutcraft.client.config.Configuration;
 
 public class ViewBobbingButton extends GenericCheckBox {
 	public ViewBobbingButton() {
-		super("View Bobbing");
+		super("行走摇晃");
 		setChecked(Configuration.isViewBobbing());
-		setTooltip("More realistic movement.");
+		setTooltip("更现实的运动.");
 	}
 
 	@Override

@@ -25,20 +25,20 @@ import org.spoutcraft.client.config.Configuration;
 
 public class AutosaveButton extends AutomatedButton {
 	public AutosaveButton() {
-		setTooltip("Autosave interval\nDefault autosave interval (2s) is NOT RECOMMENDED.\nAutosave causes the famous Lag Spike of Death.");
+		setTooltip("自动保存间隔\n默认频率 (2s) 不推荐.\n会导致\"卡死\".");
 	}
 
 	@Override
 	public String getText() {
 		switch(Configuration.getAutosave()) {
-			case 0: return "Autosave: 30 min";
-			case 1: return "Autosave: 3 min";
-			case 2: return "Autosave: 1 min";
-			case 3: return "Autosave: 30 sec";
-			case 4: return "Autosave: 10 sec";
-			case 5: return "Autosave: 2 sec";
+			case 0: return "自动保存: 30 min";
+			case 1: return "自动保存: 3 min";
+			case 2: return "自动保存: 1 min";
+			case 3: return "自动保存: 30 sec";
+			case 4: return "自动保存: 10 sec";
+			case 5: return "自动保存: 2 sec";
 		}
-		return "Unknown State: " + Configuration.getAutosave();
+		return "未知选项: " + Configuration.getAutosave();
 	}
 
 	@Override

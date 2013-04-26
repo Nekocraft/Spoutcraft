@@ -119,7 +119,7 @@ public class GuiAdvancedOptions extends GuiScreen {
 		screen.setHeight(height - 24 - 30).setWidth(width).setY(24).setX(0);
 		getScreen().attachWidget("Spoutcraft", screen);
 
-		GenericLabel label = new GenericLabel("Game Settings");
+		GenericLabel label = new GenericLabel("游戏选项");
 		int size = Spoutcraft.getMinecraftFont().getTextWidth(label.getText());
 		label.setX((int) (width / 2 - size / 2)).setY(10);
 		label.setFixed(true).setPriority(RenderPriority.Lowest);
@@ -133,14 +133,14 @@ public class GuiAdvancedOptions extends GuiScreen {
 		control.setWidth(150).setHeight(20).setX(left).setY(height - 25);
 		getScreen().attachWidget("Spoutcraft", control);
 
-		switchToSimpleCheck = new GenericCheckBox("Advanced");
+		switchToSimpleCheck = new GenericCheckBox("高级");
 		switchToSimpleCheck.setChecked(true);
 		switchToSimpleCheck.setAlign(WidgetAnchor.CENTER_CENTER);
 		switchToSimpleCheck.setX(5).setY(3).setWidth(100).setHeight(20);
 		switchToSimpleCheck.setPriority(RenderPriority.Low);
 		getScreen().attachWidget("Spoutcraft", switchToSimpleCheck);
 
-		doneButton = new GenericButton("Done");
+		doneButton = new GenericButton("完成");
 		doneButton.setAlign(WidgetAnchor.CENTER_CENTER);
 		doneButton.setX(right).setY(height - 25);
 		doneButton.setHeight(20).setWidth(150);
@@ -151,7 +151,7 @@ public class GuiAdvancedOptions extends GuiScreen {
 		Color grey = new Color(0.80F, 0.80F, 0.80F, 0.65F);
 
 		// Controls and audio
-		label = new GenericLabel("Controls and Audio Settings");
+		label = new GenericLabel("控制和音频设置");
 		size = Spoutcraft.getMinecraftFont().getTextWidth(label.getText());
 		label.setX((int) (width / 2 - size / 2)).setY(top);
 		label.setTextColor(grey);
@@ -212,7 +212,7 @@ public class GuiAdvancedOptions extends GuiScreen {
 		top += 22;
 
 		// Graphics
-		label = new GenericLabel("Graphical Settings");
+		label = new GenericLabel("图形设置");
 		size = Spoutcraft.getMinecraftFont().getTextWidth(label.getText());
 		label.setX((int) (width / 2 - size / 2)).setY(top);
 		label.setTextColor(grey);
@@ -237,13 +237,13 @@ public class GuiAdvancedOptions extends GuiScreen {
 		}
 
 		RadioButton button;
-		button = (RadioButton) new FavorPerformanceButton("Favor Performance", message).setGroup(1).setAlign(WidgetAnchor.TOP_CENTER);
+		button = (RadioButton) new FavorPerformanceButton("最佳性能", message).setGroup(1).setAlign(WidgetAnchor.TOP_CENTER);
 		button.setWidth(150).setHeight(20).setX(left).setY(top);
 		button.setTooltip("Spoutcraft will attempt to provide smooth framerates, potentially at the cost of appearance.");
 		screen.attachWidget("Spoutcraft", button);
 		button.setSelected(Configuration.isAutomatePerformance() && Configuration.getAutomateMode() == 0);
 
-		button = (RadioButton) new OptimalGameplayButton("Balanced Gameplay", message).setGroup(1).setAlign(WidgetAnchor.TOP_CENTER);
+		button = (RadioButton) new OptimalGameplayButton("平衡", message).setGroup(1).setAlign(WidgetAnchor.TOP_CENTER);
 		button.setWidth(150).setHeight(20).setX(right).setY(top);
 		button.setTooltip("Spoutcraft will attempt to provide reasonable framerates and appearance.");
 		screen.attachWidget("Spoutcraft", button);
@@ -251,13 +251,13 @@ public class GuiAdvancedOptions extends GuiScreen {
 
 		top += 22;
 
-		button = (RadioButton) new FavorAppearanceButton("Favor Appearance", message).setGroup(1).setAlign(WidgetAnchor.TOP_CENTER);
+		button = (RadioButton) new FavorAppearanceButton("最佳画质", message).setGroup(1).setAlign(WidgetAnchor.TOP_CENTER);
 		button.setWidth(150).setHeight(20).setX(left).setY(top);
 		button.setTooltip("Spoutcraft will attempt to provide the best appearance, but potentially at the cost of framerates.");
 		screen.attachWidget("Spoutcraft", button);
 		button.setSelected(Configuration.isAutomatePerformance() && Configuration.getAutomateMode() == 2);
 
-		button = (RadioButton) new ManualSelectionButton("Manual Selection", message, parent).setGroup(1).setAlign(WidgetAnchor.TOP_CENTER);
+		button = (RadioButton) new ManualSelectionButton("自定义", message, parent).setGroup(1).setAlign(WidgetAnchor.TOP_CENTER);
 		button.setWidth(150).setHeight(20).setX(right).setY(top);
 		button.setTooltip("Disable automatic performance settings and adjust the settings manually.");
 		screen.attachWidget("Spoutcraft", button);
@@ -373,7 +373,7 @@ public class GuiAdvancedOptions extends GuiScreen {
 		top += 5;
 
 		// Performance
-		label = new GenericLabel("Performance Settings");
+		label = new GenericLabel("性能设置");
 		size = Spoutcraft.getMinecraftFont().getTextWidth(label.getText());
 		label.setX((int) (width / 2 - size / 2)).setY(top);
 		label.setTextColor(grey);
@@ -424,7 +424,7 @@ public class GuiAdvancedOptions extends GuiScreen {
 		top += 5;
 
 		// Appearance
-		label = new GenericLabel("Appearance Settings");
+		label = new GenericLabel("画质设置");
 		size = Spoutcraft.getMinecraftFont().getTextWidth(label.getText());
 		label.setX((int) (width / 2 - size / 2)).setY(top);
 		label.setTextColor(grey);
@@ -537,7 +537,7 @@ public class GuiAdvancedOptions extends GuiScreen {
 		top += 5;
 
 		// Inventory
-		label = new GenericLabel("Inventory Settings");
+		label = new GenericLabel("物品栏设置");
 		size = Spoutcraft.getMinecraftFont().getTextWidth(label.getText());
 		label.setX((int) (width / 2 - size / 2)).setY(top);
 		label.setTextColor(grey);
@@ -563,7 +563,7 @@ public class GuiAdvancedOptions extends GuiScreen {
 		top += 5;
 
 		// Miscellaneous
-		label = new GenericLabel("Miscellaneous Settings");
+		label = new GenericLabel("杂项设置");
 		size = Spoutcraft.getMinecraftFont().getTextWidth(label.getText());
 		label.setX((int) (width / 2 - size / 2)).setY(top);
 		label.setTextColor(grey);

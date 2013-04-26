@@ -27,18 +27,24 @@ import org.spoutcraft.client.config.Configuration;
 
 public class PerformanceButton extends AutomatedButton {
 	public PerformanceButton() {
-		setTooltip("FPS Limit\nMax FPS - no limit (fastest)\nBalanced - limit 120 FPS (slower)\nPower saver - limit 40 FPS (slowest)\nVSync - limit to monitor framerate (60, 30, 20)\nBalanced and Power saver decrease the FPS even if\nthe limit value is not reached.");
+		setTooltip("FPS限制\n" +
+				"最多的FPS - 没有限制（最快）\n" +
+				"平衡 - 限制120 FPS（较慢）\n" +
+				"节电保护 - 限制40 FPS（最慢）\n" +
+				"垂直同步 - 限制监视帧率（60，30，20）\n" +
+				"即使平衡和省电降低FPS\n" +
+				"限制值还没有达到.");
 	}
 
 	@Override
 	public String getText() {
 		switch (Configuration.getPerformance()) {
-			case 0: return "Performance: Max FPS";
-			case 1: return "Performance: Balanced";
-			case 2: return "Performance: Power Saver";
-			case 3: return "Performance: Vsync";
+			case 0: return "性能: 最大 FPS";
+			case 1: return "性能: 平衡";
+			case 2: return "性能: 节能";
+			case 3: return "性能: 显示器";
 		}
-		return "Unknown State: " + Configuration.getPerformance();
+		return "未知选项: " + Configuration.getPerformance();
 	}
 
 	@Override

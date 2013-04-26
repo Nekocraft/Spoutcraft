@@ -24,9 +24,9 @@ import org.spoutcraft.client.config.Configuration;
 
 public class HotbarTextButton extends GenericCheckBox {
 	public HotbarTextButton() {
-		super("Hotbar Text");
+		super("快捷栏文本");
 		setChecked(Configuration.isShowingHotbarText());
-		setTooltip("Displays the name of the currently selected hotbar item.");
+		setTooltip("显示当前选定的快捷栏项目的名称.");
 	}
 
 	@Override

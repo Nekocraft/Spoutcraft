@@ -25,17 +25,17 @@ import org.spoutcraft.client.config.Configuration;
 
 public class AdvancedOpenGLButton extends AutomatedButton {
 	public AdvancedOpenGLButton() {
-		setTooltip("Detect and render only visible geometry\nOFF - all geometry is rendered (slower)\nFast - only visible geometry is rendered (fastest)\nFancy - conservative, avoids visual artifacts (faster)\nThe option is available only if it is supported by the\ngraphic card.");
+		setTooltip("检测可见的几何体\n关闭 - 所以几何体会被渲染 (慢)\n速度优先 - 只有可见的几何体 (最快)\n高级 - 更保守的渲染 (中等)\n这个选项值在显卡支持的情况\n下被启用.");
 	}
 
 	@Override
 	public String getText() {
 		switch (Configuration.getAdvancedOpenGL()) {
-			case 0: return "Advanced OpenGL: OFF";
-			case 1: return "Advanced OpenGL: Fast";
-			case 2: return "Advanced OpenGL: Fancy";
+			case 0: return "高级 OpenGL: 关";
+			case 1: return "高级 OpenGL: 速度优先";
+			case 2: return "高级 OpenGL: 高级";
 		}
-		return "Unknown State: " + Configuration.getAdvancedOpenGL();
+		return "未知选项: " + Configuration.getAdvancedOpenGL();
 	}
 
 	@Override

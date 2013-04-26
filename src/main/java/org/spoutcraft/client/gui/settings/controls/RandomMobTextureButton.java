@@ -27,9 +27,11 @@ import org.spoutcraft.client.config.Configuration;
 
 public class RandomMobTextureButton extends AutomatedCheckBox {
 	public RandomMobTextureButton() {
-		super("Random Mob Textures");
+		super("随机怪物纹理");
 		setChecked(Configuration.isRandomMobTextures());
-		setTooltip("Applies Random Textures to Mobs and Animals.\n\nOnly supported by certain texture packs.");
+		setTooltip("适用的随机纹理到小怪和动物。\n" +
+				"\n" +
+				"仅支持某些纹理包.");
 	}
 
 	@Override

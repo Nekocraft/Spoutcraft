@@ -25,7 +25,7 @@ import org.spoutcraft.client.config.Configuration;
 
 public class ResizeScreenshotWidthField extends GenericTextField {
 	public ResizeScreenshotWidthField() {
-		setTooltip("The width to resize the screenshot to.");
+		setTooltip("宽度调整截图");
 		setText("");
 		setPlaceholder("" + Configuration.getResizedScreenshotWidth());
 		setMaximumCharacters(4);

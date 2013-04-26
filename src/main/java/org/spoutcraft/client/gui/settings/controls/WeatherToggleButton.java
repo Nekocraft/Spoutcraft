@@ -25,16 +25,19 @@ import org.spoutcraft.client.config.Configuration;
 
 public class WeatherToggleButton extends GenericCheckBox {
 	public WeatherToggleButton() {
-		super("Weather");
+		super("天气");
 		setChecked(Configuration.isWeather());
 		setEnabled(SpoutClient.getInstance().isWeatherCheat());
-		setTooltip("Weather\nON - weather is active, slower\nOFF  - weather is not active, faster\nThe weather controls rain, snow and thunderstorms.");
+		setTooltip("天气\n" +
+				"开 - 天气活跃，慢\n" +
+				"关 - 天气不活跃，速度更快\n" +
+				"天气控制雨，雪和雷暴.");
 	}
 
 	@Override
 	public String getTooltip() {
 		if (!isEnabled()) {
-			return "This option is not allowed by your server, it is considered cheating.";
+			return "此选项在服务器不被允许，它被视为作弊.";
 		}
 		return super.getTooltip();
 	}

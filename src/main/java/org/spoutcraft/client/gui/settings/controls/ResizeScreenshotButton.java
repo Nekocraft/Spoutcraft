@@ -24,9 +24,11 @@ import org.spoutcraft.client.config.Configuration;
 
 public class ResizeScreenshotButton extends GenericCheckBox {
 	public ResizeScreenshotButton() {
-		super("Resize Screenshots");
+		super("调整大小截图");
 		setChecked(Configuration.isResizeScreenshots());
-		setTooltip("Screenshots will be rendered at an alternate dimension.\nOFF - (Default) Screenshots are the size of your window.\nON - Screenshots are the specified dimension.");
+		setTooltip("截图将呈现一个备用的尺寸。\n" +
+				"OFF - （默认）截图是你的窗口的大小。\n" +
+				"ON - 截图指定维.");
 	}
 
 	@Override

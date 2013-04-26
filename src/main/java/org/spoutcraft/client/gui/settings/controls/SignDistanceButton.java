@@ -23,12 +23,13 @@ import org.spoutcraft.client.config.Configuration;
 
 public class SignDistanceButton extends AutomatedButton {
 	public SignDistanceButton() {
-		setTooltip("The distance from which you can see the text on a sign\nFarther distances can decrease FPS.");
+		setTooltip("你可以看到一个牌子上的文字的距离\n" +
+				"更远的距离可以降低FPS.");
 	}
 
 	@Override
 	public String getText() {
-		return "Sign Distance: " + (Configuration.getSignDistance() != Integer.MAX_VALUE ? Configuration.getSignDistance() : "Infinite");
+		return "牌子距离: " + (Configuration.getSignDistance() != Integer.MAX_VALUE ? Configuration.getSignDistance() : "无限");
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public class MinimapButton extends GenericButton {
 	GuiScreen parent;
 
 	public MinimapButton(GuiScreen parent) {
-		super("Minimap Options");
+		super("小地图选项");
 		this.parent = parent;
 	}
 

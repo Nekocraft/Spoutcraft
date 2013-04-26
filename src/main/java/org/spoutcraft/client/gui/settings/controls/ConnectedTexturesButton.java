@@ -27,9 +27,10 @@ import org.spoutcraft.client.config.Configuration;
 
 public class ConnectedTexturesButton extends AutomatedCheckBox {
 	public ConnectedTexturesButton() {
-		super("Connected Textures");
+		super("连续材质");
 		setChecked(Configuration.isConnectedTextures());
-		setTooltip("Connects textures of identical blocks next to each other for aesthetics.\n\nCertain texture packs may add additional enhancements");
+		setTooltip("连接对方美学相同的块的纹理。\n" +
+				"\n某些纹理包可能会增加额外的增强功能");
 	}
 
 	@Override

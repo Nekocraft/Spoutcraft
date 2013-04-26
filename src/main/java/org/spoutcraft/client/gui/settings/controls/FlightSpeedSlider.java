@@ -25,20 +25,21 @@ import org.spoutcraft.client.config.Configuration;
 
 public class FlightSpeedSlider extends GenericSlider {
 	public FlightSpeedSlider() {
-		super("Flight Speed");
+		super("飞行速度");
 		setEnabled(SpoutClient.getInstance().isFlySpeedCheat());
 		if (SpoutClient.getInstance().isFlySpeedCheat()) {
 			this.setSliderPosition(Configuration.getFlightSpeedFactor() / 10);
 		} else {
 			this.setSliderPosition(1.0F / 10);
 		}
-		setTooltip("Flight Speed Multiplier\nAlters how fast you fly in creative. 1X is vanilla speed.");
+		setTooltip("飞行速度\n" +
+				"飞行速度有多快。 1X速度默认。");
 	}
 
 	@Override
 	public String getText() {
 		double pos = this.getSliderPosition() * 10;
-		return "Flight Speed: " + (Math.round(pos * 100D)  / 100D) + "X";
+		return "飞行速度: " + (Math.round(pos * 100D)  / 100D) + "X";
 	}
 
 	@Override

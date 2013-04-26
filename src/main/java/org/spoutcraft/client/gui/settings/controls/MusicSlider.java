@@ -25,9 +25,10 @@ import org.spoutcraft.api.gui.GenericSlider;
 
 public class MusicSlider extends GenericSlider {
 	public MusicSlider() {
-		super("Music");
+		super("音乐");
 		setSliderPosition(Minecraft.theMinecraft.gameSettings.musicVolume);
-		setTooltip("Music Volume\nControls the volume of all the music in game.");
+		setTooltip("音乐音量\n" +
+				"控制游戏中的所有音乐的音量.");
 	}
 
 	@Override

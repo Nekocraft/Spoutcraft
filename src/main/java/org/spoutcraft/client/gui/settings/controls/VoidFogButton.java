@@ -25,16 +25,19 @@ import org.spoutcraft.client.config.Configuration;
 
 public class VoidFogButton extends GenericCheckBox {
 	public VoidFogButton() {
-		super("Void Fog");
+		super("虚空迷雾");
 		setChecked(Configuration.isVoidFog());
 		setEnabled(SpoutClient.getInstance().isVoidFogCheat());
-		setTooltip("Void Fog\nON - A dark fog that obscures vision appears at low\nlevels of the map.\nOFF - normal view distance at all height levels.");
+		setTooltip("虚空迷雾\n" +
+				"开 - 黑暗雾掩盖视力出现在低\n" +
+				"水平的地图。\n" +
+				"关 - 正常观看距离在所有高度.");
 	}
 
 	@Override
 	public String getTooltip() {
 		if (!isEnabled()) {
-			return "This option is not allowed by your server, it is considered cheating.";
+			return "此选项在服务器不被允许，它被视为作弊.";
 		}
 
 		return super.getTooltip();

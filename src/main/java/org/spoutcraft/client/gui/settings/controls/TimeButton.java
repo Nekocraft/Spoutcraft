@@ -26,23 +26,26 @@ import org.spoutcraft.client.config.Configuration;
 public class TimeButton extends GenericButton {
 	public TimeButton() {
 		setEnabled(SpoutClient.getInstance().isTimeCheat());
-		setTooltip("Time\nDefault - normal day/night cycles\nDay Only - day only\nNight Only - night only");
+		setTooltip("时间\n" +
+				"默认 - 正常的白天/黑夜循环\n" +
+				"只有白天 - 只有白天\n" +
+				"只有晚上 - 只有晚上");
 	}
 
 	@Override
 	public String getText() {
 		switch(Configuration.getTime()) {
-			case 0: return "Time: Default";
-			case 1: return "Time: Night";
-			case 2: return "Time: Day";
+			case 0: return "时间: 默认";
+			case 1: return "时间: 只有白天";
+			case 2: return "时间: 只有晚上";
 		}
-		return "Unknown State: " + Configuration.getTime();
+		return "未知选项: " + Configuration.getTime();
 	}
 
 	@Override
 	public String getTooltip() {
 		if (!isEnabled()) {
-			return "This option is not allowed by your server, it is considered cheating.";
+			return "此选项在服务器不被允许，它被视为作弊.";
 		}
 		return super.getTooltip();
 	}

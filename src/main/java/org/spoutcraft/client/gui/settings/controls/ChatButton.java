@@ -29,7 +29,7 @@ public class ChatButton extends GenericButton {
 	GuiScreen parent;
 
 	public ChatButton(GuiScreen parent) {
-		super("Chat Options");
+		super("聊天选项");
 		this.parent = parent;
 	}
 

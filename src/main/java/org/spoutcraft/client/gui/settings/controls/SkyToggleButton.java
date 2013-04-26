@@ -25,10 +25,13 @@ import org.spoutcraft.client.config.Configuration;
 
 public class SkyToggleButton extends GenericCheckBox {
 	public SkyToggleButton() {
-		super("Sky");
+		super("天空");
 		setChecked(Configuration.isSky());
 		setEnabled(SpoutClient.getInstance().isSkyCheat());
-		setTooltip("Sky\nON - sky is visible, slower\nOFF  - sky is not visible, faster\nWhen sky is OFF the moon and sun are still visible.");
+		setTooltip("天空\n" +
+				"开 - 天空是可见的，慢\n" +
+				"关 - 天空是不可见的，速度更快\n" +
+				"当天空是关月亮和太阳仍可见.");
 	}
 
 	@Override

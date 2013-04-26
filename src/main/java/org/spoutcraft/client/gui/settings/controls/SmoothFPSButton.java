@@ -23,9 +23,13 @@ import org.spoutcraft.client.config.Configuration;
 
 public class SmoothFPSButton extends AutomatedCheckBox {
 	public SmoothFPSButton() {
-		super("Smooth FPS");
+		super("流畅的FPS");
 		setChecked(Configuration.isSmoothFPS());
-		setTooltip("Stabilizes FPS by flushing the graphic driver buffers\nOFF - no stabilization, FPS may fluctuate\nON - FPS stabilization\nThis option is graphic driver dependant and its effect\nis not always visible");
+		setTooltip("稳定FPS冲洗图形驱动程序缓冲区\n" +
+				"OFF - 没有稳定，FPS可能波动\n" +
+				"ON - FPS稳定\n" +
+				"此选项图形驱动程序的依赖性，其效果\n" +
+				"不总是可用");
 	}
 
 	@Override

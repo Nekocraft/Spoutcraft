@@ -28,10 +28,14 @@ import org.spoutcraft.client.config.Configuration;
 public class FancyTreesButton extends AutomatedCheckBox {
 	UUID fancyGraphics;
 	public FancyTreesButton(UUID fancyGraphics) {
-		super("Fancy Trees");
+		super("树渲染");
 		this.fancyGraphics = fancyGraphics;
 		setChecked(Configuration.isFancyTrees());
-		setTooltip("Trees\nFast - lower quality, faster\nFancy - higher quality, slower\nFast trees have opaque leaves.\nFancy trees have transparent leaves.");
+		setTooltip("树\n" +
+				"快 - 低质量，更快\n" +
+				"质量 - 质量更高，速度较慢\n" +
+				"快速树木叶子不透明。\n" +
+				"质量树木有透明的树叶。");
 	}
 
 	@Override

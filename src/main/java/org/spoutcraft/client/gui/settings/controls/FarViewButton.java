@@ -25,9 +25,15 @@ import org.spoutcraft.client.config.Configuration;
 
 public class FarViewButton extends AutomatedCheckBox {
 	public FarViewButton() {
-		super("Far View");
+		super("距离设置");
 		setChecked(Configuration.isFarView());
-		setTooltip("Far View\nOFF - (default) standard view distance\nON - 3x view distance\nFar View is very resource demanding!\n3x view distance => 9x chunks to be loaded => FPS / 9\nStandard view distances: 32, 64, 128, 256\nFar view distances: 96, 192, 384, 512");
+		setTooltip("距离设置\n" +
+				"OFF - （默认）标准视图距离\n" +
+				"开 - 3X视图距离\n" +
+				"资源要求非常苛刻！\n" +
+				"3倍视距=>9x中要加载块=> FPS/ 9\n" +
+				"标准视图距离：32，64，128，256\n" +
+				"远观距离：96，192，384，512");
 	}
 
 	@Override

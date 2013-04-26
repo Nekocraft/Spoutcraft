@@ -28,8 +28,9 @@ import org.spoutcraft.api.gui.GenericButton;
 public class LanguagesButton extends GenericButton {
 	GuiScreen parent;
 	public LanguagesButton(GuiScreen parent) {
-		super("Languages");
-		setTooltip("Languages\nChange the language of the game.");
+		super("语言");
+		setTooltip("语言\n" +
+				"更改游戏的语言.");
 		this.parent = parent;
 	}
 

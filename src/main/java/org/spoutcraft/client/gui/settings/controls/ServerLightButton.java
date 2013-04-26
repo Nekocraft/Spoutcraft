@@ -25,9 +25,12 @@ import org.spoutcraft.client.config.Configuration;
 
 public class ServerLightButton extends AutomatedCheckBox {
 	public ServerLightButton() {
-		super("Client Light");
+		super("光照计算");
 		setChecked(Configuration.isClientLight());
-		setTooltip("Recalculates the light from servers in multiplayer.\n\nDisabling the recalculation is faster, but may result in odd\nlight patterns or light holes.");
+		setTooltip("在多服务器人重新计算光照。\n" +
+				"\n" +
+				"禁用重新计算速度更快，但可能会导致在奇数\n" +
+				"光图案或光孔.");
 	}
 
 	@Override
@@ -41,6 +44,6 @@ public class ServerLightButton extends AutomatedCheckBox {
 		if (Minecraft.theMinecraft.theWorld == null || Minecraft.theMinecraft.theWorld.isRemote) {
 			return super.getTooltip();
 		}
-		return "Has no effect in Single Player";
+		return "在单人游戏中有没有效果";
 	}
 }

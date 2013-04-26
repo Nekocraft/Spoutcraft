@@ -24,9 +24,9 @@ import org.spoutcraft.client.config.Configuration;
 
 public class ReplaceToolsButton extends GenericCheckBox {
 	public ReplaceToolsButton() {
-		super("Auto Replace Tools");
+		super("自动替换工具");
 		setChecked(Configuration.isReplaceTools());
-		setTooltip("Replaces used up tools with spares from your inventory");
+		setTooltip("工具损坏时自动从背包中取出工具");
 	}
 
 	@Override

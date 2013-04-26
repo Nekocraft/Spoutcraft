@@ -23,7 +23,8 @@ import org.spoutcraft.client.config.Configuration;
 
 public class ChunkRenderSpeed extends AutomatedButton {
 	public ChunkRenderSpeed() {
-		setTooltip("Chunk Render Speed\nControls how fast chunks will render in new areas.\n Faster rendering may adversly affect FPS.");
+		setTooltip("大块渲染速度\n" +
+			"控制快速的块将如何呈现在新的领域。更快的渲染，可能会影响FPS.");
 	}
 
 	@Override
@@ -39,12 +40,12 @@ public class ChunkRenderSpeed extends AutomatedButton {
 
 	public String getText() {
 		switch(Configuration.getChunkRenderPasses()) {
-			case 16: return "Render Speed: Very Fast";
-			case 8: return "Render Speed: Fast";
-			case 4: return "Render Speed: Average";
-			case 2: return "Render Speed: Slow";
-			case 1: return "Render Speed: Slowest";
+			case 16: return "渲染速度：非常快";
+			case 8: return "渲染速度：快";
+			case 4: return "渲染速度：平均";
+			case 2: return "渲染速度：慢";
+			case 1: return "渲染速度：最慢";
 		}
-		return "Error, Unknown Setting!";
+		return "错误，不明设定！";
 	}
 }

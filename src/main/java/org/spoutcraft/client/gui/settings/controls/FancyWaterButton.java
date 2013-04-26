@@ -26,10 +26,14 @@ import org.spoutcraft.client.config.Configuration;
 public class FancyWaterButton extends AutomatedCheckBox {
 	UUID fancyGraphics;
 	public FancyWaterButton(UUID fancyGraphics) {
-		super("Fancy Water");
+		super("水渲染");
 		this.fancyGraphics = fancyGraphics;
 		setChecked(Configuration.isFancyWater());
-		setTooltip("Fancy Water\nFast  - lower quality, faster\nFancy - higher quality, slower\nFast water (1 pass) has some visual artifacts\nFancy water (2 pass) has no visual artifacts");
+		setTooltip("水渲染\n" +
+				"快 - 低质量，更快\n" +
+				"质量 - 质量更高，速度较慢\n" +
+				"快速水（1通）有一定的视觉假象\n" +
+				"质量水（2通）没有视觉假象");
 	}
 
 	@Override

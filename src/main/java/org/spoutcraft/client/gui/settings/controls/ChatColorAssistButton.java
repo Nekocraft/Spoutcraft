@@ -24,9 +24,9 @@ import org.spoutcraft.client.config.Configuration;
 
 public class ChatColorAssistButton extends GenericCheckBox {
 	public ChatColorAssistButton() {
-		super("Chat Colors Assistant");
+		super("聊天颜色助理");
 		setChecked(Configuration.isShowingChatColorAssist());
-		setTooltip("Displays helpful guide for Chat formatting codes.");
+		setTooltip("聊天格式化代码显示有用的指南");
 	}
 
 	@Override

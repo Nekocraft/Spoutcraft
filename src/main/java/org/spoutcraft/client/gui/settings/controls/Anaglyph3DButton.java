@@ -26,9 +26,9 @@ import org.spoutcraft.client.config.Configuration;
 
 public class Anaglyph3DButton extends GenericCheckBox {
 	public Anaglyph3DButton() {
-		super("3D Anaglyph");
+		super("3D模式");
 		setChecked(Configuration.isAnaglyph3D());
-		setTooltip("3D mode used with red-cyan 3D glasses.");
+		setTooltip("红蓝3D眼镜的3D模式.");
 	}
 
 	@Override

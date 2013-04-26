@@ -26,10 +26,14 @@ import org.spoutcraft.client.config.Configuration;
 public class FancyCloudsButton extends AutomatedCheckBox {
 	UUID fancyGraphics;
 	public FancyCloudsButton(UUID fancyGraphics) {
-		super("Fancy Clouds");
+		super("云渲染");
 		this.fancyGraphics = fancyGraphics;
 		setChecked(Configuration.isFancyClouds());
-		setTooltip("Clouds\nFast - lower quality, faster\nFancy - higher quality, slower\nFast clouds are rendered 2D.\nFancy clouds are rendered 3D.");
+		setTooltip("云\n" +
+				"快 - 低质量，更快\n" +
+				"质量 - 质量更高，速度较慢\n" +
+				"快速云渲染2D。\n" +
+				"质量云渲染的3D.");
 	}
 
 	@Override

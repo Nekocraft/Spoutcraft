@@ -25,17 +25,20 @@ import org.spoutcraft.client.config.MipMapUtils;
 
 public class MipMapSlider extends GenericSlider {
 	public MipMapSlider() {
-		super("Terrain Mipmaps");
+		super("地形的贴图");
 		this.setSliderPosition(Configuration.getMipmapsPercent());
-		setTooltip("Terrain Mipmaps\nON - reduces the pixelation in far off terrain. However, not all \ngraphic cards support it, and some texture packs handle it poorly.\nOFF - Normal Minecraft terrain.");
+		setTooltip("地形的贴图\n" +
+				"ON - 降低像素化为期不远的地形。然而，并非所有\n" +
+				"显卡支持，和一些纹理包处理不善。\n" +
+				"OFF - 正常MINECRAFT地形的.");
 	}
 
 	@Override
 	public String getText() {
 		if (this.getSliderPosition() == 0F) {
-			return "Terrain Mipmaps: OFF";
+			return "地形的贴图: OFF";
 		}
-		return "Terrain Mipmaps: " + (int)(this.getSliderPosition() * 100) + "%";
+		return "地形的贴图: " + (int)(this.getSliderPosition() * 100) + "%";
 	}
 
 	@Override

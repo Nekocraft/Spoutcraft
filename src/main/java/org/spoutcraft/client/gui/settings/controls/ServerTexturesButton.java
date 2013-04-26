@@ -24,9 +24,10 @@ import org.spoutcraft.client.config.Configuration;
 
 public class ServerTexturesButton extends GenericCheckBox {
 	public ServerTexturesButton() {
-		super("Server Texture Prompts");
+		super("服务器纹理提示");
 		setChecked(Configuration.isServerTexturePromptsEnabled());
-		setTooltip("Turn this setting off to ignore\nServer-Side Texture Pack Prompts at Login");
+		setTooltip("关闭此设定忽略\n" +
+				"服务器端纹理包在登录提示");
 	}
 
 	@Override

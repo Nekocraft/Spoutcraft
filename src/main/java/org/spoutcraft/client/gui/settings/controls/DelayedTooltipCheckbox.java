@@ -24,8 +24,9 @@ import org.spoutcraft.client.config.Configuration;
 
 public class DelayedTooltipCheckbox extends GenericCheckBox {
 	public DelayedTooltipCheckbox() {
-		super("Delayed Tooltips");
-		setTooltip("If ticked, widgets wait 500 ms\nuntil they show their tooltips.");
+		super("延迟的工具提示");
+		setTooltip("如果勾选，部件等待500毫秒\n" +
+				"直到他们展示自己的工具提示.");
 		setChecked(Configuration.isDelayedTooltips());
 	}
 

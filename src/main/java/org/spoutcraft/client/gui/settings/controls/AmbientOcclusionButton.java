@@ -25,9 +25,9 @@ import org.spoutcraft.client.config.Configuration;
 
 public class AmbientOcclusionButton extends AutomatedCheckBox {
 	public AmbientOcclusionButton() {
-		super("Ambient Occlusion");
+		super("环境光遮蔽");
 		setChecked(Configuration.isAmbientOcclusion());
-		setTooltip("Applies Ambient Occlusion to lighting calculations.\nTurn off to improve FPS.");
+		setTooltip("适用于环境光遮蔽的照明计算。\n关闭提高FPS.");
 	}
 
 	@Override

@@ -25,9 +25,10 @@ import org.spoutcraft.api.gui.GenericCheckBox;
 
 public class InvertMouseButton extends GenericCheckBox {
 	public InvertMouseButton() {
-		super("Invert Mouse");
+		super("反转鼠标");
 		setChecked(Minecraft.theMinecraft.gameSettings.invertMouse);
-		setTooltip("Invert Mouse\nInverts the mouse movement.");
+		setTooltip("反转鼠标\n" +
+				"反转鼠标移动。");
 	}
 
 	@Override

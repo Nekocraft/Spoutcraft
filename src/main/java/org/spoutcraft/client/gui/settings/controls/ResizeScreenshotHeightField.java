@@ -25,7 +25,7 @@ import org.spoutcraft.client.config.Configuration;
 
 public class ResizeScreenshotHeightField extends GenericTextField {
 	public ResizeScreenshotHeightField() {
-		setTooltip("The height to resize the screenshot to.");
+		setTooltip("调整截图高度.");
 		setText("");
 		setPlaceholder("" + Configuration.getResizedScreenshotHeight());
 		setMaximumCharacters(4);

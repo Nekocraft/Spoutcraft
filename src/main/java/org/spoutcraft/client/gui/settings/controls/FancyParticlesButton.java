@@ -26,10 +26,14 @@ import org.spoutcraft.client.config.Configuration;
 public class FancyParticlesButton extends AutomatedCheckBox {
 	UUID fancyGraphics;
 	public FancyParticlesButton(UUID fancyGraphics) {
-		super("Fancy Particles");
+		super("颗粒渲染");
 		this.fancyGraphics = fancyGraphics;
 		setChecked(Configuration.isFancyParticles());
-		setTooltip("Fancy Light\nFast - lower quality, faster\nFancy - higher quality, slower\nFast Particles renders fewer particles, and only those nearyby.\nFancy particles renders all particles.");
+		setTooltip("颗粒渲染\n" +
+				"快 - 低质量，更快\n" +
+				"质量 - 质量更高，速度较慢\n" +
+				"快速粒子呈现更少的粒子，只有那些附近的。\n" +
+				"质量粒子渲染的所有粒子.");
 	}
 
 	@Override

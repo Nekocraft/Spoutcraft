@@ -28,10 +28,14 @@ import org.spoutcraft.client.config.Configuration;
 public class FancyGrassButton extends AutomatedCheckBox {
 	UUID fancyGraphics;
 	public FancyGrassButton(UUID fancyGraphics) {
-		super("Fancy Grass");
+		super("草渲染");
 		this.fancyGraphics = fancyGraphics;
 		setChecked(Configuration.isFancyGrass());
-		setTooltip("Fancy Grass\nFast - lower quality, faster\nFancy - higher quality, slower\nFast grass uses default side texture.\nFancy grass uses biome side texture.");
+		setTooltip("草\n" +
+				"快 - 低质量，更快\n" +
+				"质量 - 质量更高，速度较慢\n" +
+				"使用默认的快速草地边纹理。\n" +
+				"花式草使用生物群落侧纹理.");
 	}
 
 	@Override

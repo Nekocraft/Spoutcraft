@@ -30,8 +30,8 @@ public class ResetButton extends SafeButton {
 	GuiScreen parent;
 
 	public ResetButton(GuiScreen parent) {
-		setText("Reset to Default");
-		setTooltip("Resets all options to default settings.");
+		setText("重置为默认值");
+		setTooltip("将所有选项为默认设置.");
 		this.parent = parent;
 	}
 

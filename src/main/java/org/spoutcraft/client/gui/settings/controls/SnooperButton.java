@@ -29,7 +29,7 @@ public class SnooperButton extends GenericButton {
 	GuiScreen parent;
 
 	public SnooperButton(GuiScreen parent) {
-		super("Snooper Settings");
+		super("窥探者设置");
 		this.parent = parent;
 	}
 

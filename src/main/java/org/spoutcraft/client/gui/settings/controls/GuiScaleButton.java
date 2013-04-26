@@ -31,18 +31,18 @@ public class GuiScaleButton extends GenericButton {
 	GuiAdvancedOptions parent;
 	public GuiScaleButton(GuiAdvancedOptions parent) {
 		this.parent = parent;
-		setTooltip("Alters how the size of the display scales.");
+		setTooltip("改变显示比例的大小如何.");
 	}
 
 	@Override
 	public String getText() {
 		switch (Configuration.getGuiScale()) {
-			case 0: return "GUI Scale: Auto";
-			case 1: return "GUI Scale: Small";
-			case 2: return "GUI Scale: Normal";
-			case 3: return "GUI Scale: Large";
+			case 0: return "GUI缩放: 自动";
+			case 1: return "GUI缩放: 小";
+			case 2: return "GUI缩放: 普通";
+			case 3: return "GUI缩放: 大";
 		}
-		return "Unknown State: " + Configuration.getGuiScale();
+		return "未知选项: " + Configuration.getGuiScale();
 	}
 
 	@Override

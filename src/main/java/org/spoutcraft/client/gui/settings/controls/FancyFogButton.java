@@ -26,10 +26,13 @@ import org.spoutcraft.client.config.Configuration;
 public class FancyFogButton extends AutomatedCheckBox {
 	UUID fancyGraphics;
 	public FancyFogButton(UUID fancyGraphics) {
-		super("Fancy Fog");
+		super("雾渲染");
 		this.fancyGraphics = fancyGraphics;
 		setChecked(Configuration.isFancyFog());
-		setTooltip("Fog type\nFast - faster fog\nFancy - slower fog, looks better\nThe fancy fog is available only if it is supported by the\ngraphic card.");
+		setTooltip("耐污型\n" +
+				"快 - 更快雾\n" +
+				"质量 - 雾慢，看起来更好\n" +
+				"只有当显卡支持的渲染雾");
 	}
 
 	@Override

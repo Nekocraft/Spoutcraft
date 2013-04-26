@@ -25,9 +25,10 @@ import org.spoutcraft.api.gui.GenericSlider;
 
 public class FieldOfViewSlider extends GenericSlider {
 	public FieldOfViewSlider() {
-		super("Field of View");
+		super("视野");
 		setSliderPosition(Minecraft.theMinecraft.gameSettings.fovSetting);
-		setTooltip("Field of View\nAdjusts the field of view in game.");
+		setTooltip("视野\n" +
+				"调整在游戏中的视场.");
 	}
 
 	@Override
@@ -39,10 +40,10 @@ public class FieldOfViewSlider extends GenericSlider {
 	public String getText() {
 		String message = String.valueOf((70 + (int)(this.getSliderPosition() * 40)));
 		if (this.getSliderPosition() == 0) {
-			message = "Normal";
+			message = "正常";
 		}
 		if (this.getSliderPosition() == 1) {
-			message = "Quake Pro";
+			message = "广角";
 		}
 		return "FOV: " + message;
 	}

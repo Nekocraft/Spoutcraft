@@ -30,12 +30,16 @@ public class FancyGraphicsButton extends AutomatedButton {
 	public boolean custom = false;
 	private List<CheckBox> linkedButtons = null;
 	public FancyGraphicsButton() {
-		setTooltip("Visual quality\nFast  - lower quality, faster\nFancy - higher quality, slower\nChanges the appearance of clouds, leaves, water,\nshadows and grass sides.");
+		setTooltip("视觉质量\n" +
+				"速度 - 低质量，更快\n" +
+				"质量 - 质量更高，速度较慢\n" +
+				"改变外观的云，叶，水，\n" +
+				"阴影草两侧");
 	}
 
 	@Override
 	public String getText() {
-		return "Graphics: " + (custom ? "Custom" : (Configuration.isFancyGraphics() ? "Fancy" :"Fast"));
+		return "图像: " + (custom ? "自定义" : (Configuration.isFancyGraphics() ? "质量" :"速度"));
 	}
 
 	@Override

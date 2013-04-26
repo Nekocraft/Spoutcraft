@@ -25,17 +25,17 @@ import org.spoutcraft.client.config.Configuration;
 
 public class BetterGrassButton extends AutomatedButton {
 	public BetterGrassButton() {
-		setTooltip("Better Grass / Snow\nOFF - default side grass texture, fastest\nFast - full side grass texture, slower\nFancy - dynamic side grass texture, slowest");
+		setTooltip("更好的玻璃 / 雪\nOFF - 默认材质，最快的\n快速 - 边缘材质，慢的\nFancy - 动态边缘材质，最慢");
 	}
 
 	@Override
 	public String getText() {
 		switch(Configuration.getBetterGrass()) {
-			case 0: return "Better Grass / Snow: OFF";
-			case 1: return "Better Grass / Snow: Fast";
-			case 2: return "Better Grass / Snow: Fancy";
+			case 0: return "更好的玻璃 / 雪: 关闭";
+			case 1: return "更好的玻璃 / 雪: 快速";
+			case 2: return "更好的玻璃 / 雪: 最好";
 		}
-		return "Unknown State: " + Configuration.getBetterGrass();
+		return "未知选项: " + Configuration.getBetterGrass();
 	}
 
 	@Override

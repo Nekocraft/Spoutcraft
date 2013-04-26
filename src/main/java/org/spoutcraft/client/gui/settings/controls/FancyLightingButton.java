@@ -28,10 +28,14 @@ import org.spoutcraft.client.config.Configuration;
 public class FancyLightingButton extends AutomatedCheckBox {
 	UUID fancyGraphics;
 	public FancyLightingButton(UUID fancyGraphics) {
-		super("Fancy Light");
+		super("灯渲染");
 		this.fancyGraphics = fancyGraphics;
 		setChecked(Configuration.isFancyLight());
-		setTooltip("Fancy Light\nFast - lower quality, faster\nFancy - higher quality, slower\nFancy Light applies more advanced occluded lighting over blocks.\nWorks best with smooth lighting.");
+		setTooltip("灯渲染\n" +
+				"快 - 低质量，更快\n" +
+				"质量 - 质量更高，速度较慢\n" +
+				"质量适用于更先进的照明块。\n" +
+				"拥有柔和的灯光效果最佳.");
 	}
 
 	@Override

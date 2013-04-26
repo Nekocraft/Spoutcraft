@@ -28,12 +28,12 @@ import org.spoutcraft.client.config.Configuration;
 public class AntiAliasingButton extends AutomatedButton {
 	public int aaSampling = Configuration.getAASampling();
 	public AntiAliasingButton() {
-		setTooltip("Anti-Aliasing \n Changing requires complete restart.");
+		setTooltip("抗锯齿 \n 变更需要完全重启.");
 	}
 
 	@Override
 	public String getText() {
-		return "Anti-Aliasing (Samples): " + Configuration.getAASampling();
+		return "抗锯齿 (实验): " + Configuration.getAASampling();
 	}
 
 	@Override

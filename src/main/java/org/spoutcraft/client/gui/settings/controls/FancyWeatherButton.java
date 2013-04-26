@@ -26,10 +26,16 @@ import org.spoutcraft.client.config.Configuration;
 public class FancyWeatherButton extends AutomatedCheckBox {
 	UUID fancyGraphics;
 	public FancyWeatherButton(UUID fancyGraphics) {
-		super("Fancy Weather");
+		super("天气渲染");
 		this.fancyGraphics = fancyGraphics;
 		setChecked(Configuration.isFancyWeather());
-		setTooltip("Fancy Weather\nDefault - as set by setting Graphics\nFast  - light rain/snow, faster\nFancy - heavy rain/snow, slower\nOFF - no rain/snow, fastest\nWhen rain is OFF the splashes and rain sounds\nare still active.");
+		setTooltip("天气渲染\n" +
+				"默认值 - 通过图形设置\n" +
+				"快速 - 光雨/雪，快\n" +
+				"质量 - 暴雨/雪，慢\n" +
+				"关 - 无雨/雪，最快\n" +
+				"当雨水飞溅和雨的声音\n" +
+				"仍然活跃.");
 	}
 
 	@Override
