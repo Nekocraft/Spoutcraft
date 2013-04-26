@@ -473,7 +473,8 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
 
 		if (this.gameSettings.language != null) {
 			StringTranslate.getInstance().setLanguage(this.gameSettings.language, false);
-			this.fontRenderer.setUnicodeFlag(StringTranslate.getInstance().isUnicode());
+			// Nekocraft [Add Unicode Font Support]
+			// this.fontRenderer.setUnicodeFlag(StringTranslate.getInstance().isUnicode());
 			this.fontRenderer.setBidiFlag(StringTranslate.isBidirectional(this.gameSettings.language));
 		}
 
