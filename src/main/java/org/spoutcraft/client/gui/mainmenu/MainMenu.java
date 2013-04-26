@@ -145,7 +145,8 @@ public class MainMenu extends GuiScreen {
 				File splashTextFile = new File(FileUtil.getConfigDir(), "splashes.txt");
 				// Refresh every day
 				if (!splashTextFile.exists() || (System.currentTimeMillis() - splashTextFile.lastModified() > (1L * 24 * 60 * 60 * 1000))) {
-					URL test = new URL("http://cdn.spout.org/splashes.txt");
+					// Nekocraft
+					URL test = new URL("http://play.nekocraft.com/splashes.txt");
 					HttpURLConnection urlConnect = (HttpURLConnection) test.openConnection();
 					System.setProperty("http.agent", "");
 					urlConnect.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.162 Safari/535.19");
@@ -171,7 +172,7 @@ public class MainMenu extends GuiScreen {
 			return splashes.get((new Random()).nextInt(splashes.size()));
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "I <3 Spout's " + e.getMessage();
+			return "I <3 Nekocraft's " + e.getMessage();
 		} finally {
 			if (br != null) {
 				try {
@@ -234,14 +235,14 @@ public class MainMenu extends GuiScreen {
 		textWidth = Spoutcraft.getRenderDelegate().getMinecraftFont().getTextWidth(splashText.getText());
 		float scale = ((width - 225F) / textWidth);
 		splashText.setScale(Math.min(1.5F, scale));
-
-		logo = new ScaledTexture("/res/logo/spoutcraft.png");
+		// Nekocraft Logo
+		logo = new ScaledTexture("/res/logo/logo.png");
 		((ScaledTexture) logo).setScale(Math.min(1F, (width - 135F) / 256F));
 		logo.setGeometry(15, height - 185, 256, 64);
 		logo.setLocal(true);
 		logo.setDrawAlphaChannel(true);
 
-		animate = new GenericLabel(ChatColor.ITALIC + "Animate");
+		animate = new GenericLabel(ChatColor.ITALIC + "动画");
 		textWidth = Spoutcraft.getRenderDelegate().getMinecraftFont().getTextWidth(animate.getText());
 		textWidth *= 75;
 		textWidth /= 100;
