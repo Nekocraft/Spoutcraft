@@ -146,7 +146,7 @@ public class MainMenu extends GuiScreen {
 				// Refresh every day
 				if (!splashTextFile.exists() || (System.currentTimeMillis() - splashTextFile.lastModified() > (1L * 24 * 60 * 60 * 1000))) {
 					// Nekocraft
-					URL test = new URL("http://play.nekocraft.com/splashes.txt");
+					URL test = new URL("http://play.nekocraft.com/other/splashes.txt");
 					HttpURLConnection urlConnect = (HttpURLConnection) test.openConnection();
 					System.setProperty("http.agent", "");
 					urlConnect.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.162 Safari/535.19");
@@ -172,7 +172,7 @@ public class MainMenu extends GuiScreen {
 			return splashes.get((new Random()).nextInt(splashes.size()));
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "I <3 Nekocraft's " + e.getMessage();
+			return "新世界构成中";
 		} finally {
 			if (br != null) {
 				try {
@@ -214,16 +214,16 @@ public class MainMenu extends GuiScreen {
 		buildNumber = new GenericLabel(SpoutClient.getClientVersion());
 		textWidth = Spoutcraft.getRenderDelegate().getMinecraftFont().getTextWidth(buildNumber.getText());
 		buildNumber.setTextColor(new Color(0x6CC0DC));
-		buildNumber.setGeometry(Math.min(90 - textWidth, width - 296 - textWidth), height - 99, 75, 20);
+		buildNumber.setGeometry(Math.min(90 - textWidth, width - 296 - textWidth), height - 79, 75, 20);
 
-		about = new GenericButton("About");
-		about.setGeometry(Math.min(98, width - 288), height - 105, 51, 20);
+		about = new GenericButton("关于");
+		about.setGeometry(Math.min(98, width - 288), height - 85, 51, 20);
 
 		options = new GenericButton(translate.translateKey("menu.options"));
-		options.setGeometry(Math.min(159, width - 227), height - 105, 51, 20);
+		options.setGeometry(Math.min(159, width - 227), height - 85, 51, 20);
 
 		quit = new GenericButton(translate.translateKey("menu.quit"));
-		quit.setGeometry(Math.min(220, width - 166), height - 105, 51, 20);
+		quit.setGeometry(Math.min(220, width - 166), height - 85, 51, 20);
 
 		background.setGeometry(0, 0, width, height);
 		background.setPriority(RenderPriority.Highest);
