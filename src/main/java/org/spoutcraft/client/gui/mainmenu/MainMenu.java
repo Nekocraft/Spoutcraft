@@ -238,7 +238,7 @@ public class MainMenu extends GuiScreen {
 		// Nekocraft Logo
 		logo = new ScaledTexture("/res/logo/logo.png");
 		((ScaledTexture) logo).setScale(Math.min(1F, (width - 135F) / 256F));
-		logo.setGeometry(15, height - 245, 256, 98);
+		logo.setGeometry(15, height - 230, 256, 98);
 		logo.setLocal(true);
 		logo.setDrawAlphaChannel(true);
 
