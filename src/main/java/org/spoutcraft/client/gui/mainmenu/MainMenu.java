@@ -230,7 +230,7 @@ public class MainMenu extends GuiScreen {
 		background.setAnchor(WidgetAnchor.TOP_LEFT);
 		background.setLocal(true);
 
-		splashText.setGeometry(Math.min(100, width - 245), height - 135, 200, 12);
+		splashText.setGeometry(Math.min(100, width - 215), height - 135, 200, 12);
 		splashText.setTextColor(new Color(0x6CC0DC));
 		textWidth = Spoutcraft.getRenderDelegate().getMinecraftFont().getTextWidth(splashText.getText());
 		float scale = ((width - 225F) / textWidth);
