@@ -203,13 +203,13 @@ public class MainMenu extends GuiScreen {
 		StringTranslate translate = StringTranslate.getInstance();
 
 		singleplayer = new GenericButton(translate.translateKey("menu.singleplayer"));
-		singleplayer.setGeometry(width - 110, height - 155, 100, 20);
+		singleplayer.setGeometry(width - 110, height - 135, 100, 20);
 
 		multiplayer = new GenericButton(translate.translateKey("menu.multiplayer"));
-		multiplayer.setGeometry(width - 110, height - 130, 100, 20);
+		multiplayer.setGeometry(width - 110, height - 110, 100, 20);
 
 		textures = new GenericButton(translate.translateKey("options.texture.pack"));
-		textures.setGeometry(width - 110, height - 105, 100, 20);
+		textures.setGeometry(width - 110, height - 85, 100, 20);
 
 		buildNumber = new GenericLabel(SpoutClient.getClientVersion());
 		textWidth = Spoutcraft.getRenderDelegate().getMinecraftFont().getTextWidth(buildNumber.getText());
@@ -230,7 +230,7 @@ public class MainMenu extends GuiScreen {
 		background.setAnchor(WidgetAnchor.TOP_LEFT);
 		background.setLocal(true);
 
-		splashText.setGeometry(Math.min(100, width - 245), height - 135, 200, 12);
+		splashText.setGeometry(Math.min(100, width - 215), height - 135, 200, 12);
 		splashText.setTextColor(new Color(0x6CC0DC));
 		textWidth = Spoutcraft.getRenderDelegate().getMinecraftFont().getTextWidth(splashText.getText());
 		float scale = ((width - 225F) / textWidth);
@@ -238,7 +238,7 @@ public class MainMenu extends GuiScreen {
 		// Nekocraft Logo
 		logo = new ScaledTexture("/res/logo/logo.png");
 		((ScaledTexture) logo).setScale(Math.min(1F, (width - 135F) / 256F));
-		logo.setGeometry(15, height - 185, 256, 64);
+		logo.setGeometry(15, height - 230, 256, 98);
 		logo.setLocal(true);
 		logo.setDrawAlphaChannel(true);
 
