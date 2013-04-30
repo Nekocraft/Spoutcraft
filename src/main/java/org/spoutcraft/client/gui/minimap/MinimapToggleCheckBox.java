@@ -23,9 +23,9 @@ import org.spoutcraft.api.gui.GenericCheckBox;
 
 public class MinimapToggleCheckBox extends GenericCheckBox {
 	public MinimapToggleCheckBox() {
-		super("Minimap Enabled");
+		super("小地图开启");
 		setChecked(MinimapConfig.getInstance().isEnabled());
-		setTooltip("Minimap Enabled\nEnables or disables the minimap on the HUD.");
+		setTooltip("小地图开启\n开启或关闭屏幕上的小地图。");
 	}
 
 	@Override
