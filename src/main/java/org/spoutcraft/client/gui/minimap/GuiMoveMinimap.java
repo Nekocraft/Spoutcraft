@@ -55,12 +55,12 @@ public class GuiMoveMinimap extends GuiSpoutScreen {
 
 	@Override
 	protected void createInstances() {
-		title = new GenericLabel("Drag the minimap around");
+		title = new GenericLabel("拖动小地图");
 		minimapDrag = new GenericGradient();
 		minimapDrag.setTopColor(dragColor);
 		minimapDrag.setBottomColor(dragColor);
-		buttonDone = new GenericButton("Done");
-		buttonReset = new GenericButton("Reset to Default");
+		buttonDone = new GenericButton("确定");
+		buttonReset = new GenericButton("恢复到默认位置");
 		sliderScale = new GenericSlider();
 		float scale = MinimapConfig.getInstance().getSizeAdjust();
 		sliderScale.setSliderPosition(scale / 4);
@@ -89,7 +89,7 @@ public class GuiMoveMinimap extends GuiSpoutScreen {
 			height += 18 * scale;
 		}
 
-		sliderScale.setText("Size adjust: " + Math.round(scale * 100f) / 100f);
+		sliderScale.setText("大小调整：" + Math.round(scale * 100f) / 100f);
 
 		MinimapConfig.getInstance().setSizeAdjust(scale);
 
