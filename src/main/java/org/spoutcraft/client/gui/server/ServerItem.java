@@ -129,10 +129,8 @@ public class ServerItem implements ListWidgetItem {
 
 	public void render(int x, int y, int width, int height) {
 		MCRenderDelegate r = (MCRenderDelegate) Spoutcraft.getRenderDelegate();
-                //System.out.println(databaseId); //Debug
 		if (databaseId != -1) {
 			String iconUrl = "http://play.nekocraft.com/servers/" + databaseId + "/icon.png";
-                        //System.out.println(iconUrl);
 			Texture icon = CustomTextureManager.getTextureFromUrl("Spoutcraft", iconUrl);
 			if (icon == null) {
 				CustomTextureManager.downloadTexture("Spoutcraft", iconUrl, true);
