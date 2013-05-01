@@ -178,7 +178,7 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		labelSpoutcraft = new GenericLabel("...");
 		labelSpoutcraft.setTextColor(new Color(0xffaaaaaa));
 		content.attachWidget("Spoutcraft", labelSpoutcraft);
-		textureIcon = new GenericTexture("http://cdn.spout.org/server/thumb/" + item.getDatabaseId() + ".png");
+		textureIcon = new GenericTexture("http://play.nekocraft.com/servers/" + item.getDatabaseId() + "/icon.png");
 		textureIcon.setFinishDelegate(new ImageUpdate());
 		textureIcon.setWidth(48).setHeight(48);
 		content.attachWidget("Spoutcraft", textureIcon);
@@ -406,7 +406,7 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		loadThread = new Thread() {
 			public void run() {
 				try {
-					URL url = new URL("http://servers.spout.org/api2.php?id=" + item.getDatabaseId());
+					URL url = new URL("http://play.nekocraft.com/servers/" + item.getDatabaseId() + "/info.html");
 					BufferedReader reader = new BufferedReader(new InputStreamReader(url.openStream()));
 					Yaml yaml = new Yaml();
 					ArrayList<Map<String, Object>> list = (ArrayList<Map<String, Object>>) yaml.load(reader);
