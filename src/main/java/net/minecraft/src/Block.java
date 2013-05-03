@@ -98,7 +98,7 @@ public class Block {
 	public static final BlockFlower mushroomBrown = (BlockFlower)(new BlockMushroom(39, "mushroom_brown")).setHardness(0.0F).setStepSound(soundGrassFootstep).setLightValue(0.125F).getIndirectPowerOutput("mushroom");
 	public static final BlockFlower mushroomRed = (BlockFlower)(new BlockMushroom(40, "mushroom_red")).setHardness(0.0F).setStepSound(soundGrassFootstep).getIndirectPowerOutput("mushroom");
 	public static final Block blockGold = (new BlockOreStorage(41)).setHardness(3.0F).setResistance(10.0F).setStepSound(soundMetalFootstep).getIndirectPowerOutput("blockGold");
-	public static final Block blockSteel = (new BlockOreStorage(42)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundMetalFootstep).getIndirectPowerOutput("blockIron");
+	public static final Block blockIron = (new BlockOreStorage(42)).setHardness(5.0F).setResistance(10.0F).setStepSound(soundMetalFootstep).getIndirectPowerOutput("blockIron");
 
 	/** stoneDoubleSlab */
 	public static final BlockHalfSlab stoneDoubleSlab = (BlockHalfSlab)(new BlockStep(43, true)).setHardness(2.0F).setResistance(10.0F).setStepSound(soundStoneFootstep).getIndirectPowerOutput("stoneSlab");
@@ -131,7 +131,7 @@ public class Block {
 	public static final Block signWall = (new BlockSign(68, TileEntitySign.class, false)).setHardness(1.0F).setStepSound(soundWoodFootstep).getIndirectPowerOutput("sign").disableStats();
 	public static final Block lever = (new BlockLever(69)).setHardness(0.5F).setStepSound(soundWoodFootstep).getIndirectPowerOutput("lever");
 	public static final Block pressurePlateStone = (new BlockPressurePlate(70, "stone", Material.rock, EnumMobType.mobs)).setHardness(0.5F).setStepSound(soundStoneFootstep).getIndirectPowerOutput("pressurePlate");
-	public static final Block doorSteel = (new BlockDoor(71, Material.iron)).setHardness(5.0F).setStepSound(soundMetalFootstep).getIndirectPowerOutput("doorIron").disableStats();
+	public static final Block doorIron = (new BlockDoor(71, Material.iron)).setHardness(5.0F).setStepSound(soundMetalFootstep).getIndirectPowerOutput("doorIron").disableStats();
 	public static final Block pressurePlatePlanks = (new BlockPressurePlate(72, "wood", Material.wood, EnumMobType.everything)).setHardness(0.5F).setStepSound(soundWoodFootstep).getIndirectPowerOutput("pressurePlate");
 	public static final Block oreRedstone = (new BlockRedstoneOre(73, false)).setHardness(3.0F).setResistance(5.0F).setStepSound(soundStoneFootstep).getIndirectPowerOutput("oreRedstone").setCreativeTab(CreativeTabs.tabBlock);
 	public static final Block oreRedstoneGlowing = (new BlockRedstoneOre(74, true)).setLightValue(0.625F).setHardness(3.0F).setResistance(5.0F).setStepSound(soundStoneFootstep).getIndirectPowerOutput("oreRedstone");
@@ -515,13 +515,13 @@ public class Block {
 	 * Retrieves the block texture to use based on the display side. Args: iBlockAccess, x, y, z, side
 	 */
 	public Icon getBlockTexture(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5) {
-		return this.getBlockTextureFromSideAndMetadata(par5, par1IBlockAccess.getBlockMetadata(par2, par3, par4));
+		return this.getIcon(par5, par1IBlockAccess.getBlockMetadata(par2, par3, par4));
 	}
 
 	/**
 	 * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
 	 */
-	public Icon getBlockTextureFromSideAndMetadata(int par1, int par2) {
+	public Icon getIcon(int par1, int par2) {
 		return this.blockIcon;
 	}
 
@@ -529,7 +529,7 @@ public class Block {
 	 * Returns the block texture based on the side being looked at.  Args: side
 	 */
 	public final Icon getBlockTextureFromSide(int par1) {
-		return this.getBlockTextureFromSideAndMetadata(par1, 0);
+		return this.getIcon(par1, 0);
 	}
 
 	/**
@@ -1230,7 +1230,10 @@ public class Block {
 	 */
 	public void fillWithRain(World par1World, int par2, int par3, int par4) {}
 
-	public boolean func_82505_u_() {
+	/**
+	 * Returns true only if block is flowerPot
+	 */
+	public boolean isFlowerPot() {
 		return false;
 	}
 
@@ -1284,7 +1287,10 @@ public class Block {
 		this.blockIcon = par1IconRegister.registerIcon(this.unlocalizedName);
 	}
 
-	public String func_94327_t_() {
+	/**
+	 * Gets the icon name of the ItemBlock corresponding to this block. Used by hoppers.
+	 */
+	public String getItemIconName() {
 		return null;
 	}
 

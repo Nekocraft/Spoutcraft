@@ -651,9 +651,7 @@ public class Chunk {
 	public int getBlockLightValue(int par1, int par2, int par3, int par4) {
 		ExtendedBlockStorage var5 = this.storageArrays[par2 >> 4];
 
-		if (var5 == null) {
-			return !this.worldObj.provider.hasNoSky && par4 < EnumSkyBlock.Sky.defaultLightValue ? EnumSkyBlock.Sky.defaultLightValue - par4 : 0;
-		} else {
+		if (var5 != null) {
 			int var6 = this.worldObj.provider.hasNoSky ? 0 : var5.getExtSkylightValue(par1, par2 & 15, par3);
 
 			if (var6 > 0) {
@@ -668,6 +666,8 @@ public class Chunk {
 			}
 
 			return var6;
+		} else {
+			return !this.worldObj.provider.hasNoSky && par4 < EnumSkyBlock.Sky.defaultLightValue ? EnumSkyBlock.Sky.defaultLightValue - par4 : 0;
 		}
 	}
 
@@ -680,7 +680,7 @@ public class Chunk {
 		int var3 = MathHelper.floor_double(par1Entity.posZ / 16.0D);
 
 		if (var2 != this.xPosition || var3 != this.zPosition) {
-			this.worldObj.getWorldLogAgent().func_98232_c("Wrong location! " + par1Entity);
+			this.worldObj.getWorldLogAgent().logSevere("Wrong location! " + par1Entity);
 			Thread.dumpStack();
 		}
 

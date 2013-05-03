@@ -187,10 +187,10 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
 	public EntityClientPlayerMP thePlayer;
 
 	/**
-	 * The Entity from which the renderer determines the render viewpoint. Currently is always the parent Minecraft class's
-	 * 'thePlayer' instance. Modification of its location, rotation, or other settings at render time will modify the
-	 * camera likewise, with the caveat of triggering chunk rebuilds as it moves, making it unsuitable for changing the
-	 * viewpoint mid-render.
+	 * The Entity from which the renderer determines the render viewpoint. Currently is always the parent Minecraft
+	 * class's 'thePlayer' instance. Modification of its location, rotation, or other settings at render time will
+	 * modify the camera likewise, with the caveat of triggering chunk rebuilds as it moves, making it unsuitable for
+	 * changing the viewpoint mid-render.
 	 */
 	public EntityLiving renderViewEntity;
 	public EntityLiving pointedEntityLiving;
@@ -1899,7 +1899,7 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
 			this.mcProfiler.endStartSection("animateTick");
 
 			if (!this.isGamePaused && this.theWorld != null) {
-				this.theWorld.func_73029_E(MathHelper.floor_double(this.thePlayer.posX), MathHelper.floor_double(this.thePlayer.posY), MathHelper.floor_double(this.thePlayer.posZ));
+				this.theWorld.doVoidFogParticles(MathHelper.floor_double(this.thePlayer.posX), MathHelper.floor_double(this.thePlayer.posY), MathHelper.floor_double(this.thePlayer.posZ));
 			}
 
 			this.mcProfiler.endStartSection("particles");
@@ -2339,7 +2339,7 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
 				}
 
 				var4 = Item.itemsList[var2].getHasSubtypes();
-				int var9 = var2 < 256 && !Block.blocksList[var8.blockID].func_82505_u_() ? var2 : var8.blockID;
+				int var9 = var2 < 256 && !Block.blocksList[var8.blockID].isFlowerPot() ? var2 : var8.blockID;
 				var3 = Block.blocksList[var9].getDamageValue(this.theWorld, var5, var6, var7);
 			} else {
 				if (this.objectMouseOver.typeOfHit != EnumMovingObjectType.ENTITY || this.objectMouseOver.entityHit == null || !var1) {
@@ -2361,13 +2361,13 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
 				} else if (this.objectMouseOver.entityHit instanceof EntityMinecart) {
 					EntityMinecart var11 = (EntityMinecart)this.objectMouseOver.entityHit;
 
-					if (var11.func_94087_l() == 2) {
+					if (var11.getMinecartType() == 2) {
 						var2 = Item.minecartPowered.itemID;
-					} else if (var11.func_94087_l() == 1) {
+					} else if (var11.getMinecartType() == 1) {
 						var2 = Item.minecartCrate.itemID;
-					} else if (var11.func_94087_l() == 3) {
+					} else if (var11.getMinecartType() == 3) {
 						var2 = Item.tntMinecart.itemID;
-					} else if (var11.func_94087_l() == 5) {
+					} else if (var11.getMinecartType() == 5) {
 						var2 = Item.hopperMinecart.itemID;
 					} else {
 						var2 = Item.minecartEmpty.itemID;

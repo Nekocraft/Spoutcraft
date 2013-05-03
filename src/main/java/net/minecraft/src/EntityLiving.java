@@ -168,7 +168,9 @@ public abstract class EntityLiving extends Entity {
 
 	/** Chances for each equipment piece from dropping when this entity dies. */
 	protected float[] equipmentDropChances = new float[5];
-	private ItemStack[] field_82180_bT = new ItemStack[5];
+
+	/** The equipment this mob was previously wearing, used for syncing. */
+	private ItemStack[] previousEquipment = new ItemStack[5];
 
 	/** Whether an arm swing is currently in progress. */
 	public boolean isSwingInProgress = false;
@@ -706,9 +708,9 @@ public abstract class EntityLiving extends Entity {
 			for (var1 = 0; var1 < 5; ++var1) {
 				ItemStack var2 = this.getCurrentItemOrArmor(var1);
 
-				if (!ItemStack.areItemStacksEqual(var2, this.field_82180_bT[var1])) {
+				if (!ItemStack.areItemStacksEqual(var2, this.previousEquipment[var1])) {
 					((WorldServer)this.worldObj).getEntityTracker().sendPacketToAllPlayersTrackingEntity(this, new Packet5PlayerInventory(this.entityId, var1, var2));
-					this.field_82180_bT[var1] = var2 == null ? null : var2.copy();
+					this.previousEquipment[var1] = var2 == null ? null : var2.copy();
 				}
 			}
 
@@ -1613,7 +1615,7 @@ public abstract class EntityLiving extends Entity {
 			while (var12.hasNext()) {
 				EntityItem var4 = (EntityItem)var12.next();
 
-				// Spout Start - item instead of func_92059_d
+				// Spout Start - item instead of getEntityItem
 				if (!var4.isDead && var4.getEntityItem() != null) {
 					ItemStack var13 = var4.getEntityItem();
 					// Spout End
@@ -1919,7 +1921,7 @@ public abstract class EntityLiving extends Entity {
 	 * Checks if the entity's current position is a valid location to spawn this entity.
 	 */
 	public boolean getCanSpawnHere() {
-		return this.worldObj.checkIfAABBIsClear(this.boundingBox) && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty() && !this.worldObj.isAnyLiquid(this.boundingBox);
+		return this.worldObj.checkNoEntityCollision(this.boundingBox) && this.worldObj.getCollidingBoundingBoxes(this, this.boundingBox).isEmpty() && !this.worldObj.isAnyLiquid(this.boundingBox);
 	}
 
 	/**
@@ -2080,12 +2082,12 @@ public abstract class EntityLiving extends Entity {
 				if (this.activePotionsMap.isEmpty()) {
 					this.dataWatcher.updateObject(9, Byte.valueOf((byte)0));
 					this.dataWatcher.updateObject(8, Integer.valueOf(0));
-					this.setHasActivePotion(false);
+					this.setInvisible(false);
 				} else {
 					var12 = PotionHelper.calcPotionLiquidColor(this.activePotionsMap.values());
 					this.dataWatcher.updateObject(9, Byte.valueOf((byte)(PotionHelper.func_82817_b(this.activePotionsMap.values()) ? 1 : 0)));
 					this.dataWatcher.updateObject(8, Integer.valueOf(var12));
-					this.setHasActivePotion(this.isPotionActive(Potion.invisibility.id));
+					this.setInvisible(this.isPotionActive(Potion.invisibility.id));
 				}
 			}
 
@@ -2098,7 +2100,7 @@ public abstract class EntityLiving extends Entity {
 		if (var12 > 0) {
 			boolean var4 = false;
 
-			if (!this.getHasActivePotion()) {
+			if (!this.isInvisible()) {
 				var4 = this.rand.nextBoolean();
 			} else {
 				var4 = this.rand.nextInt(15) == 0;
@@ -2444,7 +2446,7 @@ public abstract class EntityLiving extends Entity {
 				} else if (par1 == 2) {
 					return Item.helmetChain;
 				} else if (par1 == 3) {
-					return Item.helmetSteel;
+					return Item.helmetIron;
 				} else if (par1 == 4) {
 					return Item.helmetDiamond;
 				}
@@ -2457,7 +2459,7 @@ public abstract class EntityLiving extends Entity {
 				} else if (par1 == 2) {
 					return Item.plateChain;
 				} else if (par1 == 3) {
-					return Item.plateSteel;
+					return Item.plateIron;
 				} else if (par1 == 4) {
 					return Item.plateDiamond;
 				}
@@ -2470,7 +2472,7 @@ public abstract class EntityLiving extends Entity {
 				} else if (par1 == 2) {
 					return Item.legsChain;
 				} else if (par1 == 3) {
-					return Item.legsSteel;
+					return Item.legsIron;
 				} else if (par1 == 4) {
 					return Item.legsDiamond;
 				}
@@ -2483,7 +2485,7 @@ public abstract class EntityLiving extends Entity {
 				} else if (par1 == 2) {
 					return Item.bootsChain;
 				} else if (par1 == 3) {
-					return Item.bootsSteel;
+					return Item.bootsIron;
 				} else if (par1 == 4) {
 					return Item.bootsDiamond;
 				}

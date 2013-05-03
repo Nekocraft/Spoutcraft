@@ -103,6 +103,9 @@ public class RenderManager {
 		this.entityRenderMap.put(EntityText.class, new RenderText());
 		this.entityRenderMap.put(EntityTexture.class, new RenderTexture());
 		// Spout End
+		// ModLoader Start
+		ModLoader.addAllRenderers(this.entityRenderMap);
+		// ModLoader End
 		Iterator var1 = this.entityRenderMap.values().iterator();
 
 		while (var1.hasNext()) {
@@ -199,7 +202,7 @@ public class RenderManager {
 			var10 = this.getEntityRenderObject(par1Entity);
 
 			if (var10 != null && this.renderEngine != null) {
-				if (field_85095_o && !par1Entity.getHasActivePotion()) {
+				if (field_85095_o && !par1Entity.isInvisible()) {
 					try {
 						this.func_85094_b(par1Entity, par2, par4, par6, par8, par9);
 					} catch (Throwable var17) {
@@ -311,12 +314,12 @@ public class RenderManager {
 		return this.fontRenderer;
 	}
 
-	public void updateIcons(IconRegister par1IconRegister) {
+	public void registerIcons(IconRegister par1IconRegister) {
 		Iterator var2 = this.entityRenderMap.values().iterator();
 
 		while (var2.hasNext()) {
 			Render var3 = (Render)var2.next();
-			var3.updateIcons(par1IconRegister);
+			var3.registerIcons(par1IconRegister);
 		}
 	}
 }

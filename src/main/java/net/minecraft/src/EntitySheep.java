@@ -13,7 +13,8 @@ public class EntitySheep extends EntityAnimal {
 	// Spout End
 
 	/**
-	 * Used to control movement as well as wool regrowth. Set to 40 on handleHealthUpdate and counts down with each tick.
+	 * Used to control movement as well as wool regrowth. Set to 40 on handleHealthUpdate and counts down with each
+	 * tick.
 	 */
 	private int sheepTimer;
 
@@ -52,8 +53,8 @@ public class EntitySheep extends EntityAnimal {
 	}
 
 	/**
-	 * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons use
-	 * this to react to sunlight and start to burn.
+	 * Called frequently so the entity can update its state every tick as required. For example, zombies and skeletons
+	 * use this to react to sunlight and start to burn.
 	 */
 	public void onLivingUpdate() {
 		if (this.worldObj.isRemote) {
@@ -228,8 +229,8 @@ public class EntitySheep extends EntityAnimal {
 	}
 
 	/**
-	 * This function applies the benefits of growing back wool and faster growing up to the acting entity. (This function
-	 * is used in the AIEatGrass)
+	 * This function applies the benefits of growing back wool and faster growing up to the acting entity. (This
+	 * function is used in the AIEatGrass)
 	 */
 	public void eatGrassBonus() {
 		this.setSheared(false);

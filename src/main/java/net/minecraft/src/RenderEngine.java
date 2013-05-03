@@ -82,9 +82,10 @@ public class RenderEngine {
 		if (var3 != null) {
 			return var3;
 		} else {
+			int[] var4;
+
 			try {
 				InputStream var7 = var2.getResourceAsStream(par1Str);
-				int[] var4;
 
 				if (var7 == null) {
 					var4 = this.getImageContentsAndAllocate(this.missingTextureImage);
@@ -96,9 +97,9 @@ public class RenderEngine {
 				return var4;
 			} catch (IOException var6) {
 				var6.printStackTrace();
-				int[] var5 = this.getImageContentsAndAllocate(this.missingTextureImage);
-				this.textureContentsMap.put(par1Str, var5);
-				return var5;
+				var4 = this.getImageContentsAndAllocate(this.missingTextureImage);
+				this.textureContentsMap.put(par1Str, var4);
+				return var4;
 			}
 		}
 	}

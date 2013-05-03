@@ -277,6 +277,7 @@ public class EntityItem extends Entity {
 					par1EntityPlayer.triggerAchievement(AchievementList.blazeRod);
 				}
 
+				ModLoader.onItemPickup(par1EntityPlayer, var2);
 				this.playSound("random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
 				par1EntityPlayer.onItemPickup(this, var3);
 
@@ -321,7 +322,7 @@ public class EntityItem extends Entity {
 
 		if (var1 == null) {
 			if (this.worldObj != null) {
-				this.worldObj.getWorldLogAgent().func_98232_c("Item entity " + this.entityId + " has no item?!");
+				this.worldObj.getWorldLogAgent().logSevere("Item entity " + this.entityId + " has no item?!");
 			}
 
 			return new ItemStack(Block.stone);

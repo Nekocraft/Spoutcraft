@@ -54,7 +54,7 @@ public class TextureMap implements IconRegister {
 			}
 
 			Minecraft.getMinecraft().renderGlobal.registerDestroyBlockIcons(this);
-			RenderManager.instance.updateIcons(this);
+			RenderManager.instance.registerIcons(this);
 		}
 
 		Item[] var19 = Item.itemsList;
@@ -64,7 +64,7 @@ public class TextureMap implements IconRegister {
 			Item var22 = var19[var3];
 
 			if (var22 != null && var22.getSpriteNumber() == this.textureType) {
-				var22.updateIcons(this);
+				var22.registerIcons(this);
 			}
 		}
 
