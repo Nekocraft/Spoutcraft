@@ -28,7 +28,7 @@ public class ServerListInfo {
 	public List serverList = new ArrayList();;
 	public int activeCountry = 0;
 	public List<String> countries = new ArrayList();
-	public HashMap<String,ArrayList<ServerSlot>> countryMappings = new LinkedHashMap<String,ArrayList<ServerSlot>>();
+	public HashMap<String, ArrayList<ServerSlot>> countryMappings = new LinkedHashMap<String, ArrayList<ServerSlot>>();
 	public int page = 0;
 	public int pages = 0;
 

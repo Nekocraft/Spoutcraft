@@ -53,8 +53,8 @@ import net.minecraft.src.EntityZombie;
 import org.spoutcraft.client.io.CustomTextureManager;
 
 public class WatchedEntity {
-	public static HashMap<Class<? extends Entity>, String> mobFaceTextures = new HashMap<Class<? extends Entity>, String>();
-	public static HashMap<Class<? extends Entity>, Texture> mobFaceTextureBindings = new HashMap<Class<? extends Entity>, Texture>();
+	public static HashMap < Class <? extends Entity > , String > mobFaceTextures = new HashMap < Class <? extends Entity > , String > ();
+	public static HashMap < Class <? extends Entity > , Texture > mobFaceTextureBindings = new HashMap < Class <? extends Entity > , Texture > ();
 
 	static {
 		mobFaceTextures.put(EntityBlaze.class, "blaze.png");

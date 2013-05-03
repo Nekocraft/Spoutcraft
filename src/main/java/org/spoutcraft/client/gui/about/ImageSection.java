@@ -45,12 +45,10 @@ public class ImageSection extends Section {
 			{
 				setPriority(RenderPriority.Highest);
 			}
-
 			@Override
 			public void render() {
 				// Don't render ;)
 			}
-
 			@Override
 			public void onButtonClick() {
 				Sys.openURL(url);
@@ -62,13 +60,16 @@ public class ImageSection extends Section {
 	@Override
 	public List<Widget> getWidgets() {
 		List<Widget> ret = super.getWidgets();
-		for (Image img:images) {
+
+		for (Image img: images) {
 			ret.add(img.texture);
 			ret.add(img.button);
+
 			if (img.description != null) {
 				ret.add(img.description);
 			}
 		}
+
 		return ret;
 	}
 
@@ -82,10 +83,11 @@ public class ImageSection extends Section {
 		height = 0;
 		int x = getX();
 		int y = getY() + super.getHeight() + 5;
-		for (Image img:images) {
+
+		for (Image img: images) {
 			int th = img.texture.getOriginalHeight();
 			int tw = img.texture.getOriginalWidth();
-			int theight = (int) (getWidth() * ((float) th / (float) tw));
+			int theight = (int)(getWidth() * ((float) th / (float) tw));
 			img.texture.setGeometry(x, y, getWidth(), theight);
 			img.button.setGeometry(x, y, getWidth(), theight);
 			int h = theight + 5;
@@ -102,6 +104,7 @@ public class ImageSection extends Section {
 			y += h;
 			height += h;
 		}
+
 		super.update();
 	}
 
@@ -110,9 +113,9 @@ public class ImageSection extends Section {
 	public void init(final GuiNewAbout screen, String title, Object yaml) {
 		setTitle(title);
 		this.screen = screen;
-
 		HashMap<String, Object> images = (HashMap<String, Object>) yaml;
-		for (Object img:images.values()) {
+
+		for (Object img: images.values()) {
 			HashMap<String, String> attr = (HashMap<String, String>) img;
 			Image image = new Image();
 			image.texture = new GenericTexture(attr.get("image"));
@@ -124,12 +127,13 @@ public class ImageSection extends Section {
 			});
 			image.url = attr.get("website");
 			image.texture.setTooltip(attr.get("tooltip"));
+
 			if (attr.containsKey("description") && !attr.get("description").isEmpty()) {
 				image.description = new GenericLabel(attr.get("description"));
 				image.description.setTextColor(new Color(0xaaaaaa));
 			}
-			this.images.add(image);
 
+			this.images.add(image);
 			// TODO Description
 		}
 	}

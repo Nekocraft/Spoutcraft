@@ -45,14 +45,14 @@ public class ImageManager {
 	}
 
 	public void setRGB(int X, int Y, int color) {
-		synchronized(image) {
+		synchronized (image) {
 			image.setRGB(X, Y, 0xff000000 | color);
 			hasChanged = true;
 		}
 	}
 
 	public void setARGB(int X, int Y, int color) {
-		synchronized(image) {
+		synchronized (image) {
 			image.setRGB(X, Y, color);
 			hasChanged = true;
 		}

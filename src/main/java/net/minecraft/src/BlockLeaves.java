@@ -190,7 +190,7 @@ public class BlockLeaves extends BlockLeavesBase {
 
 	private void removeLeaves(World par1World, int par2, int par3, int par4) {
 		this.dropBlockAsItem(par1World, par2, par3, par4, par1World.getBlockMetadata(par2, par3, par4), 0);
-		par1World.setBlockToAir(par2, par3, par4); 
+		par1World.setBlockToAir(par2, par3, par4);
 	}
 
 	/**
@@ -279,7 +279,7 @@ public class BlockLeaves extends BlockLeavesBase {
 	 * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
 	 */
 	public Icon getBlockTextureFromSideAndMetadata(int par1, int par2) {
-		return (par2 & 3) == 1 ? this.iconArray[this.field_94394_cP][1] : ((par2 & 3) == 3 ? this.iconArray[this.field_94394_cP][3] : this.iconArray[this.field_94394_cP][0]); 
+		return (par2 & 3) == 1 ? this.iconArray[this.field_94394_cP][1] : ((par2 & 3) == 3 ? this.iconArray[this.field_94394_cP][3] : this.iconArray[this.field_94394_cP][0]);
 	}
 
 	/**
@@ -312,12 +312,12 @@ public class BlockLeaves extends BlockLeavesBase {
 	 * When this method is called, your block should register all the icons it needs with the given IconRegister. This is
 	 * the only chance you get to register icons.
 	 */
-	public void registerIcons(IconRegister par1IconRegister) { 
+	public void registerIcons(IconRegister par1IconRegister) {
 		for (int var2 = 0; var2 < field_94396_b.length; ++var2) {
 			this.iconArray[var2] = new Icon[field_94396_b[var2].length];
 
 			for (int var3 = 0; var3 < field_94396_b[var2].length; ++var3) {
-				this.iconArray[var2][var3] = par1IconRegister.registerIcon(field_94396_b[var2][var3]); 
+				this.iconArray[var2][var3] = par1IconRegister.registerIcon(field_94396_b[var2][var3]);
 			}
 		}
 	}

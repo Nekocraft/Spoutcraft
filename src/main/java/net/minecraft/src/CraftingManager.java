@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 
 public class CraftingManager {
-
 	/** The static instance of this class */
 	private static final CraftingManager instance = new CraftingManager();
 

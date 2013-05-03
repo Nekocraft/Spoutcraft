@@ -37,11 +37,19 @@ public class GuiScaleButton extends GenericButton {
 	@Override
 	public String getText() {
 		switch (Configuration.getGuiScale()) {
-			case 0: return "GUI缩放: 自动";
-			case 1: return "GUI缩放: 小";
-			case 2: return "GUI缩放: 普通";
-			case 3: return "GUI缩放: 大";
+			case 0:
+				return "GUI缩放: 自动";
+
+			case 1:
+				return "GUI缩放: 小";
+
+			case 2:
+				return "GUI缩放: 普通";
+
+			case 3:
+				return "GUI缩放: 大";
 		}
+
 		return "未知选项: " + Configuration.getGuiScale();
 	}
 
@@ -53,7 +61,6 @@ public class GuiScaleButton extends GenericButton {
 		Minecraft.theMinecraft.gameSettings.guiScale = guiScale;
 		Configuration.setGuiScale(guiScale);
 		Configuration.write();
-
 		// Redisplay the video screen.
 		ScaledResolution var3 = new ScaledResolution(Minecraft.theMinecraft.gameSettings, Minecraft.theMinecraft.displayWidth, Minecraft.theMinecraft.displayHeight);
 		int width = var3.getScaledWidth();

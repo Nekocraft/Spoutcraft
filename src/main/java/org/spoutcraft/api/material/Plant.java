@@ -19,7 +19,7 @@
  */
 package org.spoutcraft.api.material;
 
-public interface Plant extends Block{
+public interface Plant extends Block {
 	public boolean isHasGrowthStages();
 
 	public int getNumGrowthStages();

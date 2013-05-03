@@ -68,6 +68,7 @@ public class GenericPopup extends GenericScreen implements PopupScreen {
 				((InGameHUD) getScreen()).closePopup();
 			}
 		}
+
 		return false;
 	}
 

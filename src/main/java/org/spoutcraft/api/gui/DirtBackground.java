@@ -26,14 +26,14 @@ import org.spoutcraft.api.UnsafeClass;
 import org.spoutcraft.client.SpoutClient;
 
 @UnsafeClass
-public class DirtBackground extends GenericWidget{
+public class DirtBackground extends GenericWidget {
 	public WidgetType getType() {
 		return WidgetType.DirtBackground;
 	}
 
 	public void render() {
-		GL11.glDisable(2896 /*GL_LIGHTING*/);
-		GL11.glDisable(2912 /*GL_FOG*/);
+		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glDisable(GL11.GL_FOG);
 		SpoutClient.getHandle().renderEngine.bindTexture("/gui/allitems.png");
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		float var3 = 32.0F;

@@ -46,7 +46,10 @@ public class SpoutServerData extends ServerData {
 	public SpoutServerData(String name, ServerItem serverItem) {
 		this(name, serverItem.getIp() + ":" + String.valueOf(serverItem.getPort()));
 		setServerItem(serverItem);
-		if (serverItem.getAcceptsTextures() != null) setAcceptsTextures(serverItem.getAcceptsTextures());
+
+		if (serverItem.getAcceptsTextures() != null) {
+			setAcceptsTextures(serverItem.getAcceptsTextures());
+		}
 	}
 
 	@Override

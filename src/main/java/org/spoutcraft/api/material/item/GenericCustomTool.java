@@ -30,7 +30,7 @@ import org.spoutcraft.api.material.CustomBlock;
 import org.spoutcraft.api.material.MaterialData;
 import org.spoutcraft.api.material.Tool;
 
-public class GenericCustomTool extends GenericCustomItem implements Tool{
+public class GenericCustomTool extends GenericCustomItem implements Tool {
 	private short durability = 1;
 	private TObjectFloatHashMap<Block> strengthMods = new TObjectFloatHashMap<Block>();
 
@@ -55,6 +55,7 @@ public class GenericCustomTool extends GenericCustomItem implements Tool{
 		if (strengthMods.contains(block)) {
 			return strengthMods.get(block);
 		}
+
 		return 1.0F;
 	}
 
@@ -72,14 +73,17 @@ public class GenericCustomTool extends GenericCustomItem implements Tool{
 		super.readData(input);
 		setDurability(input.readShort());
 		short size = input.readShort();
+
 		for (int i = 0; i < size; i++) {
 			int id = input.readInt();
 			int data = input.readShort();
 			float mod = input.readFloat();
 			Block block = MaterialData.getBlock(id, (short) data);
+
 			if (data == -1) {
 				block = MaterialData.getCustomBlock(id);
 			}
+
 			setStrengthModifier(block, mod);
 		}
 	}
@@ -90,15 +94,18 @@ public class GenericCustomTool extends GenericCustomItem implements Tool{
 		output.writeShort(getDurability());
 		Block[] mod = getStrengthModifiedBlocks();
 		output.writeShort((short) mod.length);
+
 		for (int i = 0; i < mod.length; i++) {
 			Block block =  mod[i];
+
 			if (block instanceof CustomBlock) {
 				output.writeInt(((CustomBlock)block).getCustomId());
-				output.writeShort((short) -1);
+				output.writeShort((short) - 1);
 			} else {
 				output.writeInt(block.getRawId());
 				output.writeShort((short) block.getRawData());
 			}
+
 			output.writeFloat(getStrengthModifier(block));
 		}
 	}

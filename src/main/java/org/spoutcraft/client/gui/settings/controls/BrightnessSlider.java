@@ -29,10 +29,10 @@ public class BrightnessSlider extends GenericSlider {
 		super("亮度");
 		setSliderPosition(Configuration.getBrightnessSlider());
 		setTooltip("增加亮度较暗的物体\n" +
-                "OFF - 标准亮度\n" +
-                "100% - 最大亮度较暗的对象\n" +
-                "此选项不改变\n" +
-                "全黑色物体的亮度");
+				"OFF - 标准亮度\n" +
+				"100% - 最大亮度较暗的对象\n" +
+				"此选项不改变\n" +
+				"全黑色物体的亮度");
 	}
 
 	@Override
@@ -46,9 +46,11 @@ public class BrightnessSlider extends GenericSlider {
 		if (getSliderPosition() == 0F) {
 			return "亮度: 昏暗";
 		}
+
 		if (getSliderPosition() == 1F) {
 			return "亮度: 明亮";
 		}
+
 		return "亮度: " + (int)(this.getSliderPosition() * 100) + "%";
 	}
 }

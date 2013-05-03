@@ -49,6 +49,7 @@ public class DataMiningThread extends Thread {
 
 	private void doLogin() {
 		onRunOnce();
+
 		if (SpoutClient.getInstance().getServerVersion() > 0) {
 			onSpoutLogin();
 		} else {
@@ -63,6 +64,7 @@ public class DataMiningThread extends Thread {
 
 	private void onRunOnce() {
 		File runOnce = new File(FileUtil.getConfigDir(), "runonce");
+
 		if (!runOnce.exists()) {
 			try {
 				runOnce.createNewFile();
@@ -88,7 +90,9 @@ public class DataMiningThread extends Thread {
 			con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.100 Safari/534.30");
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			String str;
+
 			while ((str = in.readLine()) != null);
+
 			in.close();
 		} catch (Exception e) {}
 	}
@@ -97,23 +101,27 @@ public class DataMiningThread extends Thread {
 		while (true) {
 			try {
 				sleep(10000);
-			}
-			catch (InterruptedException e1) {}
+			} catch (InterruptedException e1) {}
+
 			if (onLogin) {
 				doLogin();
 				onLogin = false;
 			}
+
 			World world = SpoutClient.getHandle().theWorld;
+
 			if (world != null) {
 				if (!runOnce) {
 					multiplayer = world.isRemote;
 					runOnce = true;
 					onRunOnce();
 				}
+
 				if (multiplayer != world.isRemote) {
 					if (world.isRemote) {
 						doSinglePlayer();
 					}
+
 					multiplayer = world.isRemote;
 				}
 			}

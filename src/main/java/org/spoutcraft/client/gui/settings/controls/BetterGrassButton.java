@@ -30,20 +30,28 @@ public class BetterGrassButton extends AutomatedButton {
 
 	@Override
 	public String getText() {
-		switch(Configuration.getBetterGrass()) {
-			case 0: return "更好的玻璃 / 雪: 关闭";
-			case 1: return "更好的玻璃 / 雪: 快速";
-			case 2: return "更好的玻璃 / 雪: 最好";
+		switch (Configuration.getBetterGrass()) {
+			case 0:
+				return "更好的玻璃 / 雪: 关闭";
+
+			case 1:
+				return "更好的玻璃 / 雪: 快速";
+
+			case 2:
+				return "更好的玻璃 / 雪: 最好";
 		}
+
 		return "未知选项: " + Configuration.getBetterGrass();
 	}
 
 	@Override
 	public void onButtonClick() {
 		Configuration.setBetterGrass(Configuration.getBetterGrass() + 1);
+
 		if (Configuration.getBetterGrass() > 2) {
 			Configuration.setBetterGrass(0);
 		}
+
 		Configuration.write();
 
 		if (Minecraft.theMinecraft.theWorld != null) {

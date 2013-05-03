@@ -56,12 +56,14 @@ public enum Orientation {
 	}
 
 	public Orientation getOther() {
-		switch(this) {
-		case HORIZONTAL:
-			return VERTICAL;
-		case VERTICAL:
-			return HORIZONTAL;
+		switch (this) {
+			case HORIZONTAL:
+				return VERTICAL;
+
+			case VERTICAL:
+				return HORIZONTAL;
 		}
+
 		return null;
 	}
 }

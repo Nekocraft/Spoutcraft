@@ -6,7 +6,6 @@ import com.prupe.mcpatcher.mod.MobOverlay;
 // MCPatcher End
 
 public class RenderSnowMan extends RenderLiving {
-
 	/** A reference to the Snowman model in RenderSnowMan. */
 	private ModelSnowMan snowmanModel;
 
@@ -41,8 +40,8 @@ public class RenderSnowMan extends RenderLiving {
 			} else {
 				this.renderManager.itemRenderer.renderItem(par1EntitySnowman, var3, 0);
 			}
-			// MCPatcher End
 
+			// MCPatcher End
 			GL11.glPopMatrix();
 		}
 	}

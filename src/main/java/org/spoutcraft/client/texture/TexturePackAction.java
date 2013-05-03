@@ -39,14 +39,18 @@ public class TexturePackAction implements Runnable {
 	public void run() {
 		TexturePackCustom pack = new TexturePackCustom(texturePackFile.getName().substring(0, texturePackFile.getName().length() - 4), texturePackFile, TexturePackList.func_98143_h());
 		Minecraft game = SpoutClient.getHandle();
+
 		if (game.renderEngine.oldPack == null) {
 			game.renderEngine.oldPack = game.renderEngine.texturePack.selectedTexturePack;
 		}
+
 		game.renderEngine.texturePack.setTexturePack(pack);
 		game.renderEngine.refreshTextures();
 		MipMapUtils.update();
+
 		if (game.renderGlobal != null && game.renderGlobal.worldRenderers != null) {
 			WorldRenderer[] renderers = game.renderGlobal.worldRenderers;
+
 			for (int i = 0; i < renderers.length; i++) {
 				renderers[i].markDirty();
 			}

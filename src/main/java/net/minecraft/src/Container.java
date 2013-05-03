@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 
 public abstract class Container {
-
 	/** the list of all items(stacks) for the corresponding slot */
 	public List inventoryItemStacks = new ArrayList();
 

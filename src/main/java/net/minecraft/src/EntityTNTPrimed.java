@@ -1,7 +1,6 @@
 package net.minecraft.src;
 
 public class EntityTNTPrimed extends Entity {
-
 	/** How long the fuse is */
 	public int fuse;
 	private EntityLiving tntPlacedBy;

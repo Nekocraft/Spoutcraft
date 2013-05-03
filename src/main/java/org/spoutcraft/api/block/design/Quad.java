@@ -66,6 +66,7 @@ public class Quad {
 		if (vertex < 0 || vertex > 3) {
 			throw new IllegalArgumentException("Invalid vertex index: " + vertex);
 		}
+
 		vertexes[vertex] = new Vertex(vertex, index, x, y, z, texture);
 		return this;
 	}
@@ -78,7 +79,6 @@ public class Quad {
 	 */
 	public Quad addVertex(Vertex vertex) {
 		vertexes[vertex.getIndex()] = vertex;
-
 		return this;
 	}
 

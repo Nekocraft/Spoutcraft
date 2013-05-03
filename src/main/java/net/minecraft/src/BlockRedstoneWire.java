@@ -10,7 +10,6 @@ import com.prupe.mcpatcher.mod.Colorizer;
 // MCPatcher End
 
 public class BlockRedstoneWire extends Block {
-
 	/**
 	 * When false, power transmission methods do not look at other redstone wires. Used internally during
 	 * updateCurrentStrength.
@@ -94,7 +93,7 @@ public class BlockRedstoneWire extends Block {
 		byte var9 = 0;
 		int var15 = this.getMaxCurrentStrength(par1World, par5, par6, par7, var9);
 		this.wiresProvidePower = false;
-		int var10 = par1World.getStrongestIndirectPower(par2, par3, par4); 
+		int var10 = par1World.getStrongestIndirectPower(par2, par3, par4);
 		this.wiresProvidePower = true;
 
 		if (var10 > 0 && var10 > var15 - 1) {
@@ -268,7 +267,7 @@ public class BlockRedstoneWire extends Block {
 	 */
 	// Spout Start - private to public
 	public int getMaxCurrentStrength(World par1World, int par2, int par3, int par4, int par5) {
-	// Spout End
+		// Spout End
 		if (par1World.getBlockId(par2, par3, par4) != this.blockID) {
 			return par5;
 		} else {
@@ -392,6 +391,7 @@ public class BlockRedstoneWire extends Block {
 				var15 = var13 * var13 * 0.7F - 0.5F;
 				var16 = var13 * var13 * 0.6F - 0.7F;
 			}
+
 			// MCPatcher End
 
 			if (var15 < 0.0F) {
@@ -460,7 +460,7 @@ public class BlockRedstoneWire extends Block {
 		this.field_94410_cO = par1IconRegister.registerIcon("redstoneDust_line");
 		this.field_94411_cP = par1IconRegister.registerIcon("redstoneDust_cross_overlay");
 		this.field_94412_cQ = par1IconRegister.registerIcon("redstoneDust_line_overlay");
-		this.blockIcon = this.field_94413_c; 
+		this.blockIcon = this.field_94413_c;
 	}
 
 	public static Icon func_94409_b(String par0Str) {

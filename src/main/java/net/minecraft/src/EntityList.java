@@ -8,7 +8,6 @@ import com.prupe.mcpatcher.mod.ColorizeItem;
 // MCPatcher End
 
 public class EntityList {
-
 	/** Provides a mapping between entity classes and a string */
 	private static Map stringToClassMapping = new HashMap();
 

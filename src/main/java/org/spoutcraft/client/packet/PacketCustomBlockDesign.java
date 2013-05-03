@@ -40,6 +40,7 @@ public class PacketCustomBlockDesign implements SpoutPacket {
 		data = (byte) input.read();
 		design = new GenericBlockDesign();
 		design.read(input);
+
 		if (design.isReset()) {
 			design = null;
 		}
@@ -51,6 +52,7 @@ public class PacketCustomBlockDesign implements SpoutPacket {
 
 	public void run(int id) {
 		CustomBlock block = MaterialData.getCustomBlock(customId);
+
 		if (block != null) {
 			block.setBlockDesign(design, data);
 		}

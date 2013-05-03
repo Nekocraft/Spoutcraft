@@ -46,15 +46,18 @@ public class PacketBlockData implements CompressablePacket {
 			deflater.finish();
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length);
 			byte[] buffer = new byte[1024];
+
 			while (!deflater.finished()) {
 				int bytesCompressed = deflater.deflate(buffer);
 				bos.write(buffer, 0, bytesCompressed);
 			}
+
 			try {
 				bos.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+
 			data = bos.toByteArray();
 			compressed = true;
 		}
@@ -64,10 +67,9 @@ public class PacketBlockData implements CompressablePacket {
 		if (compressed) {
 			Inflater decompressor = new Inflater();
 			decompressor.setInput(data);
-
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length);
-
 			byte[] buf = new byte[1024];
+
 			while (!decompressor.finished()) {
 				try {
 					int count = decompressor.inflate(buf);
@@ -75,6 +77,7 @@ public class PacketBlockData implements CompressablePacket {
 				} catch (DataFormatException e) {
 				}
 			}
+
 			try {
 				bos.close();
 			} catch (IOException e) {
@@ -91,6 +94,7 @@ public class PacketBlockData implements CompressablePacket {
 	public void readData(SpoutInputStream input) throws IOException {
 		int size = input.readInt();
 		compressed = input.readBoolean();
+
 		if (size > 0) {
 			data = new byte[size];
 			input.read(data);
@@ -100,6 +104,7 @@ public class PacketBlockData implements CompressablePacket {
 	public void writeData(SpoutOutputStream output) throws IOException {
 		output.writeInt(data == null ? 0 : data.length);
 		output.writeBoolean(compressed);
+
 		if (data != null) {
 			output.write(data);
 		}
@@ -108,16 +113,18 @@ public class PacketBlockData implements CompressablePacket {
 	public void run(int playerId) {
 		if (data != null) {
 			ByteBuffer result = ByteBuffer.allocate(data.length).put(data);
+
 			for (int i = 0; i < data.length / 15; i++) {
 				int index = i * 15;
 				int id = result.get(index);
-				short rawData = result.get(index+1);
+				short rawData = result.get(index + 1);
 				Block block = MaterialData.getBlock(id, rawData);
+
 				if (block != null) {
-					block.setHardness(result.getFloat(index+2));
-					block.setLightLevel(result.getInt(index+6));
-					block.setFriction(result.getFloat(index+10));
-					block.setOpaque(result.get(index+14) != 0);
+					block.setHardness(result.getFloat(index + 2));
+					block.setLightLevel(result.getInt(index + 6));
+					block.setFriction(result.getFloat(index + 10));
+					block.setOpaque(result.get(index + 14) != 0);
 				}
 			}
 		}

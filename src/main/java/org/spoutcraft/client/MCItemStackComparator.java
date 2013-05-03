@@ -37,24 +37,31 @@ public class MCItemStackComparator implements Comparator {
 		if (o1 == null && o2 == null) {
 			return 0;
 		}
+
 		if (o1 != null && o2 == null) {
 			return o1.itemID;
 		}
+
 		if (o2 != null && o1 == null) {
 			return -o2.itemID;
 		}
+
 		if (byName) {
 			org.spoutcraft.api.material.Material other1 = MaterialData.getMaterial(o1.itemID, (short)(o1.getItemDamage()));
 			org.spoutcraft.api.material.Material other2 = MaterialData.getMaterial(o2.itemID, (short)(o2.getItemDamage()));
+
 			if (other1 == null && other2 == null) {
 				return 0;
 			}
+
 			if (other1 != null && other2 == null) {
 				return o1.itemID;
 			}
+
 			if (other2 != null && other1 == null) {
 				return -o2.itemID;
 			}
+
 			return other1.getName().compareTo(other2.getName());
 		} else {
 			int idDiff = o1.itemID - o2.itemID;

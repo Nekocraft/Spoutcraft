@@ -52,7 +52,8 @@ public class TexturePackItem implements ListWidgetItem {
 	public TexturePackItem(TexturePacksModel model, TexturePackImplementation pack) {
 		this.setPack(pack);
 		this.model = model;
-		synchronized(texturePackSize) {
+
+		synchronized (texturePackSize) {
 			if (!texturePackSize.containsKey(getName())) {
 				calculateTexturePackSize(pack, this);
 			} else {
@@ -82,32 +83,32 @@ public class TexturePackItem implements ListWidgetItem {
 			model.currentGui.setLoading(false);
 			tick = -1;
 		}
+
 		if (tick == 0) {
 			tick++;
 		}
 
 		MinecraftTessellator tessellator = Spoutcraft.getTessellator();
 		FontRenderer font = SpoutClient.getHandle().fontRenderer;
-
 		font.drawStringWithShadow(getName(), x + 29, y + 2, 0xffffffff);
 		font.drawStringWithShadow(pack.getFirstDescriptionLine(), x + 29, y + 11, 0xffaaaaaa);
 		font.drawStringWithShadow(pack.getSecondDescriptionLine(), x + 29, y + 20, 0xffaaaaaa);
 		String sTileSize;
+
 		if (tileSize != -1) {
 			//ToDo:  Hide this until we come up with a way to calculate TileSize without building a sprite sheet for every texture pack in the texturepack folder.
 			//sTileSize = ChatColor.GREEN + "" + tileSize + "x";
 		} else {
 			//sTileSize = ChatColor.YELLOW + "Calculating...";
 		}
+
 		//int w = font.getStringWidth(sTileSize);
 		//font.drawStringWithShadow(sTileSize, width - 5 - w, y + 2, 0xffaaaaaa);
-
 		// TODO Show database information (author/member who posted it)
-
 		pack.bindThumbnailTexture(SpoutClient.getHandle().renderEngine);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		tessellator.startDrawingQuads();
-		tessellator.setColorOpaque(255,255,255);
+		tessellator.setColorOpaque(255, 255, 255);
 		tessellator.addVertexWithUV(x + 2, y + 27, 0.0D, 0.0D, 1.0D);
 		tessellator.addVertexWithUV(x + 27, y + 27, 0.0D, 1.0D, 1.0D);
 		tessellator.addVertexWithUV(x + 27, y + 2, 0.0D, 1.0D, 0.0D);
@@ -133,20 +134,26 @@ public class TexturePackItem implements ListWidgetItem {
 		if (title == null) {
 			String name = pack.texturePackFileName;
 			int suffix = name.lastIndexOf(".zip");
+
 			if (suffix != -1) {
 				name = name.substring(0, suffix);
 			}
+
 			int db = name.lastIndexOf(".id_");
+
 			if (db != -1) {
 				try {
 					id = Integer.valueOf(name.substring(db + 4, name.length()));
-				} catch(NumberFormatException e) {
+				} catch (NumberFormatException e) {
 				}
+
 				name = name.substring(0, db);
-		}
+			}
+
 			name = name.replaceAll("_", " ");
 			title = name;
 		}
+
 		return title;
 	}
 
@@ -158,6 +165,7 @@ public class TexturePackItem implements ListWidgetItem {
 	private static void updateQueue() {
 		if (activeThread == null) {
 			Thread thread = queued.poll();
+
 			if (thread != null) {
 				thread.start();
 			}
@@ -186,7 +194,8 @@ class TexturePackSizeThread extends Thread {
 	@Override
 	public void run() {
 		item.tileSize = TexturePackList.getTileSize(texturePack);
-		synchronized(TexturePackItem.texturePackSize) {
+
+		synchronized (TexturePackItem.texturePackSize) {
 			TexturePackItem.texturePackSize.put(getName(), item.tileSize);
 		}
 

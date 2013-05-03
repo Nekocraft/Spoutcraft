@@ -45,8 +45,10 @@ public class LANModel extends ServerModel {
 
 	protected void removeItem(String unqalifiedServiceName) {
 		Iterator<ServerItem> iter = items.iterator();
+
 		while (iter.hasNext()) {
 			ServerItem item = iter.next();
+
 			if (unqalifiedServiceName.equals(item.getTitle())) {
 				iter.remove();
 				return;

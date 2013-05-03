@@ -121,7 +121,6 @@ public class TessellatorUtils {
 
 			try {
 				Object var7 = var6.get(var0);
-
 				var6.set(var1, var7);
 			} catch (IllegalAccessException var8) {
 				var8.printStackTrace();

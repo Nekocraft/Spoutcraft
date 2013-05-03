@@ -60,6 +60,7 @@ public class PacketCustomBlockChunkOverride implements CompressablePacket {
 		chunkX = input.readInt();
 		chunkZ = input.readInt();
 		hasData = input.readBoolean();
+
 		if (hasData) {
 			int size = input.readInt();
 			data = new byte[size];
@@ -71,6 +72,7 @@ public class PacketCustomBlockChunkOverride implements CompressablePacket {
 		output.writeInt(chunkX);
 		output.writeInt(chunkZ);
 		output.writeBoolean(hasData);
+
 		if (hasData) {
 			output.writeInt(data.length);
 			output.write(data);
@@ -90,12 +92,14 @@ public class PacketCustomBlockChunkOverride implements CompressablePacket {
 
 			ByteBuffer buffer = ByteBuffer.allocate(data.length);
 			buffer.put(data);
-			short[] customIds = new short[16*16*256];
-			byte[] customData = new byte[16*16*256];
+			short[] customIds = new short[16 * 16 * 256];
+			byte[] customData = new byte[16 * 16 * 256];
+
 			for (int i = 0; i < customIds.length; i++) {
 				customIds[i] = buffer.getShort(i * 3);
 				customData[i] = buffer.get((i * 3) + 2);
 			}
+
 			Spoutcraft.getChunk(SpoutClient.getInstance().getRawWorld(), chunkX, chunkZ).setCustomBlockIds(customIds);
 			Spoutcraft.getChunk(SpoutClient.getInstance().getRawWorld(), chunkX, chunkZ).setCustomBlockData(customData);
 			thread.queue.add(new LightingData(chunkX, chunkZ, customIds));
@@ -122,17 +126,21 @@ public class PacketCustomBlockChunkOverride implements CompressablePacket {
 				deflater.finish();
 				ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length);
 				byte[] buffer = new byte[1024];
+
 				while (!deflater.finished()) {
 					int bytesCompressed = deflater.deflate(buffer);
 					bos.write(buffer, 0, bytesCompressed);
 				}
+
 				try {
 					bos.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+
 				data = bos.toByteArray();
 			}
+
 			compressed = true;
 		}
 	}
@@ -141,10 +149,9 @@ public class PacketCustomBlockChunkOverride implements CompressablePacket {
 		if (compressed && hasData) {
 			Inflater decompressor = new Inflater();
 			decompressor.setInput(data);
-
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length);
-
 			byte[] buf = new byte[1024];
+
 			while (!decompressor.finished()) {
 				try {
 					int count = decompressor.inflate(buf);
@@ -152,6 +159,7 @@ public class PacketCustomBlockChunkOverride implements CompressablePacket {
 				} catch (DataFormatException e) {
 				}
 			}
+
 			try {
 				bos.close();
 			} catch (IOException e) {
@@ -180,9 +188,11 @@ class LightingThread extends Thread {
 			try {
 				LightingData data = queue.take();
 				World world = SpoutClient.getHandle().theWorld;
+
 				if (world != null && world.chunkProvider.chunkExists(data.cx, data.cz)) {
 					for (int i = 0; i < data.ids.length; i++) {
 						CustomBlock cb = MaterialData.getCustomBlock(data.ids[i]);
+
 						if (cb != null && cb.getLightLevel() != 0) {
 							int bx = (i >> 12) & 0xF;
 							int by = i & 0xFF;
@@ -198,7 +208,7 @@ class LightingThread extends Thread {
 		}
 	}
 
-	static class LightingData{
+	static class LightingData {
 		final int cx, cz;
 		final short[] ids;
 		LightingData(int cx, int cz, short[] ids) {

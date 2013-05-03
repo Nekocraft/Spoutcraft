@@ -33,7 +33,7 @@ public abstract class Render {
 	 */
 	// Spout Start - protected to public
 	public boolean loadDownloadableImageTexture(String par1Str, String par2Str) {
-	// Spout End
+		// Spout End
 		RenderEngine var3 = this.renderManager.renderEngine;
 		int var4 = var3.getTextureForDownloadableImage(par1Str, par2Str);
 

@@ -37,7 +37,6 @@ public class Rectangle extends PropertyObject implements PropertyInterface, Anim
 		setY(y);
 		setWidth(width);
 		setHeight(height);
-
 		initProperties();
 	}
 
@@ -46,7 +45,6 @@ public class Rectangle extends PropertyObject implements PropertyInterface, Anim
 			public void set(Object value) {
 				setX((Integer) value);
 			}
-
 			public Object get() {
 				return getX();
 			}
@@ -55,7 +53,6 @@ public class Rectangle extends PropertyObject implements PropertyInterface, Anim
 			public void set(Object value) {
 				setY((Integer) value);
 			}
-
 			public Object get() {
 				return getY();
 			}
@@ -64,7 +61,6 @@ public class Rectangle extends PropertyObject implements PropertyInterface, Anim
 			public void set(Object value) {
 				setWidth((Integer) value);
 			}
-
 			public Object get() {
 				return getWidth();
 			}
@@ -73,7 +69,6 @@ public class Rectangle extends PropertyObject implements PropertyInterface, Anim
 			public void set(Object value) {
 				setHeight((Integer) value);
 			}
-
 			public Object get() {
 				return getHeight();
 			}
@@ -179,6 +174,7 @@ public class Rectangle extends PropertyObject implements PropertyInterface, Anim
 			Rectangle other = (Rectangle) obj;
 			return (new EqualsBuilder()).append(width, other.width).append(height, other.height).append(x, other.x).append(y, other.y).isEquals();
 		}
+
 		return false;
 	}
 

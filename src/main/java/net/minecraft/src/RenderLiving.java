@@ -366,17 +366,20 @@ public class RenderLiving extends Render {
 				this.renderLivingLabel(par1EntityLiving, Integer.toString(par1EntityLiving.entityId), par2, par4, par6, 64);
 			} else if (par1EntityLiving.func_94059_bO() || par1EntityLiving.func_94056_bM() && par1EntityLiving == this.renderManager.field_96451_i) {
 				String title = par1EntityLiving.func_96090_ax();
+
 				if (title != null && !title.equals("[hide]")) {
 					String lines[] = title.split("\\n");
-					for (int i = 0; i < lines.length; i++){
+
+					for (int i = 0; i < lines.length; i++) {
 						renderLivingLabel(par1EntityLiving, lines[i], par2, par4 + (0.275D * (lines.length - i - 1)), par6, 64);
 					}
 				}
 			}
 		} else if (par1EntityLiving instanceof EntityPlayer) {
 			EntityPlayer par1EntityPlayer = (EntityPlayer) par1EntityLiving;
+
 			if (!par1EntityPlayer.getHasActivePotion()) {
-				if(Minecraft.isGuiEnabled() && (par1EntityPlayer != this.renderManager.livingPlayer || (Minecraft.theMinecraft.gameSettings.thirdPersonView != 0 && Minecraft.theMinecraft.currentScreen == null))) {
+				if (Minecraft.isGuiEnabled() && (par1EntityPlayer != this.renderManager.livingPlayer || (Minecraft.theMinecraft.gameSettings.thirdPersonView != 0 && Minecraft.theMinecraft.currentScreen == null))) {
 					float var8 = 1.6F;
 					float var9 = 0.016666668F * var8;
 					double var10 = par1EntityPlayer.getDistanceSqToEntity(this.renderManager.livingPlayer);
@@ -386,17 +389,20 @@ public class RenderLiving extends Render {
 						String title = null;
 						VIP vip = par1EntityPlayer.vip;
 						float var92 = 0.0F;
+
 						if (vip != null) {
 							title = vip.getTitle();
 							var92 = vip.getScale();
 						} else {
 							title = par1EntityPlayer.displayName;
 						}
+
 						float alpha = 0.25F;
-						
+
 						if (!title.equals("[hide]")) {
 							String lines[] = title.split("\\n");
 							double y = par4;
+
 							for (int line = 0; line < lines.length; line++) {
 								title = lines[line];
 								par4 = y + (0.275D * (lines.length - line - 1));
@@ -406,7 +412,7 @@ public class RenderLiving extends Render {
 								} else if (AccessoryHandler.hasAccessory(par1EntityPlayer.username, AccessoryType.TOPHAT)) {
 									par4 = par4 + 0.5d;
 								}
-								
+
 								if (var92 > 0.9375F) {
 									par4 = par4 + 0.5D;
 								} else if (var92 < 0.86F && var92 != 0.0F) {
@@ -431,7 +437,6 @@ public class RenderLiving extends Render {
 									GL11.glDisable(GL11.GL_LIGHTING);
 									GL11.glTranslatef(0.0F, 0.25F / var9, 0.0F);
 									GL11.glDepthMask(false);
-
 									GL11.glEnable(GL11.GL_BLEND);
 									GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 									Tessellator var15 = Tessellator.instance;
@@ -458,6 +463,7 @@ public class RenderLiving extends Render {
 				}
 			}
 		}
+
 		// Spout End
 	}
 

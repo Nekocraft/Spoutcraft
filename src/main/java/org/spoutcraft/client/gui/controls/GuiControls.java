@@ -38,9 +38,6 @@ import org.spoutcraft.client.controls.Shortcut;
 import org.spoutcraft.client.controls.SimpleKeyBindingManager;
 import org.spoutcraft.client.gui.ButtonUpdater;
 import org.spoutcraft.client.gui.GuiSpoutScreen;
-import org.spoutcraft.client.gui.controls.ControlsBasicItem;
-import org.spoutcraft.client.gui.controls.KeyBindingItem;
-import org.spoutcraft.client.gui.controls.ShortcutBindingItem;
 
 public class GuiControls extends GuiSpoutScreen implements ButtonUpdater {
 	private GenericLabel labelTitle, labelDescription;
@@ -61,6 +58,7 @@ public class GuiControls extends GuiSpoutScreen implements ButtonUpdater {
 		if (model == null) {
 			model = new ControlsModel(this);
 		}
+
 		this.parentScreen = parent;
 	}
 
@@ -78,18 +76,15 @@ public class GuiControls extends GuiSpoutScreen implements ButtonUpdater {
 		filter = new GenericScrollArea();
 		view = new GenericListView(model);
 		model.setCurrentGui(this);
-
 		checkVanilla = new ControlsCheckBox(this, VANILLA_COLOR + "Minecraft Bindings");
 		checkSpoutcraft = new ControlsCheckBox(this, SPOUTCRAFT_COLOR + "Spoutcraft Bindings");
 		checkCustom = new ControlsCheckBox(this, CUSTOM_COLOR + "Custom Bindings");
 		checkShortcuts = new ControlsCheckBox(this, SHORTCUTS_COLOR + "Shortcuts");
 		search = new ControlsSearch(this);
-
 		filter.attachWidget("Spoutcraft", checkVanilla);
 		filter.attachWidget("Spoutcraft", checkSpoutcraft);
 		filter.attachWidget("Spoutcraft", checkCustom);
 		filter.attachWidget("Spoutcraft", checkShortcuts);
-
 		getScreen().attachWidget("Spoutcraft", search);
 		getScreen().attachWidget("Spoutcraft", labelTitle);
 		getScreen().attachWidget("Spoutcraft", filter);
@@ -105,20 +100,13 @@ public class GuiControls extends GuiSpoutScreen implements ButtonUpdater {
 
 	protected void layoutWidgets() {
 		int top = 5;
-
 		int swidth = mc.fontRenderer.getStringWidth(labelTitle.getText());
 		labelTitle.setY(top + 7).setX(width / 2 - swidth / 2).setHeight(11).setWidth(swidth);
-
 		search.setX(5).setY(top).setWidth(150).setHeight(20);
-
-		top+=25;
-
+		top += 25;
 		int sheight = height - top - 55;
-
 		filter.setX(5).setY(top).setWidth(130).setHeight(sheight);
-
-		view.setX((int) (5 + filter.getX() + filter.getWidth())).setY(top).setWidth((int) (width - 15 - filter.getWidth())).setHeight(sheight);
-
+		view.setX((int)(5 + filter.getX() + filter.getWidth())).setY(top).setWidth((int)(width - 15 - filter.getWidth())).setHeight(sheight);
 		int ftop = 5;
 		checkVanilla.setX(5).setY(ftop).setWidth(100).setHeight(20);
 		ftop += 25;
@@ -128,30 +116,23 @@ public class GuiControls extends GuiSpoutScreen implements ButtonUpdater {
 		ftop += 25;
 		checkShortcuts.setX(5).setY(ftop).setWidth(100).setHeight(20);
 
-		for (Widget w:filter.getAttachedWidgets()) {
+		for (Widget w: filter.getAttachedWidgets()) {
 			w.setWidth(filter.getViewportSize(Orientation.HORIZONTAL) - 10);
 		}
+
 		search.setWidth((int) filter.getWidth());
-
 		top += 5 + view.getHeight();
-
 		int totalWidth = Math.min(width - 10, 200 * 3 + 10);
 		int cellWidth = (totalWidth - 10) / 3;
 		int left = width / 2 - totalWidth / 2;
 		int center = left + 5 + cellWidth;
 		int right = center + 5 + cellWidth;
-
 		buttonAdd.setHeight(20).setWidth(cellWidth).setX(left).setY(top);
-
 		buttonEdit.setHeight(20).setWidth(cellWidth).setX(center).setY(top);
-
 		buttonRemove.setHeight(20).setWidth(cellWidth).setX(right).setY(top);
-
-		top+=25;
-
+		top += 25;
 		labelDescription.setHeight(20).setWidth(cellWidth * 2 + 5).setX(left).setY(top);
 		labelDescription.recalculateLines();
-
 		buttonDone.setHeight(20).setWidth(cellWidth).setX(right).setY(top);
 	}
 
@@ -169,11 +150,14 @@ public class GuiControls extends GuiSpoutScreen implements ButtonUpdater {
 			editItem(sh);
 			return;
 		}
+
 		ControlsBasicItem item = model.getItem(view.getSelectedRow());
 		ShortcutBindingItem sh = null;
+
 		if (item != null && item instanceof ShortcutBindingItem) {
 			sh = (ShortcutBindingItem) item;
 		}
+
 		if (sh != null && btn.equals(buttonEdit)) {
 			editItem(sh.getShortcut());
 		} else if (btn.equals(buttonEdit) && item != null) {
@@ -195,6 +179,7 @@ public class GuiControls extends GuiSpoutScreen implements ButtonUpdater {
 
 	protected void keyTyped(char c, int i, boolean pressed) {
 		ControlsBasicItem item = model.getEditingItem();
+
 		if (item != null) {
 			if (item.useModifiers() && (!SimpleKeyBindingManager.isModifierKey(i) && pressed) || (SimpleKeyBindingManager.isModifierKey(i) && !pressed)) {
 				item.setModifiers(SimpleKeyBindingManager.getPressedModifiers());
@@ -210,6 +195,7 @@ public class GuiControls extends GuiSpoutScreen implements ButtonUpdater {
 	@Override
 	public void handleKeyboardInput() {
 		ControlsBasicItem item = model.getEditingItem();
+
 		if (item != null) {
 			this.keyTyped(org.lwjgl.input.Keyboard.getEventCharacter(), org.lwjgl.input.Keyboard.getEventKey(), org.lwjgl.input.Keyboard.getEventKeyState());
 		} else {
@@ -220,6 +206,7 @@ public class GuiControls extends GuiSpoutScreen implements ButtonUpdater {
 	@Override
 	protected void mouseClicked(int x, int y, int button) {
 		ControlsBasicItem item = model.getEditingItem();
+
 		if (item != null && item.useMouseButtons()) {
 			item.setModifiers(SimpleKeyBindingManager.getPressedModifiers());
 			item.setKey(SimpleKeyBindingManager.MOUSE_OFFSET + button);
@@ -235,13 +222,17 @@ public class GuiControls extends GuiSpoutScreen implements ButtonUpdater {
 		SimpleKeyBindingManager man = (SimpleKeyBindingManager) SpoutClient.getInstance().getKeyBindingManager();
 		ControlsBasicItem item = model.getItem(view.getSelectedRow());
 		ShortcutBindingItem sh = null;
+
 		if (item != null && item instanceof ShortcutBindingItem) {
 			sh = (ShortcutBindingItem) item;
 		}
+
 		KeyBindingItem binding = null;
+
 		if (item != null && item instanceof KeyBindingItem) {
 			binding = (KeyBindingItem) item;
 		}
+
 		if (sh != null) {
 			man.unregisterShortcut(sh.getShortcut());
 			man.save();
@@ -252,6 +243,7 @@ public class GuiControls extends GuiSpoutScreen implements ButtonUpdater {
 		} else {
 			item.setKey(-128);
 		}
+
 		model.refresh();
 	}
 }

@@ -45,6 +45,7 @@ public enum EntitySkinType {
 				return type;
 			}
 		}
+
 		return null;
 	}
 }

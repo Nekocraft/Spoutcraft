@@ -23,7 +23,7 @@ import org.spoutcraft.api.Spoutcraft;
 import org.spoutcraft.api.block.design.BlockDesign;
 import org.spoutcraft.api.material.Block;
 
-public class GenericBlock implements Block{
+public class GenericBlock implements Block {
 	private final int id;
 	private final int data;
 	private final boolean subtypes;
@@ -62,6 +62,7 @@ public class GenericBlock implements Block{
 		if (customName != null) {
 			return customName;
 		}
+
 		return name;
 	}
 

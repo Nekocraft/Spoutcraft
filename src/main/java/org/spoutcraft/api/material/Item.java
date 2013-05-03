@@ -19,5 +19,5 @@
  */
 package org.spoutcraft.api.material;
 
-public interface Item extends Material{
+public interface Item extends Material {
 }

@@ -22,7 +22,7 @@ package org.spoutcraft.api;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings({ "rawtypes", "unchecked" })
+@SuppressWarnings( { "rawtypes", "unchecked" })
 public enum ChatColor {
 	BLACK(0),
 
@@ -86,7 +86,8 @@ public enum ChatColor {
 	static {
 		colors = new HashMap();
 
-		for (ChatColor color : values())
+		for (ChatColor color : values()) {
 			colors.put(Integer.valueOf(color.getCode()), color);
+		}
 	}
 }

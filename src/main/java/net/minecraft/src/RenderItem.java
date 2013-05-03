@@ -33,6 +33,7 @@ public class RenderItem extends Render {
 	protected void loadTexture(String texture) {
 		if (this.renderManager != null && this.renderManager.renderEngine != null) {
 			int textureId = this.renderManager.renderEngine.getTexture(texture);
+
 			if (textureId >= 0) {
 				this.renderManager.renderEngine.bindTexture(textureId);
 			}
@@ -74,17 +75,22 @@ public class RenderItem extends Render {
 			// Spout Start
 			boolean custom = false;
 			BlockDesign design = null;
+
 			if (var10.itemID == 318) {
 				org.spoutcraft.api.material.CustomItem item = MaterialData.getCustomItem(var10.getItemDamage());
+
 				if (item != null) {
 					String textureURI = item.getTexture();
+
 					if (textureURI == null) {
 						org.spoutcraft.api.material.CustomBlock block = MaterialData.getCustomBlock(var10.getItemDamage());
 						design = block != null ? block.getBlockDesign() : null;
 						textureURI = design != null ? design.getTexureURL() : null;
 					}
+
 					if (textureURI != null) {
 						Texture texture = CustomTextureManager.getTextureFromUrl(item.getAddon(), textureURI);
+
 						if (texture != null) {
 							SpoutClient.getHandle().renderEngine.bindTexture(texture.getTextureID());
 							custom = true;
@@ -92,6 +98,7 @@ public class RenderItem extends Render {
 					}
 				}
 			}
+
 			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 
 			if (design != null && custom) {
@@ -99,6 +106,7 @@ public class RenderItem extends Render {
 				design.renderItemstack(par1EntityItem.getEntityItem(), (float)par2, (float)(par4 + var11), (float)par6, var12, 0.25F, random);
 			} else {
 				GL11.glPushMatrix(); // the push from above
+
 				if (!custom) {
 					if (var10.itemID < 256) {
 						this.loadTexture("/terrain.png");
@@ -106,8 +114,8 @@ public class RenderItem extends Render {
 						this.loadTexture("/gui/items.png");
 					}
 				}
-				// Spout End
 
+				// Spout End
 				GL11.glTranslatef((float)par2, (float)par4 + var11, (float)par6);
 				GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 				int var17;
@@ -209,8 +217,8 @@ public class RenderItem extends Render {
 					}
 				}
 
-			GL11.glDisable(GL12.GL_RESCALE_NORMAL);
-			GL11.glPopMatrix();
+				GL11.glDisable(GL12.GL_RESCALE_NORMAL);
+				GL11.glPopMatrix();
 			}
 		}
 	}
@@ -233,6 +241,7 @@ public class RenderItem extends Render {
 		float var14 = 0.5F;
 		float var15 = 0.25F;
 		float var17;
+
 		// Spout Start
 		if (customTexture) {
 			var9 = 0F;
@@ -240,6 +249,7 @@ public class RenderItem extends Render {
 			var11 = 1F;
 			var12 = 0F;
 		}
+
 		// Spout End
 
 		if (this.renderManager.options.fancyGraphics) {
@@ -271,7 +281,6 @@ public class RenderItem extends Render {
 
 			for (int var20 = 0; var20 < var27; ++var20) {
 				GL11.glTranslatef(0.0F, 0.0F, var16 + var17);
-
 				// Spout Removed
 				/*
 				if (Block.blocksList[var18.itemID] != null) {
@@ -281,7 +290,6 @@ public class RenderItem extends Render {
 				}
 				*/
 				// Spout End
-
 				GL11.glColor4f(par5, par6, par7, 1.0F);
 				ItemRenderer.renderItemIn2D(var8, var10, var11, var9, var12, par2Icon.getSheetWidth(), par2Icon.getSheetHeight(), var16);
 
@@ -355,21 +363,25 @@ public class RenderItem extends Render {
 		float var12;
 		float var13;
 		float var18;
-
 		// Spout Start
 		boolean custom = false;
 		BlockDesign design = null;
+
 		if (var6 == 318) {
 			org.spoutcraft.api.material.CustomItem item = MaterialData.getCustomItem(var7);
+
 			if (item != null) {
 				String textureURI = item.getTexture();
+
 				if (textureURI == null) {
 					org.spoutcraft.api.material.CustomBlock block = MaterialData.getCustomBlock(var7);
 					design = block != null ? block.getBlockDesign() : null;
 					textureURI = design != null ? design.getTexureURL() : null;
 				}
+
 				if (textureURI != null) {
 					Texture texture = CustomTextureManager.getTextureFromUrl(item.getAddon(), textureURI);
+
 					if (texture != null) {
 						SpoutClient.getHandle().renderEngine.bindTexture(texture.getTextureID());
 						custom = true;
@@ -377,6 +389,7 @@ public class RenderItem extends Render {
 				}
 			}
 		}
+
 		if (!custom) {
 			if (var6 < 256) {
 				loadTexture("/terrain.png");
@@ -407,7 +420,6 @@ public class RenderItem extends Render {
 			}
 
 			//this.renderIcon(par4, par5, var10, 16, 16); //TODO:
-
 			GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
 			this.itemRenderBlocks.useInventoryTint = this.renderWithColor;
 			this.itemRenderBlocks.renderBlockAsItem(var15, var7, 1.0F);
@@ -418,6 +430,7 @@ public class RenderItem extends Render {
 
 			if (Item.itemsList[var6].requiresMultipleRenderPasses()) {
 				GL11.glDisable(GL11.GL_LIGHTING);
+
 				if (!custom) {
 					par2RenderEngine.bindTexture("/gui/items.png");
 				}
@@ -459,15 +472,17 @@ public class RenderItem extends Render {
 
 				// Spout Start
 				if (custom) {
-				Tessellator tes = Tessellator.instance;
-				tes.startDrawingQuads();
-				tes.addVertexWithUV((double)(par4 + 0), (double)(par5 + 16), (double)0, 0, 0);
-				tes.addVertexWithUV((double)(par4 + 16), (double)(par5 + 16), (double)0, 1, 0);
-				tes.addVertexWithUV((double)(par4 + 16), (double)(par5 + 0), (double)0, 1, 1);
-				tes.addVertexWithUV((double)(par4 + 0), (double)(par5 + 0), (double)0, 0, 1);
-				tes.draw();
-				} else
+					Tessellator tes = Tessellator.instance;
+					tes.startDrawingQuads();
+					tes.addVertexWithUV((double)(par4 + 0), (double)(par5 + 16), (double)0, 0, 0);
+					tes.addVertexWithUV((double)(par4 + 16), (double)(par5 + 16), (double)0, 1, 0);
+					tes.addVertexWithUV((double)(par4 + 16), (double)(par5 + 0), (double)0, 1, 1);
+					tes.addVertexWithUV((double)(par4 + 0), (double)(par5 + 0), (double)0, 0, 1);
+					tes.draw();
+				} else {
 					this.renderIcon(par4, par5, var8, 16, 16);
+				}
+
 				// Spout End
 				GL11.glEnable(GL11.GL_LIGHTING);
 			}
@@ -555,21 +570,29 @@ public class RenderItem extends Render {
 			NBTTagList list = par3ItemStack.getAllEnchantmentTagList();
 			short max = -1;
 			short amnt = -1;
+
 			if (list != null) {
 				for (int i = 0; i < list.tagCount(); i++) {
 					NBTBase tag = list.tagAt(i);
+
 					if (tag instanceof NBTTagCompound) {
 						NBTTagCompound ench = (NBTTagCompound)tag;
 						short id = ench.getShort("id");
 						short lvl = ench.getShort("lvl");
-						if (id == 254)
-							amnt = lvl; //Enchantment DURABILITY = new SpoutEnchantment(254);
-						if (id == 255)
-							max = lvl; //Enchantment MAX_DURABILITY = new SpoutEnchantment(255);
+
+						if (id == 254) {
+							amnt = lvl;    //Enchantment DURABILITY = new SpoutEnchantment(254);
+						}
+
+						if (id == 255) {
+							max = lvl;    //Enchantment MAX_DURABILITY = new SpoutEnchantment(255);
+						}
 					}
 				}
 			}
+
 			boolean override = max > 0 && amnt > 0 && amnt < max;
+
 			// Spout End
 			if (par3ItemStack.isItemDamaged()) {
 				int var12 = (int)Math.round(13.0D - (double)par3ItemStack.getItemDamageForDisplay() * 13.0D / (double)par3ItemStack.getMaxDamage());

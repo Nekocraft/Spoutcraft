@@ -61,8 +61,8 @@ public class MutableIntegerVector extends MutableVector {
 		if (!(o instanceof MutableIntegerVector)) {
 			return false;
 		}
-		MutableIntegerVector other = (MutableIntegerVector) o;
 
+		MutableIntegerVector other = (MutableIntegerVector) o;
 		return this.getIntX() == other.getIntX() && this.getIntY() == other.getIntY() && this.getIntZ() == other.getIntZ();
 	}
 }

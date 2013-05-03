@@ -44,12 +44,15 @@ public class RenderPlayer extends RenderLiving {
 				// Spout Start
 				VIP vip = par1EntityPlayer.vip;
 				int armorId = (par2 == 2 ? 2 : 1);
+
 				if (vip != null && vip.getArmor(armorId) != null) {
 					String url = vip.getArmor(armorId);
+
 					if (!this.loadDownloadableImageTexture(url, (String) null)) {
 						Minecraft.theMinecraft.renderEngine.obtainImageData(url, new HDImageBufferDownload());
 					}
 				}
+
 				// Spout End
 				ModelBiped var7 = par2 == 2 ? this.modelArmor : this.modelArmorChestplate;
 				var7.bipedHead.showModel = par2 == 0;
@@ -139,11 +142,12 @@ public class RenderPlayer extends RenderLiving {
 		if (par1EntityPlayer.isSneaking() && !(par1EntityPlayer instanceof EntityPlayerSP)) {
 			var14 -= 0.125D;
 		}
+
 		// Spout Start - VIP
 		if (!AccessoryHandler.isHandled(par1EntityPlayer.username)) {
 			AccessoryHandler.addVIPAccessoriesFor(par1EntityPlayer);
 		}
-		
+
 		super.doRenderLiving(par1EntityPlayer, par2, var14, par6, par8, par9);
 		// Spout End
 		this.modelArmorChestplate.aimedBow = this.modelArmor.aimedBow = this.modelBipedMain.aimedBow = false;
@@ -191,11 +195,11 @@ public class RenderPlayer extends RenderLiving {
 		}
 
 		// Spout Start
-		if (!par1EntityPlayer.getHasActivePotion()){
+		if (!par1EntityPlayer.getHasActivePotion()) {
 			AccessoryHandler.renderAllAccessories(par1EntityPlayer, 0.0625F, par2);
 		}
-		// Spout End
 
+		// Spout End
 		float var8;
 		float var7;
 
@@ -351,9 +355,11 @@ public class RenderPlayer extends RenderLiving {
 		float var3 = 0.9375F;
 		// Spout Start
 		VIP vip = par1EntityPlayer.vip;
+
 		if (vip != null) {
 			var3 = vip.getScale();
 		}
+
 		// Spout End
 		GL11.glScalef(var3, var3, var3);
 	}

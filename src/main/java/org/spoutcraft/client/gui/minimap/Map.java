@@ -113,7 +113,7 @@ public class Map {
 	 */
 	private final int wrapIndex(int index, int arraysize) {
 		if (index < 0) {
-			return arraysize + ((index+1) % arraysize) - 1;
+			return arraysize + ((index + 1) % arraysize) - 1;
 		} else {
 			return index % arraysize;
 		}
@@ -172,7 +172,7 @@ public class Map {
 	public void update(double playerx, double playerz) {
 		this.playerX = playerx;
 		this.playerZ = playerz;
-		originOffsetX = wrapIndex((int) -this.playerZ, imageSize);
+		originOffsetX = wrapIndex((int) - this.playerZ, imageSize);
 		originOffsetY = wrapIndex((int) this.playerX, imageSize);
 	}
 
@@ -189,7 +189,7 @@ public class Map {
 	}
 
 	public float getRenderScale() {
-		float displaydist = (float) (Math.pow(2, zoom) * 32);
+		float displaydist = (float)(Math.pow(2, zoom) * 32);
 		return (float)imageSize / displaydist;
 	}
 
@@ -197,13 +197,13 @@ public class Map {
 	 * @return
 	 */
 	public double getCurrOffsetX(double playerZ) {
-		double wrapped = wrapIndex(((int) -playerZ), imageSize);
+		double wrapped = wrapIndex(((int) - playerZ), imageSize);
 		double leftover = 0; // playerZ - ((double)(int)playerZ);
-		return (wrapped+leftover)/2;
+		return (wrapped + leftover) / 2;
 	}
 	public double getCurrOffsetY(double playerX) {
 		double wrapped = wrapIndex(((int) playerX), imageSize);
 		double leftover = 0; // playerX - ((double)(int)playerX);
-		return (wrapped+leftover)/2;
+		return (wrapped + leftover) / 2;
 	}
 }

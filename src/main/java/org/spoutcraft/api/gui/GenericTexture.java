@@ -80,9 +80,11 @@ public class GenericTexture extends GenericWidget implements Texture {
 
 	public Texture setUrl(String url) {
 		this.url = url;
+
 		if (getUrl() != null) {
 			Spoutcraft.getClient().getRenderDelegate().downloadTexture(getAddon(), getUrl());
 		}
+
 		return this;
 	}
 
@@ -104,6 +106,7 @@ public class GenericTexture extends GenericWidget implements Texture {
 		if (getTop() != top) {
 			this.top = top;
 		}
+
 		return this;
 	}
 
@@ -115,6 +118,7 @@ public class GenericTexture extends GenericWidget implements Texture {
 		if (getLeft() != left) {
 			this.left = left;
 		}
+
 		return this;
 	}
 

@@ -72,12 +72,15 @@ public class TableSection extends Section {
 		int right = left + maxCaption + 5;
 		int textRightWidth = getWidth() - right + left;
 		int textLeftWidth = right - left;
+
 		if (right - left > getWidth() || right - left <= 30) {
 			textRightWidth = textLeftWidth = getWidth() / 2 - 5;
 			right = left + textLeftWidth + 5;
 		}
+
 		height = 0;
-		for (Row row:rows) {
+
+		for (Row row: rows) {
 			row.caption.setX(left);
 			row.caption.setY(y);
 			row.caption.setWidth(textLeftWidth);
@@ -95,10 +98,12 @@ public class TableSection extends Section {
 	@Override
 	public List<Widget> getWidgets() {
 		List<Widget> ret = super.getWidgets();
-		for (Row row:rows) {
+
+		for (Row row: rows) {
 			ret.add(row.caption);
 			ret.add(row.text);
 		}
+
 		return ret;
 	}
 
@@ -106,7 +111,8 @@ public class TableSection extends Section {
 	public void init(GuiNewAbout screen, String title, Object yaml) {
 		setTitle(title);
 		LinkedHashMap<String, String> r = (LinkedHashMap<String, String>) yaml;
-		for (Entry<String, String> entry:r.entrySet()) {
+
+		for (Entry<String, String> entry: r.entrySet()) {
 			Row row = new Row();
 			row.caption.setText(entry.getKey());
 			maxCaption = Math.max(maxCaption, Spoutcraft.getRenderDelegate().getMinecraftFont().getTextWidth(row.caption.getText()));

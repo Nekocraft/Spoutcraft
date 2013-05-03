@@ -63,6 +63,7 @@ public class PacketComboBox implements SpoutPacket {
 	public void run(int playerId) {
 		if (SpoutClient.getInstance().getActivePlayer().getMainScreen().getActivePopup() != null) {
 			Widget w = SpoutClient.getInstance().getActivePlayer().getMainScreen().getActivePopup().getWidget(uuid);
+
 			if (w != null && w instanceof GenericComboBox) {
 				box = (GenericComboBox) w;
 				box.setOpen(open);

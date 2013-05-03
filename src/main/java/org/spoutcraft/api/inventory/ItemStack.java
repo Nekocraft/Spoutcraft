@@ -36,7 +36,7 @@ import org.spoutcraft.api.material.MaterialData;
 /**
  * Represents a stack of items
  */
-public class ItemStack implements Cloneable{
+public class ItemStack implements Cloneable {
 	private int type;
 	private int amount = 0;
 	private short durability = 0;
@@ -73,6 +73,7 @@ public class ItemStack implements Cloneable{
 		this.type = type;
 		this.amount = amount;
 		this.durability = damage;
+
 		if (data != null) {
 			this.durability = data;
 		}
@@ -106,6 +107,7 @@ public class ItemStack implements Cloneable{
 		if (displayName != null && !displayName.isEmpty()) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -130,9 +132,10 @@ public class ItemStack implements Cloneable{
 	 * @return - true if this item has enchantments.
 	 */
 	public boolean hasEnchants() {
-		if (enchants != null && enchants.size() > 0){
+		if (enchants != null && enchants.size() > 0) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -160,6 +163,7 @@ public class ItemStack implements Cloneable{
 		if (lore != null && lore.size() > 0) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -185,6 +189,7 @@ public class ItemStack implements Cloneable{
 	 */
 	public net.minecraft.src.ItemStack asNMSItenStack() {
 		net.minecraft.src.ItemStack itemstack = new net.minecraft.src.ItemStack(getTypeId(), getAmount(), getDurability());
+
 		if (hasDisplayName()) {
 			itemstack.setItemName(getDisplayName());
 		}
@@ -199,6 +204,7 @@ public class ItemStack implements Cloneable{
 			if (itemstack.stackTagCompound == null) {
 				itemstack.stackTagCompound = new NBTTagCompound();
 			}
+
 			if (!itemstack.stackTagCompound.hasKey("display")) {
 				itemstack.stackTagCompound.setCompoundTag("display", new NBTTagCompound());
 			}
@@ -331,7 +337,6 @@ public class ItemStack implements Cloneable{
 		}
 
 		ItemStack item = (ItemStack) obj;
-
 		return item.getAmount() == getAmount() && item.getTypeId() == getTypeId();
 	}
 
@@ -347,7 +352,6 @@ public class ItemStack implements Cloneable{
 	@Override
 	public int hashCode() {
 		int hash = 11;
-
 		hash = hash * 19 + 7 * getTypeId(); // Overriding hashCode since equals is overridden, it's just
 		hash = hash * 7 + 23 * getAmount(); // too bad these are mutable values... Q_Q
 		return hash;

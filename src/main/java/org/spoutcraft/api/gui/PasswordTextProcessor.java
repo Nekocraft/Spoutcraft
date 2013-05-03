@@ -83,13 +83,16 @@ public class PasswordTextProcessor implements TextProcessor {
 
 	public void setText(String str) {
 		clear();
+
 		if (str.length() > 0) {
 			if (charLimit > 0 && str.length() > charLimit) {
 				str = str.substring(0, charLimit);
 			}
+
 			if (str.length() > maxAsteriskChars) {
 				str = str.substring(0, maxAsteriskChars);
 			}
+
 			textBuffer.append(str);
 			cursor = textBuffer.length();
 		}
@@ -103,6 +106,7 @@ public class PasswordTextProcessor implements TextProcessor {
 		if (textBuffer.length() + 1 > maxAsteriskChars || (charLimit > 0 && textBuffer.length() >= charLimit)) {
 			return false;
 		}
+
 		textBuffer.insert(cursor++, c);
 		return true;
 	}
@@ -114,6 +118,7 @@ public class PasswordTextProcessor implements TextProcessor {
 			correctCursor();
 			return true;
 		}
+
 		return false;
 	}
 
@@ -128,6 +133,7 @@ public class PasswordTextProcessor implements TextProcessor {
 
 	public Iterator<String> iterator() {
 		final char[] hiddenText = new char[textBuffer.length()];
+
 		for (int i = 0; i < textBuffer.length(); ++i) {
 			hiddenText[i] = CHAR_ASTERISK;
 		}
@@ -135,15 +141,12 @@ public class PasswordTextProcessor implements TextProcessor {
 		Iterator<String> iter = new Iterator<String>() {
 			int iteratorPos = 0;
 			String s = new String(hiddenText);
-
 			public void remove() {
 			}
-
 			public String next() {
 				++iteratorPos;
 				return s;
 			}
-
 			public boolean hasNext() {
 				return iteratorPos == 0;
 			}
@@ -153,6 +156,7 @@ public class PasswordTextProcessor implements TextProcessor {
 
 	public boolean handleInput(char key, int keyId) {
 		boolean ctrl = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL);
+
 		if (keyId == Keyboard.KEY_BACK.getKeyCode()) {
 			if (ctrl) {
 				return delete(0, cursor, 0);
@@ -160,6 +164,7 @@ public class PasswordTextProcessor implements TextProcessor {
 				return delete(cursor - 1, cursor, cursor - 1);
 			}
 		}
+
 		if (keyId == Keyboard.KEY_DELETE.getKeyCode()) {
 			if (ctrl) {
 				return delete(cursor, textBuffer.length(), cursor);
@@ -167,39 +172,48 @@ public class PasswordTextProcessor implements TextProcessor {
 				return delete(cursor, cursor + 1, cursor);
 			}
 		}
+
 		if (keyId == Keyboard.KEY_UP.getKeyCode() || keyId == Keyboard.KEY_HOME.getKeyCode()) {
 			cursor = 0;
 			return false;
 		}
+
 		if (keyId == Keyboard.KEY_LEFT.getKeyCode()) {
 			if (ctrl) {
 				cursor = 0;
 			} else {
 				cursor = Math.max(0, --cursor);
 			}
+
 			return false;
 		}
+
 		if (keyId == Keyboard.KEY_DOWN.getKeyCode() || keyId == Keyboard.KEY_END.getKeyCode()) {
 			cursor = textBuffer.length();
 			return false;
 		}
+
 		if (keyId == Keyboard.KEY_RIGHT.getKeyCode()) {
 			if (ctrl) {
 				cursor = textBuffer.length();
 			} else {
 				cursor = Math.min(textBuffer.length(), ++cursor);
 			}
+
 			return false;
 		}
+
 		if (keyId == Keyboard.KEY_D.getKeyCode() || keyId == Keyboard.KEY_C.getKeyCode()) {
 			if (ctrl) {
 				clear();
 				return true;
 			}
 		}
+
 		if (font.isAllowedChar(key)) {
 			return insert(key);
 		}
+
 		return false;
 	}
 }

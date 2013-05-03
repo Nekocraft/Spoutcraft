@@ -507,24 +507,24 @@ public class MaterialData {
 		for (int i = 0; i < idLookup.length; i++) {
 			idLookup[i] = null;
 		}
+
 		nameLookup.clear();
 		customBlocks.clear();
 		customBlockLookup.clear();
 		customItems.clear();
 		customItemLookup.clear();
-
 		Field[] fields = MaterialData.class.getFields();
+
 		for (Field f : fields) {
 			if (Modifier.isStatic(f.getModifiers())) {
 				try {
 					Object value = f.get(null);
+
 					if (value instanceof Material) {
 						Material mat = (Material)value;
 						mat.setName(mat.getNotchianName());
-
 						int id = mat.getRawId();
 						int data = mat.getRawData();
-
 						insertItem(id, data, mat);
 					}
 				} catch (IllegalArgumentException e) {
@@ -537,14 +537,17 @@ public class MaterialData {
 	private static void insertItem(int id, int data, Material mat) {
 		if (id < idLookup.length && id > -1) {
 			nameLookup.put(mat.getNotchianName().toLowerCase(), mat);
+
 			if (idLookup[mat.getRawId()] == null) {
 				idLookup[mat.getRawId()] = mat;
 			} else if (idLookup[mat.getRawId()] instanceof Material[]) {
 				Material[] multiple = (Material[])idLookup[mat.getRawId()];
 				int size = mat.getRawData() * 2 + 1;
+
 				if (multiple.length < size) {
 					multiple = adjust(multiple, size);
 				}
+
 				multiple[mat.getRawData()] =  mat;
 				idLookup[mat.getRawId()] = multiple;
 			} else if (idLookup[mat.getRawId()] instanceof Material) {
@@ -564,9 +567,11 @@ public class MaterialData {
 
 	private static Material[] adjust(Material[] oldArray, int size) {
 		Material[] newArray = new Material[size];
+
 		for (int i = 0; i < oldArray.length; i++) {
 			newArray[i] = oldArray[i];
 		}
+
 		return newArray;
 	}
 
@@ -609,21 +614,28 @@ public class MaterialData {
 	 */
 	public static Material getMaterial(int id, short data) {
 		Object o = idLookup[id];
+
 		if (id == FLINT_ID && data >= 1024) {
 			o = getCustomBlock(data);
+
 			if (o == null) {
 				o = getCustomItem(data);
 			}
+
 			return (Material)o;
 		}
+
 		if (o == null || o instanceof Material) {
 			return (Material)o;
 		}
+
 		Material[] materials = (Material[])o;
 		Material m = materials[0];
+
 		if (data < materials.length && data > -1) {
 			return materials[data];
 		}
+
 		return m;
 	}
 
@@ -642,43 +654,54 @@ public class MaterialData {
 		Object o = idLookup[id];
 		Material[] materials;
 		Material mat;
+
 		if (idLookup[id] == null) {
 			return null;
 		}
+
 		if (o instanceof Material) {
 			mat = (Material)o;
-			materials = new Material[Math.max(mat.getRawData(), data) *2 + 1];
+			materials = new Material[Math.max(mat.getRawData(), data) * 2 + 1];
 			materials[mat.getRawData()] = mat;
 		} else {
 			materials = (Material[])o;
+
 			if (data >= materials.length) {
 				materials = adjust(materials, data * 2 + 1);
 			}
+
 			mat = materials[data];
 		}
+
 		idLookup[id] = materials;
 
 		if (mat != null && id != FLINT_ID) {
 			if (mat.getRawId() == id && mat.getRawData() == data) {
 				return mat;
 			}
+
 			Material orig = mat;
+
 			try {
 				Class<?>[] params = {String.class, int.class, int.class, boolean.class};
-				Constructor<? extends Material> constructor = orig.getClass().getConstructor(params);
+				Constructor <? extends Material > constructor = orig.getClass().getConstructor(params);
 				constructor.setAccessible(true);
 				mat = constructor.newInstance(orig.getName(), id, data, true);
 				insertItem(id, data, mat);
 			} catch (Exception e) {
 				System.out.println("[Spoutcraft] Available constructors: ");
+
 				for (Constructor<?> c : orig.getClass().getConstructors()) {
 					System.out.println("[Spoutcraft]	   Constructor Params: " + c.getParameterTypes());
 				}
+
 				e.printStackTrace();
 				System.out.println("[Spoutcraft] Failed to create a duplicate item in MaterialData.getOrCreateMaterial, for " + id + ", " + data);
 			}
+
 			return mat;
 		}
+
 		return null;
 	}
 
@@ -699,9 +722,11 @@ public class MaterialData {
 	 */
 	public static Block getBlock(int id, short data) {
 		Material mat = getMaterial(id, data);
+
 		if (mat instanceof Block) {
 			return (Block)mat;
 		}
+
 		return null;
 	}
 
@@ -711,9 +736,11 @@ public class MaterialData {
 	 */
 	public static CustomBlock[] getCustomBlocks() {
 		CustomBlock[] blocks = new CustomBlock[customBlocks.size()];
+
 		for (int i = 0; i < blocks.length; i++) {
 			blocks[i] = customBlocks.get(i);
 		}
+
 		return blocks;
 	}
 
@@ -723,9 +750,11 @@ public class MaterialData {
 	 */
 	public static CustomItem[] getCustomItems() {
 		CustomItem[] items = new CustomItem[customItems.size()];
+
 		for (int i = 0; i < items.length; i++) {
 			items[i] = customItems.get(i);
 		}
+
 		return items;
 	}
 
@@ -764,9 +793,11 @@ public class MaterialData {
 	 */
 	public static Item getItem(int id, short data) {
 		Material mat = getMaterial(id, data);
+
 		if (mat instanceof Item) {
 			return (Item)mat;
 		}
+
 		return null;
 	}
 
@@ -776,6 +807,7 @@ public class MaterialData {
 	 */
 	public static List<Material> getMaterials() {
 		LinkedList<Material> materials = new LinkedList<Material>();
+
 		for (int i = 0; i < idLookup.length; i++) {
 			if (idLookup[i] instanceof Material) {
 				materials.add((Material)idLookup[i]);
@@ -787,6 +819,7 @@ public class MaterialData {
 				}
 			}
 		}
+
 		materials.addAll(customBlocks);
 		materials.addAll(customItems);
 		return materials;

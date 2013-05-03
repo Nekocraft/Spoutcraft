@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Random;
 
 public class ContainerEnchantment extends Container {
-
 	/** SlotEnchantmentTable object with ItemStack to be enchanted */
 	public IInventory tableInventory = new SlotEnchantmentTable(this, "Enchant", true, 1);
 

@@ -58,6 +58,7 @@ public class SortButton extends GenericRadioButton implements UrlElement {
 		if (isSelected() && !firstClick) {
 			topdown = !topdown;
 		}
+
 		updateUrl();
 		firstClick = false;
 	}
@@ -68,6 +69,7 @@ public class SortButton extends GenericRadioButton implements UrlElement {
 			topdown = preferredOrder;
 			firstClick = true;
 		}
+
 		super.setSelected(b);
 		return this;
 	}
@@ -87,20 +89,24 @@ public class SortButton extends GenericRadioButton implements UrlElement {
 		} else {
 			MCRenderDelegate r = (MCRenderDelegate) SpoutClient.getInstance().getRenderDelegate();
 			String texture = "";
+
 			if (isSelected() && topdown || !isSelected() && preferredOrder) {
 				texture = "ui/box_ascending.png";
 			} else {
 				texture = "ui/box_descending.png";
 			}
+
 			Texture direction = CustomTextureManager.getTextureFromJar("/res/" + texture);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			GL11.glTranslatef((float) getScreenX(), (float) getScreenY(), 0);
 			r.renderBaseBox(this, true);
 			FontRenderer font = SpoutClient.getHandle().fontRenderer;
 			Color color = r.getColor(this);
+
 			if (!isSelected()) {
 				color.setAlpha(0.2F);
 			}
+
 			r.drawTexture(direction, 20, 20, color, true);
 			font.drawString(getText(), 22, 7, r.getColor(this).toInt());
 		}

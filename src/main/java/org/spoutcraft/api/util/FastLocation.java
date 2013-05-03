@@ -39,17 +39,12 @@ public class FastLocation extends FastVector implements FixedLocation {
 
 	public Vector getDirection() {
 		Vector vector = new MutableVector();
-
 		double rotX = this.getYaw();
 		double rotY = this.getPitch();
-
 		vector.setY(-Math.sin(Math.toRadians(rotY)));
-
 		double h = Math.cos(Math.toRadians(rotY));
-
 		vector.setX(-h * Math.sin(Math.toRadians(rotX)));
 		vector.setZ(h * Math.cos(Math.toRadians(rotX)));
-
 		return vector;
 	}
 

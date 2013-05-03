@@ -39,6 +39,7 @@ public class MinecraftFontWrapper implements MinecraftFont {
 				return false;
 			}
 		}
+
 		return true;
 	}
 

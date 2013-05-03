@@ -6,7 +6,6 @@ import com.prupe.mcpatcher.mod.ColorizeBlock;
 // MCPatcher End
 
 public class BlockStem extends BlockFlower {
-
 	/** Defines if it is a Melon or a Pumpkin that the stem is producing. */
 	private final Block fruitType;
 	private Icon theIcon;
@@ -247,7 +246,7 @@ public class BlockStem extends BlockFlower {
 	 */
 	public void registerIcons(IconRegister par1IconRegister) {
 		this.blockIcon = par1IconRegister.registerIcon("stem_straight");
-		this.theIcon = par1IconRegister.registerIcon("stem_bent"); 
+		this.theIcon = par1IconRegister.registerIcon("stem_bent");
 	}
 
 	public Icon func_94368_p() {

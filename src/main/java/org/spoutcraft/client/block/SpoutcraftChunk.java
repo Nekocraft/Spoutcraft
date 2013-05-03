@@ -30,7 +30,7 @@ import net.minecraft.client.Minecraft;
 import org.spoutcraft.api.material.CustomBlock;
 import org.spoutcraft.api.material.MaterialData;
 
-public class SpoutcraftChunk{
+public class SpoutcraftChunk {
 	public static final Set<SpoutcraftChunk> loadedChunks = new HashSet<SpoutcraftChunk>();
 
 	private WeakReference<net.minecraft.src.Chunk> weakChunk;
@@ -48,10 +48,12 @@ public class SpoutcraftChunk{
 
 	public net.minecraft.src.Chunk getHandle() {
 		net.minecraft.src.Chunk c = weakChunk.get();
+
 		if (c == null) {
 			c = world.getChunkFromChunkCoords(x, z);
 			weakChunk = new WeakReference<net.minecraft.src.Chunk>(c);
 		}
+
 		return c;
 	}
 
@@ -68,14 +70,19 @@ public class SpoutcraftChunk{
 			int key = ((x & 0xF) << 12) | ((z & 0xF) << 8) | (y & 0xFF);
 			return customBlockData[key];
 		}
+
 		return 0;
 	}
 
 	public short setCustomBlockId(int x, int y, int z, short id) {
 		if (customBlockData == null) {
-			customBlockData = new short[16*16*256];
+			customBlockData = new short[16 * 16 * 256];
 		}
-		if (id < 0) id = 0;
+
+		if (id < 0) {
+			id = 0;
+		}
+
 		int key = ((x & 0xF) << 12) | ((z & 0xF) << 8) | (y & 0xFF);
 		short old = customBlockData[key];
 		customBlockData[key] = id;
@@ -96,6 +103,7 @@ public class SpoutcraftChunk{
 		if (block == null) {
 			throw new NullPointerException("Custom Block can not be null!");
 		}
+
 		short old = setCustomBlockId(x, y, z, (short) block.getCustomId());
 		return MaterialData.getCustomBlock(old);
 	}
@@ -105,14 +113,19 @@ public class SpoutcraftChunk{
 			int key = ((x & 0xF) << 12) | ((z & 0xF) << 8) | (y & 0xFF);
 			return customBlockRotations[key];
 		}
+
 		return 0;
 	}
 
 	public byte setCustomBlockData(int x, int y, int z, byte rot) {
 		if (customBlockRotations == null) {
-			customBlockRotations = new byte[16*16*256];
+			customBlockRotations = new byte[16 * 16 * 256];
 		}
-		if (rot < 0) rot = 0;
+
+		if (rot < 0) {
+			rot = 0;
+		}
+
 		int key = ((x & 0xF) << 12) | ((z & 0xF) << 8) | (y & 0xFF);
 		byte old = customBlockRotations[key];
 		customBlockRotations[key] = rot;
@@ -133,6 +146,7 @@ public class SpoutcraftChunk{
 		if (block == null) {
 			throw new NullPointerException("Custom Block can not be null!");
 		}
+
 		short old = setCustomBlockId(x, y, z, (short) block.getCustomId());
 		setCustomBlockData(x, y, z, data);
 		return MaterialData.getCustomBlock(old);
@@ -147,6 +161,7 @@ public class SpoutcraftChunk{
 			SpoutcraftChunk other = (SpoutcraftChunk)obj;
 			return x == other.x && z == other.z;
 		}
+
 		return false;
 	}
 

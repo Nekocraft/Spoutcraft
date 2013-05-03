@@ -37,12 +37,10 @@ public class Texture {
 		this.width = width;
 		this.height = height;
 		this.spriteSize = spriteSize;
-
 		int amount = (width / spriteSize) * (height / spriteSize);
-
 		subTextures = new ArrayList<SubTexture>(amount);
-
 		int count = 0;
+
 		for (int y = (height / spriteSize) - 1; y >= 0; y--) {
 			for (int x = 0; x < width / spriteSize; x++) {
 				subTextures.add(count, new SubTexture(this, x * spriteSize, y * spriteSize, spriteSize));

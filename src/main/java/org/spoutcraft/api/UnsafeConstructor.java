@@ -26,9 +26,10 @@ import java.lang.annotation.RetentionPolicy;
 @Documented
 @Retention(value = RetentionPolicy.RUNTIME)
 public @interface UnsafeConstructor {
-	public String author() default "SpoutDev";
 
-	public String version() default "1.0";
+public String author() default "SpoutDev";
 
-	public String shortDescription() default "Indicates that the constructor executes potentionally unsafe addon code and should be sandboxed before calling";
+public String version() default "1.0";
+
+public String shortDescription() default "Indicates that the constructor executes potentionally unsafe addon code and should be sandboxed before calling";
 }

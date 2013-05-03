@@ -32,6 +32,7 @@ public class PropertyObject implements PropertyInterface {
 		if (properties.containsKey(name)) {
 			return properties.get(name).get();
 		}
+
 		return null;
 	}
 

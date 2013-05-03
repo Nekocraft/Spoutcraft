@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class Packet {
-
 	/** Maps packet id to packet class */
 	public static IntHashMap packetIdToClassMap = new IntHashMap();
 
@@ -45,7 +44,7 @@ public abstract class Packet {
 	 */
 	// Spout Start - static to public static
 	public static void addIdClassMapping(int par0, boolean par1, boolean par2, Class par3Class) {
-	// Spout End
+		// Spout End
 		if (packetIdToClassMap.containsItem(par0)) {
 			throw new IllegalArgumentException("Duplicate packet id:" + par0);
 		} else if (packetClassToIdMap.containsKey(par3Class)) {

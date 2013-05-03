@@ -3,7 +3,6 @@ package net.minecraft.src;
 import net.minecraft.client.Minecraft;
 
 public class PlayerControllerMP {
-
 	/** The Minecraft instance. */
 	private final Minecraft mc;
 	private final NetClientHandler netClientHandler;
@@ -155,7 +154,7 @@ public class PlayerControllerMP {
 
 				// Spout Start
 				if (var5 > 0 && Block.blocksList[var5].getPlayerRelativeBlockHardness(this.mc.thePlayer) >= 1.0F) {
-				// Spout End
+					// Spout End
 					this.onPlayerDestroyBlock(par1, par2, par3, par4);
 				} else {
 					this.isHittingBlock = true;

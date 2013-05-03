@@ -48,7 +48,8 @@ public class ControlsModel extends AbstractListModel {
 		if (gui.checkVanilla.isChecked()) {
 			// Minecraft controls
 			int n = 0;
-			for (KeyBinding binding:options.keyBindings) {
+
+			for (KeyBinding binding: options.keyBindings) {
 				items.add(new VanillaBindingItem(n, binding, this));
 				n++;
 			}
@@ -56,30 +57,32 @@ public class ControlsModel extends AbstractListModel {
 
 		if (gui.checkSpoutcraft.isChecked()) {
 			// Spoutcraft controls
-			for (KeyBinding binding:options.spoutcraftBindings) {
+			for (KeyBinding binding: options.spoutcraftBindings) {
 				items.add(new SpoutcraftBindingItem(binding, this));
 			}
 		}
 
 		if (gui.checkCustom.isChecked()) {
 			// Custom plugin controls
-			for (org.spoutcraft.api.keyboard.KeyBinding binding:manager.getAllBindings()) {
+			for (org.spoutcraft.api.keyboard.KeyBinding binding: manager.getAllBindings()) {
 				items.add(new KeyBindingItem(binding, this));
 			}
 		}
 
 		if (gui.checkShortcuts.isChecked()) {
 			// User shortcuts
-			for (Shortcut sh:manager.getAllShortcuts()) {
+			for (Shortcut sh: manager.getAllShortcuts()) {
 				items.add(new ShortcutBindingItem(sh, this));
 			}
 		}
 
 		// Check for conflicting keys
-		outer: for (ControlsBasicItem item1:items) {
-			for (ControlsBasicItem item2:items) {
+
+		outer: for (ControlsBasicItem item1: items) {
+			for (ControlsBasicItem item2: items) {
 				if (!item1.equals(item2)) {
 					item1.setConflicting(item1.conflicts(item2));
+
 					if (item1.isConflicting()) {
 						continue outer;
 					}
@@ -90,6 +93,7 @@ public class ControlsModel extends AbstractListModel {
 		if (!gui.search.getText().isEmpty()) {
 			for (int i = 0; i < items.size(); i++) {
 				ControlsBasicItem item = items.get(i);
+
 				if (!item.getName().toLowerCase().contains(gui.search.getText().toLowerCase())) {
 					items.remove(i);
 					i--;
@@ -109,6 +113,7 @@ public class ControlsModel extends AbstractListModel {
 		if (row < 0 || row >= items.size()) {
 			return null;
 		}
+
 		return items.get(row);
 	}
 
@@ -124,11 +129,14 @@ public class ControlsModel extends AbstractListModel {
 	protected void onItemClicked(ControlsBasicItem item, boolean doubleClicked) {
 		if (doubleClicked) {
 			editing = !editing;
+
 			if (item != lastEdit) {
 				editing = true;
 			}
+
 			lastEdit = item;
 		}
+
 		gui.updateButtons();
 	}
 
@@ -138,7 +146,7 @@ public class ControlsModel extends AbstractListModel {
 	}
 
 	public ControlsBasicItem getEditingItem() {
-		return editing?lastEdit:null;
+		return editing ? lastEdit : null;
 	}
 
 	public void finishEdit() {

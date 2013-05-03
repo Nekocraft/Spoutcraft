@@ -28,9 +28,11 @@ public class CraftEntityFactory {
 		if (aThis instanceof EntityPlayerSP) {
 			return ClientPlayer.getInstance();
 		}
+
 		if (aThis instanceof EntityLiving) {
 			return new CraftLivingEntity((EntityLiving)aThis);
 		}
+
 		return null; // Should not break, got most of the important stuff
 	}
 }

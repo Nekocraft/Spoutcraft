@@ -74,7 +74,7 @@ public class GameSettings {
 	public float chatScale = 1.0F;
 	public float chatWidth = 1.0F;
 	public float chatHeightUnfocused = 0.44366196F;
-	public float chatHeightFocused = 1.0F; 
+	public float chatHeightFocused = 1.0F;
 	public KeyBinding keyBindForward = new KeyBinding("key.forward", 17);
 	public KeyBinding keyBindLeft = new KeyBinding("key.left", 30);
 	public KeyBinding keyBindBack = new KeyBinding("key.back", 31);
@@ -90,10 +90,10 @@ public class GameSettings {
 	public KeyBinding keyBindPickBlock = new KeyBinding("key.pickItem", -98);
 	public KeyBinding keyBindCommand = new KeyBinding("key.command", 53);
 	// Spout Start
-	public KeyBinding keyBindToggleFog = new KeyBinding("Toggle Fog", Keyboard.KEY_F); 
+	public KeyBinding keyBindToggleFog = new KeyBinding("Toggle Fog", Keyboard.KEY_F);
 	public final KeyBinding keySneakToggle = new KeyBinding("Sneak Toggle", Keyboard.KEY_LCONTROL);
 	public final KeyBinding keyRunToggle = new KeyBinding("Run Toggle", Keyboard.KEY_RCONTROL);
-	public final KeyBinding keyTreadWaterToggle = new KeyBinding("Tread Water Toggle", Keyboard.KEY_Z); 
+	public final KeyBinding keyTreadWaterToggle = new KeyBinding("Tread Water Toggle", Keyboard.KEY_Z);
 	public final KeyBinding keyAutoForward = new KeyBinding("Forward Toggle", Keyboard.KEY_G);
 	public final KeyBinding keyAutoBackward = new KeyBinding("Backward Toggle", Keyboard.KEY_H);
 	public final KeyBinding keyFlyToggle = new KeyBinding("Fly Toggle", Keyboard.KEY_O);
@@ -106,7 +106,8 @@ public class GameSettings {
 	public final KeyBinding keyWaypoint = new KeyBinding("Overview Map", Keyboard.KEY_P);
 	public final KeyBinding keyHideChat = new KeyBinding("Hide Chat", Keyboard.KEY_M);
 	public final KeyBinding[] spoutcraftBindings = {keyBindToggleFog, keySneakToggle, keyRunToggle, keyTreadWaterToggle, keyAutoForward,
-			keyAutoBackward, keyFlyToggle, keyFlyForward, keyFlyLeft, keyFlyBack, keyFlyRight, keyFlyUp, keyFlyDown, keyWaypoint, keyHideChat};
+							  keyAutoBackward, keyFlyToggle, keyFlyForward, keyFlyLeft, keyFlyBack, keyFlyRight, keyFlyUp, keyFlyDown, keyWaypoint, keyHideChat
+												   };
 	// Spout End
 	public KeyBinding[] keyBindings;
 	protected Minecraft mc;
@@ -378,7 +379,7 @@ public class GameSettings {
 	}
 
 	public float getOptionFloatValue(EnumOptions par1EnumOptions) {
-		return par1EnumOptions == EnumOptions.FOV ? this.fovSetting : (par1EnumOptions == EnumOptions.GAMMA ? this.gammaSetting : (par1EnumOptions == EnumOptions.MUSIC ? this.musicVolume : (par1EnumOptions == EnumOptions.SOUND ? this.soundVolume : (par1EnumOptions == EnumOptions.SENSITIVITY ? this.mouseSensitivity : (par1EnumOptions == EnumOptions.CHAT_OPACITY ? this.chatOpacity : (par1EnumOptions == EnumOptions.CHAT_HEIGHT_FOCUSED ? this.chatHeightFocused : (par1EnumOptions == EnumOptions.CHAT_HEIGHT_UNFOCUSED ? this.chatHeightUnfocused : (par1EnumOptions == EnumOptions.CHAT_SCALE ? this.chatScale : (par1EnumOptions == EnumOptions.CHAT_WIDTH ? this.chatWidth : 0.0F))))))))); 
+		return par1EnumOptions == EnumOptions.FOV ? this.fovSetting : (par1EnumOptions == EnumOptions.GAMMA ? this.gammaSetting : (par1EnumOptions == EnumOptions.MUSIC ? this.musicVolume : (par1EnumOptions == EnumOptions.SOUND ? this.soundVolume : (par1EnumOptions == EnumOptions.SENSITIVITY ? this.mouseSensitivity : (par1EnumOptions == EnumOptions.CHAT_OPACITY ? this.chatOpacity : (par1EnumOptions == EnumOptions.CHAT_HEIGHT_FOCUSED ? this.chatHeightFocused : (par1EnumOptions == EnumOptions.CHAT_HEIGHT_UNFOCUSED ? this.chatHeightUnfocused : (par1EnumOptions == EnumOptions.CHAT_SCALE ? this.chatScale : (par1EnumOptions == EnumOptions.CHAT_WIDTH ? this.chatWidth : 0.0F)))))))));
 	}
 
 	public boolean getOptionOrdinalValue(EnumOptions par1EnumOptions) {
@@ -652,12 +653,14 @@ public class GameSettings {
 							this.keyBindings[var4].keyCode = Integer.parseInt(var3[1]);
 						}
 					}
+
 					// Spout Start
 					for (int key = 0; key < this.spoutcraftBindings.length; ++key) {
 						if (var3[0].equals("key_" + this.spoutcraftBindings[key].keyDescription)) {
 							this.spoutcraftBindings[key].keyCode = Integer.parseInt(var3[1]);
 						}
 					}
+
 					// Spout End
 				} catch (Exception var5) {
 					this.mc.getLogAgent().logWarning("Skipping bad option: " + var2);
@@ -725,22 +728,24 @@ public class GameSettings {
 			var1.println("chatHeightFocused:" + this.chatHeightFocused);
 			var1.println("chatHeightUnfocused:" + this.chatHeightUnfocused);
 			var1.println("chatScale:" + this.chatScale);
-			var1.println("chatWidth:" + this.chatWidth); 
+			var1.println("chatWidth:" + this.chatWidth);
 
 			for (int var2 = 0; var2 < this.keyBindings.length; ++var2) {
 				var1.println("key_" + this.keyBindings[var2].keyDescription + ":" + this.keyBindings[var2].keyCode);
 			}
+
 			// Spout Start
 			for (int key = 0; key < this.spoutcraftBindings.length; ++key) {
 				var1.println("key_" + this.spoutcraftBindings[key].keyDescription + ":" + this.spoutcraftBindings[key].keyCode);
 			}
-			// Spout End
 
+			// Spout End
 			var1.close();
 		} catch (Exception var3) {
 			this.mc.getLogAgent().logWarning("Failed to save options");
 			var3.printStackTrace();
 		}
+
 		this.sendSettingsToServer();
 	}
 

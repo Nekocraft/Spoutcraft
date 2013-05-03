@@ -190,9 +190,9 @@ public class RenderBiped extends RenderLiving {
 				GL11.glScalef(var6, -var6, var6);
 				GL11.glRotatef(-100.0F, 1.0F, 0.0F, 0.0F);
 				GL11.glRotatef(45.0F, 0.0F, 1.0F, 0.0F);
-			// Spout Start
+				// Spout Start
 			} else if (Item.itemsList[var4.itemID].isFull3D() || var4.itemID == Item.flint.itemID && org.spoutcraft.api.material.MaterialData.getCustomItem(var4.getItemDamage()) instanceof org.spoutcraft.api.material.Tool) {
-			// Spout End
+				// Spout End
 				var6 = 0.625F;
 
 				if (Item.itemsList[var4.itemID].shouldRotateAroundWhenRendering()) {

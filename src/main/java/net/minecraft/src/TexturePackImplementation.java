@@ -13,7 +13,6 @@ import com.prupe.mcpatcher.MCPatcherUtils;
 // MCPatcher End
 
 public abstract class TexturePackImplementation implements ITexturePack {
-
 	/**
 	 * Texture pack ID as returnd by generateTexturePackID(). Used only internally and not visible to the user.
 	 */

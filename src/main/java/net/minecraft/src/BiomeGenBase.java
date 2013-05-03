@@ -9,7 +9,6 @@ import com.prupe.mcpatcher.mod.ColorizeWorld;
 // MCPatcher End
 
 public abstract class BiomeGenBase {
-
 	/** An array of all the biomes, indexed by biome id. */
 	public static final BiomeGenBase[] biomeList = new BiomeGenBase[256];
 	public static final BiomeGenBase ocean = (new BiomeGenOcean(0)).setColor(112).setBiomeName("Ocean").setMinMaxHeight(-1.0F, 0.4F);

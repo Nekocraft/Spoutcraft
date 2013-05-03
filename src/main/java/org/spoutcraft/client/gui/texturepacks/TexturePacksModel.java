@@ -60,19 +60,20 @@ public class TexturePacksModel extends AbstractListModel {
 	public void update() {
 		textures = SpoutClient.getHandle().texturePackList;
 		textures.updateAvaliableTexturePacks();
-
 		List<TexturePackItem> oldPacks = new ArrayList<TexturePackItem>();
 		oldPacks.addAll(items);
 		items.clear();
 
 		for (TexturePackItem item : oldPacks) {
 			boolean found = false;
+
 			for (ITexturePack pack : getTextures()) {
 				if (item.getPack() == pack) {
 					found = true;
 					break;
 				}
 			}
+
 			if (found) {
 				items.add(item);
 			}
@@ -80,12 +81,14 @@ public class TexturePacksModel extends AbstractListModel {
 
 		for (ITexturePack pack : getTextures()) {
 			boolean found = false;
+
 			for (TexturePackItem item : oldPacks) {
 				if (item.getPack() == pack) {
 					found = true;
 					break;
 				}
 			}
+
 			if (!found) {
 				items.add(new TexturePackItem(this, (TexturePackImplementation) pack));
 			}

@@ -5,7 +5,6 @@ import com.prupe.mcpatcher.mod.ColorizeWorld;
 // MCPatcher End
 
 public class WorldProviderEnd extends WorldProvider {
-
 	/**
 	 * creates a new world chunk manager for WorldProvider
 	 */

@@ -39,17 +39,17 @@ public class TIntPairFloatHashMap {
 	}
 
 	public float put(int key1, int key2, float value) {
-		long key = (((long)key1)<<32) | (((long)key2) & 0xFFFFFFFFL);
+		long key = (((long)key1) << 32) | (((long)key2) & 0xFFFFFFFFL);
 		return map.put(key, value);
 	}
 
 	public float get(int key1, int key2) {
-		long key = (((long)key1)<<32) | (((long)key2) & 0xFFFFFFFFL);
+		long key = (((long)key1) << 32) | (((long)key2) & 0xFFFFFFFFL);
 		return map.get(key);
 	}
 
 	public boolean containsKey(int key1, int key2) {
-		long key = (((long)key1)<<32) | (((long)key2) & 0xFFFFFFFFL);
+		long key = (((long)key1) << 32) | (((long)key2) & 0xFFFFFFFFL);
 		return map.containsKey(key);
 	}
 
@@ -62,7 +62,7 @@ public class TIntPairFloatHashMap {
 	}
 
 	public boolean increment(int key1, int key2) {
-		long key = (((long)key1)<<32) | (((long)key2) & 0xFFFFFFFFL);
+		long key = (((long)key1) << 32) | (((long)key2) & 0xFFFFFFFFL);
 		return map.increment(key);
 	}
 
@@ -83,7 +83,7 @@ public class TIntPairFloatHashMap {
 	}
 
 	public float remove(int key1, int key2) {
-		long key = (((long)key1)<<32) | (((long)key2) & 0xFFFFFFFFL);
+		long key = (((long)key1) << 32) | (((long)key2) & 0xFFFFFFFFL);
 		return map.remove(key);
 	}
 

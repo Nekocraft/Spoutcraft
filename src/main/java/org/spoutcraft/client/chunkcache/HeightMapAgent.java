@@ -28,11 +28,14 @@ public class HeightMapAgent {
 	public static void scanChunk(Chunk chunk) {
 		try {
 			HeightMap map = HeightMap.getHeightMap(MinimapUtils.getWorldName());
+
 			synchronized (map) {
 				HeightChunk hchunk = map.getChunk(chunk.xPosition, chunk.zPosition, true);
+
 				for (int x = 0; x < 16; x++) {
 					for (int z = 0; z < 16; z++) {
 						int h = getHighestBlock(chunk, x, z);
+
 						if (h > -1) {
 							byte id = (byte) chunk.getBlockID(x, h, z);
 							byte data = (byte) chunk.getBlockMetadata(x, h, z);
@@ -41,6 +44,7 @@ public class HeightMapAgent {
 							if (chunk.getBlockID(x, h + 1, z) == 78) {
 								id = 78;
 							}
+
 							hchunk.setHeight(x, z, (short) h);
 							hchunk.setBlockId(x, z, id);
 							hchunk.setData(x, z, data);
@@ -48,8 +52,7 @@ public class HeightMapAgent {
 					}
 				}
 			}
-		}
-		catch (ArrayIndexOutOfBoundsException ignore) {
+		} catch (ArrayIndexOutOfBoundsException ignore) {
 		}
 	}
 
@@ -59,14 +62,17 @@ public class HeightMapAgent {
 
 	public static short getHighestBlock(Chunk chunk, int x, int z) {
 		boolean lastWater = false;
+
 		for (short y = 255; y > 0; y--) {
 			byte id = (byte) chunk.getBlockID(x, y, z);
+
 			if (id != 0 && id != 8 && id != 9) {
-				return (short) (lastWater ? y + 1 : y);
+				return (short)(lastWater ? y + 1 : y);
 			} else if (id == 8 || id == 9) {
 				lastWater = true;
 			}
 		}
+
 		return -1;
 	}
 }

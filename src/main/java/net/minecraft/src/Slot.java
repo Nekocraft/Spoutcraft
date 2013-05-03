@@ -1,7 +1,6 @@
 package net.minecraft.src;
 
 public class Slot {
-
 	/** The index of the slot in the inventory. */
 	// Spout Start - private to public
 	public final int slotIndex;

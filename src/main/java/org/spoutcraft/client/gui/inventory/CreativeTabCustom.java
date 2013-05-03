@@ -29,7 +29,7 @@ import net.minecraft.src.ItemStack;
 import org.spoutcraft.api.material.MaterialData;
 import org.spoutcraft.api.material.CustomItem;
 
-public class CreativeTabCustom extends CreativeTabs{
+public class CreativeTabCustom extends CreativeTabs {
 	public CreativeTabCustom(int inty, String string) {
 		super(inty, string);
 	}
@@ -53,6 +53,7 @@ public class CreativeTabCustom extends CreativeTabs{
 			if (rawDatas.contains(ci.getRawData())) {
 				continue;
 			}
+
 			ItemStack is = new ItemStack(ci.getRawId(), 1, ci.getRawData());
 			rawDatas.add(ci.getRawData());
 			par1List.add(is);

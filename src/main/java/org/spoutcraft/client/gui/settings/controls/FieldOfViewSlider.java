@@ -39,12 +39,15 @@ public class FieldOfViewSlider extends GenericSlider {
 
 	public String getText() {
 		String message = String.valueOf((70 + (int)(this.getSliderPosition() * 40)));
+
 		if (this.getSliderPosition() == 0) {
 			message = "正常";
 		}
+
 		if (this.getSliderPosition() == 1) {
 			message = "广角";
 		}
+
 		return "FOV: " + message;
 	}
 }

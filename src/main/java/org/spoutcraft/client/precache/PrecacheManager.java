@@ -62,6 +62,7 @@ public class PrecacheManager {
 	public static void addPlugin(PrecacheTuple plugin) {
 		// Grab precache file
 		File target = getPluginPreCacheFile(plugin);
+
 		// Does it exist locally?
 		if (target.exists()) {
 			// Is the CRC the same as the one sent from SpoutPlugin?
@@ -71,11 +72,14 @@ public class PrecacheManager {
 				return;
 			}
 		}
+
 		// Either it doesn't exist or CRC failed, either or it isn't cached.
 		File temp = new File(FileUtil.getCacheDir(), plugin.getPlugin());
+
 		if (temp.exists() && temp.isDirectory()) {
 			FileUtil.deleteDirectory(temp);
 		}
+
 		plugins.put(plugin, false);
 	}
 
@@ -94,10 +98,12 @@ public class PrecacheManager {
 	public static PrecacheTuple getPrecacheTuple(String plugin, String version) {
 		for (Entry entry : plugins.entrySet()) {
 			PrecacheTuple tuple = (PrecacheTuple)entry.getKey();
+
 			if (tuple.getPlugin().equalsIgnoreCase(plugin) && tuple.getVersion().equalsIgnoreCase(version)) {
 				return tuple;
 			}
 		}
+
 		return null;
 	}
 
@@ -119,6 +125,7 @@ public class PrecacheManager {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
@@ -134,9 +141,11 @@ public class PrecacheManager {
 				// It's cached, continue
 				continue;
 			}
+
 			// It wasn't cached so return this entry to be cached
 			return (PrecacheTuple) entry.getKey();
 		}
+
 		// Nothing is left to cache, return null
 		return null;
 	}
@@ -151,12 +160,14 @@ public class PrecacheManager {
 			loadPrecache();
 			return;
 		}
+
 		final PrecacheTuple next = getNextToCache();
 
 		// Let the user know we are precaching
 		if (spoutDebug) {
 			setPreloadGuiText(ChatColor.BLUE + "Spoutcraft" + "\n" + " " + "\n" + ChatColor.WHITE + "Downloading Custom Content for:  " + ChatColor.ITALIC + next.getPlugin() + " " + next.getVersion());
 		}
+
 		// Send SpoutPlugin a request for the pre-cache zip
 		SpoutClient.getInstance().getPacketManager().sendSpoutPacket(new PacketRequestPrecache(next.getPlugin()));
 	}
@@ -177,54 +188,68 @@ public class PrecacheManager {
 			// Grab the tuple
 			final PrecacheTuple toCache = (PrecacheTuple) entry.getKey();
 			final File extractDir = new File(cacheRoot, toCache.getPlugin()); //Ex. /cache/pluginname/
+
 			if (spoutDebug) {
 				System.out.println("[Spoutcraft] Reading: " + extractDir.getName() + ".zip");
 			}
+
 			// Make the directories to unzip to
 			extractDir.mkdirs();
-			try  {
+
+			try {
 				// Read in a zip stream
 				final ZipInputStream stream = new ZipInputStream(new FileInputStream(getPluginPreCacheFile(toCache)));
 				final ReadableByteChannel read = Channels.newChannel(stream);
 				// Grab the first entry in the zip
 				ZipEntry inner = stream.getNextEntry();
+
 				while (inner != null) {
 					// Construct an output stream for the entry
 					final File toExtract = new File(extractDir, inner.getName());
+
 					if (!toExtract.exists()) {
 						final FileOutputStream write = new FileOutputStream(toExtract);
 						write.getChannel().transferFrom(read, 0, Long.MAX_VALUE);
 						// Close the writable buffer
 						write.close();
 					}
+
 					// Close the zip stream for this entry
 					stream.closeEntry();
 					// Grab the next entry in the zip
 					inner = stream.getNextEntry();
 				}
+
 				// Finally close the stream altogether
 				stream.close();
-			} catch (Exception e ) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
+
 		for (Entry entry : plugins.entrySet()) {
 			final File dir = new File(cacheRoot, ((PrecacheTuple) entry.getKey()).getPlugin());
+
 			if (!dir.isDirectory()) {
 				continue;
 			}
+
 			final File[] files = dir.listFiles();
+
 			for (File file : files) {
 				if (file.getName().endsWith(".sbd")) {
 					if (spoutDebug) {
 						System.out.println("[Spoutcraft] Loading Spout Block Design: " + file.getName() + " from: " + file.getParent());
 					}
+
 					loadDesign(file);
 				} else if (FileUtil.isImageFile(file.getName())) {
 					if (spoutDebug) {
 						System.out.println("[Spoutcraft] Loading image: " + file.getName() + " from: " + file.getParent());
 					}
-					Texture tex = CustomTextureManager.getTextureFromUrl(((PrecacheTuple) entry.getKey()).getPlugin(),file.getName());
+
+					Texture tex = CustomTextureManager.getTextureFromUrl(((PrecacheTuple) entry.getKey()).getPlugin(), file.getName());
+
 					if (spoutDebug && tex == null) {
 						System.out.println("[Spoutcraft] Precache tried to load a null image: " + tex);
 					}
@@ -234,6 +259,7 @@ public class PrecacheManager {
 
 		if (Minecraft.theMinecraft.theWorld != null) {
 			Minecraft.theMinecraft.renderGlobal.updateAllRenderers();
+
 			if (spoutDebug) {
 				System.out.println("[Spoutcraft] Updating renderer...");
 			}
@@ -257,6 +283,7 @@ public class PrecacheManager {
 			// Prevent closing a plugin created menu from opening the downloading terrain
 			SpoutClient.getHandle().clearPreviousScreen();
 		}
+
 		SpoutClient.getInstance().getPacketManager().sendSpoutPacket(new org.spoutcraft.client.packet.PacketPreCacheCompleted());
 	}
 
@@ -281,15 +308,16 @@ public class PrecacheManager {
 			data = buffer.get();
 			design = new GenericBlockDesign();
 			design.read(new SpoutInputStream(buffer));
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
 			if (design != null && design.isReset()) {
 				design = null;
 			}
+
 			if (customId != -1) {
 				CustomBlock block = MaterialData.getCustomBlock(customId);
+
 				if (block != null) {
 					block.setBlockDesign(design, data);
 				}

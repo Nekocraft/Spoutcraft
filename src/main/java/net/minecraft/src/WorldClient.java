@@ -12,7 +12,6 @@ import org.spoutcraft.client.packet.PacketCustomBlockChunkOverride;
 // Spout End
 
 public class WorldClient extends World {
-
 	/** The packets that need to be sent to the server. */
 	private NetClientHandler sendQueue;
 
@@ -160,7 +159,7 @@ public class WorldClient extends World {
 	 */
 	// Spout Start - protected to public
 	public void obtainEntitySkin(Entity par1Entity) {
-	// Spout End
+		// Spout End
 		super.obtainEntitySkin(par1Entity);
 
 		if (this.entitySpawnQueue.contains(par1Entity)) {
@@ -173,7 +172,7 @@ public class WorldClient extends World {
 	 */
 	// Spout Start - protected to public
 	public void releaseEntitySkin(Entity par1Entity) {
-	// Spout End
+		// Spout End
 		super.releaseEntitySkin(par1Entity);
 
 		if (this.entityList.contains(par1Entity)) {
@@ -281,11 +280,11 @@ public class WorldClient extends World {
 	public void func_73029_E(int par1, int par2, int par3) {
 		byte var4 = 16;
 		Random var5 = new Random();
-
 		// Spout Start
 		int num = Configuration.isFancyParticles() ? 1000 : 250;
+
 		for (int var6 = 0; var6 < num; ++var6) {
-		// Spout End
+			// Spout End
 			int var7 = par1 + this.rand.nextInt(var4) - this.rand.nextInt(var4);
 			int var8 = par2 + this.rand.nextInt(var4) - this.rand.nextInt(var4);
 			int var9 = par3 + this.rand.nextInt(var4) - this.rand.nextInt(var4);

@@ -44,6 +44,7 @@ public class PacketManager {
 			player.sendQueue.addToSendQueue(new CustomPacket(packet));
 			return true;
 		}
+
 		return false;
 	}
 
@@ -59,6 +60,7 @@ public class PacketManager {
 
 	private void sendPacket(Packet packet) {
 		EntityClientPlayerMP player = (EntityClientPlayerMP)mc.thePlayer;
+
 		if (player != null) {
 			player.sendQueue.addToSendQueue(packet);
 		}
@@ -74,6 +76,7 @@ public class PacketManager {
 		if (SpoutClient.getInstance().getServerVersion() >= pluginVersion) {
 			return sendSpoutPacket(packet);
 		}
+
 		return false;
 	}
 }

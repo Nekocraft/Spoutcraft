@@ -10,17 +10,6 @@ import com.prupe.mcpatcher.mod.RenderPass;
 // MCPatcher End
 // Spout Start
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.Block;
-import net.minecraft.src.Chunk;
-import net.minecraft.src.Entity;
-import net.minecraft.src.ICamera;
-import net.minecraft.src.RenderBlocks;
-import net.minecraft.src.RenderItem;
-import net.minecraft.src.Tessellator;
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.TileEntityRenderer;
-import net.minecraft.src.World;
 import org.newdawn.slick.opengl.Texture;
 import org.spoutcraft.api.Spoutcraft;
 import org.spoutcraft.api.block.design.GenericBlockDesign;
@@ -32,7 +21,6 @@ import org.spoutcraft.client.io.CustomTextureManager;
 // Spout End
 
 public class WorldRenderer {
-
 	/** Reference to the World object. */
 	public World worldObj;
 	private int glRenderList = -1;
@@ -149,6 +137,7 @@ public class WorldRenderer {
 	// MCPatcher Start
 	public void updateRenderer() {
 		CTMUtils.start();
+
 		if (!this.needsUpdate) {
 			CTMUtils.finish();
 		} else {
@@ -172,18 +161,15 @@ public class WorldRenderer {
 			if (!chunkCache.extendedLevelsInChunkCache()) {
 				++chunksUpdated;
 				RenderBlocks blockRenderer = new RenderBlocks(chunkCache);
-
 				Minecraft game = SpoutClient.getHandle();
 				int currentTexture = 0;
 				int limit = skipRenderPass.length; // MCPatcher 2.4.4 requires 4, anything less and things get missed.
 				int defaultTexture = game.renderEngine.getTexture("/terrain.png");
 				game.renderEngine.bindTexture(defaultTexture);
-
 				List<String> hitTextures = new ArrayList<String>();
 				List<String> hitTexturesPlugins = new ArrayList<String>();
 				hitTextures.add("/terrain.png");
 				hitTexturesPlugins.add("");
-
 				SpoutcraftChunk sChunk = Spoutcraft.getChunkAt(worldObj, posX, posY, posZ);
 				short[] customBlockIds = sChunk.getCustomBlockIds();
 				byte[] customBlockData = sChunk.getCustomBlockData();
@@ -194,6 +180,7 @@ public class WorldRenderer {
 					boolean rendered = false;
 					boolean drawBlock = false;
 					RenderPass.start(renderPass);
+
 					if (!drawBlock) {
 						drawBlock = true;
 						GL11.glNewList(this.glRenderList + renderPass, GL11.GL_COMPILE);
@@ -210,23 +197,27 @@ public class WorldRenderer {
 
 					for (currentTexture = 0; currentTexture < hitTextures.size(); currentTexture++) {
 						int texture = defaultTexture;
+
 						// First pass (currentTexture == 0) is for the default terrain.png texture. Subsquent passes are for custom textures
 						// This design is to avoid unnessecary glBindTexture calls.
 						if (currentTexture > 0) {
 							Texture customTexture = CustomTextureManager.getTextureFromUrl(hitTexturesPlugins.get(currentTexture), hitTextures.get(currentTexture));
+
 							if (customTexture == null) {
 								customTexture = CustomTextureManager.getTextureFromJar("/res/block/spout.png");
 							}
+
 							if (customTexture != null) {
 								texture = customTexture.getTextureID();
 								game.renderEngine.bindTexture(texture);
+
 								if (texture <= 0) {
 									texture = defaultTexture;
 								}
 							}
 						}
 
-						if (tessellator.texture != texture){
+						if (tessellator.texture != texture) {
 							tessellator.draw();
 							tessellator.texture = texture;
 							tessellator.startDrawingQuads();
@@ -239,6 +230,7 @@ public class WorldRenderer {
 							for (int dz = z; dz < sizeZOffset; ++dz) {
 								for (int dy = y; dy < sizeYOffset; ++dy) {
 									int id = chunkCache.getBlockId(dx, dy, dz);
+
 									if (id > 0) {
 										String customTexture = null;
 										String customTextureAddon = null;
@@ -247,8 +239,10 @@ public class WorldRenderer {
 
 										if (customBlockIds != null) {
 											int key = ((dx & 0xF) << 12) | ((dz & 0xF) << 8) | (dy & 0xFF);
+
 											if (customBlockIds[key] != 0) {
 												mat = MaterialData.getCustomBlock(customBlockIds[key]);
+
 												if (mat != null) {
 													design = (GenericBlockDesign) mat.getBlockDesign(customBlockData == null ? 0 : customBlockData[key]);
 												}
@@ -260,16 +254,17 @@ public class WorldRenderer {
 											customTextureAddon = design.getTextureAddon();
 										}
 
-										if (customTexture != null){
+										if (customTexture != null) {
 											boolean found = false;
 
 											// Search for the custom texture in our list
-											for(int i = 0; i < hitTextures.size(); i++){
-												if(hitTextures.get(i).equals(customTexture) && hitTexturesPlugins.get(i).equals(customTextureAddon)) {
+											for (int i = 0; i < hitTextures.size(); i++) {
+												if (hitTextures.get(i).equals(customTexture) && hitTexturesPlugins.get(i).equals(customTextureAddon)) {
 													found = true;
 													break;
 												}
 											}
+
 											// If it is not already accounted for, add it so we do an additional pass for it.
 											if (!found) {
 												hitTextures.add(customTexture);
@@ -280,7 +275,8 @@ public class WorldRenderer {
 											if (!hitTextures.get(currentTexture).equals(customTexture) || !hitTexturesPlugins.get(currentTexture).equals(customTextureAddon)) {
 												continue;
 											}
-										// Do not render if we are not using the terrain.png and can't find a valid texture for this custom block
+
+											// Do not render if we are not using the terrain.png and can't find a valid texture for this custom block
 										} else if (currentTexture != 0) {
 											continue;
 										}
@@ -290,6 +286,7 @@ public class WorldRenderer {
 										if (block != null) {
 											if (renderPass == 0 && block.hasTileEntity()) {
 												TileEntity var20 = chunkCache.getBlockTileEntity(dx, dy, dz);
+
 												if (TileEntityRenderer.instance.hasSpecialRenderer(var20)) {
 													this.tileEntityRenderers.add(var20);
 												}
@@ -344,9 +341,11 @@ public class WorldRenderer {
 					if (!skipRenderPass) {
 						break;
 					}
+
 					blockRenderer.customIds = null;
 				}
 			}
+
 			HashSet var24 = new HashSet();
 			var24.addAll(this.tileEntityRenderers);
 			var24.removeAll(tileRenderers);
@@ -377,7 +376,7 @@ public class WorldRenderer {
 	public void setDontDraw() {
 		// Spout Start
 		for (int var1 = 0; var1 < skipRenderPass.length; ++var1) {
-		// Spout End
+			// Spout End
 			this.skipRenderPass[var1] = true;
 		}
 

@@ -40,10 +40,12 @@ public class ManualSelectionButton extends GenericRadioButton {
 	@Override
 	public void onButtonClick() {
 		Configuration.setAutomatePerformance(false);
+
 		if (!Configuration.isAdvancedOptions()) {
 			Configuration.setAdvancedOptions(true);
 			SpoutClient.getHandle().displayGuiScreen(GuiSimpleOptions.constructOptionsScreen(parent));
 		}
+
 		Configuration.write();
 		label.setTextColor(new Color(0.45F, 0.45F, 0.45F, 0.45F));
 	}

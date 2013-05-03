@@ -90,9 +90,9 @@ public enum PacketType {
 	PacketSendPrecache(65, PacketSendPrecache.class);
 
 	private final int id;
-	private final Class<? extends SpoutPacket> packetClass;
+	private final Class <? extends SpoutPacket > packetClass;
 	private static final HashMap<Integer, PacketType> lookupId = new HashMap<Integer, PacketType>();
-	PacketType(final int type, final Class<? extends SpoutPacket> packetClass) {
+	PacketType(final int type, final Class <? extends SpoutPacket > packetClass) {
 		this.id = type;
 		this.packetClass = packetClass;
 	}
@@ -101,7 +101,7 @@ public enum PacketType {
 		return id;
 	}
 
-	public Class<? extends SpoutPacket> getPacketClass() {
+	public Class <? extends SpoutPacket > getPacketClass() {
 		return packetClass;
 	}
 

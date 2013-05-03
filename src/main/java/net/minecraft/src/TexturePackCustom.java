@@ -10,7 +10,6 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 
 public class TexturePackCustom extends TexturePackImplementation {
-
 	/** ZipFile object used to access the texture pack file's contents. */
 	// MCPatcher Start - private to public
 	public ZipFile texturePackZipFile;

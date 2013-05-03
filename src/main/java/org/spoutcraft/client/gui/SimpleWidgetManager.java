@@ -31,6 +31,7 @@ public class SimpleWidgetManager implements WidgetManager {
 		if (widget.getScreen() == null) {
 			return;
 		}
+
 		PacketWidget update = new PacketWidget(widget, widget.getScreen().getId());
 		SpoutClient.getInstance().getPacketManager().sendSpoutPacket(update);
 	}

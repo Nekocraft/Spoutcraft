@@ -48,7 +48,9 @@ public class PacketEntitySkin implements SpoutPacket {
 		if (texture.equals("[reset]")) {
 			texture = null;
 		}
+
 		CraftEntity entity = Spoutcraft.getWorld().getEntityFromId(entityId);
+
 		if (entity != null) {
 			entity.setSkin(texture, EntitySkinType.getType(textureId));
 		}

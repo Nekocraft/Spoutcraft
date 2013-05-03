@@ -37,7 +37,7 @@ import org.spoutcraft.api.util.Vector;
 import org.spoutcraft.client.SpoutcraftWorld;
 import org.spoutcraft.client.player.SpoutPlayer;
 
-public class CraftEntity extends PropertyObject{
+public class CraftEntity extends PropertyObject {
 	protected net.minecraft.src.Entity handle = null;
 
 	public CraftEntity() {
@@ -67,7 +67,7 @@ public class CraftEntity extends PropertyObject{
 	}
 
 	public Location getLocation() {
-		return new MutableLocation(handle.posX,handle.posY,handle.posZ,handle.rotationYaw,handle.rotationPitch);
+		return new MutableLocation(handle.posX, handle.posY, handle.posZ, handle.rotationYaw, handle.rotationPitch);
 	}
 
 	public void setVelocity(Vector velocity) {
@@ -101,6 +101,7 @@ public class CraftEntity extends PropertyObject{
 		for (net.minecraft.src.Entity e: notchEntityList) {
 			entities.add(e.spoutEnty);
 		}
+
 		return entities;
 	}
 
@@ -148,6 +149,7 @@ public class CraftEntity extends PropertyObject{
 			handle.riddenByEntity = null;
 			return true;
 		}
+
 		return false;
 	}
 

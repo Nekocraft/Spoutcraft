@@ -21,7 +21,7 @@ package org.spoutcraft.api.material.block;
 
 import org.spoutcraft.api.material.SolidBlock;
 
-public class Slab extends GenericBlock implements SolidBlock{
+public class Slab extends GenericBlock implements SolidBlock {
 	public Slab(String name, int id, int data) {
 		super(name, id, data);
 	}

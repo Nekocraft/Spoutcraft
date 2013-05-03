@@ -2,10 +2,9 @@ package net.minecraft.src;
 
 // MCPatcher Start
 import com.prupe.mcpatcher.mod.ColorizeItem;
-// MCPatcher 
+// MCPatcher
 
 public class Potion {
-
 	/** The array of potion types. */
 	public static final Potion[] potionTypes = new Potion[32];
 	public static final Potion field_76423_b = null;

@@ -22,7 +22,6 @@ package org.spoutcraft.client.chunkcache;
 public class PartitionChunk {
 	static public void copyToChunkData(byte[] chunkData, int blockNum, byte[] partition, int dataLength) {
 		int j = blockNum << 11;
-
 		boolean clear = partition == null;
 
 		if (clear) {
@@ -38,11 +37,12 @@ public class PartitionChunk {
 
 	static public void copyFromChunkData(byte[] chunkData, int blockNum, byte[] partition, int dataLength) {
 		int j = blockNum << 11;
-
 		int i = 0;
+
 		for (i = 0; i < 2048 && j < dataLength; i++) {
 			partition[i] = chunkData[j++];
 		}
+
 		for (; i < 2048; i++) {
 			partition[i] = 0;
 		}
@@ -64,14 +64,14 @@ public class PartitionChunk {
 
 	static public void setHash(byte[] chunkData, int blockNum, long hash, int base) {
 		int p = blockNum * 8 + base;
-		chunkData[p++] = (byte) (hash >> 56);
-		chunkData[p++] = (byte) (hash >> 48);
-		chunkData[p++] = (byte) (hash >> 40);
-		chunkData[p++] = (byte) (hash >> 32);
-		chunkData[p++] = (byte) (hash >> 24);
-		chunkData[p++] = (byte) (hash >> 16);
-		chunkData[p++] = (byte) (hash >> 8);
-		chunkData[p++] = (byte) (hash >> 0);
+		chunkData[p++] = (byte)(hash >> 56);
+		chunkData[p++] = (byte)(hash >> 48);
+		chunkData[p++] = (byte)(hash >> 40);
+		chunkData[p++] = (byte)(hash >> 32);
+		chunkData[p++] = (byte)(hash >> 24);
+		chunkData[p++] = (byte)(hash >> 16);
+		chunkData[p++] = (byte)(hash >> 8);
+		chunkData[p++] = (byte)(hash >> 0);
 	}
 
 	static public int getInt(byte[] chunkData, int blockNum, int base) {
@@ -86,10 +86,10 @@ public class PartitionChunk {
 
 	static public void setInt(byte[] chunkData, int blockNum, int hash, int base) {
 		int p = blockNum * 4 + base;
-		chunkData[p++] = (byte) (hash >> 24);
-		chunkData[p++] = (byte) (hash >> 16);
-		chunkData[p++] = (byte) (hash >> 8);
-		chunkData[p++] = (byte) (hash >> 0);
+		chunkData[p++] = (byte)(hash >> 24);
+		chunkData[p++] = (byte)(hash >> 16);
+		chunkData[p++] = (byte)(hash >> 8);
+		chunkData[p++] = (byte)(hash >> 0);
 	}
 
 	public static long hash(final byte[] a) {
@@ -99,9 +99,11 @@ public class PartitionChunk {
 	public static long hash(final byte[] a, final int off, final int len) {
 		long h = 1;
 		int end = off + len;
+
 		for (int i = off; i < end; i++) {
 			h += (h << 5) + (long) a[i];
 		}
+
 		return h;
 	}
 }

@@ -34,11 +34,17 @@ public class TimeButton extends GenericButton {
 
 	@Override
 	public String getText() {
-		switch(Configuration.getTime()) {
-			case 0: return "时间: 默认";
-			case 1: return "时间: 只有白天";
-			case 2: return "时间: 只有晚上";
+		switch (Configuration.getTime()) {
+			case 0:
+				return "时间: 默认";
+
+			case 1:
+				return "时间: 只有白天";
+
+			case 2:
+				return "时间: 只有晚上";
 		}
+
 		return "未知选项: " + Configuration.getTime();
 	}
 
@@ -47,15 +53,18 @@ public class TimeButton extends GenericButton {
 		if (!isEnabled()) {
 			return "此选项在服务器不被允许，它被视为作弊.";
 		}
+
 		return super.getTooltip();
 	}
 
 	@Override
 	public void onButtonClick() {
 		Configuration.setTime(Configuration.getTime() + 1);
+
 		if (Configuration.getTime() > 2) {
 			Configuration.setTime(0);
 		}
+
 		Configuration.write();
 	}
 }

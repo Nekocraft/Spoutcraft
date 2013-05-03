@@ -35,7 +35,6 @@ public class ResetButton extends SafeButton {
 	protected void executeAction() {
 		MinimapConfig.initialize(false);
 		MinimapConfig.getInstance().save();
-
 		SpoutClient.getHandle().displayGuiScreen(new GuiMinimapMenu(parent.parent));
 	}
 }

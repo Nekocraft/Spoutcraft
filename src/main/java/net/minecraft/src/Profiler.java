@@ -11,7 +11,6 @@ import net.minecraft.client.Minecraft;
 // Spout End
 
 public class Profiler {
-
 	/** List of parent sections */
 	private final List sectionList = new ArrayList();
 
@@ -42,7 +41,7 @@ public class Profiler {
 	public void startSection(String par1Str) {
 		// Spout Start
 		if (this.profilingEnabled && Thread.currentThread() == Minecraft.mainThread) {
-		// Spout End
+			// Spout End
 			if (this.profilingSection.length() > 0) {
 				this.profilingSection = this.profilingSection + ".";
 			}
@@ -59,7 +58,7 @@ public class Profiler {
 	public void endSection() {
 		// Spout Start
 		if (this.profilingEnabled && Thread.currentThread() == Minecraft.mainThread) {
-		// Spout End
+			// Spout End
 			long var1 = System.nanoTime();
 			long var3 = ((Long)this.timestampList.remove(this.timestampList.size() - 1)).longValue();
 			this.sectionList.remove(this.sectionList.size() - 1);

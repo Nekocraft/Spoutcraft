@@ -51,8 +51,8 @@ import org.spoutcraft.client.util.NetworkUtils;
 public class GuiServerInfo extends GuiSpoutScreen {
 	private GenericButton buttonDone, buttonOpenBrowser, buttonRefresh, buttonAddFavorite, buttonJoin;
 	private GenericLabel labelTitle, labelAddressLabel, labelAddress, labelMotdLabel, labelMotd, labelDescription,
-	labelPlayersLabel, labelPlayers, labelSpoutcraftLabel, labelSpoutcraft, labelAccessLabel, labelAccess,
-	labelMCVersionLabel, labelMCVersion, labelCategoryLabel, labelCategory;
+			labelPlayersLabel, labelPlayers, labelSpoutcraftLabel, labelSpoutcraft, labelAccessLabel, labelAccess,
+			labelMCVersionLabel, labelMCVersion, labelCategoryLabel, labelCategory;
 	private LinkButton linkForum, linkSite;
 	private GenericScrollArea content;
 	private List<GenericLabel> labels = new ArrayList<GenericLabel>();
@@ -80,101 +80,82 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		labels.clear();
 		buttonDone = new GenericButton("Done");
 		getScreen().attachWidget("Spoutcraft", buttonDone);
-
 		buttonRefresh = new GenericButton();
 		getScreen().attachWidget("Spoutcraft", buttonRefresh);
-
 		buttonAddFavorite = new GenericButton("加入收藏夹");
 		getScreen().attachWidget("Spoutcraft", buttonAddFavorite);
-
 		buttonJoin = new GenericButton("Join");
 		getScreen().attachWidget("Spoutcraft", buttonJoin);
-
 		content = new GenericScrollArea();
 		content.setScrollBarPolicy(Orientation.HORIZONTAL, ScrollBarPolicy.SHOW_NEVER);
-
 		getScreen().attachWidget("Spoutcraft", content);
-
 		labelTitle = new GenericLabel(item.getTitle());
 		getScreen().attachWidget("Spoutcraft", labelTitle);
-
 		buttonOpenBrowser = new GenericButton("更多信息...");
 		getScreen().attachWidget("Spoutcraft", buttonOpenBrowser);
-
 		labelCategoryLabel = new GenericLabel("分类");
 		content.attachWidget("Spoutcraft", labelCategoryLabel);
 		labels.add(labelCategoryLabel);
-
 		labelCategory = new GenericLabel("...");
 		labelCategory.setTextColor(new Color(0xffaaaaaa));
 		content.attachWidget("Spoutcraft", labelCategory);
-
 		labelMCVersionLabel = new GenericLabel("Minecraft 版本");
 		content.attachWidget("Spoutcraft", labelMCVersionLabel);
 		labels.add(labelMCVersionLabel);
-
 		labelMCVersion = new GenericLabel("...");
 		labelMCVersion.setTextColor(new Color(0xffaaaaaa));
 		content.attachWidget("Spoutcraft", labelMCVersion);
-
 		labelAccessLabel = new GenericLabel("验证类型");
 		content.attachWidget("Spoutcraft", labelAccessLabel);
 		labels.add(labelAccessLabel);
-
 		String access = "开放";
-		switch(item.accessType) {
+
+		switch (item.accessType) {
 			case ServerItem.WHITELIST:
 				access = "白名单";
 				break;
+
 			case ServerItem.GRAYLIST:
 				access = "灰名单";
 				break;
+
 			case ServerItem.BLACKLIST:
 				access = "黑名单";
 				break;
 		}
+
 		labelAccess = new GenericLabel(access);
 		labelAccess.setTextColor(new Color(0xffaaaaaa));
 		content.attachWidget("Spoutcraft", labelAccess);
-
 		labelAddress = new GenericLabel(item.getIp() + (item.getPort() != ServerItem.DEFAULT_PORT ? item.getPort() : ""));
 		labelAddress.setTextColor(new Color(0xffaaaaaa));
 		content.attachWidget("Spoutcraft", labelAddress);
-
 		labelAddressLabel = new GenericLabel("IP");
 		content.attachWidget("Spoutcraft", labelAddressLabel);
 		labels.add(labelAddressLabel);
-
 		labelMotd = new GenericLabel(item.getMotd());
 		content.attachWidget("Spoutcraft", labelMotd);
 		labelMotd.setTextColor(new Color(0xffaaaaaa));
-
 		labelMotdLabel = new GenericLabel("MOTD");
 		content.attachWidget("Spoutcraft", labelMotdLabel);
 		labels.add(labelMotdLabel);
-
 		labelDescription = new GenericLabel("...");
 		content.attachWidget("Spoutcraft", labelDescription);
 		labelDescription.setTextColor(new Color(0xffaaaaaa));
 		labelDescription.setWrapLines(true);
-
 		labelPlayersLabel = new GenericLabel("玩家");
 		content.attachWidget("Spoutcraft", labelPlayersLabel);
 		labels.add(labelPlayersLabel);
-
 		labelPlayers = new GenericLabel();
 		labelPlayers.setTextColor(new Color(0xffaaaaaa));
 		content.attachWidget("Spoutcraft", labelPlayers);
-
 		linkForum = new LinkButton("论坛", "");
 		getScreen().attachWidget("Spoutcraft", linkForum);
 		linkSite = new LinkButton("网站", "");
 		getScreen().attachWidget("Spoutcraft", linkSite);
-
 		labelSpoutcraftLabel = new GenericLabel("Spoutcraft");
 		content.attachWidget("Spoutcraft", labelSpoutcraftLabel);
 		labels.add(labelSpoutcraftLabel);
-
 		labelSpoutcraft = new GenericLabel("...");
 		labelSpoutcraft.setTextColor(new Color(0xffaaaaaa));
 		content.attachWidget("Spoutcraft", labelSpoutcraft);
@@ -183,9 +164,10 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		textureIcon.setWidth(48).setHeight(48);
 		content.attachWidget("Spoutcraft", textureIcon);
 
-		for (GenericLabel lbl:labels) {
+		for (GenericLabel lbl: labels) {
 			labelWidth = (int) Math.max(labelWidth, lbl.getTextWidth());
 		}
+
 		updateButtons();
 		refresh();
 		updateData();
@@ -213,41 +195,49 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		if (!hasGallery()) {
 			return;
 		}
+
 		if (gallery.size() - 1 < n) {
 			n = gallery.size() - 1;
 		}
+
 		if (n < 0) {
 			n = 0;
 		}
+
 		galleryCurrentImage = n;
 		GalleryImage image = gallery.get(n);
 		labelGalleryImageTitle.setText(image.getTitle());
 		labelGalleryImageDesc.setText(image.getDesc());
+
 		if (labelGalleryImageDesc.getWidth() > 0) {
 			labelGalleryImageDesc.recalculateLines();
 			content.updateInnerSize();
 		}
+
 		textureGalleryImage.setUrl("http://cdn.spout.org/server/gallery/" + item.getDatabaseId() + "_" + image.getHash() + ".png");
 		textureGalleryImage.setFinishDelegate(new ImageUpdate());
+
 		if (n == 0) {
 			buttonGalleryPrev.setEnabled(false);
 		} else {
 			buttonGalleryPrev.setEnabled(true);
 		}
+
 		if (n == gallery.size() - 1) {
 			buttonGalleryNext.setEnabled(false);
 		} else {
 			buttonGalleryNext.setEnabled(true);
 		}
+
 		layoutWidgets();
 	}
 
 	public void updateButtons() {
 		linkForum.setEnabled(!linkForum.getUrl().isEmpty());
 		linkSite.setEnabled(!linkSite.getUrl().isEmpty());
-
 		boolean updating = loadThread != null;
 		buttonRefresh.setEnabled(!updating);
+
 		if (updating) {
 			buttonRefresh.setText("获取中...");
 		} else {
@@ -255,6 +245,7 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		}
 
 		buttonAddFavorite.setEnabled(!SpoutClient.getInstance().getServerManager().getFavorites().containsSever(item));
+
 		if (!buttonAddFavorite.isEnabled()) {
 			buttonAddFavorite.setTooltip("已经添加过这个服务器");
 		} else {
@@ -265,13 +256,11 @@ public class GuiServerInfo extends GuiSpoutScreen {
 	@Override
 	protected void layoutWidgets() {
 		int w = Spoutcraft.getMinecraftFont().getTextWidth(labelTitle.getText());
-
 		int totalWidth = Math.min(width - 9, 200 * 3 + 10);
-		int cellWidth = (totalWidth - 10)/3;
+		int cellWidth = (totalWidth - 10) / 3;
 		int left = width / 2 - totalWidth / 2;
 		int center = left + cellWidth + 5;
 		int right = center + cellWidth + 5;
-
 		labelTitle.setX(width / 2 - w / 2).setY(5 + 7).setWidth(w).setHeight(11);
 
 		if (labelTitle.getX() + w > width - 110) {
@@ -279,27 +268,18 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		}
 
 		buttonRefresh.setX(width - 105).setY(5).setWidth(100).setHeight(20);
-
 		content.setX(0).setY(5 + 7 + 11 + 5).setWidth(width).setHeight(height - 55 - (5 + 7 + 11 + 5));
-
 		int top = 5;
-
 		textureIcon.setX(5).setY(top);
 		updateImageWidth(textureIcon, cellWidth, MAX_HEIGHT);
-
-		int labelLeft = (int) (10 + textureIcon.getWidth());
+		int labelLeft = (int)(10 + textureIcon.getWidth());
 		int valueLeft = labelLeft + 5 + labelWidth;
-
 		top += 5;
-
 		labelAddressLabel.setX(labelLeft).setY(top).setWidth(width - 10).setHeight(11);
 		labelAddress.setX(valueLeft).setY(top).setWidth(width - valueLeft - 5).setHeight(11);
-
 		top += 16;
-
 		labelMotdLabel.setX(labelLeft).setY(top).setWidth(width - 10).setHeight(11);
 		labelMotd.setX(valueLeft).setY(top).setWidth(width - valueLeft - 5).setHeight(11);
-
 		labelMotd.setWrapLines(true);
 		labelMotd.recalculateLines();
 
@@ -308,52 +288,36 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		}
 
 		top += 16;
-
 		labelPlayersLabel.setX(labelLeft).setY(top).setWidth(width - 10).setHeight(11);
 		labelPlayers.setX(valueLeft).setY(top).setWidth(width - valueLeft - 5).setHeight(11);
-
 		top += 16;
-
 		labelSpoutcraftLabel.setX(labelLeft).setY(top).setWidth(width - 10).setHeight(11);
 		labelSpoutcraft.setX(valueLeft).setY(top).setWidth(width - valueLeft - 5).setHeight(11);
-
 		top += 16;
-
 		labelAccessLabel.setX(labelLeft).setY(top).setWidth(width - 10).setHeight(11);
 		labelAccess.setX(valueLeft).setY(top).setWidth(width - valueLeft - 5).setHeight(11);
-
 		top += 16;
-
 		labelMCVersionLabel.setX(labelLeft).setY(top).setWidth(width - 10).setHeight(11);
 		labelMCVersion.setX(valueLeft).setY(top).setWidth(width - valueLeft - 5).setHeight(11);
-
 		top += 16;
-
 		labelCategoryLabel.setX(labelLeft).setY(top).setWidth(width - 10).setHeight(11);
 		labelCategory.setX(valueLeft).setY(top).setWidth(width - valueLeft - 5).setHeight(11);
-
 		top += 16;
-
 		labelLeft = 5;
 		valueLeft = labelLeft + labelWidth + 5;
-
 		top = (int) Math.max(top, 5 + textureIcon.getHeight() + 5);
-
 		labelDescription.setX(5).setY(top).setWidth(totalWidth).setHeight(11);
 		labelDescription.recalculateLines();
-
 		top += labelDescription.getHeight() + 5;
 
 		if (hasGallery()) {
 			labelGalleryTitle.setGeometry(labelLeft, top, totalWidth, 10);
 			top += 15;
-
 			textureGalleryImage.setGeometry(labelLeft, top, totalWidth, 100);
-			updateImageWidth(textureGalleryImage, totalWidth, (int) (content.getHeight() - 50));
+			updateImageWidth(textureGalleryImage, totalWidth, (int)(content.getHeight() - 50));
 			w = (int) textureGalleryImage.getWidth();
 			textureGalleryImage.setX(totalWidth / 2 - w / 2);
 			top += textureGalleryImage.getHeight() + 5;
-
 			buttonGalleryPrev.setGeometry(labelLeft, top, 20, 20);
 			buttonGalleryNext.setGeometry(labelLeft + totalWidth - 20, top, 20, 20);
 			w = Spoutcraft.getRenderDelegate().getMinecraftFont().getTextWidth(labelGalleryImageTitle.getText());
@@ -367,11 +331,9 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		linkForum.setX(left).setY(height - 50).setWidth(cellWidth).setHeight(20);
 		linkSite.setX(center).setY(height - 50).setWidth(cellWidth).setHeight(20);
 		buttonOpenBrowser.setX(right).setY(height - 50).setHeight(20).setWidth(cellWidth);
-
 		buttonJoin.setX(left).setY(height - 25).setHeight(20).setWidth(cellWidth);
 		buttonAddFavorite.setX(center).setY(height - 25).setHeight(20).setWidth(cellWidth);
 		buttonDone.setX(right).setY(height - 25).setHeight(20).setWidth(cellWidth);
-
 		content.updateInnerSize();
 	}
 
@@ -380,23 +342,29 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		if (btn == buttonDone) {
 			mc.displayGuiScreen(back);
 		}
+
 		if (btn == buttonOpenBrowser) {
 			NetworkUtils.openInBrowser("http://servers.spout.org/info/" + item.getDatabaseId());
 		}
+
 		if (btn == buttonRefresh) {
 			refresh();
 		}
+
 		if (btn == buttonAddFavorite) {
 			SpoutClient.getInstance().getServerManager().getFavorites().addServer(item);
 			SpoutClient.getInstance().getServerManager().getFavorites().save();
 			updateButtons();
 		}
+
 		if (btn == buttonJoin) {
 			item.onClick(-1, -1, true);
 		}
+
 		if (btn == buttonGalleryNext) {
 			setGalleryImage(galleryCurrentImage + 1);
 		}
+
 		if (btn == buttonGalleryPrev) {
 			setGalleryImage(galleryCurrentImage - 1);
 		}
@@ -412,7 +380,7 @@ public class GuiServerInfo extends GuiSpoutScreen {
 					ArrayList<Map<String, Object>> list = (ArrayList<Map<String, Object>>) yaml.load(reader);
 					reader.close();
 					parseYaml(list);
-				} catch(IOException e) {
+				} catch (IOException e) {
 					e.printStackTrace();
 					parseYaml(null);
 				}
@@ -425,6 +393,7 @@ public class GuiServerInfo extends GuiSpoutScreen {
 	protected void parseYaml(ArrayList<Map<String, Object>> list) {
 		loadThread = null;
 		updateButtons();
+
 		try {
 			if (list != null && list.size() > 0) {
 				Map<String, Object> i = list.get(1);
@@ -435,14 +404,17 @@ public class GuiServerInfo extends GuiSpoutScreen {
 				labelSpoutcraft.setText(spoutcraft ? "必须" : "可选");
 				labelMCVersion.setText(URLDecoder.decode((String) i.get("mcversion"), "UTF-8"));
 				labelCategory.setText(URLDecoder.decode((String) i.get("category"), "UTF-8"));
+
 				if (i.containsKey("gallery")) {
 					System.out.println("Has gallery");
 					List<Map<String, String>> gMap = (List<Map<String, String>>) i.get("gallery");
 					gallery.clear();
-					for (Map<String, String> image:gMap) {
+
+					for (Map<String, String> image: gMap) {
 						GalleryImage img = new GalleryImage(image.get("picid"), URLDecoder.decode((String) image.get("title"), "UTF-8"), URLDecoder.decode((String) image.get("desc"), "UTF-8"));
 						gallery.add(img);
 					}
+
 					if (buttonGalleryNext == null) {
 						setupGallery();
 					} else {
@@ -450,7 +422,8 @@ public class GuiServerInfo extends GuiSpoutScreen {
 					}
 				}
 			}
-		} catch(UnsupportedEncodingException e) {}
+		} catch (UnsupportedEncodingException e) {}
+
 		layoutWidgets();
 		updateButtons();
 	}
@@ -465,6 +438,7 @@ public class GuiServerInfo extends GuiSpoutScreen {
 			color.setGreen(1f - (float)darkness);
 			buttonRefresh.setDisabledColor(color);
 		}
+
 		super.updateScreen();
 	}
 
@@ -483,17 +457,16 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		int imgwidth, imgheight;
 		imgwidth = texture.getOriginalWidth();
 		imgheight = texture.getOriginalHeight();
-
 		double ratio = (double) imgwidth / (double) imgheight;
 
 		if (imgheight > maxHeight) {
 			imgheight = maxHeight;
-			imgwidth = (int) ((double) imgheight * ratio);
+			imgwidth = (int)((double) imgheight * ratio);
 		}
 
 		if (imgwidth > maxWidth) {
 			imgwidth = maxWidth;
-			imgheight = (int) ((double) imgwidth * (1.0/ratio));
+			imgheight = (int)((double) imgwidth * (1.0 / ratio));
 		}
 
 		texture.setWidth(imgwidth).setHeight(imgheight);

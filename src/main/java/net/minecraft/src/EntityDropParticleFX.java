@@ -7,7 +7,6 @@ import com.prupe.mcpatcher.mod.Colorizer;
 // MCPatcher End
 
 public class EntityDropParticleFX extends EntityFX {
-
 	/** the material type for dropped items/blocks */
 	private Material materialType;
 
@@ -29,6 +28,7 @@ public class EntityDropParticleFX extends EntityFX {
 				this.particleGreen = 0.3F;
 				this.particleBlue = 1.0F;
 			}
+
 			// MCPatcher End
 		} else {
 			this.particleRed = 1.0F;
@@ -75,7 +75,8 @@ public class EntityDropParticleFX extends EntityFX {
 				this.particleGreen = 16.0F / (float)(40 - this.bobTimer + 16);
 				this.particleBlue = 4.0F / (float)(40 - this.bobTimer + 8);
 			}
-		// MCPatcher End
+
+			// MCPatcher End
 		}
 
 		this.motionY -= (double)this.particleGravity;

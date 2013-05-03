@@ -58,21 +58,27 @@ public class PacketRenderDistance implements SpoutPacket {
 
 	public void run(int PlayerId) {
 		Minecraft game = SpoutClient.getHandle();
+
 		if (game != null) {
 			GameSettings settings = game.gameSettings;
+
 			if (view > -1 && view < 4) {
 				settings.renderDistance = view;
 			}
 		}
+
 		if (min > -1 && min < 4) {
 			SpoutClient.getInstance().getActivePlayer().setMinimumView(RenderDistance.getRenderDistanceFromValue(min));
 		}
+
 		if (max > -1 && max < 4) {
 			SpoutClient.getInstance().getActivePlayer().setMaximumView(RenderDistance.getRenderDistanceFromValue(max));
 		}
+
 		if (min == -2) {
 			SpoutClient.getInstance().getActivePlayer().setMinimumView(RenderDistance.TINY);
 		}
+
 		if (max == -2) {
 			SpoutClient.getInstance().getActivePlayer().setMinimumView(RenderDistance.FAR);
 		}

@@ -6,7 +6,6 @@ import org.spoutcraft.client.gui.mainmenu.MainMenu;
 // Spout End
 
 public class GuiConnecting extends GuiScreen {
-
 	/** A reference to the NetClientHandler. */
 	private NetClientHandler clientHandler;
 

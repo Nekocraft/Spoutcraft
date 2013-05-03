@@ -192,7 +192,6 @@ public class FancyDial {
 		this.width = getIconWidth(var2);
 		this.height = getIconHeight(var2);
 		this.needExtraUpdate = !hasAnimation(var2);
-
 		TexturePackAPI.bindTexture("/gui/items.png");
 		this.itemsTexture = GL11.glGetInteger(GL11.GL_TEXTURE_BINDING_2D);
 		int var4;
@@ -207,10 +206,12 @@ public class FancyDial {
 			this.scratchTextureBuffer = null;
 			var4 = this.itemsTexture;
 		}
+
 		int var7 = 0;
 
 		while (true) {
 			FancyDial$Layer var6 = this.newLayer("/misc/" + this.name + ".properties", var3, "." + var7);
+
 			if (var6 == null) {
 				if (var7 > 0) {
 					if (this.layers.size() < 2) {
@@ -240,6 +241,7 @@ public class FancyDial {
 				this.layers.add(var6);
 				this.debug |= var6.debug;
 			}
+
 			++var7;
 		}
 	}

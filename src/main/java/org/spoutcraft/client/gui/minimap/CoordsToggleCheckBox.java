@@ -35,6 +35,7 @@ public class CoordsToggleCheckBox extends GenericCheckBox {
 		if (!isEnabled()) {
 			return "This option is not allowed by your server, it is considered cheating.\nContact your admins if you feel this is an error.";
 		}
+
 		return super.getTooltip();
 	}
 

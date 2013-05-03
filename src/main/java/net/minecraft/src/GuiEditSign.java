@@ -8,7 +8,6 @@ import org.spoutcraft.api.Spoutcraft;
 // Spout End
 
 public class GuiEditSign extends GuiScreen {
-
 	/**
 	 * This String is just a local copy of the characters allowed in text rendering of minecraft.
 	 */
@@ -53,13 +52,16 @@ public class GuiEditSign extends GuiScreen {
 		entitySign.lineBeingEdited = -1;
 		entitySign.columnBeingEdited = -1;
 		entitySign.recalculateText();
+
 		// Colorize text
 		if (sendAsUnicode()) {
 			for (int i = 0; i < entitySign.signText.length; i++) {
-				if (entitySign.signText[i] != null)
+				if (entitySign.signText[i] != null) {
 					entitySign.signText[i] = entitySign.signText[i].replaceAll("(&([a-fA-F0-9]))", "\u00A7$2");
+				}
 			}
 		}
+
 		// Spout End
 		Keyboard.enableRepeatEvents(false);
 		NetClientHandler var1 = this.mc.getNetHandler();
@@ -90,6 +92,7 @@ public class GuiEditSign extends GuiScreen {
 						entitySign.signText[i] = ChatColor.stripColor(entitySign.signText[i]);
 					}
 				}
+
 				// Spout End
 				this.entitySign.onInventoryChanged();
 				this.mc.displayGuiScreen((GuiScreen)null);
@@ -114,13 +117,15 @@ public class GuiEditSign extends GuiScreen {
 
 		if (par2 == 205) { // Right
 			editColumn++;
+
 			if (editColumn > entitySign.signText[editLine].length()) {
 				editColumn--;
 			}
 		}
 
-		if (par2 == 203) {// Left
+		if (par2 == 203) { // Left
 			editColumn--;
+
 			if (editColumn < 0) {
 				editColumn = 0;
 			}
@@ -130,19 +135,24 @@ public class GuiEditSign extends GuiScreen {
 			String line = entitySign.signText[editLine];
 			int endColumnStart = Math.min(editColumn, line.length());
 			String before = "";
+
 			if (endColumnStart > 0) {
 				before = line.substring(0, endColumnStart);
 			}
+
 			String after = "";
+
 			if (line.length() - editColumn > 0) {
 				after = line.substring(editColumn, line.length());
 			}
+
 			if (before.length() > 0) {
 				before = before.substring(0, before.length() - 1);
 				line = before + after;
 				entitySign.signText[editLine] = line;
 				endColumnStart--;
 				editColumn = endColumnStart;
+
 				if (editColumn < 0) {
 					editColumn = 0;
 				}
@@ -151,17 +161,20 @@ public class GuiEditSign extends GuiScreen {
 
 		if ((allowedCharacters.indexOf(par1) > -1 || par1 > 32) && this.entitySign.signText[this.editLine].length() < 15) { // Enter
 			String line = entitySign.signText[editLine];
-
 			// Prevent out of bounds on the substring call
 			int endColumnStart = Math.min(editColumn, line.length());
 			String before = "";
+
 			if (endColumnStart > 0) {
 				before = line.substring(0, endColumnStart);
 			}
+
 			String after = "";
+
 			if (line.length() - endColumnStart > 0) {
 				after = line.substring(endColumnStart, line.length());
 			}
+
 			before += par1;
 			line = before + after;
 			entitySign.signText[editLine] = line;
@@ -173,9 +186,11 @@ public class GuiEditSign extends GuiScreen {
 			String line = entitySign.signText[editLine];
 			String before = line.substring(0, editColumn);
 			String after = "";
+
 			if (line.length() - editColumn > 0) {
 				after = line.substring(editColumn, line.length());
 			}
+
 			if (after.length() > 0) {
 				after = after.substring(1, after.length());
 				line = before + after;
@@ -230,7 +245,6 @@ public class GuiEditSign extends GuiScreen {
 		entitySign.columnBeingEdited = editColumn;
 		//}
 		// Spout End
-
 		TileEntityRenderer.instance.renderTileEntityAt(this.entitySign, -0.5D, -0.75D, -0.5D, 0.0F);
 		this.entitySign.lineBeingEdited = -1;
 		// Spout Start

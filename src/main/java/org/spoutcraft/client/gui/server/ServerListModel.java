@@ -60,37 +60,44 @@ public class ServerListModel extends AbstractAPIModel {
 			public void run() {
 				//long start = System.currentTimeMillis();
 				URL url1;
+
 				try {
 					url1 = new URL(API + "?countries");
 				} catch (MalformedURLException e) {
 					return;
 				}
+
 				//System.out.println("Loading " + url1.toString());
 				BufferedReader reader;
+
 				try {
 					reader = new BufferedReader(new InputStreamReader(url1.openStream()));
 				} catch (IOException e1) {
 					System.out.println(e1.getClass().toString());
 					return;
 				}
+
 				Yaml yaml = new Yaml();
 				ArrayList<String> yamlObj = (ArrayList<String>) yaml.load(reader);
+
 				//System.out.println("Loaded in " + (System.currentTimeMillis() - start) + " ms");
 				synchronized (countries) {
 					countries.clear();
-					for (String c:yamlObj) {
+
+					for (String c: yamlObj) {
 						if (!c.trim().isEmpty()) {
 							countries.add(c);
 						}
 					}
 				}
+
 				try {
 					reader.close();
 				} catch (IOException e) {
 					return;
 				}
 			}
-		}.start();
+		} .start();
 	}
 
 	public String getDefaultUrl() {
@@ -105,11 +112,13 @@ public class ServerListModel extends AbstractAPIModel {
 		if (clear) {
 			lastPage = 0;
 			entries.clear();
-			for (GenericListView view:getViews()) {
+
+			for (GenericListView view: getViews()) {
 				view.setScrollPosition(Orientation.VERTICAL, 0);
 			}
 		}
-		for (Object item:apiData) {
+
+		for (Object item: apiData) {
 			try {
 				HashMap<String, Object> hash = (HashMap<String, Object>) item;
 				String name = URLDecoder.decode((String) hash.get("name"), "UTF-8");
@@ -125,9 +134,12 @@ public class ServerListModel extends AbstractAPIModel {
 				server.setCountry(country);
 				server.setAccessType(accessType);
 				entries.add(server);
-			} catch(UnsupportedEncodingException e) {}
-			catch(Exception e2) { continue; }
+			} catch (UnsupportedEncodingException e) {}
+			catch (Exception e2) {
+				continue;
+			}
 		}
+
 		update();
 	}
 
@@ -141,11 +153,13 @@ public class ServerListModel extends AbstractAPIModel {
 
 	public List<ServerItem> getServers() {
 		ArrayList<ServerItem> servers = new ArrayList<ServerItem>();
-		for (ListWidgetItem item:entries) {
+
+		for (ListWidgetItem item: entries) {
 			if (item instanceof ServerItem) {
 				servers.add((ServerItem)item);
 			}
 		}
+
 		return servers;
 	}
 

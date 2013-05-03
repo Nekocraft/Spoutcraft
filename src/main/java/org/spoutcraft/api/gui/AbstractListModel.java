@@ -41,7 +41,7 @@ public abstract class AbstractListModel {
 	}
 
 	public void sizeChanged() {
-		for (GenericListView view:views) {
+		for (GenericListView view: views) {
 			view.sizeChanged();
 		}
 	}

@@ -7,7 +7,6 @@ import org.spoutcraft.client.gui.mainmenu.MainMenu;
 // Spout End
 
 public class GuiGameOver extends GuiScreen {
-
 	/**
 	 * The cooldown timer for the buttons, increases every tick and enables all buttons when reaching 20.
 	 */

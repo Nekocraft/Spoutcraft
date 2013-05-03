@@ -30,6 +30,7 @@ public class PropertyAnimation extends Animation {
 		this.object = object;
 		setValueDelegate(new PropertyDelegate(object, propertyName));
 		Object val = object.getProperty(propertyName);
+
 		if (val instanceof Animatable) {
 			Animatable value = (Animatable) val;
 			setStartValue(value);

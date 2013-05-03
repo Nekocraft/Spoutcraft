@@ -6,8 +6,6 @@ import java.util.Random;
 import com.prupe.mcpatcher.mod.ColorizeBlock;
 // MCPatcher End
 // Spout Start
-import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.World;
 import gnu.trove.map.hash.TIntFloatHashMap;
 
 import org.spoutcraft.api.Spoutcraft;
@@ -19,7 +17,6 @@ import org.spoutcraft.client.block.SpoutcraftChunk;
 // Spout End
 
 public class Block {
-
 	/**
 	 * used as foreach item, if item.tab = current tab, display it on the screen
 	 */
@@ -345,7 +342,7 @@ public class Block {
 	 */
 	// Spout Start - protected to public
 	public Block setLightOpacity(int par1) {
-	// Spout End
+		// Spout End
 		lightOpacity[this.blockID] = par1;
 		return this;
 	}
@@ -456,18 +453,22 @@ public class Block {
 	// Spout Start
 	public float getBlockBrightness(IBlockAccess par1IBlockAccess, int x, int y, int z) {
 		int light = lightValue[par1IBlockAccess.getBlockId(x, y, z)];
+
 		if (customIds != null) {
 			int key = ((x & 0xF) << 12) | ((z & 0xF) << 8) | (y & 256);
 			short customId = customIds[key];
+
 			if (customId > 0) {
 				CustomBlock block = MaterialData.getCustomBlock(customId);
+
 				if (block != null) {
 					light = block.getLightLevel();
 				}
 			}
 		}
+
 		return par1IBlockAccess.getBrightness(x, y, z, light);
-	// Spout End
+		// Spout End
 	}
 
 	/**
@@ -476,18 +477,22 @@ public class Block {
 	// Spout Start
 	public int getMixedBrightnessForBlock(IBlockAccess par1IBlockAccess, int x, int y, int z) {
 		int light = lightValue[par1IBlockAccess.getBlockId(x, y, z)];
+
 		if (customIds != null) {
 			int key = ((x & 0xF) << 12) | ((z & 0xF) << 8) | (y & 256);
 			short customId = customIds[key];
+
 			if (customId > 0) {
 				CustomBlock block = MaterialData.getCustomBlock(customId);
+
 				if (block != null) {
 					light = block.getLightLevel();
 				}
 			}
 		}
+
 		return par1IBlockAccess.getLightBrightnessForSkyBlocks(x, y, z, light);
-	// Spout End
+		// Spout End
 	}
 
 	/**
@@ -646,22 +651,27 @@ public class Block {
 	public float getPlayerRelativeBlockHardness(EntityPlayer entityhuman) {
 		if (entityhuman instanceof EntityPlayerSP) {
 			FixedLocation target = Spoutcraft.getActivePlayer().getLastClickedLocation();
+
 			if (target != null) {
 				int x = (int) target.getX();
 				int y = (int) target.getY();
 				int z = (int) target.getZ();
 				SpoutcraftChunk chunk = Spoutcraft.getChunkAt(entityhuman.worldObj, x, y, z);
 				short customId = chunk.getCustomBlockId(x, y, z);
+
 				if (customId > 0) {
 					CustomBlock b = MaterialData.getCustomBlock(customId);
+
 					if (b == null) {
 						// ToDo: Shouldn't be needed.  Something outside of SpoutPlugin changed the Custom Blocks value outside of SpoutPlugin.  This is a fall-back return to prevent client returning null and crashing.
 						return (!entityhuman.canHarvestBlock(this) ? entityhuman.getCurrentPlayerStrVsBlock(this, false) / 1.0F / 100.0F : entityhuman.getCurrentPlayerStrVsBlock(this, true) / 1.0F / 30.0F);
 					}
+
 					return b.getHardness() < 0.0F ? 0.0F : (!entityhuman.canHarvestBlock(this) ? entityhuman.getCurrentPlayerStrVsBlock(this, false) / b.getHardness() / 100.0F : entityhuman.getCurrentPlayerStrVsBlock(this, true) / b.getHardness() / 30.0F);
 				}
 			}
 		}
+
 		return this.blockHardness < 0.0F ? 0.0F : (!entityhuman.canHarvestBlock(this) ? entityhuman.getCurrentPlayerStrVsBlock(this, false) / this.blockHardness / 100.0F : entityhuman.getCurrentPlayerStrVsBlock(this, true) / this.blockHardness / 30.0F);
 	}
 	// Spout End
@@ -1098,7 +1108,7 @@ public class Block {
 	/**
 	 * Returns the indirect signal strength being outputted by the given block in the *opposite* of the given direction.
 	 * Args: World, X, Y, Z, direction. If isBlockNormalCube returns true, standard redstone propagation rules will apply
-	 * instead and this will not be called. 
+	 * instead and this will not be called.
 	 */
 	public Block getIndirectPowerOutput(String par1Str) {
 		this.unlocalizedName = par1Str;
@@ -1122,7 +1132,7 @@ public class Block {
 	/**
 	 * Returns the unlocalized name without the tile. prefix. Caution: client-only.
 	 */
-	public String getUnlocalizedName2() { 
+	public String getUnlocalizedName2() {
 		return this.unlocalizedName;
 	}
 
@@ -1239,7 +1249,7 @@ public class Block {
 	 * Returns true if the given block ID is equivalent to this one. Example: redstoneTorchOn matches itself and
 	 * redstoneTorchOff, and vice versa. Most blocks only match themselves.
 	 */
-	public boolean isAssociatedBlockID(int par1) { 
+	public boolean isAssociatedBlockID(int par1) {
 		return this.blockID == par1;
 	}
 
@@ -1248,7 +1258,7 @@ public class Block {
 	 */
 	public static boolean isAssociatedBlockID(int par0, int par1) {
 		return par0 == par1 ? true : (par0 != 0 && par1 != 0 && blocksList[par0] != null && blocksList[par1] != null ? blocksList[par0].isAssociatedBlockID(par1) : false);
-	} 
+	}
 
 	/**
 	 * If this returns true, then comparators facing away from this block will use the value from
@@ -1256,7 +1266,7 @@ public class Block {
 	 */
 	public boolean hasComparatorInputOverride() {
 		return false;
-	} 
+	}
 
 	/**
 	 * If hasComparatorInputOverride returns true, the return value from this is used instead of the redstone signal
@@ -1264,7 +1274,7 @@ public class Block {
 	 */
 	public int getComparatorInputOverride(World par1World, int par2, int par3, int par4, int par5) {
 		return 0;
-	} 
+	}
 
 	/**
 	 * When this method is called, your block should register all the icons it needs with the given IconRegister. This is
@@ -1272,7 +1282,7 @@ public class Block {
 	 */
 	public void registerIcons(IconRegister par1IconRegister) {
 		this.blockIcon = par1IconRegister.registerIcon(this.unlocalizedName);
-	} 
+	}
 
 	public String func_94327_t_() {
 		return null;
@@ -1285,7 +1295,7 @@ public class Block {
 		Item.itemsList[silverfish.blockID] = (new ItemMultiTextureTile(silverfish.blockID - 256, silverfish, BlockSilverfish.silverfishStoneTypes)).setUnlocalizedName("monsterStoneEgg");
 		Item.itemsList[stoneBrick.blockID] = (new ItemMultiTextureTile(stoneBrick.blockID - 256, stoneBrick, BlockStoneBrick.STONE_BRICK_TYPES)).setUnlocalizedName("stonebricksmooth");
 		Item.itemsList[sandStone.blockID] = (new ItemMultiTextureTile(sandStone.blockID - 256, sandStone, BlockSandStone.SAND_STONE_TYPES)).setUnlocalizedName("sandStone");
-		Item.itemsList[blockNetherQuartz.blockID] = (new ItemMultiTextureTile(blockNetherQuartz.blockID - 256, blockNetherQuartz, BlockQuartz.quartzBlockTypes)).setUnlocalizedName("quartzBlock");	     
+		Item.itemsList[blockNetherQuartz.blockID] = (new ItemMultiTextureTile(blockNetherQuartz.blockID - 256, blockNetherQuartz, BlockQuartz.quartzBlockTypes)).setUnlocalizedName("quartzBlock");
 		Item.itemsList[stoneSingleSlab.blockID] = (new ItemSlab(stoneSingleSlab.blockID - 256, stoneSingleSlab, stoneDoubleSlab, false)).setUnlocalizedName("stoneSlab");
 		Item.itemsList[stoneDoubleSlab.blockID] = (new ItemSlab(stoneDoubleSlab.blockID - 256, stoneSingleSlab, stoneDoubleSlab, true)).setUnlocalizedName("stoneSlab");
 		Item.itemsList[woodSingleSlab.blockID] = (new ItemSlab(woodSingleSlab.blockID - 256, woodSingleSlab, woodDoubleSlab, false)).setUnlocalizedName("woodSlab");

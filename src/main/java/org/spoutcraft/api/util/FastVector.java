@@ -96,6 +96,7 @@ public class FastVector implements FixedVector {
 			FastVector other = (FastVector) obj;
 			return (new EqualsBuilder()).append(x, other.getX()).append(y, other.getY()).append(z, other.getZ()).isEquals();
 		}
+
 		return false;
 	}
 

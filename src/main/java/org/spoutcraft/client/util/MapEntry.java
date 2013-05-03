@@ -21,7 +21,7 @@ package org.spoutcraft.client.util;
 
 import java.util.Map;
 
-class MapEntry<K,V> implements Map.Entry<K,V> {
+class MapEntry<K, V> implements Map.Entry<K, V> {
 	final private K key;
 	private V value;
 

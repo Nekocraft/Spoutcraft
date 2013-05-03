@@ -2,7 +2,7 @@ package net.minecraft.src;
 
 public class EntityFX extends Entity {
 	protected int particleTextureIndexX;
-	protected int particleTextureIndexY; 
+	protected int particleTextureIndexY;
 	protected float particleTextureJitterX;
 	protected float particleTextureJitterY;
 	// Spout Start - protected to public
@@ -40,7 +40,7 @@ public class EntityFX extends Entity {
 
 	// Spout Start - protected to public
 	public EntityFX(World par1World, double par2, double par4, double par6) {
-	// Spout End
+		// Spout End
 		super(par1World);
 		this.particleAge = 0;
 		this.particleMaxAge = 0;
@@ -152,10 +152,10 @@ public class EntityFX extends Entity {
 		float var12 = 0.1F * this.particleScale;
 
 		if (this.particleTextureIndex != null) {
-			 var8 = this.particleTextureIndex.getMinU();
-			 var9 = this.particleTextureIndex.getMaxU();
-			 var10 = this.particleTextureIndex.getMinV();
-			 var11 = this.particleTextureIndex.getMaxV(); 
+			var8 = this.particleTextureIndex.getMinU();
+			var9 = this.particleTextureIndex.getMaxU();
+			var10 = this.particleTextureIndex.getMinV();
+			var11 = this.particleTextureIndex.getMaxV();
 		}
 
 		float var13 = (float)(this.prevPosX + (this.posX - this.prevPosX) * (double)par2 - interpPosX);
@@ -203,12 +203,12 @@ public class EntityFX extends Entity {
 			throw new RuntimeException("Invalid call to Particle.setMiscTex");
 		} else {
 			this.particleTextureIndexX = par1 % 16;
-			this.particleTextureIndexY = par1 / 16; 
+			this.particleTextureIndexY = par1 / 16;
 		}
 	}
 
 	public void nextTextureIndexX() {
-		++this.particleTextureIndexX; 
+		++this.particleTextureIndexX;
 	}
 
 	/**

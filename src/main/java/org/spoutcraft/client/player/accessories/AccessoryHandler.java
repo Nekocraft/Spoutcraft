@@ -49,12 +49,15 @@ public class AccessoryHandler {
 			Minecraft.theMinecraft.renderEngine.obtainImageData(url, new HDImageBufferDownload());
 			downloaded.add(url);
 		}
+
 		Set<Pair<Accessory, String>> acs = sacs.get(player);
+
 		if (acs == null) {
 			acs = new HashSet<Pair<Accessory, String>>();
 		}
 
 		Set<Pair<Accessory, String>> toRemove = new HashSet<Pair<Accessory, String>>();
+
 		for (Pair<Accessory, String> pr : acs) {
 			if (pr.getLeft().getType().equals(n.getType())) {
 				toRemove.add(pr);
@@ -68,9 +71,11 @@ public class AccessoryHandler {
 
 	public static void renderAllAccessories(EntityPlayer player, float f, float par2) {
 		Set<Pair<Accessory, String>> acs = sacs.get(player.username);
+
 		if (acs == null) {
 			return;
 		}
+
 		for (Pair<Accessory, String> a : acs) {
 			if (renderer.loadDownloadableImageTexture(a.getRight(), null)) {
 				a.getLeft().render(player, f, par2);
@@ -80,13 +85,17 @@ public class AccessoryHandler {
 
 	public static void addVIPAccessoriesFor(EntityPlayer player) {
 		VIP vip = player.vip;
+
 		if (vip == null) {
 			return;
 		}
+
 		Map<String, String> vAcs = vip.Accessories();
+
 		if (vAcs == null) {
 			return;
 		}
+
 		String that = vAcs.get("tophat");
 		String nhat = vAcs.get("notchhat");
 		String brace = vAcs.get("bracelet");
@@ -94,24 +103,31 @@ public class AccessoryHandler {
 		String ears = vAcs.get("ears");
 		String glasses = vAcs.get("sunglasses");
 		String tail = vAcs.get("tail");
+
 		if (that != null) {
 			addAccessory(player.username, new TopHat(modelBipedMain), that);
 		}
+
 		if (nhat != null) {
 			addAccessory(player.username, new NotchHat(modelBipedMain), nhat);
 		}
+
 		if (brace != null) {
 			addAccessory(player.username, new Bracelet(modelBipedMain), brace);
 		}
+
 		if (wings != null) {
 			addAccessory(player.username, new Wings(modelBipedMain), wings);
 		}
+
 		if (ears != null) {
 			addAccessory(player.username, new Ears(modelBipedMain), ears);
 		}
+
 		if (glasses != null) {
 			addAccessory(player.username, new Sunglasses(modelBipedMain), glasses);
 		}
+
 		if (tail != null) {
 			addAccessory(player.username, new Tail(modelBipedMain), tail);
 		}
@@ -119,37 +135,48 @@ public class AccessoryHandler {
 
 	public static void addAccessoryType(String player, AccessoryType type, String url) {
 		Set<Pair<Accessory, String>> acs = sacs.get(player);
+
 		if (acs == null) {
 			acs = new HashSet<Pair<Accessory, String>>();
 			sacs.put(player, acs);
 		}
+
 		Accessory toCreate;
+
 		switch (type) {
 			case BRACELET:
 				toCreate = new Bracelet(modelBipedMain);
 				break;
+
 			case EARS:
 				toCreate = new Ears(modelBipedMain);
 				break;
+
 			case NOTCHHAT:
 				toCreate = new NotchHat(modelBipedMain);
 				break;
+
 			case SUNGLASSES:
 				toCreate = new Sunglasses(modelBipedMain);
 				break;
+
 			case TAIL:
 				toCreate = new Tail(modelBipedMain);
 				break;
+
 			case TOPHAT:
 				toCreate = new TopHat(modelBipedMain);
 				break;
+
 			case WINGS:
 				toCreate = new Wings(modelBipedMain);
 				break;
+
 			default:
 				toCreate = null;
 				break;
 		}
+
 		if (toCreate != null) {
 			addAccessory(player, toCreate, url);
 		}
@@ -157,16 +184,20 @@ public class AccessoryHandler {
 
 	public static void removeAccessoryType(String player, AccessoryType type) {
 		Set<Pair<Accessory, String>> acs = sacs.get(player);
+
 		if (acs == null) {
 			return;
 		}
+
 		Pair<Accessory, String> toRemove = null;
+
 		for (Pair<Accessory, String> accessory : acs) {
 			if (accessory.getLeft().getType().equals(type)) {
 				toRemove = accessory;
 				break;
 			}
 		}
+
 		acs.remove(toRemove);
 	}
 

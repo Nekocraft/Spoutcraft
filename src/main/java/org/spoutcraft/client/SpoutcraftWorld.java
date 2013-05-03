@@ -54,12 +54,15 @@ public class SpoutcraftWorld {
 
 	public int getMixedBrightnessAt(org.spoutcraft.api.material.Block block, int x, int y, int z) {
 		net.minecraft.src.Block b = null;
+
 		if (block.getRawId() < net.minecraft.src.Block.blocksList.length) {
 			b = net.minecraft.src.Block.blocksList[block.getRawId()];
 		}
+
 		if (b == null) {
 			b = net.minecraft.src.Block.stone;
 		}
+
 		return b.getMixedBrightnessForBlock(handle, x, y, z);
 	}
 
@@ -117,17 +120,21 @@ public class SpoutcraftWorld {
 
 	public long getTime() {
 		long time = getFullTime() % 24000;
+
 		if (time < 0) {
 			time += 24000;
 		}
+
 		return time;
 	}
 
 	public void setTime(long time) {
 		long margin = (time - getFullTime()) % 24000;
+
 		if (margin < 0) {
 			margin += 24000;
 		}
+
 		setFullTime(getFullTime() + margin);
 	}
 
@@ -153,31 +160,37 @@ public class SpoutcraftWorld {
 
 	public List<CraftEntity> getEntities() {
 		ArrayList<CraftEntity> ret = new ArrayList<CraftEntity>();
-		for (Object mcentity:handle.loadedEntityList) {
+
+		for (Object mcentity: handle.loadedEntityList) {
 			if (mcentity instanceof net.minecraft.src.Entity) {
 				ret.add(((net.minecraft.src.Entity)mcentity).spoutEnty);
 			}
 		}
+
 		return ret;
 	}
 
 	public List<CraftLivingEntity> getLivingEntities() {
 		ArrayList<CraftLivingEntity> ret = new ArrayList<CraftLivingEntity>();
-		for (Object mcentity:handle.loadedEntityList) {
+
+		for (Object mcentity: handle.loadedEntityList) {
 			if (mcentity instanceof net.minecraft.src.EntityLiving) {
-				ret.add((CraftLivingEntity) ((net.minecraft.src.EntityLiving)mcentity).spoutEnty);
+				ret.add((CraftLivingEntity)((net.minecraft.src.EntityLiving)mcentity).spoutEnty);
 			}
 		}
+
 		return ret;
 	}
 
 	public List<SpoutPlayer> getPlayers() {
 		ArrayList<SpoutPlayer> ret = new ArrayList<SpoutPlayer>();
-		for (Object mcentity:handle.loadedEntityList) {
+
+		for (Object mcentity: handle.loadedEntityList) {
 			if (mcentity instanceof net.minecraft.src.EntityPlayer) {
-				ret.add((SpoutPlayer) ((net.minecraft.src.EntityPlayer)mcentity).spoutEnty);
+				ret.add((SpoutPlayer)((net.minecraft.src.EntityPlayer)mcentity).spoutEnty);
 			}
 		}
+
 		return ret;
 	}
 
@@ -253,9 +266,11 @@ public class SpoutcraftWorld {
 
 	public CraftEntity getEntityFromId(int id) {
 		net.minecraft.src.Entity e = SpoutClient.getInstance().getEntityFromId(id);
+
 		if (e != null) {
 			return e.spoutEnty;
 		}
+
 		return null;
 	}
 }

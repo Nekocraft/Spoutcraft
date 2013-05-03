@@ -42,7 +42,8 @@ public class ChatMessage {
 	static {
 		messagePatterns = new Pattern[messageFormats.length];
 		int i = 0;
-		for (String format:messageFormats) {
+
+		for (String format: messageFormats) {
 			Pattern pattern = Pattern.compile(format);
 			messagePatterns[i] = pattern;
 			i++;

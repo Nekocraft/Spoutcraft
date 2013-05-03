@@ -51,11 +51,13 @@ public class PacketScreenshot implements SpoutPacket {
 		if (ssAsPng == null) {
 			return 1;
 		}
+
 		return ssAsPng.length + 5;
 	}
 
 	public void readData(SpoutInputStream input) throws IOException {
 		isRequest = input.readBoolean();
+
 		if (!isRequest) {
 			int ssLen = input.readInt();
 			ssAsPng = new byte[ssLen];
@@ -77,6 +79,7 @@ public class PacketScreenshot implements SpoutPacket {
 		if (!isRequest) {
 			return; // we can't do anything!
 		}
+
 		try {
 			SpoutClient.getInstance().getActivePlayer().showAchievement("Sending screenshot...", "Screenshot requested", 321);
 			BufferedImage screenshot = ScreenShotHelper.getScreenshot(Minecraft.theMinecraft.displayWidth, Minecraft.theMinecraft.displayHeight);

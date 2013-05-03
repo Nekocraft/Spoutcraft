@@ -22,23 +22,27 @@ public class RenderMooshroom extends RenderLiving {
 			MobOverlay.finishMooshroom();
 		} else {
 			this.loadTexture(MobOverlay.setupMooshroom(par1EntityMooshroom, "/terrain.png"));
-		// MCPatcher End
+			// MCPatcher End
 			GL11.glEnable(GL11.GL_CULL_FACE);
 			GL11.glPushMatrix();
 			GL11.glScalef(1.0F, -1.0F, 1.0F);
 			GL11.glTranslatef(0.2F, 0.4F, 0.5F);
 			GL11.glRotatef(42.0F, 0.0F, 1.0F, 0.0F);
+
 			// MCPatcher Start
 			if (!MobOverlay.renderMooshroomOverlay()) {
 				this.renderBlocks.renderBlockAsItem(Block.mushroomRed, 0, 1.0F);
 			}
+
 			// MCPatcher End
 			GL11.glTranslatef(0.1F, 0.0F, -0.6F);
 			GL11.glRotatef(42.0F, 0.0F, 1.0F, 0.0F);
+
 			// MCPatcher Start
 			if (!MobOverlay.renderMooshroomOverlay()) {
 				this.renderBlocks.renderBlockAsItem(Block.mushroomRed, 0, 1.0F);
 			}
+
 			// MCPatcher End
 			GL11.glPopMatrix();
 			GL11.glPushMatrix();
@@ -46,10 +50,12 @@ public class RenderMooshroom extends RenderLiving {
 			GL11.glScalef(1.0F, -1.0F, 1.0F);
 			GL11.glTranslatef(0.0F, 0.75F, -0.2F);
 			GL11.glRotatef(12.0F, 0.0F, 1.0F, 0.0F);
+
 			// MCPatcher Start
 			if (!MobOverlay.renderMooshroomOverlay()) {
 				this.renderBlocks.renderBlockAsItem(Block.mushroomRed, 0, 1.0F);
 			}
+
 			// MCPatcher End
 			GL11.glPopMatrix();
 			GL11.glDisable(GL11.GL_CULL_FACE);

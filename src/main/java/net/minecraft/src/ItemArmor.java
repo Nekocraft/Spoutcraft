@@ -5,7 +5,6 @@ import com.prupe.mcpatcher.mod.ColorizeEntity;
 // MCPatcher End
 
 public class ItemArmor extends Item {
-
 	/** Holds the 'base' maxDamage that each armorType have. */
 	private static final int[] maxDamageArray = new int[] {11, 16, 15, 13};
 	private static final String[] field_94606_cu = new String[] {"helmetCloth_overlay", "chestplateCloth_overlay", "leggingsCloth_overlay", "bootsCloth_overlay"};

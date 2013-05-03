@@ -67,6 +67,7 @@ public class GenericSlider extends GenericControl implements Slider {
 		} else if (value < 0f) {
 			value = 0f;
 		}
+
 		slider = value;
 		return this;
 	}

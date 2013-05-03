@@ -62,6 +62,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP {
 				this.sendQueue.addToSendQueue(new Packet19EntityAction(this, 4));
 			}
 		}
+
 		// Spout End
 	}
 
@@ -172,7 +173,7 @@ public class EntityClientPlayerMP extends EntityPlayerSP {
 	 */
 	// Spout Start - private to public
 	public void damageEntity(DamageSource par1DamageSource, int par2) {
-	// Spout End
+		// Spout End
 		if (!this.isEntityInvulnerable()) {
 			this.setEntityHealth(this.getHealth() - par2);
 		}

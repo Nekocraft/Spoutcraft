@@ -7,7 +7,6 @@ import net.minecraft.client.Minecraft;
 import org.lwjgl.opengl.GL11;
 
 public class GuiNewChat extends Gui {
-
 	/** The Minecraft instance. */
 	private final Minecraft mc;
 

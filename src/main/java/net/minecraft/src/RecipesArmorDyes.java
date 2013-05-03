@@ -4,7 +4,6 @@ import com.prupe.mcpatcher.mod.ColorizeEntity;
 import java.util.ArrayList;
 
 public class RecipesArmorDyes implements IRecipe {
-
 	/**
 	 * Used to check if a recipe matches current crafting inventory
 	 */

@@ -28,7 +28,7 @@ import org.spoutcraft.api.io.SpoutOutputStream;
 import org.spoutcraft.api.property.PropertyInterface;
 
 @UnsafeClass
-public interface Widget extends PropertyInterface{
+public interface Widget extends PropertyInterface {
 	/**
 	 * Is this running on Spoutcraft (ie, not on the server) - declared final in GenericWidget!
 	 * @return if it's running on a client

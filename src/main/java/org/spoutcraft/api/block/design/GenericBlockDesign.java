@@ -73,11 +73,9 @@ public class GenericBlockDesign implements BlockDesign {
 		this.lowXBound = lowXBound;
 		this.lowYBound = lowYBound;
 		this.lowZBound = lowZBound;
-
 		this.highXBound = highXBound;
 		this.highYBound = highYBound;
 		this.highZBound = highZBound;
-
 		this.textureURL = textureURL;
 		this.textureAddon = textureAddon;
 		this.xPos = xPos;
@@ -174,10 +172,12 @@ public class GenericBlockDesign implements BlockDesign {
 
 	public void read(SpoutInputStream input) throws IOException {
 		textureURL = PacketUtil.readString(input);
+
 		if (textureURL.equals(resetString)) {
 			reset = true;
 			return;
 		}
+
 		reset = false;
 		textureAddon = PacketUtil.readString(input);
 		xPos = PacketUtil.readDoubleArray(input);
@@ -201,10 +201,12 @@ public class GenericBlockDesign implements BlockDesign {
 
 	public void read(DataInputStream input) throws IOException {
 		textureURL = PacketUtil.readString(input);
+
 		if (textureURL.equals(resetString)) {
 			reset = true;
 			return;
 		}
+
 		reset = false;
 		textureAddon = PacketUtil.readString(input);
 		xPos = PacketUtil.readDoubleArray(input);
@@ -264,6 +266,7 @@ public class GenericBlockDesign implements BlockDesign {
 			lightSourceYOffset[i] = 0;
 			lightSourceZOffset[i] = 0;
 		}
+
 		return this;
 	}
 
@@ -327,6 +330,7 @@ public class GenericBlockDesign implements BlockDesign {
 
 	public boolean renderBlock(Block block, int x, int y, int z) {
 		SpoutcraftWorld world = Spoutcraft.getWorld();
+
 		if (block != null) {
 			boolean enclosed = true;
 			enclosed &= world.isOpaque(x, y + 1, z);
@@ -335,6 +339,7 @@ public class GenericBlockDesign implements BlockDesign {
 			enclosed &= world.isOpaque(x, y, z - 1);
 			enclosed &= world.isOpaque(x + 1, y, z);
 			enclosed &= world.isOpaque(x - 1, y, z);
+
 			if (enclosed) {
 				return false;
 			}
@@ -345,10 +350,9 @@ public class GenericBlockDesign implements BlockDesign {
 		}
 
 		setBrightness(1F);
-
 		MinecraftTessellator tessellator = Spoutcraft.getTessellator();
-
 		int internalLightLevel = 0;
+
 		if (block == null) {
 			internalLightLevel = 0x00F000F0;
 		} else {
@@ -357,7 +361,6 @@ public class GenericBlockDesign implements BlockDesign {
 
 		for (int i = 0; i < getX().length; i++) {
 			MutableIntegerVector sourceBlock = getLightSource(i, x, y, z);
-
 			int sideBrightness;
 
 			if (block != null && sourceBlock != null) {
@@ -377,9 +380,7 @@ public class GenericBlockDesign implements BlockDesign {
 			}
 
 			tessellator.setBrightness(sideBrightness);
-
 			tessellator.setColorOpaqueFloat(1.0F, 1.0F, 1.0F);
-
 			float[] xx = getX()[i];
 			float[] yy = getY()[i];
 			float[] zz = getZ()[i];
@@ -390,13 +391,16 @@ public class GenericBlockDesign implements BlockDesign {
 				tessellator.addVertexWithUV(x + xx[j], y + yy[j], z + zz[j], tx[j], ty[j]);
 			}
 		}
+
 		return true;
 	}
 
 	public boolean renderItemstack(net.minecraft.src.ItemStack item, float x, float y, float depth, float rotation, float scale, Random rand) {
 		int items = 1;
+
 		if (item != null) {
 			int amt = item.stackSize;
+
 			if (amt > 1) {
 				items = 2;
 			}
@@ -411,19 +415,17 @@ public class GenericBlockDesign implements BlockDesign {
 		}
 
 		boolean result = false;
-
 		GL11.glPushMatrix();
 		GL11.glColor4f(1, 1, 1, 1);
 		GL11.glTranslatef(x, y, depth);
-
 		GL11.glRotatef(rotation, 0.0F, 1.0F, 0.0F);
 		GL11.glScalef(scale, scale, scale);
-
 		Spoutcraft.getTessellator().startDrawingQuads();
 		Spoutcraft.getTessellator().setNormal(0.0F, -1.0F, 0.0F);
 
 		for (int i = 0; i < items; ++i) {
 			GL11.glPushMatrix();
+
 			if (i > 0) {
 				float rotX = (rand.nextFloat() * 2.0F - 1.0F) * 0.2F / 0.25F;
 				float rotY = (rand.nextFloat() * 2.0F - 1.0F) * 0.2F / 0.25F;
@@ -432,21 +434,18 @@ public class GenericBlockDesign implements BlockDesign {
 			}
 
 			result &= renderBlock(null, 0, 0, 0);
-
 			GL11.glPopMatrix();
 		}
 
 		Spoutcraft.getTessellator().draw();
 		GL11.glPopMatrix();
-
 		return result;
 	}
 
 	public boolean renderItemOnHUD(float x, float y, float depth) {
 		GL11.glPushMatrix();
 		Spoutcraft.getTessellator().startDrawingQuads();
-
-		GL11.glTranslatef(x, y+1, depth);
+		GL11.glTranslatef(x, y + 1, depth);
 		GL11.glScalef(10.0F, 10.0F, 10.0F);
 		GL11.glTranslatef(1.0F, 0.5F, 1.0F);
 		GL11.glScalef(1.0F, 1.0F, -1.0F);
@@ -456,7 +455,6 @@ public class GenericBlockDesign implements BlockDesign {
 		boolean result = renderBlock(null, 0, 0, 0);
 		Spoutcraft.getTessellator().draw();
 		GL11.glPopMatrix();
-
 		return result;
 	}
 }

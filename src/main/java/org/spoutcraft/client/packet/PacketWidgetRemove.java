@@ -52,7 +52,6 @@ public class PacketWidgetRemove implements SpoutPacket {
 	public void run(int playerId) {
 		InGameHUD mainScreen = SpoutClient.getInstance().getActivePlayer().getMainScreen();
 		PopupScreen popup = mainScreen.getActivePopup();
-
 		Widget w = PacketWidget.allWidgets.get(widget);
 
 		if (w != null && w.getScreen() != null && !(w instanceof Screen)) {

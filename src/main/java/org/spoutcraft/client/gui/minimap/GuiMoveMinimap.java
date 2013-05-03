@@ -64,7 +64,6 @@ public class GuiMoveMinimap extends GuiSpoutScreen {
 		sliderScale = new GenericSlider();
 		float scale = MinimapConfig.getInstance().getSizeAdjust();
 		sliderScale.setSliderPosition(scale / 4);
-
 		getScreen().attachWidgets("Spoutcraft", title, minimapDrag, buttonDone, buttonReset, sliderScale);
 	}
 
@@ -72,9 +71,7 @@ public class GuiMoveMinimap extends GuiSpoutScreen {
 	protected void layoutWidgets() {
 		title.setX(width / 2 - SpoutClient.getHandle().fontRenderer.getStringWidth(title.getText()) / 2);
 		title.setY(10);
-
 		sliderScale.setGeometry(width / 2 - 100, height - 55, 200, 20);
-
 		buttonDone.setGeometry(width / 2 + 5, height - 25, 150, 20);
 		buttonReset.setGeometry(width / 2 - 155, height - 25, 150, 20);
 	}
@@ -84,15 +81,15 @@ public class GuiMoveMinimap extends GuiSpoutScreen {
 		int x = (int) MinimapConfig.getInstance().getAdjustX();
 		int y = (int) MinimapConfig.getInstance().getAdjustY();
 		float scale = sliderScale.getSliderPosition() * 4;
-		int width = (int) (65 * scale); int height = (int) (65 * scale);
+		int width = (int)(65 * scale);
+		int height = (int)(65 * scale);
+
 		if (MinimapConfig.getInstance().isCoords()) {
 			height += 18 * scale;
 		}
 
 		sliderScale.setText("Size adjust: " + Math.round(scale * 100f) / 100f);
-
 		MinimapConfig.getInstance().setSizeAdjust(scale);
-
 		minimapDrag.setGeometry(this.width + x - width, y, width, height);
 		super.updateScreen();
 	}
@@ -104,6 +101,7 @@ public class GuiMoveMinimap extends GuiSpoutScreen {
 			dragStartX = x;
 			dragStartY = y;
 		}
+
 		super.mouseClicked(x, y, button);
 	}
 
@@ -112,6 +110,7 @@ public class GuiMoveMinimap extends GuiSpoutScreen {
 		if (button == 0 && !Mouse.isButtonDown(button)) {
 			dragging = false;
 		}
+
 		if (dragging) {
 			int mX = (int) MinimapConfig.getInstance().getAdjustX();
 			int mY = (int) MinimapConfig.getInstance().getAdjustY();
@@ -119,10 +118,10 @@ public class GuiMoveMinimap extends GuiSpoutScreen {
 			mY += y - dragStartY;
 			MinimapConfig.getInstance().setAdjustX(mX);
 			MinimapConfig.getInstance().setAdjustY(mY);
-
 			dragStartX = x;
 			dragStartY = y;
 		}
+
 		super.mouseMovedOrUp(x, y, button);
 	}
 
@@ -131,6 +130,7 @@ public class GuiMoveMinimap extends GuiSpoutScreen {
 		if (btn == buttonDone) {
 			mc.displayGuiScreen(parent);
 		}
+
 		if (btn == buttonReset) {
 			MinimapConfig.getInstance().setAdjustX(0);
 			MinimapConfig.getInstance().setAdjustY(0);

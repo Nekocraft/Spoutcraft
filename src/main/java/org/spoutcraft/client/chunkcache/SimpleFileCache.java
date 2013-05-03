@@ -70,14 +70,10 @@ public class SimpleFileCache {
 
 		File[] files = dir.listFiles();
 		Arrays.sort(files, fileCompare);
-
 		prune(files);
-
 		files = dir.listFiles();
 		Arrays.sort(files, fileCompare);
-
 		readFAT(files);
-
 		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 			public void run() {
 				writePending(true);
@@ -89,7 +85,6 @@ public class SimpleFileCache {
 	private void prune() {
 		File[] files = dir.listFiles();
 		Arrays.sort(files, fileCompare);
-
 		prune(files);
 	}
 
@@ -101,10 +96,12 @@ public class SimpleFileCache {
 				size += file.length();
 			}
 		}
+
 		int cnt = 0;
 
 		while (size > (limit << 10) && cnt < files.length) {
 			File current = files[cnt++];
+
 			if (current.isFile()) {
 				size -= current.length();
 				current.delete();
@@ -117,30 +114,38 @@ public class SimpleFileCache {
 			if (!isValid(f)) {
 				continue;
 			}
+
 			boolean delete = false;
 			int id = getIntFromName(f);
 			DataInputStream din = new DataInputStream(new FileInputStream(f));
+
 			try {
 				int version = din.readInt();
+
 				if (version < VERSION) {
 					System.out.println("File " + f.getAbsolutePath() + " has out of date version " + version + ", deleting");
 					delete = true;
 					continue;
-				} else if (version > VERSION){
+				} else if (version > VERSION) {
 					System.out.println("File " + f.getAbsolutePath() + " has unknown version " + version);
 					continue;
 				}
+
 				int entries = din.readInt();
+
 				if (entries > (this.entries * 2)) {
 					System.out.println("File " + f.getAbsolutePath() + " has to many entries " + entries + ", skipping");
 					continue;
 				}
+
 				long[] hashArray = new long[entries];
+
 				for (int i = 0; i < entries; i++) {
 					long hash = din.readLong();
 					FATMap.put(hash, new FATEntry(id, i));
 					hashArray[i] = hash;
 				}
+
 				FATIMap.put(id, hashArray);
 			} finally {
 				if (din != null) {
@@ -149,6 +154,7 @@ public class SimpleFileCache {
 					} catch (IOException ioe) {
 					}
 				}
+
 				if (delete) {
 					f.delete();
 				}
@@ -164,19 +170,23 @@ public class SimpleFileCache {
 		}
 
 		byte[] returnArray = null;
-
 		DataInputStream din = new DataInputStream(new FileInputStream(f));
+
 		try {
 			int version = din.readInt();
+
 			if (version != VERSION) {
 				System.out.println("File " + f.getAbsolutePath() + " has out of date version " + version);
 				return null;
 			}
+
 			int entries = din.readInt();
+
 			if (entries > (this.entries * 2)) {
 				System.out.println("File " + f.getAbsolutePath() + " has to many entries " + entries);
 				return null;
 			}
+
 			long[] hash = new long[entries];
 
 			for (int i = 0; i < entries; i++) {
@@ -189,8 +199,10 @@ public class SimpleFileCache {
 				byte[] array = new byte[2048];
 				din.readFully(array);
 				long newHash = PartitionChunk.hash(array);
+
 				if (newHash == hash[i]) {
 					cache.put(hash[i], new SoftReference<byte[]>(array));
+
 					if (hash[i] == needle) {
 						returnArray = array;
 					}
@@ -208,25 +220,19 @@ public class SimpleFileCache {
 		}
 
 		return returnArray;
-
 	}
 
 	public long putData(byte[] data) {
 		MapEntry entry = new MapEntry(data);
-
 		cache.put(entry.getHash(), new HardReference<byte[]>(entry.getData()));
 		newHashQueue.add(entry);
-
 		entriesPending.decrementAndGet();
-
 		checkFileWrite();
-
 		return entry.getHash();
 	}
 
 	public byte[] getData(long hash) {
 		Reference<byte[]> ref = cache.get(hash);
-
 		byte[] data = null;
 
 		if (ref != null) {
@@ -250,9 +256,11 @@ public class SimpleFileCache {
 			f.delete();
 			FATMap.remove(hash);
 			long[] fileHashes = FATIMap.remove(entry.getId());
+
 			for (long h : fileHashes) {
 				FATMap.remove(h);
 			}
+
 			System.out.println("Deleting corrupted chunk cache file " + entry.getId() + ", " + e.getMessage());
 			e.printStackTrace();
 			return null;
@@ -283,40 +291,48 @@ public class SimpleFileCache {
 
 		int start = index - range;
 		int end = index + range;
+
 		if (start < 0) {
 			start = 0;
 		}
+
 		if (end > fileHashes.length) {
 			end = fileHashes.length;
 		}
 
 		long[] nearby = new long[end - start];
-
 		int i = index;
 		int j = index + 1;
 		int k = 0;
+
 		while (i >= start || j < end) {
 			if (i >= start) {
 				nearby[k++] = fileHashes[i--];
 			}
+
 			if (j < end) {
 				nearby[k++] = fileHashes[j++];
 			}
 		}
+
 		if (k != nearby.length) {
 			throw new IllegalStateException("File hash array length calculation error");
 		}
+
 		return nearby;
 	}
 
 	private void checkFileWrite() {
 		boolean success = false;
+
 		while (!success) {
 			int old = entriesPending.get();
+
 			if (old > 0) {
 				success = true;
 			} else {
 				success = entriesPending.compareAndSet(old, old + entries);
+
 				if (success) {
 					writePending(false);
 				}
@@ -326,10 +342,9 @@ public class SimpleFileCache {
 
 	private void writePending(boolean blocking) {
 		int id = fileCount.getAndIncrement();
-
 		ArrayList<MapEntry> entryList = new ArrayList<MapEntry>(entries << 1);
-
 		MapEntry entry;
+
 		while ((entry = newHashQueue.poll()) != null) {
 			entryList.add(entry);
 		}
@@ -337,6 +352,7 @@ public class SimpleFileCache {
 		if (entryList.size() > 0) {
 			Thread t = new DataWriteThread(id, entryList);
 			t.start();
+
 			if (blocking) {
 				try {
 					t.join();
@@ -350,35 +366,44 @@ public class SimpleFileCache {
 	private static boolean isValid(File file) {
 		if (file != null) {
 			String fileName = file.getName();
+
 			if (!fileName.startsWith(PREFIX)) {
 				return false;
 			}
+
 			try {
 				Integer.parseInt(fileName.substring(3));
 			} catch (NumberFormatException nfe) {
 				return false;
 			}
+
 			return true;
 		}
+
 		return false;
 	}
 
 	public int getIntFromName(File file) {
 		try {
 			String fileName = file.getName();
+
 			if (fileName == null || fileName.length() < 3) {
 				return 0;
 			}
+
 			int id = Integer.parseInt(file.getName().substring(3));
 			boolean success = false;
+
 			while (!success) {
 				int oldId = fileCount.get();
+
 				if (id < oldId) {
 					success = true;
 				} else {
 					success = fileCount.compareAndSet(oldId, id + 1);
 				}
 			}
+
 			return id;
 		} catch (NumberFormatException nfe) {
 			return 0;
@@ -393,7 +418,6 @@ public class SimpleFileCache {
 		public int compare(File f1, File f2) {
 			return getIntFromName(f1) - getIntFromName(f2);
 		}
-
 	}
 
 	private class DataWriteThread extends Thread {
@@ -408,21 +432,20 @@ public class SimpleFileCache {
 
 		public void run() {
 			File file = getFileFromInt(id);
-
 			DataOutputStream dos = null;
 
 			try {
 				dos = new DataOutputStream(new FileOutputStream(file));
-
 				dos.writeInt(VERSION);
 				dos.writeInt(entryList.size());
+
 				for (MapEntry e : entryList) {
 					dos.writeLong(e.getHash());
 				}
 
 				dos = new DataOutputStream(new GZIPOutputStream(dos));
-
 				int i = 0;
+
 				for (MapEntry e : entryList) {
 					byte[] data = e.getData();
 					dos.write(data, 0, data.length);
@@ -440,11 +463,13 @@ public class SimpleFileCache {
 
 			long[] hashArray = new long[entries];
 			int i = 0;
+
 			for (MapEntry e : entryList) {
 				cache.put(e.getHash(), new SoftReference<byte[]>(e.getData()));
 				FATMap.put(e.getHash(), new FATEntry(id, i));
 				hashArray[i++] = e.getHash();
 			}
+
 			FATIMap.put(id, hashArray);
 		}
 	}
@@ -465,7 +490,6 @@ public class SimpleFileCache {
 		public int getIndex() {
 			return index;
 		}
-
 	}
 
 	private static class MapEntry {
@@ -476,6 +500,7 @@ public class SimpleFileCache {
 			if (data.length != 2048) {
 				throw new IllegalArgumentException("Data length must be 2048 bytes long");
 			}
+
 			this.data = new byte[data.length];
 			System.arraycopy(data, 0, this.data, 0, data.length);
 			this.hash = PartitionChunk.hash(this.data);

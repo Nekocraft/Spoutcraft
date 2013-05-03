@@ -24,28 +24,40 @@ import org.spoutcraft.client.config.Configuration;
 public class ChunkRenderSpeed extends AutomatedButton {
 	public ChunkRenderSpeed() {
 		setTooltip("大块渲染速度\n" +
-			"控制快速的块将如何呈现在新的领域。更快的渲染，可能会影响FPS.");
+				"控制快速的块将如何呈现在新的领域。更快的渲染，可能会影响FPS.");
 	}
 
 	@Override
 	public void onButtonClick() {
 		Configuration.setChunkRenderPasses(Configuration.getChunkRenderPasses() * 2);
+
 		if (Configuration.getChunkRenderPasses() > 16) {
 			Configuration.setChunkRenderPasses(1);
 		} else if (Configuration.getChunkRenderPasses() < 1) {
 			Configuration.setChunkRenderPasses(1);
 		}
+
 		Configuration.write();
 	}
 
 	public String getText() {
-		switch(Configuration.getChunkRenderPasses()) {
-			case 16: return "渲染速度：非常快";
-			case 8: return "渲染速度：快";
-			case 4: return "渲染速度：平均";
-			case 2: return "渲染速度：慢";
-			case 1: return "渲染速度：最慢";
+		switch (Configuration.getChunkRenderPasses()) {
+			case 16:
+				return "渲染速度：非常快";
+
+			case 8:
+				return "渲染速度：快";
+
+			case 4:
+				return "渲染速度：平均";
+
+			case 2:
+				return "渲染速度：慢";
+
+			case 1:
+				return "渲染速度：最慢";
 		}
+
 		return "错误，不明设定！";
 	}
 }

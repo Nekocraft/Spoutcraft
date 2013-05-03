@@ -69,9 +69,11 @@ public class MapWidget extends GenericScrollable {
 			renderer = new MapWidgetRenderer();
 			renderer.start();
 		}
+
 		levelOfDetail = 1;
 		this.parent = parent;
 		HeightMap newheightMap = HeightMap.getHeightMap(MinimapUtils.getWorldName());
+
 		if (newheightMap != heightMap) {
 			chunks.clear();
 			heightMap = newheightMap;
@@ -82,54 +84,54 @@ public class MapWidget extends GenericScrollable {
 			public void set(Object value) {
 				setScale((double)(Double) value);
 			}
-
 			@Override
 			public Object get() {
 				return getScale();
 			}
 		});
-
 		addProperty("scrollpos", new Property() {
 			@Override
 			public void set(Object value) {
 				Point p = (Point) value;
 				scrollTo(p, false, 0);
 			}
-
 			@Override
 			public Object get() {
-				return mapOutsideToCoords(new Point(0,0));
+				return mapOutsideToCoords(new Point(0, 0));
 			}
 		});
-
 		setScrollBarPolicy(Orientation.HORIZONTAL, ScrollBarPolicy.SHOW_NEVER);
 		setScrollBarPolicy(Orientation.VERTICAL, ScrollBarPolicy.SHOW_NEVER);
 	}
 
 	private void updateLOD() {
 		int newlod = levelOfDetail;
-		newlod = (int) (1 / scale);
+		newlod = (int)(1 / scale);
+
 		if (newlod < MIN_LOD) {
 			newlod = MIN_LOD;
 		}
+
 		if (newlod != levelOfDetail) {
 			renderer.renderQueue.clear();
 		}
+
 		levelOfDetail = newlod;
 	}
 
 	@Override
 	public int getInnerSize(Orientation axis) {
 		if (axis == Orientation.HORIZONTAL) {
-			return (int) ((double) (heightMap.getMaxX() - heightMap.getMinX() + 1) * scale * 16d);
+			return (int)((double)(heightMap.getMaxX() - heightMap.getMinX() + 1) * scale * 16d);
 		} else {
-			return (int) ((double) (heightMap.getMaxZ() - heightMap.getMinZ() + 1) * scale * 16d) + 30;
+			return (int)((double)(heightMap.getMaxZ() - heightMap.getMinZ() + 1) * scale * 16d) + 30;
 		}
 	}
 
 	public static Map drawChunk(int x, int z, boolean force) {
-		synchronized(chunks) {
+		synchronized (chunks) {
 			Map map = chunks.get(levelOfDetail).get(x, z);
+
 			if (map == null || (force && map == blankMap)) {
 				map = new Map(16);
 				map.originOffsetX = 0;
@@ -138,19 +140,22 @@ public class MapWidget extends GenericScrollable {
 			} else if (!force) {
 				return map;
 			}
+
 			boolean pixelSet = false;
+
 			try {
 				for (int cx = 0; cx < 16; cx++) {
 					for (int cz = 0; cz < 16; cz++) {
 						int aX = x * 16 + cx * levelOfDetail;
 						int aZ = z * 16 + cz * levelOfDetail;
-
 						short height = heightMap.getHeight(aX, aZ);
 						int id = heightMap.getBlockId(aX, aZ);
 						byte data = heightMap.getData(aX, aZ);
+
 						if (id < 0) {
 							id = 256 + id;
 						}
+
 						if (id == -1 || height == -1) {
 							continue;
 						} else {
@@ -166,25 +171,28 @@ public class MapWidget extends GenericScrollable {
 						map.setColorPixel(cz, cx, BlockColor.getBlockColor(id, data).color | 0xff000000);
 					}
 				}
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				pixelSet = false;
 			}
+
 			if (pixelSet) {
 				getChunkMap(levelOfDetail).put(x, z, map);
 			} else {
 				getChunkMap(levelOfDetail).put(x, z, blankMap);
 			}
+
 			return map;
 		}
 	}
 
 	public static TIntPairObjectHashMap<Map> getChunkMap(int levelOfDetail) {
 		TIntPairObjectHashMap<Map> chunkmap = chunks.get(levelOfDetail);
+
 		if (chunkmap == null) {
 			chunkmap = new TIntPairObjectHashMap<Map>(500);
 			chunks.put(levelOfDetail, chunkmap);
 		}
+
 		return chunkmap;
 	}
 
@@ -195,7 +203,7 @@ public class MapWidget extends GenericScrollable {
 		y /= scale;
 		x += heightMap.getMinX() * 16;
 		y += heightMap.getMinZ() * 16;
-		return new Point(x,y);
+		return new Point(x, y);
 	}
 
 	public Point mapCoordsToOutside(Point coords) {
@@ -226,15 +234,15 @@ public class MapWidget extends GenericScrollable {
 	}
 
 	public void scrollTo(int x, int z) {
-		scrollTo(x,z, false, 0);
+		scrollTo(x, z, false, 0);
 	}
 
 	public void scrollTo(int x, int z, boolean animated, int duration) {
 		if (!animated) {
-			Point p = mapCoordsToOutside(new Point(x,z));
+			Point p = mapCoordsToOutside(new Point(x, z));
 			int scrollX = p.getX(), scrollZ = p.getY();
-			setScrollPosition(Orientation.HORIZONTAL, scrollX - (int) (getWidth() / 2));
-			setScrollPosition(Orientation.VERTICAL, scrollZ - (int) (getHeight() / 2));
+			setScrollPosition(Orientation.HORIZONTAL, scrollX - (int)(getWidth() / 2));
+			setScrollPosition(Orientation.VERTICAL, scrollZ - (int)(getHeight() / 2));
 		} else {
 			Point start = getCenterCoord();
 			Point end = new Point(x, z);
@@ -247,28 +255,28 @@ public class MapWidget extends GenericScrollable {
 	}
 
 	public Point getCenterCoord() {
-		return mapOutsideToCoords(new Point((int) (getWidth() / 2), (int) (getHeight() / 2)));
+		return mapOutsideToCoords(new Point((int)(getWidth() / 2), (int)(getHeight() / 2)));
 	}
 
 	public BufferedImage renderFullImage() {
-		int scrollX = (int) (getScrollPosition(Orientation.HORIZONTAL) / scale);
-		int scrollY = (int) (getScrollPosition(Orientation.VERTICAL) / scale);
-
+		int scrollX = (int)(getScrollPosition(Orientation.HORIZONTAL) / scale);
+		int scrollY = (int)(getScrollPosition(Orientation.VERTICAL) / scale);
 		int 	minChunkX = heightMap.getMinX() + scrollX / 16,
 				minChunkZ = heightMap.getMinZ() + scrollY / 16,
 				maxChunkX = 0,
 				maxChunkZ = 0;
-		int horiz = (int) (getWidth() / 16 / scale) + 1;
-		int vert = (int) (getHeight() / 16 / scale) + 1;
+		int horiz = (int)(getWidth() / 16 / scale) + 1;
+		int vert = (int)(getHeight() / 16 / scale) + 1;
 		maxChunkX = minChunkX + horiz;
 		maxChunkZ = minChunkZ + vert;
-
 		minChunkX++;
 		minChunkZ++;
 		BufferedImage fullImage = new BufferedImage((maxChunkX - minChunkX) * 16 + 32, (maxChunkZ - minChunkZ) * 16 + 32, BufferedImage.TYPE_INT_ARGB);
+
 		for (int chunkX = minChunkX; chunkX <= maxChunkX; chunkX++) {
 			for (int chunkZ = minChunkZ; chunkZ <= maxChunkZ; chunkZ++) {
 				Map map = drawChunk(chunkX, chunkZ, dirty);
+
 				if (map != null && map != blankMap) {
 					Raster raster = map.getColorRaster();
 					int startX = (chunkX - minChunkX) * 16;
@@ -279,84 +287,89 @@ public class MapWidget extends GenericScrollable {
 				}
 			}
 		}
+
 		return fullImage;
 	}
 
 	public boolean saveToDesktop() {
 		try {
 			BufferedImage fullImage = renderFullImage();
-
 			// Creates a file named 'minimap 3-29-2012.png' in the desktop, if possible
 			// Otherwise saves to screenshots. Appends "(1)", etc as needed to avoid overwriting existing files
 			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			String fileName = "minimap " + df.format(new Date());
 			File desktop = new File(System.getProperty("user.home"), "Desktop");
+
 			if (!desktop.exists()) {
 				desktop = new File(Minecraft.getMinecraftDir(), "screenshots");
 			}
+
 			String fullFileName = fileName;
 			int duplicate = 0;
+
 			while (true) {
 				if (!fileExists(desktop, fullFileName, ".png")) {
 					break;
 				}
+
 				duplicate++;
 				fullFileName = fileName + " (" + duplicate + ")";
 			}
+
 			ImageIO.write(fullImage, "png", new File(desktop, fullFileName + ".png"));
 			return true;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return false;
 	}
 
 	private boolean fileExists(File dir, String name, String ext) {
 		name += ext;
+
 		for (File f : dir.listFiles()) {
 			if (f.getName().equalsIgnoreCase(name)) {
 				return true;
 			}
 		}
+
 		return false;
 	}
 
 	@Override
 	public void renderContents() {
-		GL11.glDisable(2929);
-		GL11.glEnable(3042);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
+		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDepthMask(false);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-
-		int scrollX = (int) (getScrollPosition(Orientation.HORIZONTAL) / scale);
-		int scrollY = (int) (getScrollPosition(Orientation.VERTICAL) / scale);
-
+		int scrollX = (int)(getScrollPosition(Orientation.HORIZONTAL) / scale);
+		int scrollY = (int)(getScrollPosition(Orientation.VERTICAL) / scale);
 		GL11.glScaled(scale, scale, scale);
 		GL11.glTranslatef(-heightMap.getMinX() * 16, -heightMap.getMinZ() * 16, 0);
-
 		int 	minChunkX = heightMap.getMinX() + scrollX / 16,
 				minChunkZ = heightMap.getMinZ() + scrollY / 16,
 				maxChunkX = 0,
 				maxChunkZ = 0;
-		int horiz = (int) (getWidth() / 16 / scale) + 1;
-		int vert = (int) (getHeight() / 16 / scale) + 1;
+		int horiz = (int)(getWidth() / 16 / scale) + 1;
+		int vert = (int)(getHeight() / 16 / scale) + 1;
 		maxChunkX = minChunkX + horiz;
 		maxChunkZ = minChunkZ + vert;
-
 		minChunkX = Math.max(minChunkX, heightMap.getMinX());
 		minChunkZ = Math.max(minChunkZ, heightMap.getMinZ());
 		maxChunkX = Math.min(maxChunkX, heightMap.getMaxX());
 		maxChunkZ = Math.min(maxChunkZ, heightMap.getMaxZ());
-
 		GL11.glPushMatrix();
-		synchronized(chunks) {
-			for (int chunkX = minChunkX; chunkX <= maxChunkX; chunkX+=levelOfDetail) {
-				for (int chunkZ = minChunkZ; chunkZ <= maxChunkZ; chunkZ+=levelOfDetail) {
+
+		synchronized (chunks) {
+			for (int chunkX = minChunkX; chunkX <= maxChunkX; chunkX += levelOfDetail) {
+				for (int chunkZ = minChunkZ; chunkZ <= maxChunkZ; chunkZ += levelOfDetail) {
 					Map map = getChunkMap(levelOfDetail).get(chunkX, chunkZ);
+
 					if (dirty || map == null || random .nextInt(10000) == 0) {
 						renderer.renderQueue.add(new Point(chunkX, chunkZ));
 					}
+
 					if (map != null && map != blankMap) {
 						GL11.glPushMatrix();
 						int x = chunkX * 16;
@@ -371,8 +384,9 @@ public class MapWidget extends GenericScrollable {
 						tessellator.addVertexWithUV((double) x, (double) y, -90, 0, 0);
 						tessellator.addVertexWithUV((double) x, (double) height, -90, 0, 1);
 						tessellator.draw();
-	//					GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-	//					RenderUtil.drawRectangle(x, y, width, height, 0x88ffffff);
+
+						//					GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+						//					RenderUtil.drawRectangle(x, y, width, height, 0x88ffffff);
 						if (MinimapConfig.getInstance().isHeightmap()) {
 							GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_DST_COLOR);
 							map.loadHeightImage();
@@ -383,14 +397,15 @@ public class MapWidget extends GenericScrollable {
 							tessellator.addVertexWithUV((double) x, (double) height, -90, 0, 1);
 							tessellator.draw();
 						}
+
 						GL11.glPopMatrix();
 					}
 				}
 			}
 		}
+
 		int x = (int) SpoutClient.getHandle().thePlayer.posX;
 		int z = (int) SpoutClient.getHandle().thePlayer.posZ;
-
 		drawPOI("You", x, z, 0xffff0000);
 
 		for (Waypoint waypoint : MinimapConfig.getInstance().getAllWaypoints(MinimapUtils.getWorldName())) {
@@ -406,12 +421,11 @@ public class MapWidget extends GenericScrollable {
 
 		GL11.glPopMatrix();
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-
-		GL11.glEnable(2929);
-		GL11.glDisable(3042);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		GL11.glDisable(GL11.GL_BLEND);
 		dirty = false;
-
 		Point newpos = getPlayerPosition();
+
 		if (lastPlayerPos.getX() != newpos.getX() || lastPlayerPos.getY() != newpos.getY()) {
 			showPlayer(0);
 			lastPlayerPos = newpos;
@@ -419,17 +433,21 @@ public class MapWidget extends GenericScrollable {
 	}
 
 	private void drawPOI(String name, int x, int z, int color) {
-		int mouseX = (int) ((getScreen().getMouseX() - getX() + scrollX) / scale + heightMap.getMinX() * 16);
-		int mouseY = (int) ((getScreen().getMouseY() - getY() + scrollY) / scale + heightMap.getMinZ() * 16);
-		int radius = (int) (2f / scale);
+		int mouseX = (int)((getScreen().getMouseX() - getX() + scrollX) / scale + heightMap.getMinX() * 16);
+		int mouseY = (int)((getScreen().getMouseY() - getY() + scrollY) / scale + heightMap.getMinZ() * 16);
+		int radius = (int)(2f / scale);
+
 		if (radius <= 0) {
 			radius = 2;
 		}
+
 		int mouseRadius = radius * 2;
+
 		if (parent.isInBoundingRect(x - mouseRadius, z - mouseRadius, mouseRadius * 2, mouseRadius * 2, mouseX, mouseY)) {
 			color = 0xff0000ff;
 			parent.drawTooltip(name, x, z);
 		}
+
 		RenderUtil.drawRectangle(x - radius, z - radius, x + radius, z + radius, color);
 	}
 
@@ -463,9 +481,11 @@ public class MapWidget extends GenericScrollable {
 
 	public void zoomBy(double d) {
 		double newscale = scale * d;
+
 		if (newscale <= 0) {
 			newscale = 0.0000001;
 		}
+
 		setScale(newscale, true, 100);
 	}
 

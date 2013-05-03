@@ -21,8 +21,8 @@ public class EntityRainFX extends EntityFX {
 			this.particleGreen = 0.3F;
 			this.particleBlue = 1.0F;
 		}
-		// MCPatcher End
 
+		// MCPatcher End
 		this.setParticleTextureIndex(19 + this.rand.nextInt(4));
 		this.setSize(0.01F, 0.01F);
 		this.particleGravity = 0.06F;

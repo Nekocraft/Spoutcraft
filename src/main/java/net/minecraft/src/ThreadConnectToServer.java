@@ -7,7 +7,6 @@ import net.minecraft.client.Minecraft;
 // Spout End
 
 class ThreadConnectToServer extends Thread {
-
 	/** The IP address or domain used to connect. */
 	final String ip;
 
@@ -56,6 +55,7 @@ class ThreadConnectToServer extends Thread {
 			} else {
 				displayConnectionIssue(ip, port, var3.getMessage());
 			}
+
 			// Spout End
 		} catch (Exception var4) {
 			if (GuiConnecting.isCancelled(this.connectingGui)) {

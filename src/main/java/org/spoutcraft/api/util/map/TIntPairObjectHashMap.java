@@ -28,7 +28,7 @@ import gnu.trove.set.TLongSet;
 /**
  * A simplistic map that supports a pair of integers for keys, using a trove long object hashmap in the backend.
  */
-public class TIntPairObjectHashMap<K>{
+public class TIntPairObjectHashMap<K> {
 	private TLongObjectHashMap<K> map;
 
 	public TIntPairObjectHashMap() {
@@ -44,17 +44,17 @@ public class TIntPairObjectHashMap<K>{
 	}
 
 	public K put(int key1, int key2, K value) {
-		long key = (((long)key1)<<32) | (((long)key2) & 0xFFFFFFFFL);
+		long key = (((long)key1) << 32) | (((long)key2) & 0xFFFFFFFFL);
 		return map.put(key, value);
 	}
 
 	public K get(int key1, int key2) {
-		long key = (((long)key1)<<32) | (((long)key2) & 0xFFFFFFFFL);
+		long key = (((long)key1) << 32) | (((long)key2) & 0xFFFFFFFFL);
 		return map.get(key);
 	}
 
 	public boolean containsKey(int key1, int key2) {
-		long key = (((long)key1)<<32) | (((long)key2) & 0xFFFFFFFFL);
+		long key = (((long)key1) << 32) | (((long)key2) & 0xFFFFFFFFL);
 		return map.containsKey(key);
 	}
 
@@ -83,7 +83,7 @@ public class TIntPairObjectHashMap<K>{
 	}
 
 	public K remove(int key1, int key2) {
-		long key = (((long)key1)<<32) | (((long)key2) & 0xFFFFFFFFL);
+		long key = (((long)key1) << 32) | (((long)key2) & 0xFFFFFFFFL);
 		return map.remove(key);
 	}
 

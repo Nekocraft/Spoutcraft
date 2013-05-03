@@ -13,7 +13,6 @@ import org.spoutcraft.client.config.Configuration;
 //Spout End
 
 public class RenderBlocks {
-
 	/** The IBlockAccess used by this instance of RenderBlocks */
 	public IBlockAccess blockAccess;
 
@@ -3346,6 +3345,7 @@ public class RenderBlocks {
 			double var24 = par3 + 0.5D + var20;
 			double var26 = par7 + 0.5D - var20;
 			double var28 = par7 + 0.5D + var20;
+
 			// Spout Start
 			if (customUV) {
 				var12 = 1;
@@ -3353,6 +3353,7 @@ public class RenderBlocks {
 				var16 = 1;
 				var18 = 0;
 			}
+
 			// Spout End
 			var10.addVertexWithUV(var22, par5 + (double)par9, var26, var12, var14);
 			var10.addVertexWithUV(var22, par5 + 0.0D, var26, var12, var18);

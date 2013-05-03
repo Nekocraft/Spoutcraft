@@ -51,7 +51,7 @@ public enum ScrollBarPolicy {
 	}
 
 	static {
-		for (ScrollBarPolicy s:values()) {
+		for (ScrollBarPolicy s: values()) {
 			ids.put(s.id, s);
 		}
 	}

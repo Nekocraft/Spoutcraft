@@ -12,7 +12,6 @@ import org.spoutcraft.client.entity.RenderTexture;
 // Spout End
 
 public class RenderManager {
-
 	/** A map of entity classes and the associated renderer. */
 	// Spout Start - private to public
 	public Map entityRenderMap = new HashMap();
@@ -214,25 +213,26 @@ public class RenderManager {
 
 				try {
 					var10.doRender(par1Entity, par2, par4, par6, par8, par9);
-				// Spout Start - Ignore NullPointerExceptions, the old way
-				} catch(NullPointerException ignore) {
-				// Spout End
+					// Spout Start - Ignore NullPointerExceptions, the old way
+				} catch (NullPointerException ignore) {
+					// Spout End
 				} catch (Throwable var16) {
 					throw new ReportedException(CrashReport.makeCrashReport(var16, "Rendering entity in world"));
 				}
 
 				try {
 					var10.doRenderShadowAndFire(par1Entity, par2, par4, par6, par8, par9);
-				// Spout Start - Ignore NullPointerExceptions, the old way
-				} catch(NullPointerException ignore) {
-				// Spout End
+					// Spout Start - Ignore NullPointerExceptions, the old way
+				} catch (NullPointerException ignore) {
+					// Spout End
 				} catch (Throwable var15) {
 					throw new ReportedException(CrashReport.makeCrashReport(var15, "Post-rendering entity in world"));
 				}
 			}
-		// Spout Start - Ignore NullPointerExceptions, the old way
-		} catch(NullPointerException ignore) {
-		// Spout End
+
+			// Spout Start - Ignore NullPointerExceptions, the old way
+		} catch (NullPointerException ignore) {
+			// Spout End
 		} catch (Throwable var18) {
 			CrashReport var12 = CrashReport.makeCrashReport(var18, "Rendering entity in world");
 			CrashReportCategory var13 = var12.makeCategory("Entity being rendered");

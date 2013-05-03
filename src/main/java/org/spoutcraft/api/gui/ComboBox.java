@@ -33,7 +33,7 @@ public interface ComboBox extends Button {
 	public boolean isOpen();
 	/**
 	 * Sets the format of the text on the button. Default is "%text%: %selected%"
-	 * 
+	 *
 	 * %text% will be replaced with whatever can be obtained by Button.getText()
 	 * %selected% will be replaced with the text of the selected item
 	 * @param format the format of the text on the button

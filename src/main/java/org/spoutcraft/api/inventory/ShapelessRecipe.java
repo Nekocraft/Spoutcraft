@@ -57,9 +57,11 @@ public class ShapelessRecipe implements Recipe {
 		if (ingredients.size() + count > 9) {
 			throw new IllegalArgumentException("Shapeless recipes cannot have more than 9 ingredients");
 		}
+
 		while (count-- > 0) {
 			ingredients.add(ingredient);
 		}
+
 		return this;
 	}
 

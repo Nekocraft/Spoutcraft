@@ -135,7 +135,7 @@ public class ChunkCache implements IBlockAccess {
 			if (par4) {
 				var5 = this.getBlockId(par1, par2, par3);
 
-				 if (var5 == Block.stoneSingleSlab.blockID || var5 == Block.woodSingleSlab.blockID || var5 == Block.tilledField.blockID || var5 == Block.stairsWoodOak.blockID || var5 == Block.stairsCobblestone.blockID) { 
+				if (var5 == Block.stoneSingleSlab.blockID || var5 == Block.woodSingleSlab.blockID || var5 == Block.tilledField.blockID || var5 == Block.stairsWoodOak.blockID || var5 == Block.stairsCobblestone.blockID) {
 					var6 = this.getLightValueExt(par1, par2 + 1, par3, false);
 					int var7 = this.getLightValueExt(par1 + 1, par2, par3, false);
 					int var8 = this.getLightValueExt(par1 - 1, par2, par3, false);
@@ -233,7 +233,7 @@ public class ChunkCache implements IBlockAccess {
 	 */
 	public boolean doesBlockHaveSolidTopSurface(int par1, int par2, int par3) {
 		Block var4 = Block.blocksList[this.getBlockId(par1, par2, par3)];
-		return this.worldObj.func_102026_a(var4, this.getBlockMetadata(par1, par2, par3)); 
+		return this.worldObj.func_102026_a(var4, this.getBlockMetadata(par1, par2, par3));
 	}
 
 	/**
@@ -345,14 +345,17 @@ public class ChunkCache implements IBlockAccess {
 	// Spout Start
 	public int getGrassColorCache(int x, int y, int z) {
 		Chunk chunk = Minecraft.theMinecraft.theWorld.getChunkFromBlockCoords(x, z);
+
 		if (chunk != null) {
 			return chunk.grassColorCache;
 		}
+
 		return 0xffffff;
 	}
 
 	public void setGrassColorCache(int x, int y, int z, int color) {
 		Chunk chunk = Minecraft.theMinecraft.theWorld.getChunkFromBlockCoords(x, z);
+
 		if (chunk != null) {
 			chunk.grassColorCache = color;
 		}
@@ -360,14 +363,17 @@ public class ChunkCache implements IBlockAccess {
 
 	public int getWaterColorCache(int x, int y, int z) {
 		Chunk chunk = Minecraft.theMinecraft.theWorld.getChunkFromBlockCoords(x, z);
+
 		if (chunk != null) {
 			return chunk.waterColorCache;
 		}
+
 		return 0xffffff;
 	}
 
 	public void setWaterColorCache(int x, int y, int z, int color) {
 		Chunk chunk = Minecraft.theMinecraft.theWorld.getChunkFromBlockCoords(x, z);
+
 		if (chunk != null) {
 			chunk.waterColorCache = color;
 		}

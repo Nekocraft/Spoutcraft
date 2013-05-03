@@ -7,7 +7,6 @@ import org.spoutcraft.api.material.MaterialData;
 // Spout End
 
 public class EntityXPOrb extends Entity {
-
 	/**
 	 * A constantly increasing value that RenderXPOrb uses to control the colour shifting (Green / yellow)
 	 */
@@ -139,19 +138,23 @@ public class EntityXPOrb extends Entity {
 
 			if (var4 > 0) {
 				var13 = Block.blocksList[var4].slipperiness * 0.98F;
+
 				// Spout Start
 				if (!worldObj.isRemote) {
 					int x = MathHelper.floor_double(this.posX);
 					int y = MathHelper.floor_double(this.boundingBox.minY) - 1;
 					int z = MathHelper.floor_double(this.posZ);
 					short customId = Spoutcraft.getChunkAt(worldObj, x, y, z).getCustomBlockId(x, y, z);
+
 					if (customId > 0) {
 						CustomBlock block = MaterialData.getCustomBlock(customId);
+
 						if (block != null) {
 							var13 = block.getFriction() * 0.98F;
 						}
 					}
 				}
+
 				// Spout End
 			}
 		}

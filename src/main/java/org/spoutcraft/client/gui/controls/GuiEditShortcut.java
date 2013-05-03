@@ -55,10 +55,10 @@ public class GuiEditShortcut extends GuiScreen {
 	@Override
 	public void updateScreen() {
 		addButton.setEnabled(commandName.getText().length() != 0 && commandText.getText().length() != 0);
-		titleLabel.setTextColor(commandName.getText().length() == 0 ? red:white);
-		delayLabel.setTextColor(delayText.getText().length() == 0 ? red:white);
-		recordButton.setTextColor(item.getKey() <= 0 ? red:white);
-		commandLabel.setTextColor(item.getCommands().size() == 0 ? red:white);
+		titleLabel.setTextColor(commandName.getText().length() == 0 ? red : white);
+		delayLabel.setTextColor(delayText.getText().length() == 0 ? red : white);
+		recordButton.setTextColor(item.getKey() <= 0 ? red : white);
+		commandLabel.setTextColor(item.getCommands().size() == 0 ? red : white);
 		super.updateScreen();
 	}
 
@@ -84,41 +84,32 @@ public class GuiEditShortcut extends GuiScreen {
 		int left = 10;
 		int right = left + labelWidth + 10;
 		int labelHeight = 20;
-
 		recordButton = new GenericButton();
 		recordButton.setGeometry(width - 160, top - 3, 150, labelHeight);
 		getScreen().attachWidget("Spoutcraft", recordButton);
 		updateRecordButton();
-
 		titleLabel = new GenericLabel("Name:");
 		titleLabel.setGeometry(left, top + 3, labelWidth, labelHeight);
 		getScreen().attachWidget("Spoutcraft", titleLabel);
-
 		commandName = new GenericTextField();
-		commandName.setGeometry(right, top - 1, (int) (width - right - recordButton.getWidth() - 20), 16);
+		commandName.setGeometry(right, top - 1, (int)(width - right - recordButton.getWidth() - 20), 16);
 		commandName.setText(item.getTitle());
 		commandName.setMaximumCharacters(0);
 		commandName.setPlaceholder("Enter a name here");
 		getScreen().attachWidget("Spoutcraft", commandName);
-
 		top += 23;
-
 		commandLabel = new GenericLabel("Command:");
 		commandLabel.setGeometry(left, top + 3, labelWidth, labelHeight);
 		getScreen().attachWidget("Spoutcraft", commandLabel);
-
 		commandText = new GenericTextField();
 		commandText.setGeometry(right, top - 1, width - right - 10, 16);
 		commandText.setMaximumCharacters(0);
 		commandText.setPlaceholder("Enter new command here, then click \"Add Command\"");
 		getScreen().attachWidget("Spoutcraft", commandText);
-
 		top += 23;
-
 		delayLabel = new GenericLabel("Delay (ms)");
 		delayLabel.setGeometry(left, top + 3, labelWidth, labelHeight);
 		getScreen().attachWidget("Spoutcraft", delayLabel);
-
 		delayText = new GenericTextField();
 		delayText.setGeometry(right, top - 1, width - right - 10, 16);
 		delayText.setText(item.getDelay() + "");
@@ -127,58 +118,54 @@ public class GuiEditShortcut extends GuiScreen {
 				if (c >= '0' && c <= '9') {
 					return super.insert(c);
 				}
+
 				return false;
 			};
-
 			@Override
 			protected boolean insert(String s) {
 				for (int i = 0; i < s.length(); i++) {
 					char c = s.charAt(i);
+
 					if (!(c >= '0' && c <= '9')) {
 						return false;
 					}
 				}
+
 				return super.insert(s);
 			}
 		});
 		getScreen().attachWidget("Spoutcraft", delayText);
-
 		top += 23;
-
 		slot = new GuiCommandsSlot(this);
 		slot.setGeometry(0, top, width, this.height - top - 30);
 		getScreen().attachWidget("Spoutcraft", slot);
-
 		doneButton = new GenericButton("Done");
 		doneButton.setHeight(20).setWidth(50);
 		doneButton.setX(10).setY(height - 25);
 		getScreen().attachWidget("Spoutcraft", doneButton);
-
 		addButton = new GenericButton("Add Command");
 		addButton.setHeight(20).setWidth(100);
 		addButton.setX(70).setY(height - 25);
 		getScreen().attachWidget("Spoutcraft", addButton);
-
 		editButton = new GenericButton("Edit Command");
 		editButton.setHeight(20).setWidth(100);
 		editButton.setX(180).setY(height - 25);
 		getScreen().attachWidget("Spoutcraft", editButton);
-
 		removeButton = new GenericButton("Remove Command");
 		removeButton.setHeight(20).setWidth(100);
 		removeButton.setX(290).setY(height - 25);
 		getScreen().attachWidget("Spoutcraft", removeButton);
-
 		updateButtons();
-
 		commandName.setFocus(true);
 	}
 
 	private void updateRecordButton() {
 		String keyname = recording ? "Press a key!" : "Click Here!";
-		if ((item.getKey()>=0 || item.getKey()<-1 )&& !recording) {
+
+		if ((item.getKey() >= 0 || item.getKey() < -1) && !recording) {
 			keyname = "Key: " + item.toString();
 		}
+
 		String name = (recording ? "> " : "") + keyname + (recording ? " <" : "");
 		recordButton.setText(name);
 	}
@@ -189,17 +176,21 @@ public class GuiEditShortcut extends GuiScreen {
 			recording = !recording;
 			updateRecordButton();
 		}
+
 		if (btn.equals(doneButton)) {
 			item.setTitle(commandName.getText());
 			item.setDelay(Integer.parseInt(delayText.getText()));
+
 			if (!item.getTitle().equals("") && item.getKey() != -1) {
 				SimpleKeyBindingManager manager = (SimpleKeyBindingManager) SpoutClient.getInstance().getKeyBindingManager();
 				manager.unregisterShortcut(item);
 				manager.registerShortcut(item);
 			}
+
 			mc.displayGuiScreen(parent);
 			parent.getModel().refresh();
 		}
+
 		if (btn.equals(addButton)) {
 			if (editingIndex != -1) {
 				addButton.setText("Add Command");
@@ -214,10 +205,12 @@ public class GuiEditShortcut extends GuiScreen {
 			slot.updateItems();
 			updateButtons();
 		}
+
 		if (btn.equals(editButton)) {
 			editCommand(slot.getSelectedRow());
 			updateButtons();
 		}
+
 		if (btn.equals(removeButton)) {
 			item.removeCommand(slot.getSelectedRow());
 			slot.updateItems();

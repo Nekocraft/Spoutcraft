@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class GuiSelectWorld extends GuiScreen {
-
 	/** simple date formater */
 	private final DateFormat dateFormatter = new SimpleDateFormat();
 
@@ -146,8 +145,8 @@ public class GuiSelectWorld extends GuiScreen {
 				this.mc.displayGuiScreen(new GuiCreateWorld(this));
 			} else if (par1GuiButton.id == 6) {
 				this.mc.displayGuiScreen(new GuiRenameWorld(this, this.getSaveFileName(this.selectedWorld)));
-			} else if (par1GuiButton.id == 0) {				
-				this.mc.displayGuiScreen(new org.spoutcraft.client.gui.mainmenu.MainMenu()); // Spout				
+			} else if (par1GuiButton.id == 0) {
+				this.mc.displayGuiScreen(new org.spoutcraft.client.gui.mainmenu.MainMenu()); // Spout
 			} else if (par1GuiButton.id == 7) {
 				GuiCreateWorld var5 = new GuiCreateWorld(this);
 				ISaveHandler var6 = this.mc.getSaveLoader().getSaveLoader(this.getSaveFileName(this.selectedWorld), false);

@@ -75,8 +75,10 @@ public class GenericComboBox extends GenericButton implements ComboBox {
 		if (open) {
 			return this;
 		}
+
 		open = true;
 		screen = getScreen();
+
 		while (!(screen instanceof GenericScreen)) {
 			if (screen.getScreen() != null) {
 				screen = screen.getScreen();
@@ -97,6 +99,7 @@ public class GenericComboBox extends GenericButton implements ComboBox {
 		if (!open) {
 			return this;
 		}
+
 		open = false;
 		view.setVisible(false);
 		screen.removeWidget(view);
@@ -142,11 +145,13 @@ public class GenericComboBox extends GenericButton implements ComboBox {
 	@Override
 	public Widget setScreen(String addon, Screen screen) {
 		super.setScreen(addon, screen);
+
 		if (screen == null) {
 			return this;
 		}
 
 		screen = getScreen();
+
 		while (!(screen instanceof GenericScreen)) {
 			if (screen.getScreen() != null) {
 				screen = screen.getScreen();
@@ -156,7 +161,6 @@ public class GenericComboBox extends GenericButton implements ComboBox {
 		}
 
 		screen.attachWidget(addon, view);
-
 		return this;
 	}
 
@@ -171,10 +175,12 @@ public class GenericComboBox extends GenericButton implements ComboBox {
 		view.setSelection(input.readInt());
 		int count = input.readInt();
 		items.clear();
+
 		for (int i = 0; i < count; i++) {
 			String item = input.readString();
 			items.add(item);
 		}
+
 		model.setList(items);
 		format = input.readString();
 	}
@@ -195,7 +201,8 @@ public class GenericComboBox extends GenericButton implements ComboBox {
 
 		private void updateItems() {
 			items.clear();
-			for (String l:list) {
+
+			for (String l: list) {
 				ComboBoxItem item = new ComboBoxItem(this);
 				item.setTitle(l);
 				items.add(item);
@@ -207,6 +214,7 @@ public class GenericComboBox extends GenericButton implements ComboBox {
 			if (row < 0 || row >= getSize()) {
 				return null;
 			}
+
 			return items.get(row);
 		}
 
@@ -254,10 +262,10 @@ public class GenericComboBox extends GenericButton implements ComboBox {
 
 		public void render(int x, int y, int width, int height) {
 			gradient.setX(x).setY(y).setWidth(width).setHeight(height);
-			gradient.setTopColor(new Color(0.6f,0.6f,0.6f,0.5f)).setBottomColor(new Color(0.6f,0.6f,0.6f,0f));
+			gradient.setTopColor(new Color(0.6f, 0.6f, 0.6f, 0.5f)).setBottomColor(new Color(0.6f, 0.6f, 0.6f, 0f));
 			gradient.setOrientation(Orientation.VERTICAL);
 			Spoutcraft.getRenderDelegate().render(gradient);
-			Spoutcraft.getRenderDelegate().getMinecraftFont().drawString(text, x+2, y+2, 0xffffffff);
+			Spoutcraft.getRenderDelegate().getMinecraftFont().drawString(text, x + 2, y + 2, 0xffffffff);
 		}
 
 		public void onClick(int x, int y, boolean doubleClick) {
@@ -282,7 +290,7 @@ public class GenericComboBox extends GenericButton implements ComboBox {
 		public ComboBoxView(AbstractListModel model, GenericComboBox box) {
 			super(model);
 			combo = box;
-			setBackgroundColor(new Color(0.5f,0.5f,0.5f,0.9f));
+			setBackgroundColor(new Color(0.5f, 0.5f, 0.5f, 0.9f));
 		}
 
 		@Override
@@ -290,6 +298,7 @@ public class GenericComboBox extends GenericButton implements ComboBox {
 			if (!super.getTooltip().equals("")) {
 				return super.getTooltip();
 			}
+
 			return null;
 		}
 
@@ -302,9 +311,11 @@ public class GenericComboBox extends GenericButton implements ComboBox {
 		@Override
 		public double getHeight() {
 			int a = getAvailableHeight(false) - 5;
+
 			if (a < 30) {
 				a = getAvailableHeight(true) - 5;
 			}
+
 			double res = Math.min(a, getInnerSize(Orientation.VERTICAL));
 			setHeight((int) res);
 			return res;
@@ -319,10 +330,11 @@ public class GenericComboBox extends GenericButton implements ComboBox {
 		public int getY() {
 			int h = (int) getHeight();
 			int a = getAvailableHeight(false);
+
 			if (a < 30) {
-				return (int) (combo.getActualY()-h);
+				return (int)(combo.getActualY() - h);
 			} else {
-				return (int) (combo.getActualY() + combo.getHeight());
+				return (int)(combo.getActualY() + combo.getHeight());
 			}
 		}
 
@@ -340,9 +352,9 @@ public class GenericComboBox extends GenericButton implements ComboBox {
 
 		protected int getAvailableHeight(boolean top) {
 			if (!top) {
-				return (int) (Spoutcraft.getClient().getRenderDelegate().getScreenHeight() - combo.getActualY() - combo.getHeight() - 5);
+				return (int)(Spoutcraft.getClient().getRenderDelegate().getScreenHeight() - combo.getActualY() - combo.getHeight() - 5);
 			} else {
-				return (int) (combo.getActualY() - 5);
+				return (int)(combo.getActualY() - 5);
 			}
 		}
 
@@ -357,6 +369,7 @@ public class GenericComboBox extends GenericButton implements ComboBox {
 		} else {
 			closeList();
 		}
+
 		return this;
 	}
 
@@ -365,6 +378,7 @@ public class GenericComboBox extends GenericButton implements ComboBox {
 		if (!focus && !view.isFocus() && isOpen()) {
 			closeList();
 		}
+
 		return super.setFocus(focus);
 	}
 

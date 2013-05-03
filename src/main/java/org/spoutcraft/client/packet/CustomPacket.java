@@ -42,6 +42,7 @@ public class CustomPacket extends Packet {
 	static {
 		int packets = PacketType.values()[PacketType.values().length - 1].getId();
 		nags = new int[packets];
+
 		for (int i = 0; i < packets; i++) {
 			nags[i] = NAG_MSG_AMT;
 		}
@@ -56,7 +57,7 @@ public class CustomPacket extends Packet {
 
 	public int getPacketSize() {
 		//if (packet == null) {
-			return 8;
+		return 8;
 		//} else {
 		//	return packet.getNumBytes() + 8;
 		//}
@@ -69,6 +70,7 @@ public class CustomPacket extends Packet {
 		packetId = input.readShort();
 		int version = input.readShort(); // Packet version
 		int length = input.readInt(); // Packet size
+
 		//System.out.println("Reading Packet: " + PacketType.getPacketFromId(packetId) + " Size: " + length + " bytes, version: " + version);
 		if (packetId > -1 && version > -1) {
 			try {
@@ -78,6 +80,7 @@ public class CustomPacket extends Packet {
 				//e.printStackTrace();
 			}
 		}
+
 		try {
 			if (this.packet == null) {
 				input.skipBytes(length);
@@ -85,15 +88,16 @@ public class CustomPacket extends Packet {
 				return;
 			} else if (packet.getVersion() != version) {
 				input.skipBytes(length);
+
 				// Keep server admins from going insane
 				if (nags[packetId]-- > 0) {
 					System.out.println("Invalid Packet ID: " + packetId + ". Current v: " + packet.getVersion() + " Receieved v: " + version + " Skipping contents.");
 				}
+
 				outdated = outdated ? true : version > packet.getVersion();
 			} else {
 				byte[] data = new byte[length];
 				input.readFully(data);
-
 				SpoutInputStream stream = new SpoutInputStream(ByteBuffer.wrap(data));
 				packet.readData(stream);
 				success = true;
@@ -104,6 +108,7 @@ public class CustomPacket extends Packet {
 			e.printStackTrace();
 			System.out.println("------------------------");
 		}
+
 		if (prevOutdated != outdated) {
 			SpoutClient.getInstance().getActivePlayer().showAchievement("Update Available!", "New Spoutcraft update!", 323 /*Sign*/);
 		}
@@ -118,16 +123,15 @@ public class CustomPacket extends Packet {
 			output.writeInt(0);
 			return;
 		}
+
 		//System.out.println("Writing Packet Data for " + packet.getPacketType());
 		output.writeShort(packet.getPacketType().getId());
 		output.writeShort(packet.getVersion());
-
 		stream.getRawBuffer().clear();
 		packet.writeData(stream);
 		ByteBuffer buffer = stream.getRawBuffer();
 		byte[] data = new byte[buffer.capacity() - buffer.remaining()];
 		System.arraycopy(buffer.array(), 0, data, 0, data.length);
-
 		output.writeInt(data.length);
 		output.write(data, 0, data.length);
 	}
@@ -139,6 +143,7 @@ public class CustomPacket extends Packet {
 					PacketDecompressionThread.add((CompressablePacket)packet);
 				} else {
 					SpoutClient.getHandle().mcProfiler.startSection("spoutpacket_" + packet.getClass().getSimpleName());
+
 					try {
 						packet.run(SpoutClient.getHandle().thePlayer.entityId);
 					} catch (Exception e) {
@@ -147,6 +152,7 @@ public class CustomPacket extends Packet {
 						e.printStackTrace();
 						System.out.println("------------------------");
 					}
+
 					SpoutClient.getHandle().mcProfiler.endSection();
 				}
 			} else {

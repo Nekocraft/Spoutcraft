@@ -25,7 +25,7 @@ import org.spoutcraft.client.packet.SpoutPacket;
 import org.spoutcraft.api.io.SpoutInputStream;
 import org.spoutcraft.api.io.SpoutOutputStream;
 
-public class PacketAccessory implements SpoutPacket{
+public class PacketAccessory implements SpoutPacket {
 	private AccessoryType type;
 	private String url, who;
 	private boolean add;

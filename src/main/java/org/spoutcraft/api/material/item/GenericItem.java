@@ -59,6 +59,7 @@ public class GenericItem implements Item {
 		if (customName != null) {
 			return customName;
 		}
+
 		return name;
 	}
 

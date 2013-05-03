@@ -8,7 +8,6 @@ import org.lwjgl.opengl.GL11;
 import com.prupe.mcpatcher.mod.FireworksHelper;
 
 public class EffectRenderer {
-
 	/** Reference to the World object. */
 	// MCPatcher Start - protected to public
 	public World worldObj;

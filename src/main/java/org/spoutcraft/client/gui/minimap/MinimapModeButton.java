@@ -36,29 +36,34 @@ public class MinimapModeButton extends GenericComboBox {
 		names.add("Height Map");
 		setItems(names);
 		int selected = HEIGHTMAP;
+
 		if (MinimapConfig.getInstance().isCavemap()) {
 			selected = CAVEMAP;
 		}
+
 		if (MinimapConfig.getInstance().isLightmap()) {
 			selected = LIGHTMAP;
 		}
+
 		setSelection(selected);
 	}
 
 	@Override
 	public void onSelectionChanged(int i, String text) {
-		switch(i) {
-			case LIGHTMAP: 
+		switch (i) {
+			case LIGHTMAP:
 				MinimapConfig.getInstance().setLightmap(true);
 				MinimapConfig.getInstance().setCavemap(false);
 				MinimapConfig.getInstance().setHeightmap(false);
 				break;
-			case CAVEMAP: 
+
+			case CAVEMAP:
 				MinimapConfig.getInstance().setLightmap(false);
 				MinimapConfig.getInstance().setCavemap(true);
 				MinimapConfig.getInstance().setHeightmap(false);
 				break;
-			case HEIGHTMAP: 
+
+			case HEIGHTMAP:
 				MinimapConfig.getInstance().setLightmap(false);
 				MinimapConfig.getInstance().setCavemap(false);
 				MinimapConfig.getInstance().setHeightmap(true);

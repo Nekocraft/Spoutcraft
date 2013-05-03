@@ -38,15 +38,16 @@ public class ConfigurationNode {
 	@SuppressWarnings("unchecked")
 	protected Map<String, Object> recursiveBuilder(Map<String, Object> node) {
 		Map<String, Object> map = new TreeMap<String, Object>();
-
 		Set<String> keys = node.keySet();
-		for ( String k : keys ) {
-			Object tmp = node.get(k);
-			if ( tmp instanceof Map<?,?> ) {
-				Map<String, Object> rec = recursiveBuilder((Map <String,Object>) tmp);
 
+		for (String k : keys) {
+			Object tmp = node.get(k);
+
+			if (tmp instanceof Map <? , ? >) {
+				Map<String, Object> rec = recursiveBuilder((Map <String, Object>) tmp);
 				Set<String> subkeys = rec.keySet();
-				for ( String sk : subkeys ) {
+
+				for (String sk : subkeys) {
 					map.put(k + "." + sk, rec.get(sk));
 				}
 			} else {
@@ -75,6 +76,7 @@ public class ConfigurationNode {
 			if (val == null) {
 				return null;
 			}
+
 			return val;
 		}
 
@@ -153,6 +155,7 @@ public class ConfigurationNode {
 		if (o == null) {
 			return null;
 		}
+
 		return o.toString();
 	}
 
@@ -172,6 +175,7 @@ public class ConfigurationNode {
 			setProperty(path, def);
 			return def;
 		}
+
 		return o;
 	}
 
@@ -249,6 +253,7 @@ public class ConfigurationNode {
 		if (path == null) {
 			return new ArrayList<String>(root.keySet());
 		}
+
 		Object o = getProperty(path);
 
 		if (o == null) {
@@ -501,15 +506,15 @@ public class ConfigurationNode {
 		if (o == null) {
 			return null;
 		} else if (o instanceof Byte) {
-			return (int) (Byte) o;
+			return (int)(Byte) o;
 		} else if (o instanceof Integer) {
 			return (Integer) o;
 		} else if (o instanceof Double) {
-			return (int) (double) (Double) o;
+			return (int)(double)(Double) o;
 		} else if (o instanceof Float) {
-			return (int) (float) (Float) o;
+			return (int)(float)(Float) o;
 		} else if (o instanceof Long) {
-			return (int) (long) (Long) o;
+			return (int)(long)(Long) o;
 		} else {
 			return null;
 		}
@@ -525,15 +530,15 @@ public class ConfigurationNode {
 		if (o == null) {
 			return null;
 		} else if (o instanceof Float) {
-			return (double) (Float) o;
+			return (double)(Float) o;
 		} else if (o instanceof Double) {
 			return (Double) o;
 		} else if (o instanceof Byte) {
-			return (double) (Byte) o;
+			return (double)(Byte) o;
 		} else if (o instanceof Integer) {
-			return (double) (Integer) o;
+			return (double)(Integer) o;
 		} else if (o instanceof Long) {
-			return (double) (Long) o;
+			return (double)(Long) o;
 		} else {
 			return null;
 		}

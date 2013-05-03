@@ -55,61 +55,79 @@ public class ScreenUtil {
 	public static void open(ScreenType type) {
 		GuiScreen toOpen = null;
 		StatFileWriter statfile = SpoutClient.getHandle().statFileWriter;
-		switch(type) {
+
+		switch (type) {
 			case CHAT_SCREEN:
 				toOpen = new GuiChat();
 				break;
+
 			case SLEEP_SCREEN:
 				toOpen = new GuiSleepMP();
 				break;
+
 			case PLAYER_INVENTORY:
 				toOpen = new GuiInventory(SpoutClient.getHandle().thePlayer);
 				break;
+
 			case INGAME_MENU:
 				toOpen = new GuiIngameMenu();
 				break;
+
 			case OPTIONS_MENU:
 				toOpen = GuiSimpleOptions.constructOptionsScreen(new GuiIngameMenu());
 				break;
+
 			case VIDEO_SETTINGS_MENU:
 				toOpen = GuiSimpleOptions.constructOptionsScreen(new GuiIngameMenu());
 				break;
+
 			case CONTROLS_MENU:
 				toOpen = new GuiControls(GuiSimpleOptions.constructOptionsScreen(new GuiIngameMenu()));
 				break;
+
 			case ACHIEVEMENTS_SCREEN:
 				toOpen = new GuiAchievements(statfile);
 				break;
+
 			case STATISTICS_SCREEN:
 				toOpen = new GuiStats(new GuiIngameMenu(), statfile);
 				break;
+
 			case GAME_OVER_SCREEN:
 				toOpen = new GuiGameOver();
 				break;
+
 			case CHANGE_LANGUAGE:
 				toOpen = new GuiLanguage(GuiSimpleOptions.constructOptionsScreen(new GuiIngameMenu()), SpoutClient.getHandle().gameSettings);
 				break;
+
 			case MINIMAP_SETTINGS:
 				toOpen = new GuiMinimapMenu(GuiSimpleOptions.constructOptionsScreen(new GuiIngameMenu()));
 				break;
+
 			case MOVE_MINIMAP:
 				toOpen = new GuiMoveMinimap(new GuiMinimapMenu(GuiSimpleOptions.constructOptionsScreen(new GuiIngameMenu())));
 				break;
+
 			case OVERVIEW_MAP:
 				toOpen = new GuiOverviewMap();
 				break;
+
 			case WIN_GAME:
 				toOpen = new GuiWinGame();
 				break;
 		}
+
 		SpoutClient.getHandle().displayGuiScreen(toOpen);
 	}
 
 	public static ScreenType getType(GuiScreen gui) {
 		ScreenType screen = ScreenType.UNKNOWN;
+
 		if (gui == null) {
 			screen = ScreenType.GAME_SCREEN;
 		}
+
 		if (gui instanceof CustomScreen) {
 			screen = ScreenType.CUSTOM_SCREEN;
 		} else if (gui instanceof GuiAdvancedOptions) {

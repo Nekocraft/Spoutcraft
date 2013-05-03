@@ -53,16 +53,27 @@ public class BlockColor {
 	public static BlockColor getBlockColor(int blockid, int meta) {
 		try {
 			BlockColor col = blockColors[blockColorID(blockid, meta)];
-			if (col != null) return col;
+
+			if (col != null) {
+				return col;
+			}
+
 			col = blockColors[blockColorID(blockid, 0)];
-			if (col != null) return col;
+
+			if (col != null) {
+				return col;
+			}
+
 			col = blockColors[0];
-			if (col != null) return col;
-		}
-		catch (ArrayIndexOutOfBoundsException e) {
+
+			if (col != null) {
+				return col;
+			}
+		} catch (ArrayIndexOutOfBoundsException e) {
 			System.err.println("BlockID: " + blockid + " - Meta: " + meta);
 			throw e;
 		}
+
 		System.err.println("Unable to find a block color for blockid: " + blockid + " blockmeta: " + meta);
 		return new BlockColor(0, 0xff, TintType.NONE);
 	}
@@ -75,6 +86,7 @@ public class BlockColor {
 		for (int i = 0; i < blockColors.length; i++) {
 			blockColors[i] = null;
 		}
+
 		setDefaultColor(0, 0, 0);
 		setDefaultColor(1, 0, -9934744);
 		setDefaultColor(2, 0, -12096451);
@@ -294,15 +306,12 @@ public class BlockColor {
 		setDefaultColor(96, 5, 545152301);
 		setDefaultColor(96, 6, 545152301);
 		setDefaultColor(96, 7, 545152301);
-
 		setDefaultColor(97, 0, -9934744);
 		setDefaultColor(97, 1, -6974059);
 		setDefaultColor(97, 2, -8750470);
-
 		setDefaultColor(98, 0, -8750470);
 		setDefaultColor(98, 1, -9275542);
 		setDefaultColor(98, 2, -9013642);
-
 		setDefaultColor(99, 0, -3495048);
 		setDefaultColor(99, 1, -7509421);
 		setDefaultColor(99, 2, -7509421);
@@ -314,7 +323,6 @@ public class BlockColor {
 		setDefaultColor(99, 8, -7509421);
 		setDefaultColor(99, 9, -7509421);
 		setDefaultColor(99, 10, -3495048);
-
 		setDefaultColor(100, 0, -3495048);
 		setDefaultColor(100, 1, -4840156);
 		setDefaultColor(100, 2, -4840156);
@@ -326,7 +334,6 @@ public class BlockColor {
 		setDefaultColor(100, 8, -4840156);
 		setDefaultColor(100, 9, -4840156);
 		setDefaultColor(100, 10, -3495048);
-
 		setDefaultColor(101, 0, -2140312470);
 		setDefaultColor(102, 0, 1627389951);
 		setDefaultColor(103, 0, -6842076);
@@ -350,7 +357,6 @@ public class BlockColor {
 		setDefaultColor(107, 0, -1061382046);
 		setDefaultColor(108, 0, -6591135);
 		setDefaultColor(109, 0, -8750470);
-
 		setDefaultColor(110, 0, 0xAB8790, 0xFF);
 		setDefaultColor(111, 0, 0x158003, 0xFF);
 		setDefaultColor(112, 0, 0x40002F, 0xFF);
@@ -385,7 +391,6 @@ public class BlockColor {
 		setDefaultColor(141, 0, 0xC28600);
 		setDefaultColor(142, 0, 0x9C931D);
 		setDefaultColor(143, 0, 0xA4864F);
-
 	}
 
 	private static BlockColor instance(int argb, TintType tint) {
@@ -398,27 +403,51 @@ public class BlockColor {
 
 	private static void setDefaultColor(int id, int meta, int argb) {
 		TintType tint = TintType.NONE;
+
 		switch (id) {
 			case 2:
 			case 106:
 				tint = TintType.GRASS;
 				break;
+
 			case 8:
 			case 9:
 			case 79:
 				tint = TintType.WATER;
 				break;
+
 			case 18:
 				int m = meta & 0x3;
-				if (m == 0) tint = TintType.FOLIAGE;
-				if (m == 1) tint = TintType.PINE;
-				if (m == 2) tint = TintType.BIRCH;
-				if (m != 3) break; tint = TintType.FOLIAGE; break;
+
+				if (m == 0) {
+					tint = TintType.FOLIAGE;
+				}
+
+				if (m == 1) {
+					tint = TintType.PINE;
+				}
+
+				if (m == 2) {
+					tint = TintType.BIRCH;
+				}
+
+				if (m != 3) {
+					break;
+				}
+
+				tint = TintType.FOLIAGE;
+				break;
+
 			case 20:
 				tint = TintType.GLASS;
 				break;
+
 			case 31:
-				if ((meta != 1) && (meta != 2)) break; tint = TintType.TALL_GRASS;
+				if ((meta != 1) && (meta != 2)) {
+					break;
+				}
+
+				tint = TintType.TALL_GRASS;
 		}
 
 		blockColors[blockColorID(id, meta)] = instance(argb, tint);
@@ -428,8 +457,8 @@ public class BlockColor {
 	public final short alpha;
 	public final TintType tintType;
 	public BlockColor(int color, int alpha, TintType tintType) {
-		this.color=color;
-		this.alpha=(short)alpha;
-		this.tintType=tintType;
+		this.color = color;
+		this.alpha = (short)alpha;
+		this.tintType = tintType;
 	}
 }

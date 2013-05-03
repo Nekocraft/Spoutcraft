@@ -43,62 +43,71 @@ public class FileUtil {
 
 	public static File getCacheDir() {
 		File directory = new File(Minecraft.getMinecraftDir(), "cache");
+
 		if (!directory.exists()) {
 			directory.mkdir();
 		}
+
 		return directory;
 	}
 
 	public static File getConfigDir() {
 		File directory = new File(Minecraft.getMinecraftDir(), "config");
+
 		if (!directory.exists()) {
 			directory.mkdir();
 		}
+
 		return directory;
 	}
 
 	public static File getTempDir() {
 		File directory = new File(getCacheDir(), "temp");
+
 		if (!directory.exists()) {
 			directory.mkdir();
 		}
+
 		return directory;
 	}
 
 	public static File getStatsDir() {
 		File directory = new File(Minecraft.getMinecraftDir(), "stats");
+
 		if (!directory.exists()) {
 			directory.mkdir();
 		}
+
 		return directory;
 	}
 
 	public static void migrateOldFiles() {
 		File directory = new File(Minecraft.getMinecraftDir(), "spout");
+
 		if (directory.exists()) {
 			try {
 				FileUtils.copyDirectory(directory, getCacheDir(), true);
 				FileUtils.deleteDirectory(getTempDir());
-			}
-			catch (Exception e) {}
+			} catch (Exception e) {}
 		}
 	}
 
 	public static void deleteTempDirectory() {
 		try {
 			FileUtils.deleteDirectory(getTempDir());
-		}
-		catch (Exception e) {}
+		} catch (Exception e) {}
 	}
 
 	public static File findFile(String plugin, String fileName) {
 		File result = null;
 		result = matchFile(new File(SpoutClient.getInstance().getAddonFolder(), plugin), fileName);
+
 		if (result != null) {
 			return result;
 		}
 
 		result = matchFile(new File(getCacheDir(), plugin), fileName);
+
 		if (result != null) {
 			return result;
 		}
@@ -110,29 +119,35 @@ public class FileUtil {
 		if (directory.isDirectory() && directory.exists()) {
 			File file = new File(directory + "/" + fileName);
 			boolean exists = file.exists();
+
 			if (exists) {
 				return file;
 			} else {
 				return null;
 			}
 		}
+
 		return null;
 	}
 
 	public static File getTexturePackDir() {
 		File directory = new File(Minecraft.getMinecraftDir(), "texturepacks");
+
 		if (!directory.exists()) {
 			directory.mkdir();
 		}
+
 		return directory;
 	}
 
 	public static File getSelectedTexturePackZip() {
 		String fileName = Minecraft.theMinecraft.renderEngine.texturePack.selectedTexturePack.getTexturePackFileName();
 		File file = new File(getTexturePackDir(), fileName);
+
 		if (!file.exists()) {
 			file = new File(new File(Minecraft.getAppDir("minecraft"), "texturepacks"), fileName);
 		}
+
 		return file;
 	}
 
@@ -140,6 +155,7 @@ public class FileUtil {
 		if (fileNameCache.containsKey(url)) {
 			return fileNameCache.get(url);
 		}
+
 		int end = url.lastIndexOf("?");
 		int lastDot = url.lastIndexOf('.');
 		int slash = url.lastIndexOf('/');
@@ -147,36 +163,44 @@ public class FileUtil {
 		slash = slash > forwardSlash ? slash : forwardSlash;
 		end = end == -1 || lastDot > end ? url.length() : end;
 		String result = url.substring(slash + 1, end).replaceAll("%20", " ");
+
 		if (url.contains("?")) {
 			// Use hashcode instead
 			String ext = FilenameUtils.getExtension(result);
-			result = url.hashCode() + (!ext.isEmpty()?"." + ext:"");
+			result = url.hashCode() + (!ext.isEmpty() ? "." + ext : "");
 		}
+
 		fileNameCache.put(url, result);
 		return result;
 	}
 
 	public static boolean isAudioFile(String file) {
 		String extension = FilenameUtils.getExtension(file);
+
 		if (extension != null) {
 			return extension.equalsIgnoreCase("ogg") || extension.equalsIgnoreCase("wav") || extension.equalsIgnoreCase("mp3") || extension.matches(".*[mM][iI][dD][iI]?$");
 		}
+
 		return false;
 	}
 
 	public static boolean isImageFile(String file) {
 		String extension = FilenameUtils.getExtension(file);
+
 		if (extension != null) {
 			return extension.equalsIgnoreCase("png") || extension.equalsIgnoreCase("jpg");
 		}
+
 		return false;
 	}
 
 	public static boolean isZippedFile(String file) {
 		String extension = FilenameUtils.getExtension(file);
+
 		if (extension != null) {
 			return extension.equalsIgnoreCase("zip");
 		}
+
 		return false;
 	}
 
@@ -214,18 +238,18 @@ public class FileUtil {
 				}
 			}
 		}
-
 	}
 
 	public static long getCRC(InputStream in, byte[] buffer) {
 		long hash = 1;
-
 		int read = 0;
 		int i;
+
 		while (read >= 0) {
 			try {
 				read = in.read(buffer);
-				for (i=0; i < read; i++) {
+
+				for (i = 0; i < read; i++) {
 					hash += (hash << 5) + (long)buffer[i];
 				}
 			} catch (IOException ioe) {
@@ -249,6 +273,7 @@ public class FileUtil {
 	public static boolean deleteDirectory(File path) {
 		if (path.exists()) {
 			File[] files = path.listFiles();
+
 			for (int i = 0; i < files.length; i++) {
 				if (files[i].isDirectory()) {
 					deleteDirectory(files[i]);
@@ -257,6 +282,7 @@ public class FileUtil {
 				}
 			}
 		}
+
 		return path.delete();
 	}
 }

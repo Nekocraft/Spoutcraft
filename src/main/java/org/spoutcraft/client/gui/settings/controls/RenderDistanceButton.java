@@ -47,11 +47,14 @@ public class RenderDistanceButton extends AutomatedButton {
 			Configuration.setRenderDistance(distance.getValue());
 		} else {
 			Configuration.setRenderDistance(Configuration.getRenderDistance() + 1);
+
 			if (Configuration.getRenderDistance() > 3) {
 				Configuration.setRenderDistance(0);
 			}
+
 			distance = RenderDistance.getRenderDistanceFromValue(Configuration.getRenderDistance());
 		}
+
 		Minecraft.theMinecraft.gameSettings.renderDistance = distance.getValue();
 		Configuration.write();
 		Minecraft.theMinecraft.gameSettings.saveOptions();

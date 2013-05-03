@@ -15,7 +15,6 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.client.Minecraft;
 
 public class FontRenderer {
-
 	/** Array of width of all the characters in default.png */
 	private int[] charWidth = new int[256];
 

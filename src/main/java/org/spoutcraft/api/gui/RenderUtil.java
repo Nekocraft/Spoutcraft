@@ -32,28 +32,28 @@ public final class RenderUtil {
 	 * @param numSegments to draw (number of sides to the polygon. Large values > 50 approximate a circle)
 	 */
 	public static void drawSymmetricalPolygon(float cx, float cy, float r, int numSegments) {
-		float theta = 2 * 3.1415926F / ((float)numSegments);
+		float theta = 2 * (float)Math.PI / ((float)numSegments);
 		float c = (float) Math.cos(theta); // Precalculate the sine and cosine
 		float s = (float) Math.sin(theta);
 		float t;
-
 		float x = r; // We start at angle = 0
 		float y = 0;
-
 		GL11.glBegin(GL11.GL_LINE_LOOP);
+
 		for (int ii = 0; ii < numSegments; ii++) {
 			GL11.glVertex2f(x + cx, y + cy); // Output vertex
-
 			// Apply the rotation matrix
 			t = x;
 			x = c * x - s * y;
 			y = s * t + c * y;
 		}
+
 		GL11.glEnd();
 	}
 
 	public static void drawRectangle(int x, int y, int width, int height, int color) {
 		int temp;
+
 		if (x < width) {
 			temp = x;
 			x = width;
@@ -66,13 +66,13 @@ public final class RenderUtil {
 			height = temp;
 		}
 
-		float alpha = (float) (color >> 24 & 255) / 255.0F;
-		float red = (float) (color >> 16 & 255) / 255.0F;
-		float green = (float) (color >> 8 & 255) / 255.0F;
-		float blue = (float) (color & 255) / 255.0F;
+		float alpha = (float)(color >> 24 & 255) / 255.0F;
+		float red = (float)(color >> 16 & 255) / 255.0F;
+		float green = (float)(color >> 8 & 255) / 255.0F;
+		float blue = (float)(color & 255) / 255.0F;
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
-		GL11.glBlendFunc(770, 771);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glColor4f(red, green, blue, alpha);
 		MinecraftTessellator tessellator = Spoutcraft.getTessellator();
 		tessellator.startDrawingQuads();
@@ -86,18 +86,18 @@ public final class RenderUtil {
 	}
 
 	public static void drawGradientRectangle(int x, int y, int gradientX, int gradientY, int colorOne, int colorTwo) {
-		float alphaOne = (float) (colorOne >> 24 & 255) / 255.0F;
-		float redOne = (float) (colorOne >> 16 & 255) / 255.0F;
-		float greenOne = (float) (colorOne >> 8 & 255) / 255.0F;
-		float blueOne = (float) (colorOne & 255) / 255.0F;
-		float alphaTwo = (float) (colorTwo >> 24 & 255) / 255.0F;
-		float redTwo = (float) (colorTwo >> 16 & 255) / 255.0F;
-		float greenTwo = (float) (colorTwo >> 8 & 255) / 255.0F;
-		float blueTwo = (float) (colorTwo & 255) / 255.0F;
+		float alphaOne = (float)(colorOne >> 24 & 255) / 255.0F;
+		float redOne = (float)(colorOne >> 16 & 255) / 255.0F;
+		float greenOne = (float)(colorOne >> 8 & 255) / 255.0F;
+		float blueOne = (float)(colorOne & 255) / 255.0F;
+		float alphaTwo = (float)(colorTwo >> 24 & 255) / 255.0F;
+		float redTwo = (float)(colorTwo >> 16 & 255) / 255.0F;
+		float greenTwo = (float)(colorTwo >> 8 & 255) / 255.0F;
+		float blueTwo = (float)(colorTwo & 255) / 255.0F;
 		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glDisable(GL11.GL_ALPHA_TEST);
-		GL11.glBlendFunc(770, 771);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glShadeModel(GL11.GL_SMOOTH);
 		MinecraftTessellator tessellator = Spoutcraft.getTessellator();
 		tessellator.startDrawingQuads();
@@ -119,10 +119,10 @@ public final class RenderUtil {
 		float var8 = 0.00390625F;
 		MinecraftTessellator tessellator = Spoutcraft.getTessellator();
 		tessellator.startDrawingQuads();
-		tessellator.addVertexWithUV((double) x, (double) (y + modalZ), (double) zLevel, (double) ((float) (var3) * var7), (double) ((float) (modalX + modalZ) * var8));
-		tessellator.addVertexWithUV((double) (x + modalY), (double) (y + modalZ), (double) zLevel, (double) ((float) (var3 + modalY) * var7), (double) ((float) (modalX + modalZ) * var8));
-		tessellator.addVertexWithUV((double) (x + modalY), (double) (y), (double) zLevel, (double) ((float) (var3 + modalY) * var7), (double) ((float) (modalX) * var8));
-		tessellator.addVertexWithUV((double) x, (double) y, (double) zLevel, (double) ((float) (var3) * var7), (double) ((float) (modalX) * var8));
+		tessellator.addVertexWithUV((double) x, (double)(y + modalZ), (double) zLevel, (double)((float)(var3) * var7), (double)((float)(modalX + modalZ) * var8));
+		tessellator.addVertexWithUV((double)(x + modalY), (double)(y + modalZ), (double) zLevel, (double)((float)(var3 + modalY) * var7), (double)((float)(modalX + modalZ) * var8));
+		tessellator.addVertexWithUV((double)(x + modalY), (double)(y), (double) zLevel, (double)((float)(var3 + modalY) * var7), (double)((float)(modalX) * var8));
+		tessellator.addVertexWithUV((double) x, (double) y, (double) zLevel, (double)((float)(var3) * var7), (double)((float)(modalX) * var8));
 		tessellator.draw();
 	}
 }

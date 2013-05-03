@@ -51,6 +51,7 @@ public class TextureManager {
 		if (glRoundmap == 0) {
 			glRoundmap = CustomTextureManager.getTextureFromJar("/res/minimap/roundmap.png").getTextureID();
 		}
+
 		Minecraft.theMinecraft.renderEngine.bindTexture(glRoundmap);
 	}
 
@@ -58,6 +59,7 @@ public class TextureManager {
 		if (glMMArrow == 0) {
 			glMMArrow = CustomTextureManager.getTextureFromJar("/res/minimap/arrow.png").getTextureID();
 		}
+
 		Minecraft.theMinecraft.renderEngine.bindTexture(glMMArrow);
 	}
 
@@ -65,6 +67,7 @@ public class TextureManager {
 		if (glWaypoint == 0) {
 			glWaypoint = CustomTextureManager.getTextureFromJar("/res/minimap/waypoint.png").getTextureID();
 		}
+
 		Minecraft.theMinecraft.renderEngine.bindTexture(glWaypoint);
 	}
 
@@ -72,6 +75,7 @@ public class TextureManager {
 		if (glMarker == 0) {
 			glMarker = CustomTextureManager.getTextureFromJar("/res/minimap/marker.png").getTextureID();
 		}
+
 		Minecraft.theMinecraft.renderEngine.bindTexture(glMinimap);
 	}
 
@@ -79,6 +83,7 @@ public class TextureManager {
 		if (glMinimap == 0) {
 			glMinimap = CustomTextureManager.getTextureFromJar("/res/minimap/squaremap.png").getTextureID();
 		}
+
 		Minecraft.theMinecraft.renderEngine.bindTexture(glMinimap);
 	}
 
@@ -86,6 +91,7 @@ public class TextureManager {
 		if (glWhiteMinimap == 0) {
 			glWhiteMinimap = CustomTextureManager.getTextureFromJar("/res/minimap/squaremap_white.png").getTextureID();
 		}
+
 		Minecraft.theMinecraft.renderEngine.bindTexture(glWhiteMinimap);
 	}
 
@@ -93,6 +99,7 @@ public class TextureManager {
 		if (glWhiteRoundmap == 0) {
 			glWhiteRoundmap = CustomTextureManager.getTextureFromJar("/res/minimap/roundmap_white.png").getTextureID();
 		}
+
 		Minecraft.theMinecraft.renderEngine.bindTexture(glWhiteRoundmap);
 	}
 }

@@ -16,7 +16,6 @@ import java.util.Map;
 import net.minecraft.client.Minecraft;
 
 public class TextureMap implements IconRegister {
-
 	/** 0 = terrain.png, 1 = items.png */
 	private final int textureType;
 	private final String textureName;

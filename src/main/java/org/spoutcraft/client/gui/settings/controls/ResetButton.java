@@ -39,7 +39,6 @@ public class ResetButton extends SafeButton {
 	protected void executeAction() {
 		Configuration.restoreDefaults();
 		Configuration.write();
-
 		SpoutClient.getHandle().displayGuiScreen(GuiSimpleOptions.constructOptionsScreen(parent));
 	}
 }

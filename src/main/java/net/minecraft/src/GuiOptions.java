@@ -1,7 +1,6 @@
 package net.minecraft.src;
 
 public class GuiOptions extends GuiScreen {
-
 	/**
 	 * An array of options that can be changed directly from the options GUI.
 	 */

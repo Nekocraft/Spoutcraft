@@ -31,12 +31,14 @@ public class EntityOtherPlayerMP extends EntityPlayer {
 		this.noClip = true;
 		this.field_71082_cx = 0.25F;
 		this.renderDistanceWeight = 10.0D;
+
 		// Spout Start
 		if (vip != null) {
 			displayName = vip.getTitle();
 		} else {
 			displayName = username;
 		}
+
 		this.worldObj.releaseEntitySkin(this);
 		worldObj.obtainEntitySkin(this);
 		// Spout End
@@ -74,6 +76,7 @@ public class EntityOtherPlayerMP extends EntityPlayer {
 		if (this.cloakUrl == null || this.playerCloakUrl == null) {
 			super.updateCloak();
 		}
+
 		// Spout End
 	}
 

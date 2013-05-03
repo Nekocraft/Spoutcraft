@@ -11,7 +11,6 @@ import java.util.Properties;
 import java.util.TreeMap;
 
 public class StringTranslate {
-
 	/** Is the private singleton instance of StringTranslate. */
 	private static StringTranslate instance = new StringTranslate("en_US");
 
@@ -50,10 +49,11 @@ public class StringTranslate {
 					var1.put(var4[0], var4[1]);
 				}
 			}
-		// Spout Start - IOException to Exception
+
+			// Spout Start - IOException to Exception
 		} catch (Exception var5) {
 			//var5.printStackTrace();
-		// Spout End
+			// Spout End
 			return;
 		}
 
@@ -85,6 +85,7 @@ public class StringTranslate {
 				}
 			}
 		}
+
 		// Spout Start
 		this.loadSpoutLanguage(par1Properties, par2Str);
 		// Spout End
@@ -126,9 +127,9 @@ public class StringTranslate {
 
 			try {
 				this.loadLanguage(var3, "en_US");
-			// Spout Start - IOException to Exception
+				// Spout Start - IOException to Exception
 			} catch (Exception var9) {
-			// Spout End
+				// Spout End
 				;
 			}
 
@@ -154,10 +155,11 @@ public class StringTranslate {
 							}
 						}
 					}
-				// Spout Start - IOException to Exception
+
+					// Spout Start - IOException to Exception
 				} catch (Exception var9) {
 					//var9.printStackTrace();
-				// Spout End
+					// Spout End
 					return;
 				}
 			}
@@ -178,6 +180,7 @@ public class StringTranslate {
 	/**
 	 * Translate a key to current language.
 	 */
+
 	public synchronized String translateKey(String par1Str) {
 		return this.translateTable.getProperty(par1Str, par1Str);
 	}
@@ -193,6 +196,7 @@ public class StringTranslate {
 		if (this.translateTable.containsKey(key)) {
 			return translateKey(key);
 		}
+
 		return fallback;
 	}
 	// Spout End
@@ -200,6 +204,7 @@ public class StringTranslate {
 	/**
 	 * Translate a key to current language applying String.format()
 	 */
+
 	public synchronized String translateKeyFormat(String par1Str, Object ... par2ArrayOfObj) {
 		String var3 = this.translateTable.getProperty(par1Str, par1Str);
 
@@ -217,6 +222,7 @@ public class StringTranslate {
 	/**
 	 * Translate a key with a extra '.name' at end added, is used by blocks and items.
 	 */
+
 	public synchronized String translateNamedKey(String par1Str) {
 		return this.translateTable.getProperty(par1Str + ".name", "");
 	}

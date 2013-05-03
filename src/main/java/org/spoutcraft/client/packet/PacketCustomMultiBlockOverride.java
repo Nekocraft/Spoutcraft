@@ -59,13 +59,14 @@ public class PacketCustomMultiBlockOverride implements CompressablePacket {
 	public void run(int playerId) {
 		ByteBuffer result = ByteBuffer.allocate(data.length).put(data);
 		SpoutcraftChunk chunk = Spoutcraft.getChunk(SpoutClient.getInstance().getRawWorld(), chunkX, chunkZ);
+
 		for (int i = 0; i < data.length / 7; i++) {
 			int index = i * 7;
 			int x = result.get(index) + chunkX * 16;
-			int y = result.getShort(index+1);
-			int z = result.get(index+3) + chunkZ * 16;
-			short id = result.getShort(index+4);
-			byte data = result.get(index+6);
+			int y = result.getShort(index + 1);
+			int z = result.get(index + 3) + chunkZ * 16;
+			short id = result.getShort(index + 4);
+			byte data = result.get(index + 6);
 			chunk.setCustomBlockId(x, y, z, id);
 			chunk.setCustomBlockData(x, y, z, data);
 			SpoutClient.getInstance().getRawWorld().updateAllLightTypes(x, y, z);
@@ -92,17 +93,21 @@ public class PacketCustomMultiBlockOverride implements CompressablePacket {
 				deflater.finish();
 				ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length);
 				byte[] buffer = new byte[1024];
+
 				while (!deflater.finished()) {
 					int bytesCompressed = deflater.deflate(buffer);
 					bos.write(buffer, 0, bytesCompressed);
 				}
+
 				try {
 					bos.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+
 				data = bos.toByteArray();
 			}
+
 			compressed = true;
 		}
 	}
@@ -111,10 +116,9 @@ public class PacketCustomMultiBlockOverride implements CompressablePacket {
 		if (compressed) {
 			Inflater decompressor = new Inflater();
 			decompressor.setInput(data);
-
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length);
-
 			byte[] buf = new byte[1024];
+
 			while (!decompressor.finished()) {
 				try {
 					int count = decompressor.inflate(buf);
@@ -122,10 +126,12 @@ public class PacketCustomMultiBlockOverride implements CompressablePacket {
 				} catch (DataFormatException e) {
 				}
 			}
+
 			try {
 				bos.close();
 			} catch (IOException e) {
 			}
+
 			compressed = false;
 			data = bos.toByteArray();
 		}

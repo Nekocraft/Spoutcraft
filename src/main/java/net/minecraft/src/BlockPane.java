@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Random;
 
 public class BlockPane extends Block {
-
 	/**
 	 * Holds the texture index of the side of the pane (the thin lateral side)
 	 */
@@ -184,6 +183,6 @@ public class BlockPane extends Block {
 	 */
 	public void registerIcons(IconRegister par1IconRegister) {
 		this.blockIcon = par1IconRegister.registerIcon(this.field_94402_c);
-		this.theIcon = par1IconRegister.registerIcon(this.sideTextureIndex); 
+		this.theIcon = par1IconRegister.registerIcon(this.sideTextureIndex);
 	}
 }

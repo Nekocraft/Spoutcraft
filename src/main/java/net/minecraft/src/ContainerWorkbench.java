@@ -1,7 +1,6 @@
 package net.minecraft.src;
 
 public class ContainerWorkbench extends Container {
-
 	/** The crafting matrix inventory (3x3). */
 	public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
 	public IInventory craftResult = new InventoryCraftResult();

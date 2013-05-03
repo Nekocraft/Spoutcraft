@@ -22,7 +22,7 @@ package org.spoutcraft.api.gui;
 import org.spoutcraft.api.UnsafeClass;
 
 @UnsafeClass
-public class GenericRectangle extends GenericGradient{
+public class GenericRectangle extends GenericGradient {
 	public GenericRectangle() {
 	}
 

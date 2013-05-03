@@ -129,13 +129,16 @@ public class ServerItem implements ListWidgetItem {
 
 	public void render(int x, int y, int width, int height) {
 		MCRenderDelegate r = (MCRenderDelegate) Spoutcraft.getRenderDelegate();
+
 		if (databaseId != -1) {
 			String iconUrl = "http://play.nekocraft.com/servers/" + databaseId + "/icon.png";
 			Texture icon = CustomTextureManager.getTextureFromUrl("Spoutcraft", iconUrl);
+
 			if (icon == null) {
 				CustomTextureManager.downloadTexture("Spoutcraft", iconUrl, true);
 				icon = CustomTextureManager.getTextureFromJar("/res/icon/unknown_server.png");
 			}
+
 			GL11.glPushMatrix();
 			GL11.glTranslated(x + 2, y + 2, 0);
 			r.drawTexture(icon, 25, 25);
@@ -143,11 +146,8 @@ public class ServerItem implements ListWidgetItem {
 		}
 
 		int marginleft = 29;
-
 		int ping = getPing();
-
 		FontRenderer font = SpoutClient.getHandle().fontRenderer;
-
 		int margin1 = 0;
 		int margin2 = 0;
 
@@ -158,6 +158,7 @@ public class ServerItem implements ListWidgetItem {
 				margin1 = pingwidth + 14;
 				font.drawStringWithShadow(sping, x + width - pingwidth - 14, y + 2, 0xaaaaaa);
 			}
+
 			String sPlayers = getPlayers() + " / " + getMaxPlayers() + " players";
 			int playerswidth = font.getStringWidth(sPlayers);
 			margin2 = playerswidth;
@@ -166,6 +167,7 @@ public class ServerItem implements ListWidgetItem {
 
 		font.drawStringWithShadow(r.getFittingText(title, width - margin1 - marginleft), x + marginleft, y + 2, 0xffffff);
 		String sMotd = "";
+
 		if ((getPing() == PollResult.PING_POLLING || isPolling()) && !showPingWhilePolling) {
 			sMotd = showPing ? "Polling ..." : "Retrieving MOTD";
 		} else if (!showPingWhilePolling) {
@@ -173,12 +175,15 @@ public class ServerItem implements ListWidgetItem {
 				case PollResult.PING_UNKNOWN:
 					sMotd = ChatColor.RED + "无法解析的域名!";
 					break;
+
 				case PollResult.PING_TIMEOUT:
 					sMotd = ChatColor.RED + "连接超时!";
 					break;
+
 				case PollResult.PING_BAD_MESSAGE:
 					sMotd = ChatColor.RED + "服务器版本太旧!";
 					break;
+
 				default:
 					sMotd = ChatColor.GREEN + getMotd();
 					break;
@@ -186,6 +191,7 @@ public class ServerItem implements ListWidgetItem {
 		}
 
 		int color = 0xffffff;
+
 		if ((getPing() == PollResult.PING_POLLING || isPolling()) && !showPingWhilePolling) {
 			Color c1 = new Color(0, 0, 0);
 			double darkness = 0;
@@ -196,20 +202,21 @@ public class ServerItem implements ListWidgetItem {
 		}
 
 		font.drawStringWithShadow(r.getFittingText(sMotd, width - 10 - margin2 - marginleft), x + marginleft, y + 11, color);
-
 		GL11.glColor4f(1f, 1f, 1f, 1f);
-
 		// Fancy icons
 		int xOffset = 0;
 		int yOffset = 0;
+
 		if (isPolling() && isShowPing()) {
 			xOffset = 1;
 			yOffset = (int)(System.currentTimeMillis() / 100L & 7L);
+
 			if (yOffset > 4) {
 				yOffset = 8 - yOffset;
 			}
 		} else if (isShowPing()) {
 			xOffset = 0;
+
 			if (ping < 0L) {
 				yOffset = 5;
 			} else if (ping < 150L) {
@@ -224,14 +231,16 @@ public class ServerItem implements ListWidgetItem {
 				yOffset = 4;
 			}
 		}
+
 		if (isShowPing()) {
 			SpoutClient.getHandle().renderEngine.bindTexture("/gui/icons.png");
 			RenderUtil.drawTexturedModalRectangle(x + width - 2 - 10, y + 2, 0 + xOffset * 10, 176 + yOffset * 8, 10, 8, 0f);
 		}
+
 		if (port != DEFAULT_PORT) {
-			font.drawStringWithShadow(ip + ":" +port, x+marginleft, y+20, 0xaaaaaa);
+			font.drawStringWithShadow(ip + ":" + port, x + marginleft, y + 20, 0xaaaaaa);
 		} else {
-			font.drawStringWithShadow(ip, x+marginleft, y+20, 0xaaaaaa);
+			font.drawStringWithShadow(ip, x + marginleft, y + 20, 0xaaaaaa);
 		}
 
 		// Icon drawing
@@ -240,6 +249,7 @@ public class ServerItem implements ListWidgetItem {
 		if (country != null) {
 			String url = "http://cdn.spout.org/img/flag/" + country.toLowerCase() + ".png";
 			Texture icon = CustomTextureManager.getTextureFromUrl("Spoutcraft", url);
+
 			if (icon != null) {
 				GL11.glPushMatrix();
 				GL11.glTranslatef(x + width - iconMargin - 16, y + 20, 0);
@@ -253,17 +263,21 @@ public class ServerItem implements ListWidgetItem {
 
 		if (accessType != OPEN) {
 			String name = "lock";
-			switch(accessType) {
-			case WHITELIST:
-				name = "whitelist";
-				break;
-			case GRAYLIST:
-				name = "graylist";
-				break;
-			case BLACKLIST:
-				name = "blacklist";
-				break;
+
+			switch (accessType) {
+				case WHITELIST:
+					name = "whitelist";
+					break;
+
+				case GRAYLIST:
+					name = "graylist";
+					break;
+
+				case BLACKLIST:
+					name = "blacklist";
+					break;
 			}
+
 			Texture lockIcon = CustomTextureManager.getTextureFromJar("/res/" + name + ".png");
 			GL11.glPushMatrix();
 			GL11.glTranslatef(x + width - iconMargin - 7, y + 20, 0);
@@ -275,11 +289,13 @@ public class ServerItem implements ListWidgetItem {
 		if (pollResult.getVersion() != null) {
 			GL11.glPushMatrix();
 			versionWidth = font.getStringWidth("1.0.0");
-				if (isCompatible(SpoutClient.spoutcraftVersion)) {
-					font.drawStringWithShadow(pollResult.getVersion(), x + width - versionWidth - 20, y + 21, 0x00FF00);
-				} else {
-					font.drawStringWithShadow(pollResult.getVersion(), x + width - versionWidth - 20, y + 21, 0xF44607);
-				}
+
+			if (isCompatible(SpoutClient.spoutcraftVersion)) {
+				font.drawStringWithShadow(pollResult.getVersion(), x + width - versionWidth - 20, y + 21, 0x00FF00);
+			} else {
+				font.drawStringWithShadow(pollResult.getVersion(), x + width - versionWidth - 20, y + 21, 0xF44607);
+			}
+
 			GL11.glPopMatrix();
 		} else {
 			GL11.glPushMatrix();
@@ -296,7 +312,8 @@ public class ServerItem implements ListWidgetItem {
 					String url = MirrorUtils.getMirrorUrl("/popular.php?uid=", "http://servers.spout.org/popular.php?uid=");
 					NetworkUtils.pingUrl(url + databaseId);
 				}
-				SpoutClient.getInstance().getServerManager().join(this, isFavorite?favorites.getCurrentGui():serverList.getCurrentGui(), isFavorite?"Favorites":"Server List");
+
+				SpoutClient.getInstance().getServerManager().join(this, isFavorite ? favorites.getCurrentGui() : serverList.getCurrentGui(), isFavorite ? "Favorites" : "Server List");
 			}
 		}
 	}
@@ -366,12 +383,14 @@ public class ServerItem implements ListWidgetItem {
 
 	public String getVersion() {
 		String version = pollResult.getVersion();
+
 		if (version != null) {
 			return version;
-		} 
-		return "0.0.0";				
+		}
+
+		return "0.0.0";
 	}
-	
+
 	public void setCountry(String country) {
 		this.country = country;
 	}
@@ -411,17 +430,19 @@ public class ServerItem implements ListWidgetItem {
 	public void setAcceptsTextures(boolean acceptsTextures) {
 		this.acceptsTextures = acceptsTextures;
 	}
-	
+
 	public boolean isCompatible(String version) {
 		// Update the following method to allow users to login to server based on conditional versioning response.
 		if (version.equals("1.5.1")) {
 			if (getVersion().equals("1.5")) {
 				return true;
 			}
+
 			if (getVersion().equals("1.5.1")) {
 				return true;
 			}
 		}
+
 		return false;
 	}
 }

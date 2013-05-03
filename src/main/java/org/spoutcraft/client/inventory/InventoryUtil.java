@@ -31,6 +31,7 @@ public class InventoryUtil {
 	public static void replaceItem(int id, int damage) {
 		int slot = -1;
 		InventoryPlayer inventory = Minecraft.theMinecraft.thePlayer.inventory;
+
 		for (int i = 0; i < inventory.mainInventory.length; i++) {
 			if (inventory.mainInventory[i] != null && i != inventory.currentItem) {
 				if (inventory.mainInventory[i].itemID == id && (damage == -1 || (damage == inventory.mainInventory[i].getItemDamage()))) {
@@ -39,26 +40,28 @@ public class InventoryUtil {
 						inventory.mainInventory[inventory.currentItem].setItemDamage(inventory.mainInventory[i].getItemDamage());
 						inventory.mainInventory[i] = null;
 					}
+
 					slot = i;
 					break;
 				}
 			}
 		}
+
 		if (Minecraft.theMinecraft.isMultiplayerWorld() && slot > -1) {
 			int window = Minecraft.theMinecraft.thePlayer.openContainer.windowId;
 			ItemStack replacement = inventory.mainInventory[slot].copy();
-
 			Minecraft.theMinecraft.playerController.windowClick(window, slot < 9 ? slot + 36 : slot, 0, 0, Minecraft.theMinecraft.thePlayer);
 			Minecraft.theMinecraft.playerController.windowClick(window, inventory.currentItem + 36, 0, 0, Minecraft.theMinecraft.thePlayer);
 			((EntityClientPlayerMP)Minecraft.theMinecraft.thePlayer).sendQueue.addToSendQueue(new Packet101CloseWindow(window));
 			((EntityClientPlayerMP)Minecraft.theMinecraft.thePlayer).sendQueue.queued = true;
 			((EntityClientPlayerMP)Minecraft.theMinecraft.thePlayer).sendQueue.packetQueueTime = System.currentTimeMillis() + 30L;
-
 			ItemStack current = inventory.mainInventory[inventory.currentItem];
+
 			if (replacement != null && current != null) {
 				current.stackSize = replacement.stackSize;
 				current.setItemDamage(replacement.getItemDamage());
 			}
+
 			inventory.mainInventory[slot] = null;
 		}
 	}
@@ -71,6 +74,7 @@ public class InventoryUtil {
 				}
 			}
 		}
+
 		return null;
 	}
 }

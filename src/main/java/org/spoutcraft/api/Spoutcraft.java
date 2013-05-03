@@ -49,6 +49,7 @@ public final class Spoutcraft {
 		if (client != null) {
 			throw new UnsupportedOperationException("Cannot redefine singleton Client");
 		}
+
 		client = argClient;
 	}
 
@@ -180,9 +181,11 @@ public final class Spoutcraft {
 
 	public static SpoutcraftChunk getChunk(World world, int chunkX, int chunkZ) {
 		Chunk chunk = world.getChunkFromChunkCoords(chunkX, chunkZ);
+
 		if (chunk != null) {
 			return chunk.spoutChunk;
 		}
+
 		return null;
 	}
 

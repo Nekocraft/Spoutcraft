@@ -390,6 +390,7 @@ public abstract class Entity {
 		if (this.ridingEntity != null && this.ridingEntity.isDead) {
 			this.ridingEntity = null;
 		}
+
 		// Spout Start
 		partiallyInWater = isInsideOfMaterial(Material.water, -1);
 		// Spout End
@@ -987,7 +988,7 @@ public abstract class Entity {
 
 	public boolean isInsideOfMaterial(Material material, float offset) {
 		double var2 = this.posY + (double)this.getEyeHeight() + offset;
-	// Spout End
+		// Spout End
 		int var4 = MathHelper.floor_double(this.posX);
 		int var5 = MathHelper.floor_float((float)MathHelper.floor_double(var2));
 		int var6 = MathHelper.floor_double(this.posZ);
@@ -995,7 +996,7 @@ public abstract class Entity {
 
 		// Spout Start
 		if (var7 != 0 && Block.blocksList[var7].blockMaterial == material) {
-		// Spout End
+			// Spout End
 			float var8 = BlockFluid.getFluidHeightPercent(this.worldObj.getBlockMetadata(var4, var5, var6)) - 0.11111111F;
 			float var9 = (float)(var5 + 1) - var8;
 			return var2 < (double)var9;
@@ -1310,7 +1311,7 @@ public abstract class Entity {
 			par1NBTTagCompound.setBoolean("Invulnerable", this.invulnerable);
 			par1NBTTagCompound.setInteger("PortalCooldown", this.timeUntilPortal);
 			par1NBTTagCompound.setLong("UUIDMost", this.entityUniqueID.getMostSignificantBits());
-			par1NBTTagCompound.setLong("UUIDLeast", this.entityUniqueID.getLeastSignificantBits()); 
+			par1NBTTagCompound.setLong("UUIDLeast", this.entityUniqueID.getLeastSignificantBits());
 			this.writeEntityToNBT(par1NBTTagCompound);
 
 			if (this.ridingEntity != null) {
@@ -1375,9 +1376,11 @@ public abstract class Entity {
 			long lsb = par1NBTTagCompound.getLong("ID_LSB");
 			long msb = par1NBTTagCompound.getLong("ID_MSB");
 			UUID id = new UUID(msb, lsb);
+
 			if (!id.equals(new UUID(0, 0))) {
 				uniqueId = id;
 			}
+
 			// Spout End
 			this.readEntityFromNBT(par1NBTTagCompound);
 		} catch (Throwable var5) {
@@ -1821,7 +1824,7 @@ public abstract class Entity {
 	 */
 	// Spout Start - protected to public
 	public void setFlag(int par1, boolean par2) {
-	// Spout End
+		// Spout End
 		byte var3 = this.dataWatcher.getWatchableObjectByte(0);
 
 		if (par2) {

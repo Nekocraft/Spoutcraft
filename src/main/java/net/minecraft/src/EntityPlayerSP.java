@@ -54,11 +54,13 @@ public class EntityPlayerSP extends EntityPlayer {
 			// Spout Start
 			this.skinUrl = "http://nekocraft.com/api/skin/" + ChatColor.stripColor(par3Session.username);
 			this.vip = Resources.getVIP(ChatColor.stripColor(par3Session.username));
+
 			if (vip != null) {
 				this.displayName = vip.getTitle();
 			} else {
 				displayName = par3Session.username;
 			}
+
 			// Spout End
 		}
 
@@ -105,7 +107,7 @@ public class EntityPlayerSP extends EntityPlayer {
 	public void onLivingUpdate() {
 		// Spout Start
 		if (this.sprintingTicksLeft > 0 && !runToggle) {
-		// Spout End
+			// Spout End
 			--this.sprintingTicksLeft;
 
 			if (this.sprintingTicksLeft == 0) {
@@ -172,7 +174,6 @@ public class EntityPlayerSP extends EntityPlayer {
 			// Spout Start
 			boolean wasFlightUp = movementInput.flyingUp;
 			// Spout End
-
 			boolean var1 = this.movementInput.jump;
 			float var2 = 0.8F;
 			boolean var3 = this.movementInput.moveForward >= var2;
@@ -215,7 +216,7 @@ public class EntityPlayerSP extends EntityPlayer {
 
 			// Spout Start
 			if (this.capabilities.allowFlying && !wasFlightUp && this.movementInput.flyingUp) {
-			// Spout End
+				// Spout End
 				if (this.flyToggleTimer == 0) {
 					this.flyToggleTimer = 7;
 				} else {
@@ -227,7 +228,7 @@ public class EntityPlayerSP extends EntityPlayer {
 
 			if (this.capabilities.isFlying) {
 				// Spout Start
-				if (this.movementInput.flyingDown) { 
+				if (this.movementInput.flyingDown) {
 					if (SpoutClient.getInstance().isFlySpeedCheat()) {
 						this.motionY -= 0.15D * Configuration.getFlightSpeedFactor();
 					} else {
@@ -242,6 +243,7 @@ public class EntityPlayerSP extends EntityPlayer {
 						this.motionY += 0.15D;
 					}
 				}
+
 				// Spout End
 			}
 
@@ -587,38 +589,47 @@ public class EntityPlayerSP extends EntityPlayer {
 				byte newView = (byte) SpoutClient.getInstance().getActivePlayer().getNextRenderDistance().getValue();
 				fogKey = settings.keyBindToggleFog;
 				settings.keyBindToggleFog = new KeyBinding("key.fog", -1);
+
 				if (view != newView) {
 					Configuration.setRenderDistance(newView);
 					Configuration.write();
+
 					if (this instanceof EntityClientPlayerMP && Spoutcraft.getClient().isSpoutEnabled()) {
 						SpoutClient.getInstance().getPacketManager().sendSpoutPacket(new PacketRenderDistance((byte)newView));
 					}
 				}
-			// Sneak toggle
+
+				// Sneak toggle
 			} else if (key == settings.keySneakToggle.keyCode) {
 				sneakToggle = !sneakToggle;
+
 				if (sneakToggle) {
 					runToggle = false;
 					setSprinting(false);
 					treadWaterToggle = false;
 				}
-			// Run toggle
+
+				// Run toggle
 			} else if (key == settings.keyRunToggle.keyCode) {
 				runToggle = !runToggle;
 				setSprinting(runToggle);
+
 				if (runToggle) {
 					sneakToggle = false;
 					treadWaterToggle = false;
 				}
-			// Water tread
+
+				// Water tread
 			} else if (key == settings.keyTreadWaterToggle.keyCode) {
 				treadWaterToggle = !treadWaterToggle;
+
 				if (treadWaterToggle) {
 					runToggle = false;
 					setSprinting(false);
 					sneakToggle = false;
 				}
-			// Auto forward
+
+				// Auto forward
 			} else if (key == settings.keyAutoForward.keyCode) {
 				if (Spoutcraft.hasPermission("spout.plugin.autorun.forward")) {
 					autoforwardToggle = !autoforwardToggle;
@@ -627,7 +638,7 @@ public class EntityPlayerSP extends EntityPlayer {
 			} else if (key == settings.keyBindForward.keyCode && autoforwardToggle) {
 				autoforwardToggle = false;
 				autoBackwardToggle = false;
-			// Auto backward
+				// Auto backward
 			} else if (key == settings.keyAutoBackward.keyCode) {
 				if (Spoutcraft.hasPermission("spout.plugin.autorun.backward")) {
 					autoBackwardToggle = !autoBackwardToggle;
@@ -636,12 +647,12 @@ public class EntityPlayerSP extends EntityPlayer {
 			} else if (key == settings.keyBindBack.keyCode && autoBackwardToggle) {
 				autoBackwardToggle = false;
 				autoforwardToggle = false;
-			// Overview map
-			} else if (key == settings.keyWaypoint.keyCode){
-				if(Spoutcraft.hasPermission("spout.plugin.overviewmap")) {
+				// Overview map
+			} else if (key == settings.keyWaypoint.keyCode) {
+				if (Spoutcraft.hasPermission("spout.plugin.overviewmap")) {
 					mc.displayGuiScreen(new GuiOverviewMap());
 				}
-			} else if (key == settings.keyHideChat.keyCode){
+			} else if (key == settings.keyHideChat.keyCode) {
 				if (Spoutcraft.getActivePlayer() != null) {
 					Spoutcraft.getActivePlayer().getMainScreen().getChatTextBox().setVisible(!Spoutcraft.getActivePlayer().getMainScreen().getChatTextBox().isVisible());
 				}
@@ -649,6 +660,7 @@ public class EntityPlayerSP extends EntityPlayer {
 
 			if (this.capabilities.allowFlying && key == settings.keyFlyToggle.keyCode) {
 				this.capabilities.isFlying = !this.capabilities.isFlying;
+
 				if (this.capabilities.isFlying) {
 					posY += 0.1D;
 					this.motionY += 0.15D;
@@ -663,6 +675,7 @@ public class EntityPlayerSP extends EntityPlayer {
 			SpoutClient.getHandle().gameSettings.keyBindToggleFog = fogKey;
 			fogKey = null;
 		}
+
 		super.onUpdate();
 	}
 	// Spout End

@@ -75,18 +75,23 @@ public abstract class AbstractBinding {
 	@Override
 	public String toString() {
 		String result = "";
+
 		if (hasModifier(MOD_SHIFT)) {
 			result += "SHIFT + ";
 		}
+
 		if (hasModifier(MOD_CTRL)) {
 			result += "CTRL + ";
 		}
+
 		if (hasModifier(MOD_ALT)) {
 			result += "ALT + ";
 		}
+
 		if (hasModifier(MOD_SUPER)) {
 			result += "SUPER + ";
 		}
+
 		if (key > 0) {
 			result += Keyboard.getKeyName(key);
 		} else if (key == 0) {
@@ -100,13 +105,17 @@ public abstract class AbstractBinding {
 
 	public static String getMouseButtonName(int button) {
 		button += 100;
-		switch(button) {
+
+		switch (button) {
 			case 0:
 				return "Left button";
+
 			case 1:
 				return "Right button";
+
 			case 2:
 				return "Middle button";
+
 			default:
 				return "Button " + button;
 		}
@@ -118,6 +127,7 @@ public abstract class AbstractBinding {
 			AbstractBinding a = (AbstractBinding) other;
 			return a == this;
 		}
+
 		return false;
 	}
 

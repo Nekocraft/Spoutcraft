@@ -182,9 +182,10 @@ public class RenderGlobal implements IWorldAccess {
 		this.glRenderListBase = GLAllocation.generateDisplayLists(var3 * var3 * var4 * 5);
 		// Spout End
 		this.occlusionEnabled = OpenGlCapsChecker.checkARBOcclusion();
+
 		// Spout Start
 		if (this.occlusionEnabled && Configuration.ambientOcclusion) {
-		// Spout End
+			// Spout End
 			this.occlusionResult.clear();
 			this.glOcclusionQueryBase = GLAllocation.createDirectIntBuffer(var3 * var3 * var4);
 			this.glOcclusionQueryBase.clear();
@@ -196,7 +197,6 @@ public class RenderGlobal implements IWorldAccess {
 		// Spout Start
 		refreshStars();
 		// Spout End
-
 		this.starGLCallList = GLAllocation.generateDisplayLists(3);
 		GL11.glPushMatrix();
 		GL11.glNewList(this.starGLCallList, GL11.GL_COMPILE);
@@ -294,6 +294,7 @@ public class RenderGlobal implements IWorldAccess {
 		if (!SpoutClient.getInstance().getSkyManager().isStarsVisible()) {
 			return;
 		}
+
 		// Spout End
 		Random var1 = new Random(10842L);
 		Tessellator var2 = Tessellator.instance;
@@ -301,7 +302,7 @@ public class RenderGlobal implements IWorldAccess {
 
 		// Spout Start
 		for (int var3 = 0; var3 < SpoutClient.getInstance().getSkyManager().getStarFrequency(); ++var3) {
-		// Spout End
+			// Spout End
 			double var4 = (double)(var1.nextFloat() * 2.0F - 1.0F);
 			double var6 = (double)(var1.nextFloat() * 2.0F - 1.0F);
 			double var8 = (double)(var1.nextFloat() * 2.0F - 1.0F);
@@ -388,7 +389,7 @@ public class RenderGlobal implements IWorldAccess {
 			if (Configuration.isFarView()) {
 				var1 = 512;
 			} else if (var1 > 400) {
-			// Spout End
+				// Spout End
 				var1 = 400;
 			}
 
@@ -433,6 +434,7 @@ public class RenderGlobal implements IWorldAccess {
 								this.worldRenderers[(var6 * this.renderChunksTall + var5) * this.renderChunksWide + var4].glOcclusionQuery = this.glOcclusionQueryBase.get(var3);
 							}
 						}
+
 						// Spout End
 						this.worldRenderers[(var6 * this.renderChunksTall + var5) * this.renderChunksWide + var4].isWaitingOnOcclusionQuery = false;
 						this.worldRenderers[(var6 * this.renderChunksTall + var5) * this.renderChunksWide + var4].isVisible = true;
@@ -510,24 +512,27 @@ public class RenderGlobal implements IWorldAccess {
 
 			this.theWorld.theProfiler.endStartSection("tileentities");
 			RenderHelper.enableStandardItemLighting();
-
 			// Spout Start
 			int max = tileEntities.size();
 			int threshold = (int) Math.min(1000, (Math.max(100, (SpoutWorth.getInstance().getAverageFPS() * 8))));
+
 			if (tileEntities.size() > threshold) {
 				Collections.sort((List<TileEntity>)tileEntities, new TileEntityComparator());
 				max = threshold / 2;
 			}
-			Iterator var8 = this.tileEntities.iterator();
 
+			Iterator var8 = this.tileEntities.iterator();
 			int i = 0;
+
 			while (var8.hasNext() && (i < max)) {
 				i++;
 				TileEntity var9 = (TileEntity)var8.next();
+
 				if (!var9.isInvalid()) {
 					TileEntityRenderer.instance.renderTileEntity(var9, par3);
 				}
 			}
+
 			// Spout End
 
 			for (var6 = 0; var6 < this.tileEntities.size(); ++var6) {
@@ -680,7 +685,7 @@ public class RenderGlobal implements IWorldAccess {
 
 		// Spout Start
 		if (this.occlusionEnabled && Configuration.ambientOcclusion && this.mc.gameSettings.advancedOpengl && !this.mc.gameSettings.anaglyph && par2 == 0) {
-		// Spout End
+			// Spout End
 			byte var18 = 0;
 			int var19 = 16;
 			this.checkOcclusionQueryResult(var18, var19);
@@ -814,9 +819,9 @@ public class RenderGlobal implements IWorldAccess {
 					++this.renderersSkippingRenderPass;
 				} else if (!this.sortedWorldRenderers[var7].isInFrustum) {
 					++this.renderersBeingClipped;
-				// Spout Start
+					// Spout Start
 				} else if (this.occlusionEnabled && Configuration.ambientOcclusion && !this.sortedWorldRenderers[var7].isVisible) {
-				// Spout End
+					// Spout End
 					++this.renderersBeingOccluded;
 				} else {
 					++this.renderersBeingRendered;
@@ -825,7 +830,7 @@ public class RenderGlobal implements IWorldAccess {
 
 			// Spout Start
 			if (!this.sortedWorldRenderers[var7].skipRenderPass[par3] && this.sortedWorldRenderers[var7].isInFrustum && (!this.occlusionEnabled && !Configuration.ambientOcclusion || this.sortedWorldRenderers[var7].isVisible)) {
-			// Spout End
+				// Spout End
 				int var8 = this.sortedWorldRenderers[var7].getGLCallListForPass(par3);
 
 				if (var8 >= 0) {
@@ -962,16 +967,16 @@ public class RenderGlobal implements IWorldAccess {
 			float var3 = (float)var2.xCoord;
 			float var4 = (float)var2.yCoord;
 			float var5 = (float)var2.zCoord;
-
 			// Spout Start
 			Color skyColor = SpoutClient.getInstance().getSkyManager().getSkyColor();
+
 			if (skyColor != null) {
 				var3 = skyColor.getRedF();
 				var4 = skyColor.getGreenF();
 				var5 = skyColor.getBlueF();
 			}
-			// Spout End
 
+			// Spout End
 			float var8;
 
 			if (this.mc.gameSettings.anaglyph) {
@@ -988,10 +993,12 @@ public class RenderGlobal implements IWorldAccess {
 			GL11.glDepthMask(false);
 			GL11.glEnable(GL11.GL_FOG);
 			GL11.glColor3f(var3, var4, var5);
+
 			// Spout Start
 			if (Configuration.isSky()) {
-			GL11.glCallList(this.glSkyList);
+				GL11.glCallList(this.glSkyList);
 			}
+
 			// Spout End
 			GL11.glDisable(GL11.GL_FOG);
 			GL11.glDisable(GL11.GL_ALPHA_TEST);
@@ -1006,7 +1013,7 @@ public class RenderGlobal implements IWorldAccess {
 
 			// MCPatcher Start
 			if (var24 != null && Configuration.isSky()) {
-			// MCPatcher End
+				// MCPatcher End
 				GL11.glDisable(GL11.GL_TEXTURE_2D);
 				GL11.glShadeModel(GL11.GL_SMOOTH);
 				GL11.glPushMatrix();
@@ -1060,47 +1067,53 @@ public class RenderGlobal implements IWorldAccess {
 			// MCPatcher End
 			GL11.glRotatef(this.theWorld.getCelestialAngle(par1) * 360.0F, 1.0F, 0.0F, 0.0F);
 			var12 = 30.0F;
+
 			// Spout Start
 			if (SpoutClient.getInstance().getSkyManager().isSunVisible()) {
 				if (SpoutClient.getInstance().getSkyManager().getSunTextureUrl() == null || CustomTextureManager.getTexturePathFromUrl(SpoutClient.getInstance().getSkyManager().getSunTextureUrl()) == null) {
-				this.renderEngine.bindTexture(SkyRenderer.setupCelestialObject("/environment/sun.png"));
-			} else {
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture(CustomTextureManager.getTexturePathFromUrl(SpoutClient.getInstance().getSkyManager().getSunTextureUrl())));
+					this.renderEngine.bindTexture(SkyRenderer.setupCelestialObject("/environment/sun.png"));
+				} else {
+					GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture(CustomTextureManager.getTexturePathFromUrl(SpoutClient.getInstance().getSkyManager().getSunTextureUrl())));
+				}
+
+				double multiplier = (SpoutClient.getInstance().getSkyManager().getSunSizePercent() / 100D);
+				// Spout End
+				var23.startDrawingQuads();
+				// Spout Start
+				var23.addVertexWithUV((double)(-var12), 100.0D / multiplier, (double)(-var12), 0.0D, 0.0D);
+				var23.addVertexWithUV((double)var12, 100.0D / multiplier, (double)(-var12), 1.0D, 0.0D);
+				var23.addVertexWithUV((double)var12, 100.0D / multiplier, (double)var12, 1.0D, 1.0D);
+				var23.addVertexWithUV((double)(-var12), 100.0D / multiplier, (double)var12, 0.0D, 1.0D);
+				var23.draw();
 			}
-			double multiplier = (SpoutClient.getInstance().getSkyManager().getSunSizePercent() / 100D);
-			// Spout End
-			var23.startDrawingQuads();
-			// Spout Start
-			var23.addVertexWithUV((double)(-var12), 100.0D / multiplier, (double)(-var12), 0.0D, 0.0D);
-			var23.addVertexWithUV((double)var12, 100.0D / multiplier, (double)(-var12), 1.0D, 0.0D);
-			var23.addVertexWithUV((double)var12, 100.0D / multiplier, (double)var12, 1.0D, 1.0D);
-			var23.addVertexWithUV((double)(-var12), 100.0D / multiplier, (double)var12, 0.0D, 1.0D);
-			var23.draw();
-			}
+
 			// Spout End
 			var12 = 20.0F;
+
 			// Spout Start
 			if (SpoutClient.getInstance().getSkyManager().isMoonVisible()) {
-			if (SpoutClient.getInstance().getSkyManager().getMoonTextureUrl() == null || CustomTextureManager.getTexturePathFromUrl(SpoutClient.getInstance().getSkyManager().getMoonTextureUrl()) == null) {
-				this.renderEngine.bindTexture(SkyRenderer.setupCelestialObject("/environment/moon_phases.png"));
-			} else {
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture(CustomTextureManager.getTexturePathFromUrl(SpoutClient.getInstance().getSkyManager().getMoonTextureUrl())));
+				if (SpoutClient.getInstance().getSkyManager().getMoonTextureUrl() == null || CustomTextureManager.getTexturePathFromUrl(SpoutClient.getInstance().getSkyManager().getMoonTextureUrl()) == null) {
+					this.renderEngine.bindTexture(SkyRenderer.setupCelestialObject("/environment/moon_phases.png"));
+				} else {
+					GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.renderEngine.getTexture(CustomTextureManager.getTexturePathFromUrl(SpoutClient.getInstance().getSkyManager().getMoonTextureUrl())));
+				}
+
+				int var26 = this.theWorld.getMoonPhase();
+				int var27 = var26 % 4;
+				int var28 = var26 / 4 % 2;
+				float var16 = (float)(var27 + 0) / 4.0F;
+				float var17 = (float)(var28 + 0) / 2.0F;
+				float var18 = (float)(var27 + 1) / 4.0F;
+				float var19 = (float)(var28 + 1) / 2.0F;
+				var23.startDrawingQuads();
+				double multiplier = (SpoutClient.getInstance().getSkyManager().getMoonSizePercent() / 100D);
+				var23.addVertexWithUV((double)(-var12), -100.0D, (double)var12, (double)var18, (double)var19);
+				var23.addVertexWithUV((double)var12, -100.0D, (double)var12, (double)var16, (double)var19);
+				var23.addVertexWithUV((double)var12, -100.0D, (double)(-var12), (double)var16, (double)var17);
+				var23.addVertexWithUV((double)(-var12), -100.0D, (double)(-var12), (double)var18, (double)var17);
+				var23.draw();
 			}
-			int var26 = this.theWorld.getMoonPhase();
-			int var27 = var26 % 4;
-			int var28 = var26 / 4 % 2;
-			float var16 = (float)(var27 + 0) / 4.0F;
-			float var17 = (float)(var28 + 0) / 2.0F;
-			float var18 = (float)(var27 + 1) / 4.0F;
-			float var19 = (float)(var28 + 1) / 2.0F;
-			var23.startDrawingQuads();
-			double multiplier = (SpoutClient.getInstance().getSkyManager().getMoonSizePercent() / 100D);
-			var23.addVertexWithUV((double)(-var12), -100.0D, (double)var12, (double)var18, (double)var19);
-			var23.addVertexWithUV((double)var12, -100.0D, (double)var12, (double)var16, (double)var19);
-			var23.addVertexWithUV((double)var12, -100.0D, (double)(-var12), (double)var16, (double)var17);
-			var23.addVertexWithUV((double)(-var12), -100.0D, (double)(-var12), (double)var18, (double)var17);
-			var23.draw();
-			}
+
 			// Spout End
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
 			float var20 = this.theWorld.getStarBrightness(par1) * var8;
@@ -1121,7 +1134,7 @@ public class RenderGlobal implements IWorldAccess {
 
 			// Spout Start - Added stars condition
 			if (var25 < 0.0D && Configuration.isStars()) {
-			// Spout End
+				// Spout End
 				GL11.glPushMatrix();
 				GL11.glTranslatef(0.0F, 12.0F, 0.0F);
 				GL11.glCallList(this.glSkyList2);
@@ -1162,10 +1175,12 @@ public class RenderGlobal implements IWorldAccess {
 
 			GL11.glPushMatrix();
 			GL11.glTranslatef(0.0F, -((float)(var25 - 16.0D)), 0.0F);
+
 			// Spout Start
 			if (Configuration.isSky()) {
-			GL11.glCallList(this.glSkyList2);
+				GL11.glCallList(this.glSkyList2);
 			}
+
 			// Spout End
 			GL11.glPopMatrix();
 			GL11.glEnable(GL11.GL_TEXTURE_2D);
@@ -1178,9 +1193,10 @@ public class RenderGlobal implements IWorldAccess {
 		if (!SpoutClient.getInstance().getSkyManager().isCloudsVisible() || !Configuration.isSky()) {
 			return;
 		}
+
 		if (this.mc.theWorld.provider.isSurfaceWorld()) {
 			if (ColorizeWorld.drawFancyClouds(this.mc.gameSettings.fancyGraphics)) {
-		// Spout End
+				// Spout End
 				this.renderCloudsFancy(par1);
 			} else {
 				GL11.glDisable(GL11.GL_CULL_FACE);
@@ -1274,11 +1290,13 @@ public class RenderGlobal implements IWorldAccess {
 		float var18 = (float)var15.zCoord;
 		// Spout Start
 		Color cloudColor = SpoutClient.getInstance().getSkyManager().getCloudColor();
+
 		if (cloudColor != null) {
 			var16 = cloudColor.getRedF();
 			var17 = cloudColor.getGreenF();
 			var18 = cloudColor.getBlueF();
 		}
+
 		// Spout End
 		float var19;
 		float var21;
@@ -1780,6 +1798,7 @@ public class RenderGlobal implements IWorldAccess {
 		if (mc == null || theWorld == null || mc.renderViewEntity == null) {
 			return;
 		}
+
 		// Spout End
 		try {
 			this.doSpawnParticle(par1Str, par2, par4, par6, par8, par10, par12);
@@ -1821,9 +1840,11 @@ public class RenderGlobal implements IWorldAccess {
 			} else {
 				// Spout Start
 				double var22 = 6D;
+
 				if (!org.spoutcraft.client.config.Configuration.isFancyParticles()) {
 					var22 = 16.0D;
 				}
+
 				// Spout End
 
 				if (var15 * var15 + var17 * var17 + var19 * var19 > var22 * var22) {
@@ -2011,6 +2032,7 @@ public class RenderGlobal implements IWorldAccess {
 		if (mc == null || theWorld == null || mc.renderViewEntity == null) {
 			return;
 		}
+
 		// Spout End
 		Random var7 = this.theWorld.rand;
 		double var8;
@@ -2264,7 +2286,6 @@ public class RenderGlobal implements IWorldAccess {
 			for (int var1 = 0; var1 < this.worldRenderers.length; ++var1) {
 				this.worldRenderers[var1].isVisible = true;
 			}
-
 		}
 	}
 
@@ -2279,36 +2300,38 @@ public class RenderGlobal implements IWorldAccess {
 
 	private boolean isMovingNow(EntityLiving var1) {
 		double var2 = 0.0010D;
-		return var1.isJumping?true:(var1.isSneaking()?true:((double)var1.prevSwingProgress > var2?true:(this.mc.mouseHelper.deltaX != 0?true:(this.mc.mouseHelper.deltaY != 0?true:(Math.abs(var1.posX - var1.prevPosX) > var2?true:(Math.abs(var1.posY - var1.prevPosY) > var2?true:Math.abs(var1.posZ - var1.prevPosZ) > var2))))));
+		return var1.isJumping ? true : (var1.isSneaking() ? true : ((double)var1.prevSwingProgress > var2 ? true : (this.mc.mouseHelper.deltaX != 0 ? true : (this.mc.mouseHelper.deltaY != 0 ? true : (Math.abs(var1.posX - var1.prevPosX) > var2 ? true : (Math.abs(var1.posY - var1.prevPosY) > var2 ? true : Math.abs(var1.posZ - var1.prevPosZ) > var2))))));
 	}
 
 	public void updateRenderer(int x, int y, int z) {
 		int chunkX = MathHelper.bucketInt(x, 16);
 		int chunkY = MathHelper.bucketInt(y, 16);
 		int chunkZ = MathHelper.bucketInt(z, 16);
-
 		int cx = chunkX % this.renderChunksWide;
+
 		if (cx < 0) {
 			cx += this.renderChunksWide;
 		}
 
 		int cy = chunkY % this.renderChunksTall;
+
 		if (cy < 0) {
 			cy += this.renderChunksTall;
 		}
 
 		int cz = chunkZ % this.renderChunksDeep;
+
 		if (cz < 0) {
 			cz += this.renderChunksDeep;
 		}
 
 		int index = (cz * this.renderChunksTall + cy) * this.renderChunksWide + cx;
 		WorldRenderer renderer = this.worldRenderers[index];
+
 		if (renderer.needsUpdate) {
 			renderer.updateRenderer();
 			renderer.needsUpdate = false;
 		}
-
 	}
 
 	public void prepareAO() {

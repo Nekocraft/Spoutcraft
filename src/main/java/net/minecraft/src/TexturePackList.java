@@ -21,7 +21,6 @@ import com.prupe.mcpatcher.TexturePackAPI;
 import com.prupe.mcpatcher.TexturePackChangeHandler;
 
 public class TexturePackList {
-
 	/**
 	 * An instance of TexturePackDefault for the always available builtin texture pack.
 	 */
@@ -66,7 +65,7 @@ public class TexturePackList {
 	 */
 	// Spout Start - private to public
 	public void createTexturePackDirs() {
-	// Spout End
+		// Spout End
 		if (!this.texturePackDir.isDirectory()) {
 			this.texturePackDir.delete();
 			this.texturePackDir.mkdirs();

@@ -57,9 +57,9 @@ public class GuiAmbigousInput extends GuiSpoutScreen {
 		title = new GenericLabel("Ambigous bindings\n" + ChatColor.GRAY + "The key you pressed has multiple bindings assigned.\n" + ChatColor.GRAY + "Please choose which action you want to summon.");
 		buttonCancel = new GenericButton("Cancel");
 		list = new GenericListWidget();
-
 		int i = 1;
-		for (AbstractBinding binding:bindings) {
+
+		for (AbstractBinding binding: bindings) {
 			list.addItem(new BindingItem(i, binding));
 			i++;
 		}
@@ -71,13 +71,9 @@ public class GuiAmbigousInput extends GuiSpoutScreen {
 		int swidth = mc.fontRenderer.getStringWidth(title.getText());
 		title.setGeometry(5, 7, width - 10, 0);
 		int top = 5 + 11 * 3 + 5;
-
 		list.setGeometry(5, top, width - 10, height - top - 30);
-
 		top += list.getHeight();
-
 		buttonCancel.setGeometry(width - 205, top + 5, 200, 20);
-
 		list.setFocus(true);
 		list.setSelection(0);
 	}
@@ -85,16 +81,19 @@ public class GuiAmbigousInput extends GuiSpoutScreen {
 	@Override
 	protected void keyTyped(char var1, int var2) {
 		super.keyTyped(var1, var2);
+
 		try {
 			int i = Integer.valueOf(var1 + "");
+
 			if (i == 0) {
 				i = 10;
 			}
+
 			if (bindings.size() >= i) {
 				AbstractBinding binding = bindings.get(i - 1);
 				summon(binding);
 			}
-		} catch(IllegalArgumentException e) {}
+		} catch (IllegalArgumentException e) {}
 	}
 
 	@Override
@@ -115,7 +114,6 @@ public class GuiAmbigousInput extends GuiSpoutScreen {
 
 		public void setListWidget(ListWidget widget) {
 			// TODO Auto-generated method stub
-
 		}
 
 		public ListWidget getListWidget() {
@@ -139,6 +137,7 @@ public class GuiAmbigousInput extends GuiSpoutScreen {
 					mc.fontRenderer.drawString(index + "", x + 4, y + 3, 0xff000000);
 				}
 			}
+
 			mc.fontRenderer.drawString(binding.getTitle(), x + 15, y + 3, 0xffffffff);
 		}
 
@@ -146,7 +145,9 @@ public class GuiAmbigousInput extends GuiSpoutScreen {
 			if (x == -1 && y == -1 && !doubleClick) {
 				return;
 			}
+
 			summon(binding);
+
 			if (!doubleClick) {
 				Spoutcraft.getActivePlayer().showAchievement(ChatColor.WHITE + "You can use 1-9", "on your keyboard too", Item.book.itemID);
 			}
@@ -155,13 +156,13 @@ public class GuiAmbigousInput extends GuiSpoutScreen {
 		public AbstractBinding getBinding() {
 			return binding;
 		}
-
 	}
 
 	protected void summon(final AbstractBinding binding) {
 		if (pressed != null) {
 			return;
 		}
+
 		Timer t = new Timer();
 		TimerTask task = new TimerTask() {
 			@Override

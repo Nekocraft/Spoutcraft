@@ -22,7 +22,7 @@ package org.spoutcraft.client.entity;
 import org.spoutcraft.api.util.FixedLocation;
 import org.spoutcraft.client.SpoutClient;
 
-public class CraftTextEntity extends CraftEntity{
+public class CraftTextEntity extends CraftEntity {
 	public CraftTextEntity(FixedLocation location) {
 		super(location);
 		handle = new EntityText(SpoutClient.getInstance().getRawWorld());

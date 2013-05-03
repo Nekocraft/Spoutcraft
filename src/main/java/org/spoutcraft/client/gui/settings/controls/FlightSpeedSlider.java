@@ -27,11 +27,13 @@ public class FlightSpeedSlider extends GenericSlider {
 	public FlightSpeedSlider() {
 		super("飞行速度");
 		setEnabled(SpoutClient.getInstance().isFlySpeedCheat());
+
 		if (SpoutClient.getInstance().isFlySpeedCheat()) {
 			this.setSliderPosition(Configuration.getFlightSpeedFactor() / 10);
 		} else {
 			this.setSliderPosition(1.0F / 10);
 		}
+
 		setTooltip("飞行速度\n" +
 				"飞行速度有多快。 1X速度默认。");
 	}

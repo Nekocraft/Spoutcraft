@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Random;
 
 public class SoundPool {
-
 	/** The RNG used by SoundPool. */
 	private Random rand = new Random();
 
@@ -77,22 +76,24 @@ public class SoundPool {
 	// Spout Start
 	public SoundPoolEntry getSoundFromSoundPool(String s, int id) {
 		List list = (List)nameToSoundPoolEntriesMapping.get(s);
+
 		if (list == null) {
 			return null;
 		}
+
 		return (SoundPoolEntry)list.get(id);
 	}
 
 	public SoundPoolEntry addCustomSound(String sound, File file) {
 		try {
-			if(!nameToSoundPoolEntriesMapping.containsKey(sound)) {
+			if (!nameToSoundPoolEntriesMapping.containsKey(sound)) {
 				nameToSoundPoolEntriesMapping.put(sound, new ArrayList());
 			}
+
 			SoundPoolEntry soundpoolentry = new SoundPoolEntry(sound, file.toURI().toURL());
 			((List)nameToSoundPoolEntriesMapping.get(sound)).add(soundpoolentry);
 			return soundpoolentry;
-		}
-		catch(MalformedURLException malformedurlexception) {
+		} catch (MalformedURLException malformedurlexception) {
 			return null;
 		}
 	}

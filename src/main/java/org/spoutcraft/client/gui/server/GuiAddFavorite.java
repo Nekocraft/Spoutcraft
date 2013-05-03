@@ -43,8 +43,10 @@ public class GuiAddFavorite extends GuiScreen {
 	public GuiAddFavorite(String server, GuiScreen parent) {
 		String splt[] = server.split(":");
 		int port = ServerItem.DEFAULT_PORT;
+
 		if (splt.length > 0) {
 			server = splt[0];
+
 			if (splt.length > 1) {
 				try {
 					port = Integer.valueOf(splt[1]);
@@ -55,6 +57,7 @@ public class GuiAddFavorite extends GuiScreen {
 		} else {
 			server = "";
 		}
+
 		item = new ServerItem("", server, port, -1);
 		update = false;
 		this.parent = parent;
@@ -69,27 +72,22 @@ public class GuiAddFavorite extends GuiScreen {
 
 	@Override
 	public void initGui() {
-		int top = height / 2 - 101/2;
+		int top = height / 2 - 101 / 2;
 		int left = width / 2 - 250 / 2;
-
 		updateItem();
-
 		labelTitle = new GenericLabel("服务器名称");
 		labelTitle.setHeight(11).setWidth(250).setX(left).setY(top);
 		getScreen().attachWidget("Spoutcraft", labelTitle);
-		top+=13;
-
+		top += 13;
 		textTitle = new TabField();
 		textTitle.setMaximumCharacters(0).setWidth(250).setHeight(20).setX(left).setY(top);
 		textTitle.setText(item.getTitle());
 		getScreen().attachWidget("Spoutcraft", textTitle);
-		top+=25;
-
+		top += 25;
 		labelIp = new GenericLabel("服务器地址");
 		labelIp.setHeight(11).setWidth(250).setX(left).setY(top);
 		getScreen().attachWidget("Spoutcraft", labelIp);
-		top+=13;
-
+		top += 13;
 		textIp = new TabField();
 		textIp.setMaximumCharacters(0);
 		textIp.setWidth(250);
@@ -97,20 +95,16 @@ public class GuiAddFavorite extends GuiScreen {
 		textIp.setX(left).setY(top);
 		getScreen().attachWidget("Spoutcraft", textIp);
 		textIp.setText(item.getIp() + (item.getPort() != ServerItem.DEFAULT_PORT ? ":" + item.getPort() : ""));
-		top+=25;
-
+		top += 25;
 		buttonClear = new GenericButton("清空");
 		buttonClear.setWidth(100).setHeight(20).setX(textIp.getX()).setY(top);
 		getScreen().attachWidget("Spoutcraft", buttonClear);
-
 		buttonDone = new GenericButton("完成");
 		buttonDone.setWidth(200).setHeight(20).setX(width - 205).setY(height - 25);
 		getScreen().attachWidget("Spoutcraft", buttonDone);
-
 		buttonCancel = new GenericButton("取消");
 		buttonCancel.setWidth(200).setHeight(20).setX(width - 205 - 205).setY(height - 25);
 		getScreen().attachWidget("Spoutcraft", buttonCancel);
-
 		updateButtons();
 	}
 
@@ -130,33 +124,39 @@ public class GuiAddFavorite extends GuiScreen {
 					textTitle.setFocus(false);
 					textIp.setFocus(true);
 				}
+
 				return true;
 			}
+
 			return false;
 		}
-
 	}
 
 	@Override
 	protected void buttonClicked(Button btn) {
 		if (btn.equals(buttonDone)) {
 			updateItem();
+
 			if (item.getTitle().isEmpty() || item.getIp().isEmpty()) {
 				SpoutClient.getHandle().displayGuiScreen(parent);
 				return;
 			}
+
 			if (update) {
 				// Update original item
 				toUpdate.update(item);
 			} else {
 				SpoutClient.getInstance().getServerManager().getFavorites().addServer(item);
 			}
+
 			SpoutClient.getInstance().getServerManager().getFavorites().save();
 			SpoutClient.getHandle().displayGuiScreen(parent);
 		}
+
 		if (btn.equals(buttonCancel)) {
 			SpoutClient.getHandle().displayGuiScreen(parent);
 		}
+
 		if (btn == buttonClear) {
 			textTitle.setText("");
 			textIp.setText("");
@@ -175,12 +175,14 @@ public class GuiAddFavorite extends GuiScreen {
 		if (textTitle != null) {
 			item.setTitle(textTitle.getText());
 		}
+
 		if (textIp != null) {
 			String split[] = textIp.getText().split(":");
 			item.setIp(split[0]);
+
 			try {
 				item.setPort(Integer.valueOf(split[1]));
-			} catch(Exception e) {
+			} catch (Exception e) {
 				// Handles both InvalidNumber and OutOfRange exceptions, yay
 				item.setPort(ServerItem.DEFAULT_PORT);
 			}

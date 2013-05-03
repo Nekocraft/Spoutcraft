@@ -25,7 +25,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.TileEntity;
 
-public class TileEntityComparator implements Comparator<TileEntity>{
+public class TileEntityComparator implements Comparator<TileEntity> {
 	private int playerX = MathHelper.floor_double(Minecraft.theMinecraft.thePlayer.posX);
 	private int playerY = MathHelper.floor_double(Minecraft.theMinecraft.thePlayer.posY);
 	private int playerZ = MathHelper.floor_double(Minecraft.theMinecraft.thePlayer.posZ);
@@ -35,7 +35,6 @@ public class TileEntityComparator implements Comparator<TileEntity>{
 		int x1 = (o1.xCoord - playerX) * (o1.xCoord - playerX);
 		int y1 = (o1.yCoord - playerY) * (o1.yCoord - playerY);
 		int z1 = (o1.zCoord - playerZ) * (o1.zCoord - playerZ);
-
 		int x2 = (o2.xCoord - playerX) * (o2.xCoord - playerX);
 		int y2 = (o2.yCoord - playerY) * (o2.yCoord - playerY);
 		int z2 = (o2.zCoord - playerZ) * (o2.zCoord - playerZ);

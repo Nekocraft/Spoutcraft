@@ -35,7 +35,7 @@ public class PacketWaypoint implements SpoutPacket {
 
 	public PacketWaypoint() { }
 
-	public void readData(SpoutInputStream input) throws IOException { 
+	public void readData(SpoutInputStream input) throws IOException {
 		x = input.readDouble();
 		y = input.readDouble();
 		z = input.readDouble();

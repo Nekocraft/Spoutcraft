@@ -1,7 +1,6 @@
 package net.minecraft.src;
 
 public class TileEntitySign extends TileEntity {
-
 	/** An array of four strings storing the lines of text on the sign. */
 	public String[] signText = new String[] {"", "", "", ""};
 
@@ -22,13 +21,16 @@ public class TileEntitySign extends TileEntity {
 		if (text != -1) {
 			return text != 0;
 		}
+
 		text = 0;
+
 		for (int i = 0; i < signText.length; i++) {
 			if (signText[i] != null && !signText[i].isEmpty()) {
 				text = 1;
 				break;
 			}
 		}
+
 		return text != 0;
 	}
 
@@ -62,6 +64,7 @@ public class TileEntitySign extends TileEntity {
 				this.signText[var2] = this.signText[var2].substring(0, 15);
 			}
 		}
+
 		// Spout Start
 		recalculateText();
 		// Spout End

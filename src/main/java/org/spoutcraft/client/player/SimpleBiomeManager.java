@@ -26,8 +26,8 @@ import java.util.List;
 import org.spoutcraft.api.player.BiomeManager;
 
 public class SimpleBiomeManager implements BiomeManager {
-	private HashMap<String,Boolean> changedSnow = new HashMap<String,Boolean>();
-	private HashMap<String,Boolean> changedRain = new HashMap<String,Boolean>();
+	private HashMap<String, Boolean> changedSnow = new HashMap<String, Boolean>();
+	private HashMap<String, Boolean> changedRain = new HashMap<String, Boolean>();
 	private List<String> defaultSnow = new ArrayList<String>();
 	private List<String> defaultRain = new ArrayList<String>();
 
@@ -35,7 +35,6 @@ public class SimpleBiomeManager implements BiomeManager {
 		defaultSnow.add("Tundra");
 		defaultSnow.add("Taiga");
 		defaultSnow.add("Ice Desert");
-
 		defaultRain.add("Desert");
 		defaultRain.add("Ice Desert");
 		defaultRain.add("Hell");
@@ -52,6 +51,7 @@ public class SimpleBiomeManager implements BiomeManager {
 
 	public boolean getSnowChanged(String biome) {
 		boolean bool = false;
+
 		if (changedSnow.containsKey(biome)) {
 			bool = true;
 		}
@@ -61,6 +61,7 @@ public class SimpleBiomeManager implements BiomeManager {
 
 	public boolean getRainChanged(String biome) {
 		boolean bool = false;
+
 		if (changedRain.containsKey(biome)) {
 			bool = true;
 		}
@@ -71,14 +72,12 @@ public class SimpleBiomeManager implements BiomeManager {
 	public boolean getSnowEnabled(String biome) {
 		boolean bool = false;
 		bool = changedSnow.get(biome);
-
 		return bool;
 	}
 
 	public boolean getRainEnabled(String biome) {
 		boolean bool = false;
 		bool = changedRain.get(biome);
-
 		return bool;
 	}
 
@@ -86,13 +85,13 @@ public class SimpleBiomeManager implements BiomeManager {
 		if (defaultSnow.contains(biome)) {
 			changedSnow.put(biome, true);
 		} else {
-			changedSnow.put(biome,false);
+			changedSnow.put(biome, false);
 		}
 
 		if (defaultRain.contains(biome)) {
 			changedRain.put(biome, false);
 		} else {
-			changedRain.put(biome,true);
+			changedRain.put(biome, true);
 		}
 	}
 }

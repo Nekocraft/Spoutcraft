@@ -35,6 +35,7 @@ public class ServerModel extends AbstractListModel {
 		if (row >= 0 && row < getSize()) {
 			return items.get(row);
 		}
+
 		return null;
 	}
 
@@ -53,6 +54,7 @@ public class ServerModel extends AbstractListModel {
 
 	public synchronized void setPolling(boolean poll) {
 		polling = poll;
+
 		if (gui != null) {
 			gui.updateButtons();
 		}

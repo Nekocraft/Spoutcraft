@@ -8,7 +8,6 @@ import java.awt.image.BufferedImage;
 // Spout End
 
 class ThreadDownloadImage extends Thread {
-
 	/** The URL of the image to download. */
 	final String location;
 
@@ -50,11 +49,13 @@ class ThreadDownloadImage extends Thread {
 			} else {
 				// Spout Start
 				BufferedImage image = ImageIO.read(var1.getInputStream());
+
 				if (image != null) {
-				this.imageData.image = this.buffer.parseUserSkin(image);
+					this.imageData.image = this.buffer.parseUserSkin(image);
 				} else {
 					//System.out.println("No image data found for " + location);
 				}
+
 				// Spout End
 			}
 		} catch (Exception var6) {

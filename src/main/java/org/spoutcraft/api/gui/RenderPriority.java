@@ -57,6 +57,7 @@ public enum RenderPriority {
 				return rp;
 			}
 		}
+
 		return null;
 	}
 }

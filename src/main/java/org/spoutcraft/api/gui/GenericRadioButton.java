@@ -71,10 +71,11 @@ public class GenericRadioButton extends GenericButton implements RadioButton {
 
 	public RadioButton setSelected(boolean selected) {
 		if (selected) {
-			for (RadioButton b:getRadiosInGroup()) {
+			for (RadioButton b: getRadiosInGroup()) {
 				b.setSelected(false);
 			}
 		}
+
 		this.selected = selected;
 		return this;
 	}
@@ -90,13 +91,15 @@ public class GenericRadioButton extends GenericButton implements RadioButton {
 
 	public List<RadioButton> getRadiosInGroup() {
 		List<RadioButton> ret = new ArrayList<RadioButton>();
-		for (Widget w:getScreen().getAttachedWidgets()) {
+
+		for (Widget w: getScreen().getAttachedWidgets()) {
 			if (w instanceof RadioButton) {
 				if (((RadioButton)w).getGroup() == group) {
 					ret.add((RadioButton)w);
 				}
 			}
 		}
+
 		return ret;
 	}
 }

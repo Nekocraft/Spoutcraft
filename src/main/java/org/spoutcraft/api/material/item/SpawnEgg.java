@@ -19,7 +19,7 @@
  */
 package org.spoutcraft.api.material.item;
 
-public class SpawnEgg extends GenericItem{
+public class SpawnEgg extends GenericItem {
 	public SpawnEgg(String name, int id, int data) {
 		super(name, id, data);
 	}

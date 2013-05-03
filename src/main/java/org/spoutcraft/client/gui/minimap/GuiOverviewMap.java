@@ -90,7 +90,6 @@ public class GuiOverviewMap extends GuiSpoutScreen {
 		buttonFocus.setTooltip("If a waypoint is in focus, the direction\nto it will be drawn on the minimap.");
 		buttonCloseMenu = new GenericButton("Close");
 		hoverMenu.attachWidgets("Spoutcraft", buttonFocus, buttonWaypoint, buttonCloseMenu, menuTitle);
-
 		setMenuVisible(false);
 		getScreen().attachWidget("Spoutcraft", hoverMenu);
 	}
@@ -99,13 +98,10 @@ public class GuiOverviewMap extends GuiSpoutScreen {
 	protected void layoutWidgets() {
 		title.setX(width / 2 - SpoutClient.getHandle().fontRenderer.getStringWidth(title.getText()) / 2);
 		title.setY(5);
-
 		noRenderLabel.setX(width / 2 - SpoutClient.getHandle().fontRenderer.getStringWidth(noRenderLabel.getText()) / 2);
 		noRenderLabel.setY(height / 2);
-
 		map.setGeometry(0, 0, width, height);
 		map.setPriority(RenderPriority.Highest);
-
 		buttonZoomIn.setGeometry(5, height - 25, 20, 20);
 		buttonZoomOut.setGeometry(25, height - 25, 20, 20);
 		buttonDone.setGeometry(width - 55, height - 25, 50, 20);
@@ -113,7 +109,6 @@ public class GuiOverviewMap extends GuiSpoutScreen {
 		buttonReset.setGeometry(105, height - 25, 75, 20);
 		buttonSave.setGeometry(185, height - 25, 100, 20);
 		buttonDeathpoints.setGeometry(290, height - 25, 75, 20);
-
 		hoverMenu.setGeometry(width / 2 - 320 / 2, height / 2 - 46 / 2, 320, 46);
 		int w = SpoutClient.getHandle().fontRenderer.getStringWidth(menuTitle.getText());
 		menuTitle.setGeometry(320 / 2 - w / 2, 5, w, 11);
@@ -127,47 +122,60 @@ public class GuiOverviewMap extends GuiSpoutScreen {
 		if (btn == buttonDone) {
 			mc.displayGuiScreen(null);
 		}
+
 		if (btn == buttonZoomIn) {
 			map.zoomBy(1.5);
 		}
+
 		if (btn == buttonZoomOut) {
 			map.zoomBy(1.0 / 1.5);
 		}
+
 		if (btn == buttonShowPlayer) {
 			map.showPlayer(500);
 		}
+
 		if (btn == buttonWaypoint) {
-			switch(waypoint_mode) {
+			switch (waypoint_mode) {
 				case WAYPOINT_ADD:
 					int x = coords.getX();
 					int z = coords.getY();
 					SpoutClient.getHandle().displayGuiScreen(new GuiAddWaypoint(this, x, y, z));
 					break;
+
 				case WAYPOINT_EDIT:
 					SpoutClient.getHandle().displayGuiScreen(new GuiAddWaypoint(this, clickedWaypoint));
 					break;
 			}
+
 			setMenuVisible(false);
 		}
+
 		if (btn == buttonCloseMenu) {
 			setMenuVisible(false);
 		}
+
 		if (btn == buttonFocus) {
-			switch(focus_mode) {
+			switch (focus_mode) {
 				case FOCUS_SET:
 					if (clickedWaypoint != null) {
 						MinimapConfig.getInstance().setFocussedWaypoint(clickedWaypoint);
 					}
+
 					break;
+
 				case FOCUS_REMOVE:
 					MinimapConfig.getInstance().setFocussedWaypoint(null);
 					break;
 			}
+
 			setMenuVisible(false);
 		}
+
 		if (btn == buttonReset) {
 			map.reset();
 		}
+
 		if (btn == buttonSave) {
 			if (map.saveToDesktop()) {
 				Label label = new FadingLabel("Saved to Desktop!", 500).setTextColor(new Color(0x7FFF00));
@@ -179,6 +187,7 @@ public class GuiOverviewMap extends GuiSpoutScreen {
 				getScreen().attachWidgets("Spoutcraft", label);
 			}
 		}
+
 		if (btn == buttonDeathpoints) {
 			MinimapConfig.getInstance().setDeathpoints(!MinimapConfig.getInstance().isDeathpoints());
 		}
@@ -191,25 +200,30 @@ public class GuiOverviewMap extends GuiSpoutScreen {
 			dragStartX = x;
 			dragStartY = y;
 		}
+
 		super.mouseClicked(x, y, button);
 	}
 
 	private boolean hitsWidget(int x, int y, Widget ...exclude) {
-		for (Widget widget:getScreen().getAttachedWidgets(true)) {
+		for (Widget widget: getScreen().getAttachedWidgets(true)) {
 			if (isInBoundingRect(widget, x, y)) {
 				if (ArrayUtils.contains(exclude, widget) || !widget.isVisible()) {
 					continue;
 				}
+
 				return true;
 			}
 		}
+
 		return false;
 	}
 
 	private void setMenuVisible(boolean visible) {
 		hoverMenu.setVisible(visible);
-		for (Widget w:hoverMenu.getAttachedWidgets(true)) {
+
+		for (Widget w: hoverMenu.getAttachedWidgets(true)) {
 			w.setVisible(visible);
+
 			if (w instanceof Control) {
 				((Control) w).setEnabled(visible);
 			}
@@ -225,12 +239,14 @@ public class GuiOverviewMap extends GuiSpoutScreen {
 	}
 
 	private Waypoint getClickedWaypoint(int x, int z) {
-		Point clicked = new Point(x,z);
-		for (Waypoint waypoint:MinimapConfig.getInstance().getAllWaypoints(MinimapUtils.getWorldName())) {
-			if (withinManhattanLength(new Point(waypoint.x, waypoint.z), clicked, (float) (2f/map.scale))) {
+		Point clicked = new Point(x, z);
+
+		for (Waypoint waypoint: MinimapConfig.getInstance().getAllWaypoints(MinimapUtils.getWorldName())) {
+			if (withinManhattanLength(new Point(waypoint.x, waypoint.z), clicked, (float)(2f / map.scale))) {
 				return waypoint;
 			}
 		}
+
 		return null;
 	}
 
@@ -242,6 +258,7 @@ public class GuiOverviewMap extends GuiSpoutScreen {
 				coords = map.mapOutsideToCoords(new Point(x, y));
 				clickedWaypoint = getClickedWaypoint(coords.getX(), coords.getY());
 				focus_mode = -1;
+
 				if (withinManhattanLength(map.getPlayerPosition(), coords, 2)) {
 					coords = map.getPlayerPosition();
 					this.y = (int) SpoutClient.getHandle().thePlayer.posY;
@@ -256,8 +273,10 @@ public class GuiOverviewMap extends GuiSpoutScreen {
 					waypoint_mode = WAYPOINT_EDIT;
 					buttonWaypoint.setText("Edit Waypoint");
 				}
+
 				Waypoint waypoint = MinimapConfig.getInstance().getFocussedWaypoint();
 				buttonFocus.setEnabled(true);
+
 				if ((clickedWaypoint == null || clickedWaypoint == waypoint) && waypoint != null) {
 					buttonFocus.setText("Remove Focus");
 					focus_mode = FOCUS_REMOVE;
@@ -269,12 +288,15 @@ public class GuiOverviewMap extends GuiSpoutScreen {
 					buttonFocus.setText("Set Focus");
 					buttonFocus.setEnabled(false);
 				}
+
 				menuTitle.setText(SpoutClient.getInstance().isCoordsCheat() ? "Position (" + coords.getX() + ":" + this.y + ":" + coords.getY() + ")" : "Position not shown");
 			}
+
 			dragging = false;
 			dragStartX = -1;
 			dragStartY = -1;
 		}
+
 		if (dragging || dragStartX != -1) {
 			dragging = true;
 			int mX = (int) map.getScrollPosition(Orientation.HORIZONTAL);
@@ -283,10 +305,10 @@ public class GuiOverviewMap extends GuiSpoutScreen {
 			mY -= y - dragStartY;
 			map.setScrollPosition(Orientation.HORIZONTAL, mX);
 			map.setScrollPosition(Orientation.VERTICAL, mY);
-
 			dragStartX = x;
 			dragStartY = y;
 		}
+
 		super.mouseMovedOrUp(x, y, button);
 	}
 
@@ -296,7 +318,7 @@ public class GuiOverviewMap extends GuiSpoutScreen {
 			map.zoomBy(1.8);
 			map.scrollTo(map.mapOutsideToCoords(new Point(x, y)), true, 200);
 		} else if (scroll < 0) {
-			map.zoomBy(1/1.8);
+			map.zoomBy(1 / 1.8);
 			map.scrollTo(map.mapOutsideToCoords(new Point(x, y)), true, 200);
 		}
 	}
@@ -313,9 +335,11 @@ class FadingLabel extends GenericLabel {
 	public void render() {
 		ticksPassed++;
 		float opacity = 1F - (float)ticksPassed / (float)ticks;
+
 		if (ticksPassed > ticks) {
 			setVisible(false);
 		}
+
 		this.setTextColor(getTextColor().setAlpha(opacity));
 		super.render();
 	}

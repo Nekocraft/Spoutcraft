@@ -27,12 +27,13 @@ public class RenderSpider extends RenderLiving {
 		} else {
 			// Spout Start
 			if (Configuration.isRandomMobTextures()) {
-			// MCPatcher Start
-			this.loadTexture(MobRandomizer.randomTexture((EntityLiving)par1EntitySpider, "/mob/spider_eyes.png"));
-			// MCPatcher End
+				// MCPatcher Start
+				this.loadTexture(MobRandomizer.randomTexture((EntityLiving)par1EntitySpider, "/mob/spider_eyes.png"));
+				// MCPatcher End
 			} else {
 				loadTexture(par1EntitySpider.getCustomTexture(org.spoutcraft.api.entity.EntitySkinType.SPIDER_EYES, "/mob/spider_eyes.png"));
 			}
+
 			// Spout End
 			float var4 = 1.0F;
 			GL11.glEnable(GL11.GL_BLEND);

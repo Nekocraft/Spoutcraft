@@ -39,6 +39,7 @@ public class ClientTexture extends GenericTexture {
 	public void render() {
 		GL11.glTranslatef(getX(), getY(), 0);
 		Texture t = CustomTextureManager.getTextureFromJar(getUrl());
+
 		if (t != null) {
 			MCRenderDelegate d = (MCRenderDelegate) Spoutcraft.getRenderDelegate();
 			d.drawTexture(t, (int) getWidth(), (int) getHeight(), isDrawingAlphaChannel());
@@ -48,10 +49,12 @@ public class ClientTexture extends GenericTexture {
 	@Override
 	public org.spoutcraft.api.gui.Texture setUrl(String url) {
 		Texture t = CustomTextureManager.getTextureFromJar(url);
+
 		if (t != null) {
 			setOriginalHeight(t.getImageHeight());
 			setOriginalWidth(t.getImageWidth());
 		}
+
 		return super.setUrl(url);
 	}
 }

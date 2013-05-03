@@ -29,7 +29,7 @@ import org.spoutcraft.api.material.Material;
 import org.spoutcraft.api.util.Location;
 import org.spoutcraft.api.util.Vector;
 
-public class SpoutOutputStream extends OutputStream{
+public class SpoutOutputStream extends OutputStream {
 	ByteBuffer buffer = ByteBuffer.allocate(1024);
 	public SpoutOutputStream() {
 	}
@@ -71,6 +71,7 @@ public class SpoutOutputStream extends OutputStream{
 		while (buffer.remaining() < b.length) {
 			expand();
 		}
+
 		buffer.put(b);
 	}
 
@@ -79,6 +80,7 @@ public class SpoutOutputStream extends OutputStream{
 		while (buffer.remaining() < b.length) {
 			expand();
 		}
+
 		buffer.put(b, len, off);
 	}
 
@@ -87,6 +89,7 @@ public class SpoutOutputStream extends OutputStream{
 		if (buffer.remaining() < 1) {
 			expand();
 		}
+
 		buffer.put((byte)b);
 	}
 
@@ -94,6 +97,7 @@ public class SpoutOutputStream extends OutputStream{
 		if (buffer.remaining() < 2) {
 			expand();
 		}
+
 		buffer.putShort(s);
 	}
 
@@ -101,6 +105,7 @@ public class SpoutOutputStream extends OutputStream{
 		if (buffer.remaining() < 4) {
 			expand();
 		}
+
 		buffer.putInt(i);
 	}
 
@@ -108,6 +113,7 @@ public class SpoutOutputStream extends OutputStream{
 		if (buffer.remaining() < 8) {
 			expand();
 		}
+
 		buffer.putLong(l);
 	}
 
@@ -115,6 +121,7 @@ public class SpoutOutputStream extends OutputStream{
 		if (buffer.remaining() < 4) {
 			expand();
 		}
+
 		buffer.putFloat(f);
 	}
 
@@ -122,6 +129,7 @@ public class SpoutOutputStream extends OutputStream{
 		if (buffer.remaining() < 8) {
 			expand();
 		}
+
 		buffer.putDouble(d);
 	}
 
@@ -129,6 +137,7 @@ public class SpoutOutputStream extends OutputStream{
 		if (buffer.remaining() < 2) {
 			expand();
 		}
+
 		buffer.putChar(ch);
 	}
 
@@ -136,7 +145,9 @@ public class SpoutOutputStream extends OutputStream{
 		while (buffer.remaining() < (2 + s.length() * 2)) {
 			expand();
 		}
+
 		buffer.putShort((short) s.length());
+
 		for (int i = 0; i < s.length(); i++) {
 			buffer.putChar(s.charAt(i));
 		}

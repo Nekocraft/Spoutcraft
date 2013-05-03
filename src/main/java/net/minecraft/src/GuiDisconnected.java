@@ -7,7 +7,6 @@ import org.spoutcraft.client.SpoutClient;
 // Spout End
 
 public class GuiDisconnected extends GuiScreen {
-
 	/** The error message. */
 	private String errorMessage;
 
@@ -41,6 +40,7 @@ public class GuiDisconnected extends GuiScreen {
 		this.buttonList.clear();
 		// Spout Start
 		this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120 + 12, "Back to " + SpoutClient.getInstance().getServerManager().getJoinedFromName()));
+
 		// Spout End
 		if (this.field_74247_c != null) {
 			this.field_74245_d = this.fontRenderer.listFormattedStringToWidth(var1.translateKeyFormat(this.errorDetail, this.field_74247_c), this.width - 50);

@@ -22,6 +22,7 @@ public class EntitySplashFX extends EntityRainFX {
 			this.particleGreen = ColorizeBlock.waterColor[1];
 			this.particleBlue = ColorizeBlock.waterColor[2];
 		}
+
 		// MCPatcher End
 	}
 }

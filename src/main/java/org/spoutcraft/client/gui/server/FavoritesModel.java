@@ -48,6 +48,7 @@ public class FavoritesModel extends ServerModel {
 
 				try {
 					ArrayList<HashMap<String, Object>> list = (ArrayList<HashMap<String, Object>>) yaml.load(new FileReader(getFile()));
+
 					for (HashMap<String, Object> item : list) {
 						String title = "";
 						String ip = "";
@@ -55,18 +56,23 @@ public class FavoritesModel extends ServerModel {
 						int port = ServerItem.DEFAULT_PORT;
 						int databaseId = -1;
 						Boolean acceptsTextures = null;
+
 						if (item.containsKey("title")) {
 							title = (String) item.get("title");
 						}
+
 						if (item.containsKey("ip")) {
 							ip = (String) item.get("ip");
 						}
+
 						if (item.containsKey("port")) {
 							port = (Integer) item.get("port");
 						}
+
 						if (item.containsKey("databaseid")) {
 							databaseId = (Integer) item.get("databaseid");
 						}
+
 						if (item.containsKey("acceptsTextures")) {
 							acceptsTextures = (Boolean) item.get("acceptsTextures");
 						}
@@ -88,18 +94,23 @@ public class FavoritesModel extends ServerModel {
 
 	private void importLegacyTXT() {
 		File favorites = new File(FileUtil.getCacheDir(), "favorites.txt");
+
 		if (favorites.exists()) {
 			FileReader reader;
+
 			try {
 				reader = new FileReader(favorites);
-
 				BufferedReader buffer = new BufferedReader(reader);
+
 				while (true) {
 					String line = buffer.readLine();
+
 					if (line == null) {
 						break;
 					}
+
 					String args[] = line.split(">");
+
 					if (args.length == 2) {
 						String title = args[0];
 						String split[] = args[1].split(":");
@@ -107,6 +118,7 @@ public class FavoritesModel extends ServerModel {
 						int port = split.length > 1 ? Integer.parseInt(split[1]) : ServerItem.DEFAULT_PORT;
 						addServer(title, ip, port);
 					}
+
 					if (args.length == 3) {
 						String title = args[1];
 						String split[] = args[0].split(":");
@@ -116,6 +128,7 @@ public class FavoritesModel extends ServerModel {
 						addServer(title, ip, port, databaseId);
 					}
 				}
+
 				buffer.close();
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
@@ -131,12 +144,12 @@ public class FavoritesModel extends ServerModel {
 
 	private void importVanilla() {
 		// TODO Auto-generated method stub
-
 	}
 
 	public void save() {
 		Yaml yaml = new Yaml();
 		ArrayList<Object> list = new ArrayList<Object>();
+
 		for (ServerItem item : items) {
 			HashMap<String, Object> data = new HashMap<String, Object>();
 			data.put("title", item.getTitle());
@@ -145,11 +158,14 @@ public class FavoritesModel extends ServerModel {
 			data.put("databaseid", item.getDatabaseId());
 			data.put("country", item.getCountry());
 			item.showPing = true;
+
 			if (item.getAcceptsTextures() != null) {
 				data.put("acceptsTextures", item.getAcceptsTextures().booleanValue());
 			}
+
 			list.add(data);
 		}
+
 		try {
 			yaml.dump(list, new FileWriter(getFile()));
 		} catch (IOException e) {
@@ -166,6 +182,7 @@ public class FavoritesModel extends ServerModel {
 		item.poll();
 		items.add(item);
 		sizeChanged();
+
 		if (gui != null) {
 			gui.updateButtons();
 		}
@@ -177,6 +194,7 @@ public class FavoritesModel extends ServerModel {
 		item.poll();
 		items.add(item);
 		sizeChanged();
+
 		if (gui != null) {
 			gui.updateButtons();
 		}
@@ -185,12 +203,15 @@ public class FavoritesModel extends ServerModel {
 	public void addServer(String title, String ip, int port, int databaseId, Boolean acceptsTextures) {
 		ServerItem item = new ServerItem(title, ip, port, databaseId);
 		item.setShowPing(true);
+
 		if (acceptsTextures != null) {
 			item.setAcceptsTextures(acceptsTextures);
 		}
+
 		item.poll();
 		items.add(item);
 		sizeChanged();
+
 		if (gui != null) {
 			gui.updateButtons();
 		}
@@ -199,13 +220,16 @@ public class FavoritesModel extends ServerModel {
 	public void addServer(String title, String ip, int port, int databaseId, Boolean acceptsTextures, String country) {
 		ServerItem item = new ServerItem(title, ip, port, databaseId);
 		item.setShowPing(true);
+
 		if (acceptsTextures != null) {
 			item.setAcceptsTextures(acceptsTextures);
 		}
+
 		item.poll();
 		item.country = country;
 		items.add(item);
 		sizeChanged();
+
 		if (gui != null) {
 			gui.updateButtons();
 		}
@@ -235,6 +259,7 @@ public class FavoritesModel extends ServerModel {
 				return true;
 			}
 		}
+
 		return false;
 	}
 }

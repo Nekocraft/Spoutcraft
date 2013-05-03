@@ -24,7 +24,7 @@ import org.spoutcraft.api.util.FixedLocation;
 import org.spoutcraft.api.util.Location;
 import org.spoutcraft.api.util.Vector;
 
-public class CraftCameraEntity extends CraftEntity  {
+public class CraftCameraEntity extends CraftEntity {
 	public CraftCameraEntity(FixedLocation location) {
 		super(location);
 		handle = new EntityCamera(this);

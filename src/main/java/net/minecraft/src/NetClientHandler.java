@@ -35,7 +35,6 @@ import org.spoutcraft.client.util.NetworkUtils;
 // Spout End
 
 public class NetClientHandler extends NetHandler {
-
 	/** True if kicked or disconnected from the server. */
 	private boolean disconnected = false;
 
@@ -82,14 +81,14 @@ public class NetClientHandler extends NetHandler {
 		this.field_98183_l = par4GuiScreen;
 		// Spout Start
 		InetSocketAddress address = NetworkUtils.resolve(par2Str, par3);
+
 		if (address.isUnresolved()) {
 			throw new UnknownHostException(address.getHostName());
 		}
-		this.netManager = new TcpConnection(par1Minecraft.getLogAgent(), new Socket(address.getAddress(), address.getPort()), "Client", this);
 
+		this.netManager = new TcpConnection(par1Minecraft.getLogAgent(), new Socket(address.getAddress(), address.getPort()), "Client", this);
 		org.spoutcraft.client.gui.error.GuiConnectionLost.lastServerIp = par2Str;
 		org.spoutcraft.client.gui.error.GuiConnectionLost.lastServerPort = par3;
-
 		ClientPlayer.getInstance().resetMainScreen();
 		SpoutClient.getInstance().setSpoutActive(false);
 		// Spout End
@@ -111,7 +110,6 @@ public class NetClientHandler extends NetHandler {
 
 		this.netManager = null;
 		this.worldClient = null;
-
 		// Spout Start
 		ClientPlayer.getInstance().resetMainScreen();
 		SpoutClient.getInstance().setSpoutActive(false);
@@ -136,6 +134,7 @@ public class NetClientHandler extends NetHandler {
 				mc.displayGuiScreen(null, false);
 			}
 		}
+
 		// Spout End
 	}
 
@@ -163,7 +162,7 @@ public class NetClientHandler extends NetHandler {
 	private String sendSessionRequest(String par1Str, String par2Str, String par3Str) {
 		try {
 			// Start of Nekocraft-patched Code
-			URL var4 = new URL(MySkinConfig.getLoginUrl(urlEncode(par1Str),urlEncode(par2Str),urlEncode(par3Str)));
+			URL var4 = new URL(MySkinConfig.getLoginUrl(urlEncode(par1Str), urlEncode(par2Str), urlEncode(par3Str)));
 			// End of Nekocraft-patched Code
 			BufferedReader var5 = new BufferedReader(new InputStreamReader(var4.openStream()));
 			String var6 = var5.readLine();
@@ -192,10 +191,12 @@ public class NetClientHandler extends NetHandler {
 		this.worldClient.isRemote = true;
 		this.mc.loadWorld(this.worldClient);
 		this.mc.thePlayer.dimension = par1Packet1Login.dimension;
+
 		// Spout Start
-		if (!(this.mc.currentScreen instanceof GuiPrecache)) { 
-		this.mc.displayGuiScreen(new GuiDownloadTerrain(this));
+		if (!(this.mc.currentScreen instanceof GuiPrecache)) {
+			this.mc.displayGuiScreen(new GuiDownloadTerrain(this));
 		}
+
 		//this.mc.displayGuiScreen(new org.spoutcraft.client.gui.precache.GuiPrecache());
 		System.out.println("Starting cache manager... " + System.currentTimeMillis());
 		// Spout End
@@ -391,10 +392,12 @@ public class NetClientHandler extends NetHandler {
 		if (var12 != null) {
 			var10.getDataWatcher().updateWatchedObjectsFromList(var12);
 		}
+
 		// Spout Start - Set the entity's title
 		if (var10.worldObj.customTitles.containsKey(var10.entityId)) {
 			((org.spoutcraft.client.entity.CraftLivingEntity)SpoutClient.getInstance().getEntityFromId(var10.entityId).spoutEnty).setTitle(var10.worldObj.customTitles.get(var10.entityId));
 		}
+
 		// Spout End
 	}
 
@@ -498,6 +501,7 @@ public class NetClientHandler extends NetHandler {
 					return;
 				}
 			}
+
 			// Spout End
 			this.mc.displayGuiScreen((GuiScreen)null);
 		}
@@ -537,9 +541,11 @@ public class NetClientHandler extends NetHandler {
 			kick("Cache Error - Corrupt File Deleted");
 			return;
 		}
+
 		if (worldClient == null) {
 			return;
 		}
+
 		// Spout End
 		if (par1Packet51MapChunk.includeInitialize) {
 			if (par1Packet51MapChunk.yChMin == 0) {
@@ -565,8 +571,9 @@ public class NetClientHandler extends NetHandler {
 			if (!par1Packet51MapChunk.includeInitialize || !(this.worldClient.provider instanceof WorldProviderSurface)) {
 				// Spout Start
 				if (Configuration.isClientLight()) {
-				var2.resetRelightChecks();
+					var2.resetRelightChecks();
 				}
+
 				// Spout End
 			}
 		}
@@ -581,6 +588,7 @@ public class NetClientHandler extends NetHandler {
 		if (this.mc.thePlayer != null) {
 			this.mc.thePlayer.closeScreen(); // Close the active screen first!
 		}
+
 		this.netManager.networkShutdown("disconnect.kicked", new Object[0]);
 		this.disconnected = true;
 		this.mc.loadWorld((WorldClient)null);
@@ -598,6 +606,7 @@ public class NetClientHandler extends NetHandler {
 			this.mc.loadWorld((WorldClient)null);
 			// Spout Start
 			System.out.println(par1Str);
+
 			if (par1Str != null && par1Str.toLowerCase().contains("endofstream")) {
 				this.mc.displayGuiScreen(new org.spoutcraft.client.gui.error.GuiConnectionLost());
 			} else if (par2ArrayOfObj == null || par2ArrayOfObj.length == 0 || !(par2ArrayOfObj[0] instanceof String)) {
@@ -611,6 +620,7 @@ public class NetClientHandler extends NetHandler {
 			} else {
 				this.mc.displayGuiScreen(new GuiDisconnected(null, "disconnect.lost", par1Str, par2ArrayOfObj));
 			}
+
 			// Spout End
 		}
 	}
@@ -732,10 +742,12 @@ public class NetClientHandler extends NetHandler {
 		if (var14 != null) {
 			var10.getDataWatcher().updateWatchedObjectsFromList(var14);
 		}
+
 		// Spout Start - Set the entity's title
 		if (var10.worldObj.customTitles.containsKey(var10.entityId)) {
 			((org.spoutcraft.client.entity.CraftLivingEntity)SpoutClient.getInstance().getEntityFromId(var10.entityId).spoutEnty).setTitle(var10.worldObj.customTitles.get(var10.entityId));
 		}
+
 		// Spout End
 	}
 
@@ -1264,8 +1276,9 @@ public class NetClientHandler extends NetHandler {
 				} else if (this.mc.texturePackList.func_77300_f()) {
 					// Spout Start
 					if (Configuration.isServerTexturePromptsEnabled()) {
-					this.mc.displayGuiScreen(new GuiYesNo(new NetClientWebTextures(this, var3), StringTranslate.getInstance().translateKey("multiplayer.texturePrompt.line1"), StringTranslate.getInstance().translateKey("multiplayer.texturePrompt.line2"), 0));
+						this.mc.displayGuiScreen(new GuiYesNo(new NetClientWebTextures(this, var3), StringTranslate.getInstance().translateKey("multiplayer.texturePrompt.line1"), StringTranslate.getInstance().translateKey("multiplayer.texturePrompt.line2"), 0));
 					}
+
 					// Spout End
 				}
 			}

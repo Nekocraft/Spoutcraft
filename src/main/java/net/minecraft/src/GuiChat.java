@@ -271,33 +271,42 @@ public class GuiChat extends GuiScreen {
 	public void drawScreen(int par1, int par2, float par3) {
 		drawRect(2, this.height - 14, this.width - 2, this.height - 2, Integer.MIN_VALUE);
 		this.inputField.drawTextBox();
+
 		// Spout Start
 		if (Configuration.isShowingChatColorAssist()) {
-			for(int c = 0; c < 16; c++) {
+			for (int c = 0; c < 16; c++) {
 				ChatColor value = ChatColor.getByCode(c);
 				String name = value.name().toLowerCase();
 				boolean lastUnderscore = true;
 				String parsedName = "";
-				for(int chr = 0; chr < name.length(); chr++) {
+
+				for (int chr = 0; chr < name.length(); chr++) {
 					char ch = name.charAt(chr);
-					if(lastUnderscore) {
+
+					if (lastUnderscore) {
 						ch = Character.toUpperCase(ch);
 					}
-					if(ch == '_') {
+
+					if (ch == '_') {
 						lastUnderscore = true;
 						ch = ' ';
 					} else {
 						lastUnderscore = false;
 					}
+
 					parsedName += ch;
 				}
-				char code = (char) ('0' + c);
-				if(c >= 10) {
-					code = (char) ('a' + c - 10);
+
+				char code = (char)('0' + c);
+
+				if (c >= 10) {
+					code = (char)('a' + c - 10);
 				}
+
 				fontRenderer.drawStringWithShadow("&" + code + " - " + value + parsedName, width - 90, 70 + c * 10, 0xffffffff);
 			}
 		}
+
 		// Spout End
 		super.drawScreen(par1, par2, par3);
 	}

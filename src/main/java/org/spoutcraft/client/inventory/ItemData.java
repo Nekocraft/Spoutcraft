@@ -24,7 +24,7 @@ import java.util.HashMap;
 public class ItemData {
 	public final int id;
 	public final short data;
-	private static final HashMap<Integer, HashMap<Integer, ItemData>> itemDatas= new HashMap<Integer, HashMap<Integer, ItemData>>();
+	private static final HashMap<Integer, HashMap<Integer, ItemData>> itemDatas = new HashMap<Integer, HashMap<Integer, ItemData>>();
 	protected ItemData(int id) {
 		this.id = id;
 		this.data = 0;
@@ -41,6 +41,7 @@ public class ItemData {
 			ItemData temp = (ItemData)obj;
 			return temp.id == id && temp.data == data;
 		}
+
 		return false;
 	}
 
@@ -55,15 +56,19 @@ public class ItemData {
 
 	public static ItemData getItemData(int id, int data) {
 		HashMap<Integer, ItemData> itemDatasForId = itemDatas.get(id);
+
 		if (itemDatasForId == null) {
 			itemDatasForId = new HashMap<Integer, ItemData>();
 			itemDatas.put(id, itemDatasForId);
 		}
+
 		ItemData itemData = itemDatasForId.get(data);
+
 		if (itemData == null) {
 			itemData = new ItemData(id, data);
 			itemDatasForId.put(data, itemData);
 		}
+
 		return itemData;
 	}
 }

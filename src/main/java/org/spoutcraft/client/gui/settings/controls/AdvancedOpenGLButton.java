@@ -31,19 +31,27 @@ public class AdvancedOpenGLButton extends AutomatedButton {
 	@Override
 	public String getText() {
 		switch (Configuration.getAdvancedOpenGL()) {
-			case 0: return "高级 OpenGL: 关";
-			case 1: return "高级 OpenGL: 速度优先";
-			case 2: return "高级 OpenGL: 高级";
+			case 0:
+				return "高级 OpenGL: 关";
+
+			case 1:
+				return "高级 OpenGL: 速度优先";
+
+			case 2:
+				return "高级 OpenGL: 高级";
 		}
+
 		return "未知选项: " + Configuration.getAdvancedOpenGL();
 	}
 
 	@Override
 	public void onButtonClick() {
 		Configuration.setAdvancedOpenGL(Configuration.getAdvancedOpenGL() + 1);
+
 		if (Configuration.getAdvancedOpenGL() > 2) {
 			Configuration.setAdvancedOpenGL(0);
 		}
+
 		Configuration.write();
 		Minecraft.theMinecraft.gameSettings.advancedOpengl = Configuration.getAdvancedOpenGL() != 0;
 		Minecraft.theMinecraft.renderGlobal.setAllRenderesVisible();

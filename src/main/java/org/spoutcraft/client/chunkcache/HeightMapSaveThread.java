@@ -30,6 +30,7 @@ public class HeightMapSaveThread extends Thread {
 		synchronized (saveQueue) {
 			saveQueue.add(heightMap);
 		}
+
 		if (!running) {
 			start();
 		}
@@ -38,11 +39,13 @@ public class HeightMapSaveThread extends Thread {
 	@Override
 	public void run() {
 		running = true;
+
 		synchronized (saveQueue) {
 			while (!saveQueue.isEmpty()) {
 				saveQueue.poll().save();
 			}
 		}
+
 		running = false;
 	}
 }

@@ -117,11 +117,12 @@ public class SpoutClient extends PropertyObject implements Client {
 
 	private SpoutClient() {
 		instance = this;
+
 		if (!Thread.currentThread().getName().equals("Minecraft main thread")) {
 			throw new SecurityException("Main thread name mismatch");
 		}
-		//System.setSecurityManager(securityManager);
 
+		//System.setSecurityManager(securityManager);
 		((SimpleKeyBindingManager)bindingManager).load();
 		serverManager.init();
 		Log.setVerbose(false);
@@ -154,13 +155,14 @@ public class SpoutClient extends PropertyObject implements Client {
 	}
 
 	public static SpoutClient getInstance() {
-		int mb = 1024*1024;
+		int mb = 1024 * 1024;
 
 		if (instance == null) {
 			new SpoutClient();
 			Spoutcraft.setClient(instance);
 			System.out.println("Available Memory: " + Runtime.getRuntime().maxMemory() / mb + " mb");
 		}
+
 		return instance;
 	}
 
@@ -200,6 +202,7 @@ public class SpoutClient extends PropertyObject implements Client {
 		if (getHandle() == null) {
 			return null;
 		}
+
 		return getHandle().theWorld;
 	}
 
@@ -360,7 +363,7 @@ public class SpoutClient extends PropertyObject implements Client {
 		if (isForceClearWater()) {
 			if (isShowClearWater()) {
 				Configuration.setClearWater(true);
-			} else { 
+			} else {
 				Configuration.setClearWater(false);
 			}
 		}
@@ -410,25 +413,33 @@ public class SpoutClient extends PropertyObject implements Client {
 		getHandle().mcProfiler.endStartSection("mipmapping");
 		MipMapUtils.onTick();
 		getHandle().mcProfiler.endStartSection("special_effects");
+
 		if (Minecraft.theMinecraft.theWorld != null) {
 			Minecraft.theMinecraft.theWorld.doColorfulStuff();
 			inWorldTicks++;
 		}
+
 		getHandle().mcProfiler.endStartSection("entity_info");
+
 		if (isSpoutEnabled()) {
 			LinkedList<CraftEntity> processed = new LinkedList<CraftEntity>();
 			Iterator<Entity> i = Entity.toProcess.iterator();
+
 			while (i.hasNext()) {
 				Entity next = i.next();
+
 				if (next.spoutEnty != null) {
 					processed.add((CraftEntity) next.spoutEnty);
 				}
 			}
+
 			Entity.toProcess.clear();
+
 			if (processed.size() > 0) {
 				getPacketManager().sendSpoutPacket(new PacketEntityInformation(processed));
 			}
 		}
+
 		getHandle().mcProfiler.endSection();
 	}
 
@@ -444,10 +455,12 @@ public class SpoutClient extends PropertyObject implements Client {
 		FileUtil.deleteTempDirectory();
 		CustomTextureManager.resetTextures();
 		CRCManager.clear();
+
 		if (clipboardThread != null) {
 			clipboardThread.interrupt();
 			clipboardThread = null;
 		}
+
 		Minecraft.theMinecraft.sndManager.stopMusic();
 		PacketDecompressionThread.endThread();
 		MaterialData.reset();
@@ -464,6 +477,7 @@ public class SpoutClient extends PropertyObject implements Client {
 			player.setPlayer(getHandle().thePlayer);
 			getHandle().thePlayer.spoutEnty = player;
 		}
+
 		if (player.getHandle() instanceof EntityClientPlayerMP && isSpoutEnabled()) {
 			clipboardThread = new ClipboardThread((EntityClientPlayerMP)player.getHandle());
 			clipboardThread.start();
@@ -471,6 +485,7 @@ public class SpoutClient extends PropertyObject implements Client {
 			clipboardThread.interrupt();
 			clipboardThread = null;
 		}
+
 		PacketDecompressionThread.startThread();
 		MipMapUtils.initializeMipMaps();
 		MipMapUtils.update();
@@ -487,11 +502,14 @@ public class SpoutClient extends PropertyObject implements Client {
 		if (getHandle().thePlayer.entityId == id) {
 			return getHandle().thePlayer;
 		}
+
 		WorldClient world = (WorldClient)getHandle().theWorld;
 		Entity e = world.getEntityByID(id);
+
 		if (e instanceof EntityPlayer) {
 			return (EntityPlayer) e;
 		}
+
 		return null;
 	}
 
@@ -499,6 +517,7 @@ public class SpoutClient extends PropertyObject implements Client {
 		if (getHandle().thePlayer.entityId == id) {
 			return getHandle().thePlayer;
 		}
+
 		WorldClient world = (WorldClient)getHandle().theWorld;
 		return world.getEntityByID(id);
 	}
@@ -582,6 +601,7 @@ public class SpoutClient extends PropertyObject implements Client {
 	@Override
 	public boolean hasPermission(String node) {
 		Boolean allow = permissions.get(node);
+
 		if (allow != null) {
 			return allow;
 		} else {

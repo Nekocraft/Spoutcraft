@@ -33,15 +33,18 @@ public class RenderTexture extends RenderEntity {
 	@Override
 	public void doRender(Entity entity, double x, double y, double z, float yaw, float pitch) {
 		EntityTexture entityT = (EntityTexture) entity;
+
 		if (entityT.texture == null) {
 			entityT.texture = CustomTextureManager.getTextureFromUrl(entityT.getUrl());
+
 			if (entityT.texture == null) {
 				return;
 			}
 		}
+
 		GL11.glPushMatrix();
 		RenderHelper.disableStandardItemLighting();
-		yaw = entityT.isRotateWithPlayer()?-this.renderManager.playerViewY:yaw;
+		yaw = entityT.isRotateWithPlayer() ? -this.renderManager.playerViewY : yaw;
 		GL11.glTranslated(x, y, z);
 		GL11.glRotatef(yaw, 0, 1.0F, 0);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -50,10 +53,10 @@ public class RenderTexture extends RenderEntity {
 		tessellator.startDrawingQuads();
 		double h = entityT.height * 0.014;
 		double w = entityT.width * 0.014;
-		tessellator.addVertexWithUV(w/2, -h/2, 0, 0.0D, 0.0D); // Draw corners
-		tessellator.addVertexWithUV(-w/2, -h/2, 0, entityT.texture.getWidth(), 0.0D);
-		tessellator.addVertexWithUV(-w/2, h/2, 0, entityT.texture.getWidth(), entityT.texture.getHeight());
-		tessellator.addVertexWithUV(w/2, h/2, 0, 0.0D, entityT.texture.getHeight());
+		tessellator.addVertexWithUV(w / 2, -h / 2, 0, 0.0D, 0.0D); // Draw corners
+		tessellator.addVertexWithUV(-w / 2, -h / 2, 0, entityT.texture.getWidth(), 0.0D);
+		tessellator.addVertexWithUV(-w / 2, h / 2, 0, entityT.texture.getWidth(), entityT.texture.getHeight());
+		tessellator.addVertexWithUV(w / 2, h / 2, 0, 0.0D, entityT.texture.getHeight());
 		tessellator.draw();
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		RenderHelper.enableStandardItemLighting();

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 // Spout Start
-import net.minecraft.src.NBTTagList;
 import org.spoutcraft.client.config.Configuration;
 import org.spoutcraft.client.inventory.InventoryUtil;
 // Spout End
@@ -124,8 +123,8 @@ public class ItemStack {
 		if (var10 && stackSize == 0 && getItem() instanceof ItemBlock && Configuration.isReplaceBlocks()) {
 			InventoryUtil.replaceItem(this.itemID, getItem().getMetadata(this.getItemDamage()));
 		}
-		// Spout End
 
+		// Spout End
 		return var10;
 	}
 
@@ -295,6 +294,7 @@ public class ItemStack {
 					if (stackSize == 0 && Configuration.isReplaceTools()) {
 						InventoryUtil.replaceItem(this.itemID, -1);
 					}
+
 					// Spout End
 				}
 			}
@@ -439,27 +439,33 @@ public class ItemStack {
 	}
 
 	public NBTTagList getEnchantmentTagList() {
-	// Spout Start
+		// Spout Start
 		NBTTagList list = getAllEnchantmentTagList();
+
 		if (list == null) {
 			return null;
 		}
+
 		list = (NBTTagList) list.copy();
+
 		for (int i = 0; i < list.tagCount(); i++) {
 			NBTBase tag = list.tagAt(i);
+
 			if (tag instanceof NBTTagCompound) {
 				NBTTagCompound ench = (NBTTagCompound) tag;
 				short id = ench.getShort("id");
+
 				if (id > 200) {
 					list.tagList.remove(ench);
 				}
 			}
 		}
+
 		return list;
 	}
 
 	public NBTTagList getAllEnchantmentTagList() {
-	// Spout End
+		// Spout End
 		return this.stackTagCompound == null ? null : (NBTTagList)this.stackTagCompound.getTag("ench");
 	}
 

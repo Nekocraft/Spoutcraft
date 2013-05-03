@@ -39,11 +39,19 @@ public class PerformanceButton extends AutomatedButton {
 	@Override
 	public String getText() {
 		switch (Configuration.getPerformance()) {
-			case 0: return "性能: 最大 FPS";
-			case 1: return "性能: 平衡";
-			case 2: return "性能: 节能";
-			case 3: return "性能: 显示器";
+			case 0:
+				return "性能: 最大 FPS";
+
+			case 1:
+				return "性能: 平衡";
+
+			case 2:
+				return "性能: 节能";
+
+			case 3:
+				return "性能: 显示器";
 		}
+
 		return "未知选项: " + Configuration.getPerformance();
 	}
 

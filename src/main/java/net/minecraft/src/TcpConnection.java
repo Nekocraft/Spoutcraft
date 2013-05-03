@@ -131,7 +131,6 @@ public class TcpConnection implements INetworkManager {
 		// Spout Start
 		ChunkNetCache.reset();
 		// Spout End
-
 		this.socketInputStream = new DataInputStream(par2Socket.getInputStream());
 		this.socketOutputStream = new DataOutputStream(new BufferedOutputStream(par2Socket.getOutputStream(), 5120));
 		this.readThread = new TcpReaderThread(this, par3Str + " read thread");
@@ -184,7 +183,6 @@ public class TcpConnection implements INetworkManager {
 
 				if (var2 != null) {
 					Packet.writePacket(var2, this.socketOutputStream);
-
 					// Spout Start
 					ChunkNetCache.totalPacketUp.addAndGet(var2.getPacketSize());
 					// Spout End
@@ -291,6 +289,7 @@ public class TcpConnection implements INetworkManager {
 			if (this.isTerminating) {
 				return false;
 			}
+
 			// Spout End
 			Packet var2 = Packet.readPacket(this.field_98215_i, this.socketInputStream, this.theNetHandler.isServerHandler(), this.networkSocket);
 

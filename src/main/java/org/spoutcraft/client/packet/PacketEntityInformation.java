@@ -46,18 +46,22 @@ public class PacketEntityInformation implements CompressablePacket {
 
 	public PacketEntityInformation(List<CraftEntity> entities) {
 		ByteBuffer tempbuffer = ByteBuffer.allocate(entities.size() * 4);
+
 		for (CraftEntity e : entities) {
 			tempbuffer.putInt(e.getEntityId());
 		}
+
 		data = tempbuffer.array();
 	}
 
 	public void readData(SpoutInputStream input) throws IOException {
 		int size = input.readInt();
+
 		if (size > 0) {
 			data = new byte[size];
 			input.read(data);
 		}
+
 		compressed = input.readBoolean();
 	}
 
@@ -68,6 +72,7 @@ public class PacketEntityInformation implements CompressablePacket {
 		} else {
 			output.writeInt(0);
 		}
+
 		output.writeBoolean(compressed);
 	}
 
@@ -75,13 +80,14 @@ public class PacketEntityInformation implements CompressablePacket {
 		if (Minecraft.theMinecraft.theWorld instanceof WorldClient) {
 			ByteBuffer rawData = ByteBuffer.allocate(data.length);
 			rawData.put(data);
+
 			for (int i = 0; i < data.length / 20; i++) {
 				int index = i * 20;
 				long lsb = rawData.getLong(index);
 				long msb = rawData.getLong(index + 8);
 				int id = rawData.getInt(index + 16);
-
 				net.minecraft.src.Entity e = SpoutClient.getInstance().getEntityFromId(id);
+
 				if (e != null) {
 					e.uniqueId = new UUID(msb, lsb);
 				}
@@ -109,18 +115,21 @@ public class PacketEntityInformation implements CompressablePacket {
 				deflater.finish();
 				ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length);
 				byte[] buffer = new byte[1024];
-				while (!deflater.finished())
-				{
+
+				while (!deflater.finished()) {
 					int bytesCompressed = deflater.deflate(buffer);
 					bos.write(buffer, 0, bytesCompressed);
 				}
+
 				try {
 					bos.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+
 				data = bos.toByteArray();
 			}
+
 			compressed = true;
 		}
 	}
@@ -129,10 +138,9 @@ public class PacketEntityInformation implements CompressablePacket {
 		if (compressed) {
 			Inflater decompressor = new Inflater();
 			decompressor.setInput(data);
-
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(data.length);
-
 			byte[] buf = new byte[1024];
+
 			while (!decompressor.finished()) {
 				try {
 					int count = decompressor.inflate(buf);
@@ -140,6 +148,7 @@ public class PacketEntityInformation implements CompressablePacket {
 				} catch (DataFormatException e) {
 				}
 			}
+
 			try {
 				bos.close();
 			} catch (IOException e) {

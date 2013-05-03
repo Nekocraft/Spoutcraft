@@ -15,7 +15,6 @@ import org.spoutcraft.client.special.VIP;
 // Spout End
 
 public abstract class EntityPlayer extends EntityLiving implements ICommandSender {
-
 	/** Inventory of the player */
 	public InventoryPlayer inventory = new InventoryPlayer(this);
 	private InventoryEnderChest theInventoryEnderChest = new InventoryEnderChest();
@@ -397,14 +396,17 @@ public abstract class EntityPlayer extends EntityLiving implements ICommandSende
 		String tempName = ChatColor.stripColor(username);
 		VIP vip = Resources.getVIP(tempName);
 		playerCloakUrl = cloak;
+
 		if (vip != null && vip.getCape() != null) {
 			playerCloakUrl = vip.getCape();
 		} else {
 			Holiday holiday = Resources.getHoliday();
+
 			if (holiday != null && holiday.getCape() != null) {
 				playerCloakUrl = holiday.getCape();
 			}
 		}
+
 		this.cloakUrl = this.playerCloakUrl;
 	}
 	// Spout End
@@ -484,7 +486,7 @@ public abstract class EntityPlayer extends EntityLiving implements ICommandSende
 
 		// Spout Start - No sprinting while moving backwards
 		if (this.isSprinting() && this.movementInput.moveForward >= 0F) {
-		// Spout End
+			// Spout End
 			this.landMovementFactor = (float)((double)this.landMovementFactor + (double)this.capabilities.getWalkSpeed() * 0.3D);
 			this.jumpMovementFactor = (float)((double)this.jumpMovementFactor + (double)this.speedInAir * 0.3D);
 		}
@@ -916,7 +918,7 @@ public abstract class EntityPlayer extends EntityLiving implements ICommandSende
 	 */
 	// Spout Start - protected to public
 	public void damageEntity(DamageSource par1DamageSource, int par2) {
-	// Spout End
+		// Spout End
 		if (!this.isEntityInvulnerable()) {
 			if (!par1DamageSource.isUnblockable() && this.isBlocking()) {
 				par2 = 1 + par2 >> 1;
@@ -1440,10 +1442,12 @@ public abstract class EntityPlayer extends EntityLiving implements ICommandSende
 			double var9 = this.motionY;
 			float var11 = this.jumpMovementFactor;
 			this.jumpMovementFactor = this.capabilities.getFlySpeed();
+
 			// Spout Start
 			if (SpoutClient.getInstance().isFlySpeedCheat()) {
 				jumpMovementFactor *= Configuration.getFlightSpeedFactor();
 			}
+
 			// Spout End
 			super.moveEntityWithHeading(par1, par2);
 			this.motionY = var9 * 0.6D;
@@ -1800,9 +1804,11 @@ public abstract class EntityPlayer extends EntityLiving implements ICommandSende
 		if (isSneaking()) {
 			return;
 		}
+
 		if (Minecraft.theMinecraft.isGamePaused) {
 			return;
 		}
+
 		if (Minecraft.theMinecraft.thePlayer.getDistanceSqToEntity(this) > 16) {
 			return;
 		}

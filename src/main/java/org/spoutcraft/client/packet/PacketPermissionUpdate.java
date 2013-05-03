@@ -29,7 +29,7 @@ import org.spoutcraft.api.io.SpoutOutputStream;
 import org.spoutcraft.client.SpoutClient;
 
 public class PacketPermissionUpdate implements SpoutPacket {
-private Map<String, Boolean> permissions;
+	private Map<String, Boolean> permissions;
 
 	public PacketPermissionUpdate() {
 		permissions = new HashMap<String, Boolean>();
@@ -42,7 +42,8 @@ private Map<String, Boolean> permissions;
 	@Override
 	public void writeData(SpoutOutputStream output) throws IOException {
 		output.writeInt(permissions.size());
-		for (Entry<String, Boolean> perm:permissions.entrySet()) {
+
+		for (Entry<String, Boolean> perm: permissions.entrySet()) {
 			output.writeString(perm.getKey());
 			output.writeBoolean(perm.getValue());
 		}
@@ -51,6 +52,7 @@ private Map<String, Boolean> permissions;
 	@Override
 	public void readData(SpoutInputStream input) throws IOException {
 		int num = input.readInt();
+
 		for (int i = 0; i < num; i++) {
 			String perm = input.readString();
 			boolean allowed = input.readBoolean();
@@ -70,7 +72,7 @@ private Map<String, Boolean> permissions;
 
 	@Override
 	public void run(int playerId) {
-		for (Entry<String, Boolean> perm:permissions.entrySet()) {
+		for (Entry<String, Boolean> perm: permissions.entrySet()) {
 			SpoutClient.getInstance().setPermission(perm.getKey(), perm.getValue());
 		}
 	}

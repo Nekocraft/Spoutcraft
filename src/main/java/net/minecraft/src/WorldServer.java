@@ -694,7 +694,7 @@ public class WorldServer extends World {
 	 */
 	// Spout Start - protected to public
 	public void obtainEntitySkin(Entity par1Entity) {
-	// Spout End
+		// Spout End
 		super.obtainEntitySkin(par1Entity);
 		this.entityIdMap.addKey(par1Entity.entityId, par1Entity);
 		Entity[] var2 = par1Entity.getParts();
@@ -711,7 +711,7 @@ public class WorldServer extends World {
 	 */
 	// Spout Start - protected to public
 	public void releaseEntitySkin(Entity par1Entity) {
-	// Spout End
+		// Spout End
 		super.releaseEntitySkin(par1Entity);
 		this.entityIdMap.removeObject(par1Entity.entityId);
 		Entity[] var2 = par1Entity.getParts();

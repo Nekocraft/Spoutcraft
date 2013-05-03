@@ -6,7 +6,6 @@ import com.prupe.mcpatcher.mod.Colorizer;
 // MCPatcher End
 
 public abstract class WorldProvider {
-
 	/** world object being used */
 	public World worldObj;
 	public WorldType terrainType;
@@ -166,6 +165,7 @@ public abstract class WorldProvider {
 			var5 = 0.84705883F;
 			var6 = 1.0F;
 		}
+
 		// MCPatcher End
 		var4 *= var3 * 0.94F + 0.06F;
 		var5 *= var3 * 0.94F + 0.06F;

@@ -47,11 +47,14 @@ public class PacketDecompressionThread extends Thread {
 		if (instance == null) {
 			return;
 		}
+
 		instance.interrupt();
+
 		try {
 			instance.join();
 		} catch (InterruptedException ie) {
 		}
+
 		instance = null;
 	}
 
@@ -70,7 +73,8 @@ public class PacketDecompressionThread extends Thread {
 			try {
 				CompressablePacket packet = queue.take();
 				packet.decompress();
-				synchronized(decompressed) {
+
+				synchronized (decompressed) {
 					decompressed.add(packet);
 				}
 			} catch (InterruptedException e) {
@@ -80,10 +84,12 @@ public class PacketDecompressionThread extends Thread {
 	}
 
 	public static void onTick() {
-		synchronized(instance.decompressed) {
+		synchronized (instance.decompressed) {
 			Iterator<CompressablePacket> i = instance.decompressed.iterator();
+
 			while (i.hasNext()) {
 				SpoutPacket packet = i.next();
+
 				try {
 					SpoutClient.getHandle().mcProfiler.startSection(packet.getPacketType().name());
 					packet.run(SpoutClient.getHandle().thePlayer.entityId);

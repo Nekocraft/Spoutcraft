@@ -28,41 +28,53 @@ import org.spoutcraft.api.io.SpoutInputStream;
 public abstract class PacketUtil {
 	public static int[] readIntArray(SpoutInputStream input) throws IOException {
 		int length = input.readInt();
+
 		if (length > 256) {
 			throw new IllegalArgumentException("Int array exceeded max length (" + length + ")");
 		}
+
 		int[] newArray = new int[length];
+
 		for (int i = 0; i < length; i++) {
 			newArray[i] = input.readInt();
 		}
+
 		return newArray;
 	}
 
 	public static int[] readIntArray(DataInputStream input) throws IOException {
 		int length = input.readInt();
+
 		if (length > 256) {
 			throw new IllegalArgumentException("Int array exceeded max length (" + length + ")");
 		}
+
 		int[] newArray = new int[length];
+
 		for (int i = 0; i < length; i++) {
 			newArray[i] = input.readInt();
 		}
+
 		return newArray;
 	}
 
 	public static float[] readQuadFloat(SpoutInputStream input) throws IOException {
 		float[] newArray = new float[4];
+
 		for (int i = 0; i < 4; i++) {
 			newArray[i] = input.readFloat();
 		}
+
 		return newArray;
 	}
 
 	public static float[] readQuadFloat(DataInputStream input) throws IOException {
 		float[] newArray = new float[4];
+
 		for (int i = 0; i < 4; i++) {
 			newArray[i] = input.readFloat();
 		}
+
 		return newArray;
 	}
 
@@ -72,25 +84,33 @@ public abstract class PacketUtil {
 
 	public static float[][] readDoubleArray(SpoutInputStream input) throws IOException {
 		int length = input.readShort();
+
 		if (length > 256) {
 			throw new IllegalArgumentException("Double array exceeded max length (" + length + ")");
 		}
+
 		float[][] newDoubleArray = new float[length][];
+
 		for (int i = 0; i < length; i++) {
 			newDoubleArray[i] = readQuadFloat(input);
 		}
+
 		return newDoubleArray;
 	}
 
 	public static float[][] readDoubleArray(DataInputStream input) throws IOException {
 		int length = input.readShort();
+
 		if (length > 256) {
 			throw new IllegalArgumentException("Double array exceeded max length (" + length + ")");
 		}
+
 		float[][] newDoubleArray = new float[length][];
+
 		for (int i = 0; i < length; i++) {
 			newDoubleArray[i] = readQuadFloat(input);
 		}
+
 		return newDoubleArray;
 	}
 
@@ -98,7 +118,9 @@ public abstract class PacketUtil {
 		if (ints.length > 256) {
 			throw new IllegalArgumentException("Array containing " + ints.length + " ints passed to writeQuadFloat");
 		}
+
 		output.writeInt(ints.length);
+
 		for (int i = 0; i < ints.length; i++) {
 			output.writeInt(ints[i]);
 		}
@@ -111,11 +133,10 @@ public abstract class PacketUtil {
 	}
 
 	public static String readString(DataInputStream input) throws IOException {
-		int length= input.readInt();
-		byte[] data=new byte[length];
+		int length = input.readInt();
+		byte[] data = new byte[length];
 		input.readFully(data);
-		String string = new String(data,"UTF-8");
-
+		String string = new String(data, "UTF-8");
 		return string;
 	}
 
@@ -123,8 +144,7 @@ public abstract class PacketUtil {
 		int length = input.readInt();
 		byte[] data = new byte[length];
 		input.read(data);
-		String string = new String(data,"UTF-8");
-
+		String string = new String(data, "UTF-8");
 		return string;
 	}
 }

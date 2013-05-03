@@ -11,7 +11,6 @@ import org.spoutcraft.client.config.Configuration;
 // Spout End
 
 public class RenderEnderman extends RenderLiving {
-
 	/** The model of the enderman */
 	private ModelEnderman endermanModel;
 	private Random rnd = new Random();
@@ -75,10 +74,11 @@ public class RenderEnderman extends RenderLiving {
 		} else {
 			// Spout Start
 			if (Configuration.isRandomMobTextures()) {
-			this.loadTexture(MobRandomizer.randomTexture((EntityLiving)par1EntityEnderman, "/mob/enderman_eyes.png"));
+				this.loadTexture(MobRandomizer.randomTexture((EntityLiving)par1EntityEnderman, "/mob/enderman_eyes.png"));
 			} else {
 				loadTexture(par1EntityEnderman.getCustomTexture(org.spoutcraft.api.entity.EntitySkinType.ENDERMAN_EYES, "/mob/enderman_eyes.png"));
 			}
+
 			// Spout End
 			float var4 = 1.0F;
 			GL11.glEnable(GL11.GL_BLEND);

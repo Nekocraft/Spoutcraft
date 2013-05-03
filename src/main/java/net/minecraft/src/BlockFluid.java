@@ -66,7 +66,7 @@ public abstract class BlockFluid extends Block {
 	 * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
 	 */
 	public Icon getBlockTextureFromSideAndMetadata(int par1, int par2) {
-		return par1 != 0 && par1 != 1 ? this.theIcon[1] : this.theIcon[0]; 
+		return par1 != 0 && par1 != 1 ? this.theIcon[1] : this.theIcon[0];
 	}
 
 	/**
@@ -510,15 +510,15 @@ public abstract class BlockFluid extends Block {
 	 * When this method is called, your block should register all the icons it needs with the given IconRegister. This is
 	 * the only chance you get to register icons.
 	 */
-	public void registerIcons(IconRegister par1IconRegister) { 
+	public void registerIcons(IconRegister par1IconRegister) {
 		if (this.blockMaterial == Material.lava) {
-			this.theIcon = new Icon[] {par1IconRegister.registerIcon("lava"), par1IconRegister.registerIcon("lava_flow")}; 
+			this.theIcon = new Icon[] {par1IconRegister.registerIcon("lava"), par1IconRegister.registerIcon("lava_flow")};
 		} else {
-			this.theIcon = new Icon[] {par1IconRegister.registerIcon("water"), par1IconRegister.registerIcon("water_flow")}; 
+			this.theIcon = new Icon[] {par1IconRegister.registerIcon("water"), par1IconRegister.registerIcon("water_flow")};
 		}
 	}
 
 	public static Icon func_94424_b(String par0Str) {
-		return par0Str == "water" ? Block.waterMoving.theIcon[0] : (par0Str == "water_flow" ? Block.waterMoving.theIcon[1] : (par0Str == "lava" ? Block.lavaMoving.theIcon[0] : (par0Str == "lava_flow" ? Block.lavaMoving.theIcon[1] : null))); 
+		return par0Str == "water" ? Block.waterMoving.theIcon[0] : (par0Str == "water_flow" ? Block.waterMoving.theIcon[1] : (par0Str == "lava" ? Block.lavaMoving.theIcon[0] : (par0Str == "lava_flow" ? Block.lavaMoving.theIcon[1] : null)));
 	}
 }

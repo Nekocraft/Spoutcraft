@@ -32,6 +32,7 @@ public class SpoutWorth {
 		if (instance == null) {
 			instance = new SpoutWorth();
 		}
+
 		return instance;
 	}
 
@@ -47,9 +48,11 @@ public class SpoutWorth {
 
 	public void updateFPS(long fps) {
 		fpsList.add(fps);
+
 		if (fpsList.size() > MAX_FPS_TRACKED) {
 			fpsList.removeAt(0);
 		}
+
 		avgFPS = -1;
 		currentFPS = fps;
 		doTick();
@@ -59,14 +62,18 @@ public class SpoutWorth {
 		if (avgFPS != -1) {
 			return avgFPS;
 		}
+
 		if (fpsList.size() == 0) {
 			return IDEAL_FPS;
 		}
+
 		long total = 0;
 		TLongIterator i = fpsList.iterator();
+
 		while (i.hasNext()) {
 			total += i.next();
 		}
+
 		avgFPS = Math.max(1, total / fpsList.size());
 		return avgFPS;
 	}
@@ -77,13 +84,13 @@ public class SpoutWorth {
 
 	public void doTick() {
 		Configuration.setSignDistance(Math.max(8, Configuration.getSignDistance()));
+
 		if (!Configuration.isAutomatePerformance()) {
 			return;
 		}
 
 		Configuration.setPerformance(0);
 		Configuration.setFarView(false);
-
 		long idealFPS = getIdealFPS();
 		// Calculate how close we are to acheiving ideal FPS
 		long percent = getAverageFPS() * 100 / idealFPS;
@@ -102,7 +109,6 @@ public class SpoutWorth {
 		}
 
 		boolean improving = percentCur > percent;
-
 		belowIdeal = percent < 75;
 		debug = "Ideal Percent: " + percent + " Current Percent: " + percentCur + " Improving: " + improving;
 
@@ -151,86 +157,104 @@ public class SpoutWorth {
 			Configuration.write();
 			return;
 		}
+
 		if (!Configuration.isStars()) {
 			Configuration.setStars(true);
 			Configuration.write();
 			return;
 		}
+
 		if (!Configuration.isFancyWater()) {
 			Configuration.setFancyWater(true);
 			Configuration.write();
 			return;
 		}
+
 		if (!Configuration.isFancyParticles()) {
 			Configuration.setFancyParticles(true);
 			Configuration.write();
 			return;
 		}
+
 		if (!Configuration.isFancyFog()) {
 			Configuration.setFancyFog(true);
 			Configuration.write();
 			return;
 		}
+
 		if (!Configuration.isFancyGrass()) {
 			Configuration.setFancyGrass(true);
 			Configuration.write();
 			return;
 		}
+
 		if (!Configuration.isFancyBiomeColors()) {
 			Configuration.setFancyBiomeColors(true);
 			Configuration.write();
 			return;
 		}
+
 		if (!Configuration.isFancyLight()) {
 			Configuration.setFancyLight(true);
 			Configuration.write();
 			return;
 		}
+
 		if (!Configuration.isFancyLight()) {
 			Configuration.setFancyLight(true);
 			Configuration.write();
 			return;
 		}
+
 		if (!Configuration.isFancyClouds()) {
 			Configuration.setFancyClouds(true);
 			Configuration.write();
 			return;
 		}
+
 		if (!Configuration.isFancyTrees()) {
 			Configuration.setFancyTrees(true);
 			Configuration.write();
 			return;
 		}
+
 		if (!Configuration.isFancyWeather()) {
 			Configuration.setFancyWeather(true);
 			Configuration.write();
 			return;
 		}
+
 		if (Configuration.getBetterGrass() == 1) {
 			Configuration.setBetterGrass(2);
 			Configuration.write();
 			return;
 		}
+
 		if (Configuration.getRenderDistance() != 0) {
 			Configuration.setRenderDistance(Configuration.getRenderDistance() - 1);
 			Minecraft.theMinecraft.gameSettings.renderDistance = Configuration.getRenderDistance();
 			Configuration.write();
 			return;
 		}
+
 		if (Configuration.getAdvancedOpenGL() != 0) {
 			Configuration.setAdvancedOpenGL(0);
 			Minecraft.theMinecraft.gameSettings.advancedOpengl = false;
 			Configuration.write();
 			return;
 		}
+
 		if (Configuration.getSignDistance() != Integer.MAX_VALUE) {
 			Configuration.setSignDistance(Configuration.getSignDistance() * 2);
+
 			if (Configuration.getSignDistance() >= 128) {
 				Configuration.setSignDistance(Integer.MAX_VALUE);
 			}
+
 			Configuration.write();
 			return;
 		}
+
 		if (!Configuration.isAmbientOcclusion()) {
 			Configuration.setAmbientOcclusion(true);
 			Configuration.write();
@@ -247,36 +271,45 @@ public class SpoutWorth {
 
 		if (Configuration.isSky()) {
 			Configuration.setSky(false);
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
 			}
 		}
+
 		if (Configuration.getChunkRenderPasses() > 1) {
 			Configuration.setChunkRenderPasses(1);
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
 			}
 		}
+
 		if (Configuration.getRenderDistance() < 2) {
 			Configuration.setRenderDistance(Configuration.getRenderDistance() + 1);
 			Minecraft.theMinecraft.gameSettings.renderDistance = Configuration.getRenderDistance();
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
 			}
 		}
+
 		if (Configuration.getAdvancedOpenGL() == 2 || Configuration.getAdvancedOpenGL() == 0) {
 			Configuration.setAdvancedOpenGL(1);
 			Minecraft.theMinecraft.gameSettings.advancedOpengl = true;
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
 			}
 		}
+
 		if (Configuration.getSignDistance() > 8) {
 			Configuration.setSignDistance(Configuration.getSignDistance() / 2);
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
@@ -285,90 +318,115 @@ public class SpoutWorth {
 
 		if (Configuration.isFancyParticles()) {
 			Configuration.setFancyParticles(false);
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
 			}
 		}
+
 		if (Configuration.isFancyFog()) {
 			Configuration.setFancyFog(false);
 			Configuration.write();
+
 			if (--downgrade == 0) {
 				return;
 			}
 		}
+
 		if (Configuration.isFancyGrass()) {
 			Configuration.setFancyGrass(false);
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
 			}
 		}
+
 		if (Configuration.isFancyBiomeColors()) {
 			Configuration.setFancyBiomeColors(false);
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
 			}
 		}
+
 		if (Configuration.isStars()) {
 			Configuration.setStars(false);
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
 			}
 		}
+
 		if (Configuration.isFancyLight()) {
 			Configuration.setFancyLight(false);
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
 			}
 		}
+
 		if (Configuration.isFancyLight()) {
 			Configuration.setFancyLight(false);
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
 			}
 		}
+
 		if (Configuration.isFancyClouds()) {
 			Configuration.setFancyClouds(false);
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
 			}
 		}
+
 		if (Configuration.isFancyTrees()) {
 			Configuration.setFancyTrees(false);
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
 			}
 		}
+
 		if (Configuration.isFancyWeather()) {
 			Configuration.setFancyWeather(false);
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
 			}
 		}
+
 		if (Configuration.getBetterGrass() == 2) {
 			Configuration.setBetterGrass(1);
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
 			}
 		}
+
 		if (Configuration.isFancyWater()) {
 			Configuration.setFancyWater(false);
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;
 			}
 		}
+
 		if (Configuration.isAmbientOcclusion()) {
 			Configuration.setAmbientOcclusion(false);
+
 			if (--downgrade == 0) {
 				Configuration.write();
 				return;

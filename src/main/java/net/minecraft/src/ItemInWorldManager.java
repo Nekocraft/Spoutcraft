@@ -1,7 +1,6 @@
 package net.minecraft.src;
 
 public class ItemInWorldManager {
-
 	/** The world object that this object is connected to. */
 	public World theWorld;
 

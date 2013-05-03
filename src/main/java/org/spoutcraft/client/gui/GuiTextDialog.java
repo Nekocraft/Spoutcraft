@@ -46,10 +46,8 @@ public class GuiTextDialog extends GuiSpoutScreen {
 		textText = new GenericTextField();
 		textText.setWidth(200);
 		textText.setText(text);
-
 		buttonCancel = new GenericButton("Cancel");
 		buttonDone = new GenericButton("Done");
-
 		getScreen().attachWidgets("Spoutcraft", labelTitle, textText, buttonCancel, buttonDone);
 	}
 
@@ -69,6 +67,7 @@ public class GuiTextDialog extends GuiSpoutScreen {
 			handler.onCancel(this);
 			mc.displayGuiScreen(parent);
 		}
+
 		if (btn == buttonDone) {
 			handler.onDone(this);
 			mc.displayGuiScreen(parent);
@@ -77,6 +76,7 @@ public class GuiTextDialog extends GuiSpoutScreen {
 
 	public void setTitle(String title) {
 		this.title = title;
+
 		if (labelTitle != null) {
 			labelTitle.setText(title);
 		}
@@ -88,6 +88,7 @@ public class GuiTextDialog extends GuiSpoutScreen {
 
 	public void setText(String text) {
 		this.text = text;
+
 		if (textText != null) {
 			textText.setText(text); // Redundant text is redundant
 		}

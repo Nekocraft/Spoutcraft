@@ -65,14 +65,18 @@ public class PacketTexturePack implements SpoutPacket {
 			}
 		} else {
 			String fileName = FileUtil.getFileName(url);
+
 			if (!FileUtil.isZippedFile(fileName)) {
 				System.out.println("Rejecting Invalid Texture Pack: " + fileName);
 				return;
 			}
+
 			File texturePack = new File(FileUtil.getTexturePackDir(), fileName);
+
 			if (FileUtil.getCRC(texturePack, downloadBuffer) != expectedCRC && expectedCRC != 0) {
 				texturePack.delete();
 			}
+
 			Download download = new Download(fileName, FileUtil.getTexturePackDir(), url, new TexturePackAction(fileName, FileUtil.getTexturePackDir()));
 			FileDownloadThread.getInstance().addToDownloadQueue(download);
 		}

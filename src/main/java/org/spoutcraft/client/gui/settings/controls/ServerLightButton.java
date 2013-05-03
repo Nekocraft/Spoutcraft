@@ -44,6 +44,7 @@ public class ServerLightButton extends AutomatedCheckBox {
 		if (Minecraft.theMinecraft.theWorld == null || Minecraft.theMinecraft.theWorld.isRemote) {
 			return super.getTooltip();
 		}
+
 		return "在单人游戏中有没有效果";
 	}
 }
