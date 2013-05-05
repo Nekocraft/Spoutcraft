@@ -1641,7 +1641,7 @@ public abstract class Entity {
 					int var14 = (int)(this.posZ + var11);
 					AxisAlignedBB var2 = this.boundingBox.getOffsetBoundingBox(var9, 1.0D, var11);
 
-					if (this.worldObj.getAllCollidingBoundingBoxes(var2).isEmpty()) {
+					if (this.worldObj.getCollidingBlockBounds(var2).isEmpty()) {
 						if (this.worldObj.doesBlockHaveSolidTopSurface(var13, (int)this.posY, var14)) {
 							this.setLocationAndAngles(this.posX + var9, this.posY + 1.0D, this.posZ + var11, this.rotationYaw, this.rotationPitch);
 							return;
@@ -1869,7 +1869,7 @@ public abstract class Entity {
 		double var10 = par1 - (double)var7;
 		double var12 = par3 - (double)var8;
 		double var14 = par5 - (double)var9;
-		List var16 = this.worldObj.getAllCollidingBoundingBoxes(this.boundingBox);
+		List var16 = this.worldObj.getCollidingBlockBounds(this.boundingBox);
 
 		if (var16.isEmpty() && !this.worldObj.func_85174_u(var7, var8, var9)) {
 			return false;

@@ -228,6 +228,12 @@ public class ChunkProviderServer implements IChunkProvider {
 		return true;
 	}
 
+	public void func_104112_b() {
+		if (this.currentChunkLoader != null) {
+			this.currentChunkLoader.saveExtraData();
+		}
+	}
+
 	/**
 	 * Unloads chunks that are marked to be unloaded. This is not guaranteed to unload every such chunk.
 	 */
