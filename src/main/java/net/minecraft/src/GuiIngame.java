@@ -68,6 +68,7 @@ public class GuiIngame extends Gui {
 	// TODO: Rewrite again, it's in a horrible state, I'm surprised it works...
 	public void renderGameOverlay(float f, boolean flag, int i, int j) {
 		InGameHUD mainScreen = SpoutClient.getInstance().getActivePlayer().getMainScreen();
+
 		ScaledResolution scaledRes = new ScaledResolution(this.mc.gameSettings, this.mc.displayWidth, this.mc.displayHeight);
 		int screenWidth = scaledRes.getScaledWidth();
 		int screenHeight = scaledRes.getScaledHeight();
@@ -94,8 +95,7 @@ public class GuiIngame extends Gui {
 				this.renderPortalOverlay(var10, screenWidth, screenHeight);
 			}
 		}
-
-		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glBlendFunc(770, 771);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		this.mc.renderEngine.bindTexture("/gui/gui.png");
 		InventoryPlayer var11 = this.mc.thePlayer.inventory;
@@ -103,37 +103,44 @@ public class GuiIngame extends Gui {
 		this.drawTexturedModalRect(screenWidth / 2 - 91, screenHeight - 22, 0, 0, 182, 22);
 		this.drawTexturedModalRect(screenWidth / 2 - 91 - 1 + var11.currentItem * 20, screenHeight - 22 - 1, 0, 22, 24, 22);
 		this.mc.renderEngine.bindTexture("/gui/icons.png");
-		GL11.glEnable(GL11.GL_BLEND);
-		GL11.glBlendFunc(GL11.GL_ONE_MINUS_DST_COLOR, GL11.GL_ONE_MINUS_SRC_COLOR);
+		GL11.glEnable(3042 /* GL_BLEND */);
+		GL11.glBlendFunc(775, 769);
 		this.drawTexturedModalRect(screenWidth / 2 - 7, screenHeight / 2 - 7, 0, 0, 16, 16);
-		GL11.glDisable(GL11.GL_BLEND);
-		GuiIngame.rand.setSeed((long)(this.updateCounter * 312871));
+		GL11.glDisable(3042 /* GL_BLEND */);
+
+		GuiIngame.rand.setSeed((long) (this.updateCounter * 312871));
 		int var15;
 		int var17;
-		this.renderBossHealth();
 
+		this.renderBossHealth();
 		// Toggle visibility if needed
 		if (needsUpdate && mainScreen.getHealthBar().isVisible() == mc.playerController.isInCreativeMode()) {
 			mainScreen.toggleSurvivalHUD(!mc.playerController.isInCreativeMode());
 		}
-
 		needsUpdate = false;
+
 		// Hunger Bar Begin
 		mainScreen.getHungerBar().render();
 		// Hunger Bar End
+
 		// Armor Bar Begin
 		mainScreen.getArmorBar().render();
 		// Armor Bar End
+
 		// Health Bar Begin
 		mainScreen.getHealthBar().render();
 		// Health Bar End
+
 		// Bubble Bar Begin
 		mainScreen.getBubbleBar().render();
 		// Bubble Bar End
+
 		// Exp Bar Begin
 		mainScreen.getExpBar().render();
 		// Exp Bar End
+
 		map.onRenderTick();
+
 		GL11.glDisable(GL11.GL_BLEND);
 		this.mc.mcProfiler.startSection("actionBar");
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
@@ -148,32 +155,30 @@ public class GuiIngame extends Gui {
 		RenderHelper.disableStandardItemLighting();
 		GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		this.mc.mcProfiler.endSection();
+
 		float var33;
 
 		if (this.mc.thePlayer.getSleepTimer() > 0) {
-			GL11.glDisable(GL11.GL_DEPTH_TEST);
-			GL11.glDisable(GL11.GL_ALPHA_TEST);
+			GL11.glDisable(2929 /*GL_DEPTH_TEST*/);
+			GL11.glDisable(3008 /*GL_ALPHA_TEST*/);
 			var15 = this.mc.thePlayer.getSleepTimer();
 			float var26 = (float)var15 / 100.0F;
-
 			if (var26 > 1.0F) {
 				var26 = 1.0F - (float)(var15 - 100) / 10.0F;
 			}
 
 			var17 = (int)(220.0F * var26) << 24 | 1052704;
 			this.drawRect(0, 0, screenWidth, screenHeight, var17);
-			GL11.glEnable(GL11.GL_ALPHA_TEST);
-			GL11.glEnable(GL11.GL_DEPTH_TEST);
+			GL11.glEnable(3008 /*GL_ALPHA_TEST*/);
+			GL11.glEnable(2929 /*GL_DEPTH_TEST*/);
 		}
 
 		mainScreen.render();
-
 		if (this.mc.gameSettings.showDebugInfo) {
 			this.mc.mcProfiler.startSection("debug");
 			GL11.glPushMatrix();
-
 			if (Configuration.getFastDebug() != 2) {
-				font.drawStringWithShadow("Minecraft 1.5 (" + this.mc.debug + ")", 2, 2, 16777215);
+				font.drawStringWithShadow("Minecraft 1.5.2 (" + this.mc.debug + ")", 2, 2, 16777215);
 				font.drawStringWithShadow(this.mc.debugInfoRenders(), 2, 12, 16777215);
 				font.drawStringWithShadow(this.mc.getEntityDebug(), 2, 22, 16777215);
 				font.drawStringWithShadow(this.mc.debugInfoEntities(), 2, 32, 16777215);
@@ -189,8 +194,7 @@ public class GuiIngame extends Gui {
 				int var47 = MathHelper.floor_double(this.mc.thePlayer.posX);
 				int var22 = MathHelper.floor_double(this.mc.thePlayer.posY);
 				int var23 = MathHelper.floor_double(this.mc.thePlayer.posZ);
-
-				if (SpoutClient.getInstance().isCoordsCheat()) {
+				if(SpoutClient.getInstance().isCoordsCheat()) {
 					this.drawString(font, String.format("x: %.5f (%d) // c: %d (%d)", new Object[] {Double.valueOf(this.mc.thePlayer.posX), Integer.valueOf(var47), Integer.valueOf(var47 >> 4), Integer.valueOf(var47 & 15)}), 2, 64, 14737632);
 					this.drawString(font, String.format("y: %.3f (feet pos, %.3f eyes pos)", new Object[] {Double.valueOf(this.mc.thePlayer.boundingBox.minY), Double.valueOf(this.mc.thePlayer.posY)}), 2, 72, 14737632);
 					this.drawString(font, String.format("z: %.5f (%d) // c: %d (%d)", new Object[] {Double.valueOf(this.mc.thePlayer.posZ), Integer.valueOf(var23), Integer.valueOf(var23 >> 4), Integer.valueOf(var23 & 15)}), 2, 80, 14737632);
@@ -204,18 +208,17 @@ public class GuiIngame extends Gui {
 				}
 
 				this.drawString(font, String.format("ws: %.3f, fs: %.3f, g: %b, fl: %d", new Object[] {Float.valueOf(this.mc.thePlayer.capabilities.getWalkSpeed()), Float.valueOf(this.mc.thePlayer.capabilities.getFlySpeed()), Boolean.valueOf(this.mc.thePlayer.onGround), Integer.valueOf(this.mc.theWorld.getHeightValue(var47, var23))}), 2, 104, 14737632);
+
 				// Spout Start
 				boolean cacheInUse = ChunkNetCache.cacheInUse.get();
 				int y = 115;
 				font.drawStringWithShadow("Network Info", 2, y += 11, 0xFFFFFF);
-
 				if (!cacheInUse) {
 					font.drawStringWithShadow("Chunk Network Cache: Inactive", 22, y += 11, 0xE0E0E0);
 				} else {
 					font.drawStringWithShadow("Chunk Network Cache: Active", 22, y += 11, 0xE0E0E0);
 					font.drawStringWithShadow("Cache hit: " + ChunkNetCache.hitPercentage.get() + "%", 22, y += 10, 0xE0E0E0);
 				}
-
 				font.drawStringWithShadow("Average Cube Size: " + ChunkNetCache.averageChunkSize.get() / 10.0 + " bytes", 22, y += 10, 0xE0E0E0);
 				long logTime = System.currentTimeMillis() - ChunkNetCache.loggingStart.get();
 				long kbpsUp = (80000L * ChunkNetCache.totalPacketUp.get()) / 1024 / logTime;
@@ -226,7 +229,6 @@ public class GuiIngame extends Gui {
 			} else {
 				font.drawStringWithShadow(Integer.toString(Minecraft.framesPerSecond), 4, 2, 0xFFE303);
 			}
-
 			this.mc.mcProfiler.endSection();
 			GL11.glPopMatrix();
 
@@ -258,11 +260,11 @@ public class GuiIngame extends Gui {
 				this.mc.mcProfiler.endSection();
 			}
 		}
-
 		GL11.glEnable(GL11.GL_BLEND);
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		GL11.glDisable(GL11.GL_ALPHA_TEST);
 		GL11.glPushMatrix();
+
 		int var12;
 		int var13;
 		int var38;
@@ -280,20 +282,17 @@ public class GuiIngame extends Gui {
 				if (this.highlightingItemStack.itemID == MaterialData.flint.getRawId()) {
 					custom = Spoutcraft.getMaterialManager().getToolTip(new CraftItemStack(this.highlightingItemStack));
 				}
-
 				if (custom != null) {
 					var35 = custom;
 				} else {
 					var35 = this.highlightingItemStack.getDisplayName();
 				}
-
 				var12 = (screenWidth - font.getStringWidth(var35)) / 2;
 				var13 = screenHeight - 59;
 
 				if (!mainScreen.getHungerBar().isVisible() || !mainScreen.getHealthBar().isVisible()) {
 					var13 += 8;
 				}
-
 				if (!mainScreen.getArmorBar().isVisible()) {
 					var13 += 8;
 				}

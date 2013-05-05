@@ -2,7 +2,7 @@ package net.minecraft.src;
 
 public class EntityFX extends Entity {
 	protected int particleTextureIndexX;
-	protected int particleTextureIndexY;
+	protected int particleTextureIndexY; 
 	protected float particleTextureJitterX;
 	protected float particleTextureJitterY;
 	// Spout Start - protected to public
@@ -33,6 +33,8 @@ public class EntityFX extends Entity {
 
 	/** Particle alpha */
 	protected float particleAlpha;
+	
+	/** The icon field from which the given particle pulls its texture. */
 	protected Icon particleIcon;
 	public static double interpPosX;
 	public static double interpPosY;
@@ -40,7 +42,7 @@ public class EntityFX extends Entity {
 
 	// Spout Start - protected to public
 	public EntityFX(World par1World, double par2, double par4, double par6) {
-		// Spout End
+	// Spout End
 		super(par1World);
 		this.particleAge = 0;
 		this.particleMaxAge = 0;
@@ -196,19 +198,19 @@ public class EntityFX extends Entity {
 	}
 
 	/**
-	 * Public method to set private field particleIcon.
+	 * Public method to set private field particleTextureIndex.
 	 */
 	public void setParticleTextureIndex(int par1) {
 		if (this.getFXLayer() != 0) {
 			throw new RuntimeException("Invalid call to Particle.setMiscTex");
 		} else {
 			this.particleTextureIndexX = par1 % 16;
-			this.particleTextureIndexY = par1 / 16;
+			this.particleTextureIndexY = par1 / 16; 
 		}
 	}
 
 	public void nextTextureIndexX() {
-		++this.particleTextureIndexX;
+		++this.particleTextureIndexX; 
 	}
 
 	/**

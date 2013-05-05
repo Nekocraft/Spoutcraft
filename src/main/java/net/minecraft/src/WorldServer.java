@@ -680,6 +680,12 @@ public class WorldServer extends World {
 		}
 	}
 
+	public void func_104140_m() {
+		if (this.chunkProvider.canSave()) {
+			this.chunkProvider.func_104112_b();
+		}
+	}
+	
 	/**
 	 * Saves the chunks to disk.
 	 */

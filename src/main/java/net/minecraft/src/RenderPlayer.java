@@ -1,6 +1,10 @@
 package net.minecraft.src;
 
 import org.lwjgl.opengl.GL11;
+// MCPatcher Start
+import com.prupe.mcpatcher.mod.CITUtils;
+// MCPatcher End
+
 // Spout Start
 import net.minecraft.client.Minecraft;
 import org.spoutcraft.api.material.MaterialData;
@@ -40,19 +44,16 @@ public class RenderPlayer extends RenderLiving {
 
 			if (var5 instanceof ItemArmor) {
 				ItemArmor var6 = (ItemArmor)var5;
-				this.loadTexture("/armor/" + armorFilenamePrefix[var6.renderIndex] + "_" + (par2 == 2 ? 2 : 1) + ".png");
+				this.loadTexture(CITUtils.getArmorTexture("/armor/" + armorFilenamePrefix[var6.renderIndex] + "_" + (par2 == 2 ? 2 : 1) + ".png", par1EntityPlayer, var4));
 				// Spout Start
 				VIP vip = par1EntityPlayer.vip;
 				int armorId = (par2 == 2 ? 2 : 1);
-
 				if (vip != null && vip.getArmor(armorId) != null) {
 					String url = vip.getArmor(armorId);
-
 					if (!this.loadDownloadableImageTexture(url, (String) null)) {
 						Minecraft.theMinecraft.renderEngine.obtainImageData(url, new HDImageBufferDownload());
 					}
 				}
-
 				// Spout End
 				ModelBiped var7 = par2 == 2 ? this.modelArmor : this.modelArmorChestplate;
 				var7.bipedHead.showModel = par2 == 0;
@@ -113,7 +114,7 @@ public class RenderPlayer extends RenderLiving {
 
 			if (var5 instanceof ItemArmor) {
 				ItemArmor var6 = (ItemArmor)var5;
-				this.loadTexture("/armor/" + armorFilenamePrefix[var6.renderIndex] + "_" + (par2 == 2 ? 2 : 1) + "_b.png");
+				this.loadTexture(CITUtils.getArmorTexture("/armor/" + armorFilenamePrefix[var6.renderIndex] + "_" + (par2 == 2 ? 2 : 1) + "_b.png", par1EntityPlayer, var4));
 				float var7 = 1.0F;
 				GL11.glColor3f(var7, var7, var7);
 			}
@@ -142,12 +143,11 @@ public class RenderPlayer extends RenderLiving {
 		if (par1EntityPlayer.isSneaking() && !(par1EntityPlayer instanceof EntityPlayerSP)) {
 			var14 -= 0.125D;
 		}
-
 		// Spout Start - VIP
 		if (!AccessoryHandler.isHandled(par1EntityPlayer.username)) {
 			AccessoryHandler.addVIPAccessoriesFor(par1EntityPlayer);
 		}
-
+		
 		super.doRenderLiving(par1EntityPlayer, par2, var14, par6, par8, par9);
 		// Spout End
 		this.modelArmorChestplate.aimedBow = this.modelArmor.aimedBow = this.modelBipedMain.aimedBow = false;
@@ -195,11 +195,11 @@ public class RenderPlayer extends RenderLiving {
 		}
 
 		// Spout Start
-		if (!par1EntityPlayer.isInvisible()) {
+		if (!par1EntityPlayer.isInvisible()){
 			AccessoryHandler.renderAllAccessories(par1EntityPlayer, 0.0625F, par2);
 		}
-
 		// Spout End
+
 		float var8;
 		float var7;
 
@@ -355,11 +355,9 @@ public class RenderPlayer extends RenderLiving {
 		float var3 = 0.9375F;
 		// Spout Start
 		VIP vip = par1EntityPlayer.vip;
-
 		if (vip != null) {
 			var3 = vip.getScale();
 		}
-
 		// Spout End
 		GL11.glScalef(var3, var3, var3);
 	}

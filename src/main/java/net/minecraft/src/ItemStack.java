@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 // Spout Start
+import net.minecraft.src.NBTTagList;
 import org.spoutcraft.client.config.Configuration;
 import org.spoutcraft.client.inventory.InventoryUtil;
 // Spout End
@@ -123,8 +124,8 @@ public class ItemStack {
 		if (var10 && stackSize == 0 && getItem() instanceof ItemBlock && Configuration.isReplaceBlocks()) {
 			InventoryUtil.replaceItem(this.itemID, getItem().getMetadata(this.getItemDamage()));
 		}
-
 		// Spout End
+
 		return var10;
 	}
 
@@ -244,10 +245,9 @@ public class ItemStack {
 	}
 
 	/**
-	 * Attempts to damage the ItemStack with par1 amount of damage, If the ItemStack has the Unbreaking enchantment
-	 * there is a chance for each point of damage to be negated. Returns true if it takes more damage than
-	 * getMaxDamage(). Returns false otherwise or if the ItemStack can't be damaged or if all points of damage are
-	 * negated.
+	 * Attempts to damage the ItemStack with par1 amount of damage, If the ItemStack has the Unbreaking enchantment there
+	 * is a chance for each point of damage to be negated. Returns true if it takes more damage than getMaxDamage().
+	 * Returns false otherwise or if the ItemStack can't be damaged or if all points of damage are negated.
 	 */
 	public boolean attemptDamageItem(int par1, Random par2Random) {
 		if (!this.isItemStackDamageable()) {
@@ -300,7 +300,6 @@ public class ItemStack {
 					if (stackSize == 0 && Configuration.isReplaceTools()) {
 						InventoryUtil.replaceItem(this.itemID, -1);
 					}
-
 					// Spout End
 				}
 			}
@@ -445,33 +444,27 @@ public class ItemStack {
 	}
 
 	public NBTTagList getEnchantmentTagList() {
-		// Spout Start
+	// Spout Start
 		NBTTagList list = getAllEnchantmentTagList();
-
 		if (list == null) {
 			return null;
 		}
-
 		list = (NBTTagList) list.copy();
-
 		for (int i = 0; i < list.tagCount(); i++) {
 			NBTBase tag = list.tagAt(i);
-
 			if (tag instanceof NBTTagCompound) {
 				NBTTagCompound ench = (NBTTagCompound) tag;
 				short id = ench.getShort("id");
-
 				if (id > 200) {
 					list.tagList.remove(ench);
 				}
 			}
 		}
-
 		return list;
 	}
 
 	public NBTTagList getAllEnchantmentTagList() {
-		// Spout End
+	// Spout End
 		return this.stackTagCompound == null ? null : (NBTTagList)this.stackTagCompound.getTag("ench");
 	}
 

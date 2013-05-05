@@ -331,7 +331,7 @@ public abstract class Container {
 
 					if (var24.getHasStack() && var23) {
 						var21 = var24.getStack();
-						var6.setInventorySlotContents(par2, var21);
+						var6.setInventorySlotContents(par2, var21.copy());
 
 						if ((var24.inventory != var6 || !var24.isItemValid(var22)) && var22 != null) {
 							if (var19 > -1) {
@@ -361,7 +361,7 @@ public abstract class Container {
 			} else if (par3 == 4 && var6.getItemStack() == null && par1 >= 0) {
 				var24 = (Slot)this.inventorySlots.get(par1);
 
-				if (var24 != null && var24.getHasStack()) {
+				if (var24 != null && var24.getHasStack() && var24.canTakeStack(par4EntityPlayer)) {
 					var22 = var24.decrStackSize(par2 == 0 ? 1 : var24.getStack().stackSize);
 					var24.onPickupFromSlot(par4EntityPlayer, var22);
 					par4EntityPlayer.dropPlayerItem(var22);

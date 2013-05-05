@@ -327,7 +327,7 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
 		StatList.nopInit();
 		// MCPatcher Start
 		MCPatcherUtils.setMinecraft(this);
-		MCPatcherUtils.setVersions("1.5.1", "3.0.3");
+		MCPatcherUtils.setVersions("1.5.2", "3.1.0-beta4");
 		// MCPatcher End
 		this.fullscreen = false;
 		this.hasCrashed = false;
@@ -440,7 +440,7 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
 			Display.setDisplayMode(new DisplayMode(this.displayWidth, this.displayHeight));
 		}
 
-		Display.setTitle("Minecraft Minecraft 1.5.1");
+		Display.setTitle("Minecraft Minecraft 1.5.2");
 		this.getLogAgent().logInfo("LWJGL Version: " + Sys.getVersion());
 
 		try {
@@ -504,7 +504,9 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
 		this.checkGLError("Startup");
 		this.sndManager.loadSoundSettings(this.gameSettings);
 		this.renderGlobal = new RenderGlobal(this, this.renderEngine);
+		TexturePackChangeHandler.earlyInitialize("com.prupe.mcpatcher.TileLoader", "init");
 		TexturePackChangeHandler.earlyInitialize("com.prupe.mcpatcher.mod.CTMUtils", "reset");
+		TexturePackChangeHandler.earlyInitialize("com.prupe.mcpatcher.mod.CITUtils", "init");
 		TexturePackChangeHandler.beforeChange1();
 		this.renderEngine.refreshTextureMaps();
 		TexturePackChangeHandler.afterChange1();
@@ -2366,9 +2368,9 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
 					} else if (var11.getMinecartType() == 1) {
 						var2 = Item.minecartCrate.itemID;
 					} else if (var11.getMinecartType() == 3) {
-						var2 = Item.tntMinecart.itemID;
+						var2 = Item.minecartTnt.itemID;
 					} else if (var11.getMinecartType() == 5) {
-						var2 = Item.hopperMinecart.itemID;
+						var2 = Item.minecartHopper.itemID;
 					} else {
 						var2 = Item.minecartEmpty.itemID;
 					}

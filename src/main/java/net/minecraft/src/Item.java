@@ -182,8 +182,8 @@ public class Item {
 	public static Item comparator = (new ItemReed(148, Block.redstoneComparatorIdle)).setUnlocalizedName("comparator").setCreativeTab(CreativeTabs.tabRedstone);
 	public static Item netherrackBrick = (new Item(149)).setUnlocalizedName("netherbrick").setCreativeTab(CreativeTabs.tabMaterials);
 	public static Item netherQuartz = (new Item(150)).setUnlocalizedName("netherquartz").setCreativeTab(CreativeTabs.tabMaterials);
-	public static Item tntMinecart = (new ItemMinecart(151, 3)).setUnlocalizedName("minecartTnt");
-	public static Item hopperMinecart = (new ItemMinecart(152, 5)).setUnlocalizedName("minecartHopper");
+	public static Item minecartTnt = (new ItemMinecart(151, 3)).setUnlocalizedName("minecartTnt");
+	public static Item minecartHopper = (new ItemMinecart(152, 5)).setUnlocalizedName("minecartHopper");
 	public static Item record13 = (new ItemRecord(2000, "13")).setUnlocalizedName("record");
 	public static Item recordCat = (new ItemRecord(2001, "cat")).setUnlocalizedName("record");
 	public static Item recordBlocks = (new ItemRecord(2002, "blocks")).setUnlocalizedName("record");
@@ -196,6 +196,7 @@ public class Item {
 	public static Item recordWard = (new ItemRecord(2009, "ward")).setUnlocalizedName("record");
 	public static Item record11 = (new ItemRecord(2010, "11")).setUnlocalizedName("record");
 	public static Item recordWait = (new ItemRecord(2011, "wait")).setUnlocalizedName("record");
+
 
 	/** The ID of this item. */
 	public final int itemID;

@@ -25,7 +25,7 @@ public class Packet56MapChunks extends Packet {
 
 	/** total size of the compressed data */
 	private int dataLength;
-
+	
 	/**
 	 * Whether or not the chunk data contains a light nibble array. This is true in the main world, false in the end +
 	 * nether.
@@ -96,19 +96,18 @@ public class Packet56MapChunks extends Packet {
 		}
 
 		par1DataInputStream.readFully(chunkDataNotCompressed, 0, this.dataLength);
+
 		// Spout Start
 		byte[] inflateBuffer = inflateBufferCache.get();
 		int requiredLength = 196864 * var2;
-
 		if (inflateBuffer == null || inflateBuffer.length < requiredLength) {
 			inflateBuffer = new byte[requiredLength];
 			inflateBufferCache = new SoftReference<byte[]>(inflateBuffer);
 		}
-
 		Inflater var4 = new Inflater();
 		var4.setInput(chunkDataNotCompressed, 0, this.dataLength);
-		int length = 0;
 
+		int length = 0;
 		try {
 			length = var4.inflate(inflateBuffer);
 		} catch (DataFormatException var12) {
@@ -119,6 +118,7 @@ public class Packet56MapChunks extends Packet {
 
 		byte[] var3 = ChunkNetCache.handle(inflateBuffer, length, this.dataLength, 16 * var2, Integer.MAX_VALUE, Integer.MAX_VALUE);
 		// Spout End
+
 		int var5 = 0;
 
 		for (int var6 = 0; var6 < var2; ++var6) {

@@ -17,6 +17,7 @@ import org.spoutcraft.client.io.CustomTextureManager;
 // Spout End
 
 public abstract class EntityLiving extends Entity {
+
 	/**
 	 * An array of probabilities that determines whether a random enchantment should be added to the held item. Indexed by
 	 * difficulty.
@@ -27,7 +28,7 @@ public abstract class EntityLiving extends Entity {
 	private static final float[] armorEnchantmentProbability = new float[] {0.0F, 0.0F, 0.25F, 0.5F};
 
 	/** Probability to get armor */
-	private static final float[] armorProbability = new float[] {0.0F, 0.0F, 0.05F, 0.02F};
+	private static final float[] armorProbability = new float[] {0.0F, 0.0F, 0.05F, 0.07F};
 
 	/** Probability to pick up loot */
 	public static final float[] pickUpLootProability = new float[] {0.0F, 0.1F, 0.15F, 0.45F};
@@ -168,7 +169,7 @@ public abstract class EntityLiving extends Entity {
 
 	/** Chances for each equipment piece from dropping when this entity dies. */
 	protected float[] equipmentDropChances = new float[5];
-
+	
 	/** The equipment this mob was previously wearing, used for syncing. */
 	private ItemStack[] previousEquipment = new ItemStack[5];
 
@@ -455,13 +456,11 @@ public abstract class EntityLiving extends Entity {
 	public String getTexture() {
 		// Spout Start
 		String custom = getCustomTextureUrl(getTextureToRender());
-
 		if (custom == null || CustomTextureManager.getTexturePathFromUrl(custom) == null) {
 			return this.texture;
 		} else {
 			return CustomTextureManager.getTexturePathFromUrl(custom);
 		}
-
 		// Spout End
 	}
 
@@ -1042,7 +1041,7 @@ public abstract class EntityLiving extends Entity {
 	 */
 	// Spout Start - protected to public
 	public void damageEntity(DamageSource par1DamageSource, int par2) { // Spout protected -> public
-		// Spout End
+	// Spout End
 		if (!this.isEntityInvulnerable()) {
 			par2 = this.applyArmorCalculations(par1DamageSource, par2);
 			par2 = this.applyPotionDamageCalculations(par1DamageSource, par2);
@@ -1205,7 +1204,7 @@ public abstract class EntityLiving extends Entity {
 		if (this.isInWater() && (!(this instanceof EntityPlayer) || !((EntityPlayer)this).capabilities.isFlying)) {
 			var9 = this.posY;
 			// Spout Start - Swimming mod
-			this.moveFlying(par1, par2, ((float)((this.isAIEnabled() ? 0.04F : 0.02F) * getData().getSwimmingMod())));
+			this.moveFlying(par1, par2, ((float) ((this.isAIEnabled() ? 0.04F : 0.02F) * getData().getSwimmingMod())));
 			// Spout End
 			this.moveEntity(this.motionX, this.motionY, this.motionZ);
 			this.motionX *= 0.800000011920929D;
@@ -1247,15 +1246,12 @@ public abstract class EntityLiving extends Entity {
 					int z = MathHelper.floor_double(this.posZ);
 					org.spoutcraft.client.block.SpoutcraftChunk chunk = Spoutcraft.getChunkAt(worldObj, x, y, z);
 					short customId = chunk.getCustomBlockId(x, y, z);
-
 					if (customId > 0) {
 						CustomBlock block = MaterialData.getCustomBlock(customId);
-
 						if (block != null) {
 							var3 = block.getFriction() * 0.98F;
 						}
 					}
-
 					// Spout End
 				}
 			}
@@ -1266,18 +1262,18 @@ public abstract class EntityLiving extends Entity {
 			if (this.onGround) {
 				if (this.isAIEnabled()) {
 					// Spout Start
-					var5 = (float)(this.getAIMoveSpeed() * getData().getWalkingMod());
+					var5 = (float) (this.getAIMoveSpeed() * getData().getWalkingMod());
 					// Spout End
 				} else {
 					// Spout Start
-					var5 = (float)(this.landMovementFactor * getData().getWalkingMod());
+					var5 = (float) (this.landMovementFactor * getData().getWalkingMod());
 					// Spout End
 				}
 
 				var5 *= var8;
 			} else {
 				// Spout Start - Added AirSpeed modifier
-				var5 = (float)(this.jumpMovementFactor * getData().getAirspeedMod());
+				var5 = (float) (this.jumpMovementFactor * getData().getAirspeedMod());
 				// Spout End
 			}
 
@@ -1295,15 +1291,12 @@ public abstract class EntityLiving extends Entity {
 					int y = MathHelper.floor_double(this.boundingBox.minY) - 1;
 					int z = MathHelper.floor_double(this.posZ);
 					short customId = Spoutcraft.getChunkAt(worldObj, x, y, z).getCustomBlockId(x, y, z);
-
 					if (customId > 0) {
 						CustomBlock block = MaterialData.getCustomBlock(customId);
-
 						if (block != null) {
 							var3 = block.getFriction() * 0.98F;
 						}
 					}
-
 					// Spout End
 				}
 			}
@@ -1393,7 +1386,6 @@ public abstract class EntityLiving extends Entity {
 	public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound) {
 		// MCPatcher Start
 		com.prupe.mcpatcher.mod.MobRandomizer$ExtraInfo.writeToNBT(this, par1NBTTagCompound);
-
 		// MCPatcher End
 		if (this.health < -32768) {
 			this.health = -32768;
@@ -1615,10 +1607,10 @@ public abstract class EntityLiving extends Entity {
 			while (var12.hasNext()) {
 				EntityItem var4 = (EntityItem)var12.next();
 
-				// Spout Start - item instead of getEntityItem
-				if (!var4.isDead && var4.getEntityItem() != null) {
+				// Spout Start - item instead of func_92059_d
+				if (!var4.isDead && var4.getEntityItem()!= null) {
 					ItemStack var13 = var4.getEntityItem();
-					// Spout End
+				// Spout End
 					int var6 = getArmorPosition(var13);
 
 					if (var6 > -1) {
@@ -2413,17 +2405,17 @@ public abstract class EntityLiving extends Entity {
 		if (par0ItemStack.itemID != Block.pumpkin.blockID && par0ItemStack.itemID != Item.skull.itemID) {
 			if (par0ItemStack.getItem() instanceof ItemArmor) {
 				switch (((ItemArmor)par0ItemStack.getItem()).armorType) {
-					case 0:
-						return 4;
+				case 0:
+					return 4;
 
-					case 1:
-						return 3;
+				case 1:
+					return 3;
 
-					case 2:
-						return 2;
+				case 2:
+					return 2;
 
-					case 3:
-						return 1;
+				case 3:
+					return 1;
 				}
 			}
 
@@ -2567,37 +2559,32 @@ public abstract class EntityLiving extends Entity {
 		this.entityData = e;
 	}
 
-	public String getCustomTextureUrl(byte id) {
+	public String getCustomTextureUrl(byte id){
 		if (getData().getCustomTextures() == null) {
 			return null;
 		}
-
 		return getData().getCustomTextures().get(id);
 	}
 
-	public String getCustomTexture(byte id) {
-		if (getCustomTextureUrl(id) != null) {
+	public String getCustomTexture(byte id){
+		if(getCustomTextureUrl(id) != null ) {
 			return CustomTextureManager.getTexturePathFromUrl(getCustomTextureUrl(id));
 		}
-
 		return null;
 	}
 
 	public String getCustomTexture(EntitySkinType type, String def) {
 		String tex = getCustomTexture(type.getId());
-
 		if (tex == null) {
 			tex = def;
 		}
-
 		return tex;
 	}
 
-	public void setCustomTexture(String url, byte id) {
+	public void setCustomTexture(String url, byte id){
 		if (url != null) {
 			CustomTextureManager.downloadTexture(url);
 		}
-
 		if (getData().getCustomTextures() != null) {
 			getData().getCustomTextures().put(id, url);
 		}
@@ -2658,4 +2645,9 @@ public abstract class EntityLiving extends Entity {
 	public void setCanPickUpLoot(boolean par1) {
 		this.canPickUpLoot = par1;
 	}
+
+	public boolean func_104002_bU() {
+		return this.persistenceRequired;
+	}
+
 }

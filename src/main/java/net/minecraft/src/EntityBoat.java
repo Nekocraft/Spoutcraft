@@ -299,7 +299,7 @@ public class EntityBoat extends Entity {
 			this.moveEntity(this.motionX, this.motionY, this.motionZ);
 
 			if (this.isCollidedHorizontally && var23 > 0.2D) {
-				if (!this.worldObj.isRemote) {
+				if (!this.worldObj.isRemote && !this.isDead) {
 					this.setDead();
 					int var24;
 

@@ -14,6 +14,7 @@ import com.prupe.mcpatcher.mod.Colorizer;
 // MCPatcher End
 // Spout Start
 import net.minecraft.client.Minecraft;
+import net.minecraft.src.NBTTagCompound;
 import gnu.trove.map.hash.TIntObjectHashMap;
 import org.spoutcraft.api.Spoutcraft;
 import org.spoutcraft.api.material.CustomBlock;
@@ -25,6 +26,7 @@ import org.spoutcraft.client.config.Configuration;
 // Spout End
 
 public abstract class World implements IBlockAccess {
+
 	/**
 	 * boolean; if true updates scheduled by scheduleBlockUpdate happen immediately
 	 */
@@ -107,7 +109,7 @@ public abstract class World implements IBlockAccess {
 	private final Vec3Pool vecPool = new Vec3Pool(300, 2000);
 	private final Calendar theCalendar = Calendar.getInstance();
 	protected Scoreboard worldScoreboard = new Scoreboard();
-
+	
 	/** The log agent for this world. */
 	private final ILogAgent worldLogAgent;
 	private ArrayList collidingBoundingBoxes = new ArrayList();
@@ -350,19 +352,19 @@ public abstract class World implements IBlockAccess {
 	public boolean checkChunksExist(int par1, int par2, int par3, int par4, int par5, int par6) {
 		if (par5 >= 0 && par2 < 256) {
 			par1 >>= 4;
-			par3 >>= 4;
-			par4 >>= 4;
-			par6 >>= 4;
+		par3 >>= 4;
+		par4 >>= 4;
+		par6 >>= 4;
 
-			for (int var7 = par1; var7 <= par4; ++var7) {
-				for (int var8 = par3; var8 <= par6; ++var8) {
-					if (!this.chunkExists(var7, var8)) {
-						return false;
-					}
+		for (int var7 = par1; var7 <= par4; ++var7) {
+			for (int var8 = par3; var8 <= par6; ++var8) {
+				if (!this.chunkExists(var7, var8)) {
+					return false;
 				}
 			}
+		}
 
-			return true;
+		return true;
 		} else {
 			return false;
 		}
@@ -390,9 +392,9 @@ public abstract class World implements IBlockAccess {
 	}
 
 	/**
-	 * Sets the block ID and metadata at a given location. Args: X, Y, Z, new block ID, new metadata, flags. Flag 0x02 will
-	 * trigger a block update both on server and on client, flag 0x04, if used with 0x02, will prevent a block update on
-	 * client worlds. Flag 0x01 will pass the original block ID when notifying adjacent blocks, otherwise it will pass 0.
+	 * Sets the block ID and metadata at a given location. Args: X, Y, Z, new block ID, new metadata, flags. Flag 1 will
+	 * cause a block update. Flag 2 will send the change to clients (you almost always want this). Flag 4 prevents the
+	 * block from being re-rendered, if this is a client world. Flags can be added together.
 	 */
 	public boolean setBlock(int par1, int par2, int par3, int par4, int par5, int par6) {
 		if (par1 >= -30000000 && par3 >= -30000000 && par1 < 30000000 && par3 < 30000000) {
@@ -796,38 +798,38 @@ public abstract class World implements IBlockAccess {
 				return par1EnumSkyBlock.defaultLightValue;
 			} else if (par2 >= -30000000 && par4 >= -30000000 && par2 < 30000000 && par4 < 30000000) {
 				int var5 = par2 >> 4;
-				int var6 = par4 >> 4;
+			int var6 = par4 >> 4;
 
-				if (!this.chunkExists(var5, var6)) {
-					return par1EnumSkyBlock.defaultLightValue;
-				} else if (Block.useNeighborBrightness[this.getBlockId(par2, par3, par4)]) {
-					int var12 = this.getSavedLightValue(par1EnumSkyBlock, par2, par3 + 1, par4);
-					int var8 = this.getSavedLightValue(par1EnumSkyBlock, par2 + 1, par3, par4);
-					int var9 = this.getSavedLightValue(par1EnumSkyBlock, par2 - 1, par3, par4);
-					int var10 = this.getSavedLightValue(par1EnumSkyBlock, par2, par3, par4 + 1);
-					int var11 = this.getSavedLightValue(par1EnumSkyBlock, par2, par3, par4 - 1);
+			if (!this.chunkExists(var5, var6)) {
+				return par1EnumSkyBlock.defaultLightValue;
+			} else if (Block.useNeighborBrightness[this.getBlockId(par2, par3, par4)]) {
+				int var12 = this.getSavedLightValue(par1EnumSkyBlock, par2, par3 + 1, par4);
+				int var8 = this.getSavedLightValue(par1EnumSkyBlock, par2 + 1, par3, par4);
+				int var9 = this.getSavedLightValue(par1EnumSkyBlock, par2 - 1, par3, par4);
+				int var10 = this.getSavedLightValue(par1EnumSkyBlock, par2, par3, par4 + 1);
+				int var11 = this.getSavedLightValue(par1EnumSkyBlock, par2, par3, par4 - 1);
 
-					if (var8 > var12) {
-						var12 = var8;
-					}
-
-					if (var9 > var12) {
-						var12 = var9;
-					}
-
-					if (var10 > var12) {
-						var12 = var10;
-					}
-
-					if (var11 > var12) {
-						var12 = var11;
-					}
-
-					return var12;
-				} else {
-					Chunk var7 = this.getChunkFromChunkCoords(var5, var6);
-					return var7.getSavedLightValue(par1EnumSkyBlock, par2 & 15, par3, par4 & 15);
+				if (var8 > var12) {
+					var12 = var8;
 				}
+
+				if (var9 > var12) {
+					var12 = var9;
+				}
+
+				if (var10 > var12) {
+					var12 = var10;
+				}
+
+				if (var11 > var12) {
+					var12 = var11;
+				}
+
+				return var12;
+			} else {
+				Chunk var7 = this.getChunkFromChunkCoords(var5, var6);
+				return var7.getSavedLightValue(par1EnumSkyBlock, par2 & 15, par3, par4 & 15);
+			}
 			} else {
 				return par1EnumSkyBlock.defaultLightValue;
 			}
@@ -849,14 +851,14 @@ public abstract class World implements IBlockAccess {
 
 		if (par2 >= -30000000 && par4 >= -30000000 && par2 < 30000000 && par4 < 30000000) {
 			int var5 = par2 >> 4;
-			int var6 = par4 >> 4;
+		int var6 = par4 >> 4;
 
-			if (!this.chunkExists(var5, var6)) {
-				return par1EnumSkyBlock.defaultLightValue;
-			} else {
-				Chunk var7 = this.getChunkFromChunkCoords(var5, var6);
-				return var7.getSavedLightValue(par1EnumSkyBlock, par2 & 15, par3, par4 & 15);
-			}
+		if (!this.chunkExists(var5, var6)) {
+			return par1EnumSkyBlock.defaultLightValue;
+		} else {
+			Chunk var7 = this.getChunkFromChunkCoords(var5, var6);
+			return var7.getSavedLightValue(par1EnumSkyBlock, par2 & 15, par3, par4 & 15);
+		}
 		} else {
 			return par1EnumSkyBlock.defaultLightValue;
 		}
@@ -1326,7 +1328,7 @@ public abstract class World implements IBlockAccess {
 	/**
 	 * calculates and returns a list of colliding bounding boxes within a given AABB
 	 */
-	public List getAllCollidingBoundingBoxes(AxisAlignedBB par1AxisAlignedBB) {
+	public List getCollidingBlockBounds(AxisAlignedBB par1AxisAlignedBB) {
 		this.collidingBoundingBoxes.clear();
 		int var2 = MathHelper.floor_double(par1AxisAlignedBB.minX);
 		int var3 = MathHelper.floor_double(par1AxisAlignedBB.maxX + 1.0D);
@@ -1430,8 +1432,8 @@ public abstract class World implements IBlockAccess {
 			var11 = (float)(var9 >> 8 & 255) / 255.0F;
 			var12 = (float)(var9 & 255) / 255.0F;
 		}
-
 		// MCPatcher End
+
 		var10 *= var4;
 		var11 *= var4;
 		var12 *= var4;
@@ -2529,19 +2531,19 @@ public abstract class World implements IBlockAccess {
 			int var4 = this.updateLCG >> 2;
 			int var5 = var4 & 15;
 			int var6 = var4 >> 8 & 15;
-			int var7 = var4 >> 16 & 127;
-			int var8 = par3Chunk.getBlockID(var5, var7, var6);
-			var5 += par1;
-			var6 += par2;
+				int var7 = var4 >> 16 & 127;
+				int var8 = par3Chunk.getBlockID(var5, var7, var6);
+				var5 += par1;
+				var6 += par2;
 
-			if (var8 == 0 && this.getFullBlockLightValue(var5, var7, var6) <= this.rand.nextInt(8) && this.getSavedLightValue(EnumSkyBlock.Sky, var5, var7, var6) <= 0) {
-				EntityPlayer var9 = this.getClosestPlayer((double)var5 + 0.5D, (double)var7 + 0.5D, (double)var6 + 0.5D, 8.0D);
+				if (var8 == 0 && this.getFullBlockLightValue(var5, var7, var6) <= this.rand.nextInt(8) && this.getSavedLightValue(EnumSkyBlock.Sky, var5, var7, var6) <= 0) {
+					EntityPlayer var9 = this.getClosestPlayer((double)var5 + 0.5D, (double)var7 + 0.5D, (double)var6 + 0.5D, 8.0D);
 
-				if (var9 != null && var9.getDistanceSq((double)var5 + 0.5D, (double)var7 + 0.5D, (double)var6 + 0.5D) > 4.0D) {
-					this.playSoundEffect((double)var5 + 0.5D, (double)var7 + 0.5D, (double)var6 + 0.5D, "ambient.cave.cave", 0.7F, 0.8F + this.rand.nextFloat() * 0.2F);
-					this.ambientTickCountdown = this.rand.nextInt(12000) + 6000;
+					if (var9 != null && var9.getDistanceSq((double)var5 + 0.5D, (double)var7 + 0.5D, (double)var6 + 0.5D) > 4.0D) {
+						this.playSoundEffect((double)var5 + 0.5D, (double)var7 + 0.5D, (double)var6 + 0.5D, "ambient.cave.cave", 0.7F, 0.8F + this.rand.nextFloat() * 0.2F);
+						this.ambientTickCountdown = this.rand.nextInt(12000) + 6000;
+					}
 				}
-			}
 		}
 
 		this.theProfiler.endStartSection("checkLight");
@@ -2741,22 +2743,19 @@ public abstract class World implements IBlockAccess {
 	private int computeBlockLightValue(int par1, int par2, int par3, int par4, int par5, int par6) {
 		// Spout Start
 		int light = Block.lightValue[par5];
+
 		// Fix for generation-time accessing
 		short customId = 0;
-
 		if (SpoutClient.getInstance().getRawWorld() != null) {
 			SpoutcraftChunk chunk = Spoutcraft.getChunkAt(SpoutClient.getInstance().getRawWorld(), par2, par3, par4);
-			customId = chunk.getCustomBlockId(par2, par3, par4);
+			customId = chunk.getCustomBlockId(par2, par3, par4);			
 		}
-
 		if (customId > 0) {
 			CustomBlock block = MaterialData.getCustomBlock(customId);
-
 			if (block != null) {
 				light = block.getLightLevel();
 			}
 		}
-
 		int var7 = light;
 		// Spout End
 		int var8 = this.getSavedLightValue(EnumSkyBlock.Block, par2 - 1, par3, par4) - par6;
@@ -2973,7 +2972,6 @@ public abstract class World implements IBlockAccess {
 								lightUpdateBlockList[var6++] = var10 - par2 + 32 + (var24 - par3 + 32 << 6) + (var12 + 1 - par4 + 32 << 12);
 							}
 						}
-
 						// Spout End
 					}
 				}
@@ -3097,7 +3095,7 @@ public abstract class World implements IBlockAccess {
 		for (int var3 = 0; var3 < this.loadedEntityList.size(); ++var3) {
 			Entity var4 = (Entity)this.loadedEntityList.get(var3);
 
-			if (par1Class.isAssignableFrom(var4.getClass())) {
+			if ((!(var4 instanceof EntityLiving) || !((EntityLiving)var4).func_104002_bU()) && par1Class.isAssignableFrom(var4.getClass())) {
 				++var2;
 			}
 		}
@@ -3725,9 +3723,8 @@ public abstract class World implements IBlockAccess {
 
 	// Spout Start
 	public void doColorfulStuff() {
-		for (int i = 0; i < this.playerEntities.size(); ++i) {
+		for(int i = 0; i < this.playerEntities.size(); ++i) {
 			EntityPlayer ep = (EntityPlayer)this.playerEntities.get(i);
-
 			if (ep != Minecraft.theMinecraft.thePlayer || Minecraft.theMinecraft.gameSettings.thirdPersonView != 0) {
 				ep.doFancyStuff();
 			}
@@ -3736,17 +3733,14 @@ public abstract class World implements IBlockAccess {
 
 	public int getGrassColorCache(int x, int y, int z) {
 		Chunk chunk = getChunkFromBlockCoords(x, z);
-
 		if (chunk != null) {
 			return chunk.grassColorCache;
 		}
-
 		return 0xffffff;
 	}
 
 	public void setGrassColorCache(int x, int y, int z, int color) {
 		Chunk chunk = getChunkFromBlockCoords(x, z);
-
 		if (chunk != null) {
 			chunk.grassColorCache = color;
 		}
@@ -3754,17 +3748,14 @@ public abstract class World implements IBlockAccess {
 
 	public int getWaterColorCache(int x, int y, int z) {
 		Chunk chunk = getChunkFromBlockCoords(x, z);
-
 		if (chunk != null) {
 			return chunk.waterColorCache;
 		}
-
 		return 0xffffff;
 	}
 
 	public void setWaterColorCache(int x, int y, int z, int color) {
 		Chunk chunk = getChunkFromBlockCoords(x, z);
-
 		if (chunk != null) {
 			chunk.waterColorCache = color;
 		}
