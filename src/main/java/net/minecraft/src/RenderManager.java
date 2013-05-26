@@ -314,12 +314,12 @@ public class RenderManager {
 		return this.fontRenderer;
 	}
 
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void updateIcons(IconRegister par1IconRegister) {
 		Iterator var2 = this.entityRenderMap.values().iterator();
 
 		while (var2.hasNext()) {
 			Render var3 = (Render)var2.next();
-			var3.registerIcons(par1IconRegister);
+			var3.updateIcons(par1IconRegister);
 		}
 	}
 }

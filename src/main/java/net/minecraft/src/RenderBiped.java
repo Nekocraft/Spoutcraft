@@ -8,8 +8,10 @@ public class RenderBiped extends RenderLiving {
 	protected ModelBiped field_82423_g;
 	protected ModelBiped field_82425_h;
 
-	/** List of armor texture filenames. */
-	private static final String[] bipedArmorFilenamePrefix = new String[] {"cloth", "chain", "iron", "diamond", "gold"};
+	/**
+	 * List of armor texture filenames.
+	 */
+	private static final String[] bipedArmorFilenamePrefix = new String[]{"cloth", "chain", "iron", "diamond", "gold"};
 
 	public RenderBiped(ModelBiped par1ModelBiped, float par2) {
 		this(par1ModelBiped, par2, 1.0F);

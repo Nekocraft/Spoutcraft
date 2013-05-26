@@ -273,8 +273,7 @@ public class TileEntityFurnace extends TileEntity implements ISidedInventory {
 			--this.furnaceItemStacks[0].stackSize;
 
 			if (this.furnaceItemStacks[0].stackSize <= 0) {
-				Item var2 = this.furnaceItemStacks[0].getItem().getContainerItem();
-				this.furnaceItemStacks[0] = var2 != null ? new ItemStack(var2) : null;
+				this.furnaceItemStacks[0] = null;
 			}
 		}
 	}

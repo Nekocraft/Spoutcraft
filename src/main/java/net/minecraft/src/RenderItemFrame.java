@@ -9,7 +9,7 @@ public class RenderItemFrame extends Render {
 	private final RenderBlocks renderBlocksInstance = new RenderBlocks();
 	private Icon field_94147_f;
 
-	public void registerIcons(IconRegister par1IconRegister) {
+	public void updateIcons(IconRegister par1IconRegister) {
 		this.field_94147_f = par1IconRegister.registerIcon("itemframe_back");
 	}
 
@@ -91,7 +91,6 @@ public class RenderItemFrame extends Render {
 			} else {
 				GL11.glTranslatef(-0.453125F * (float)Direction.offsetX[par1EntityItemFrame.hangingDirection], -0.18F, -0.453125F * (float)Direction.offsetZ[par1EntityItemFrame.hangingDirection]);
 			}
-
 			// Spout End
 			GL11.glRotatef(180.0F + par1EntityItemFrame.rotationYaw, 0.0F, 1.0F, 0.0F);
 			GL11.glRotatef((float)(-90 * par1EntityItemFrame.getRotation()), 0.0F, 0.0F, 1.0F);

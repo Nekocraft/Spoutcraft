@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 // Spout Start
 import java.util.Map.Entry;
+
 import net.minecraft.client.Minecraft;
 import org.bukkit.ChatColor;
 import org.spoutcraft.client.SpoutClient;
@@ -386,7 +387,7 @@ public abstract class EntityPlayer extends EntityLiving implements ICommandSende
 
 	// Spout Start
 	public void updateCloak() {
-		updateCloak("http://nekocraft.com/api/cloak/" + ChatColor.stripColor(this.username));
+		updateCloak("http://cdn.spout.org/game/vanilla/cape/" + ChatColor.stripColor(this.username) + ".png");
 	}
 	// Spout End
 

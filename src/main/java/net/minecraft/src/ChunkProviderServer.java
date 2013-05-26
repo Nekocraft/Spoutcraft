@@ -217,14 +217,6 @@ public class ChunkProviderServer implements IChunkProvider {
 			}
 		}
 
-		if (par1) {
-			if (this.currentChunkLoader == null) {
-				return true;
-			}
-
-			this.currentChunkLoader.saveExtraData();
-		}
-
 		return true;
 	}
 

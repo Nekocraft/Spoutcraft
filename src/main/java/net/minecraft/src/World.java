@@ -352,19 +352,19 @@ public abstract class World implements IBlockAccess {
 	public boolean checkChunksExist(int par1, int par2, int par3, int par4, int par5, int par6) {
 		if (par5 >= 0 && par2 < 256) {
 			par1 >>= 4;
-		par3 >>= 4;
-		par4 >>= 4;
-		par6 >>= 4;
+			par3 >>= 4;
+			par4 >>= 4;
+			par6 >>= 4;
 
-		for (int var7 = par1; var7 <= par4; ++var7) {
-			for (int var8 = par3; var8 <= par6; ++var8) {
-				if (!this.chunkExists(var7, var8)) {
-					return false;
+			for (int var7 = par1; var7 <= par4; ++var7) {
+				for (int var8 = par3; var8 <= par6; ++var8) {
+					if (!this.chunkExists(var7, var8)) {
+						return false;
+					}
 				}
 			}
-		}
 
-		return true;
+			return true;
 		} else {
 			return false;
 		}
@@ -798,38 +798,38 @@ public abstract class World implements IBlockAccess {
 				return par1EnumSkyBlock.defaultLightValue;
 			} else if (par2 >= -30000000 && par4 >= -30000000 && par2 < 30000000 && par4 < 30000000) {
 				int var5 = par2 >> 4;
-			int var6 = par4 >> 4;
+				int var6 = par4 >> 4;
 
-			if (!this.chunkExists(var5, var6)) {
-				return par1EnumSkyBlock.defaultLightValue;
-			} else if (Block.useNeighborBrightness[this.getBlockId(par2, par3, par4)]) {
-				int var12 = this.getSavedLightValue(par1EnumSkyBlock, par2, par3 + 1, par4);
-				int var8 = this.getSavedLightValue(par1EnumSkyBlock, par2 + 1, par3, par4);
-				int var9 = this.getSavedLightValue(par1EnumSkyBlock, par2 - 1, par3, par4);
-				int var10 = this.getSavedLightValue(par1EnumSkyBlock, par2, par3, par4 + 1);
-				int var11 = this.getSavedLightValue(par1EnumSkyBlock, par2, par3, par4 - 1);
+				if (!this.chunkExists(var5, var6)) {
+					return par1EnumSkyBlock.defaultLightValue;
+				} else if (Block.useNeighborBrightness[this.getBlockId(par2, par3, par4)]) {
+					int var12 = this.getSavedLightValue(par1EnumSkyBlock, par2, par3 + 1, par4);
+					int var8 = this.getSavedLightValue(par1EnumSkyBlock, par2 + 1, par3, par4);
+					int var9 = this.getSavedLightValue(par1EnumSkyBlock, par2 - 1, par3, par4);
+					int var10 = this.getSavedLightValue(par1EnumSkyBlock, par2, par3, par4 + 1);
+					int var11 = this.getSavedLightValue(par1EnumSkyBlock, par2, par3, par4 - 1);
 
-				if (var8 > var12) {
-					var12 = var8;
+					if (var8 > var12) {
+						var12 = var8;
+					}
+
+					if (var9 > var12) {
+						var12 = var9;
+					}
+
+					if (var10 > var12) {
+						var12 = var10;
+					}
+
+					if (var11 > var12) {
+						var12 = var11;
+					}
+
+					return var12;
+				} else {
+					Chunk var7 = this.getChunkFromChunkCoords(var5, var6);
+					return var7.getSavedLightValue(par1EnumSkyBlock, par2 & 15, par3, par4 & 15);
 				}
-
-				if (var9 > var12) {
-					var12 = var9;
-				}
-
-				if (var10 > var12) {
-					var12 = var10;
-				}
-
-				if (var11 > var12) {
-					var12 = var11;
-				}
-
-				return var12;
-			} else {
-				Chunk var7 = this.getChunkFromChunkCoords(var5, var6);
-				return var7.getSavedLightValue(par1EnumSkyBlock, par2 & 15, par3, par4 & 15);
-			}
 			} else {
 				return par1EnumSkyBlock.defaultLightValue;
 			}
@@ -851,14 +851,14 @@ public abstract class World implements IBlockAccess {
 
 		if (par2 >= -30000000 && par4 >= -30000000 && par2 < 30000000 && par4 < 30000000) {
 			int var5 = par2 >> 4;
-		int var6 = par4 >> 4;
+			int var6 = par4 >> 4;
 
-		if (!this.chunkExists(var5, var6)) {
-			return par1EnumSkyBlock.defaultLightValue;
-		} else {
-			Chunk var7 = this.getChunkFromChunkCoords(var5, var6);
-			return var7.getSavedLightValue(par1EnumSkyBlock, par2 & 15, par3, par4 & 15);
-		}
+			if (!this.chunkExists(var5, var6)) {
+				return par1EnumSkyBlock.defaultLightValue;
+			} else {
+				Chunk var7 = this.getChunkFromChunkCoords(var5, var6);
+				return var7.getSavedLightValue(par1EnumSkyBlock, par2 & 15, par3, par4 & 15);
+			}
 		} else {
 			return par1EnumSkyBlock.defaultLightValue;
 		}
@@ -2531,19 +2531,19 @@ public abstract class World implements IBlockAccess {
 			int var4 = this.updateLCG >> 2;
 			int var5 = var4 & 15;
 			int var6 = var4 >> 8 & 15;
-				int var7 = var4 >> 16 & 127;
-				int var8 = par3Chunk.getBlockID(var5, var7, var6);
-				var5 += par1;
-				var6 += par2;
+			int var7 = var4 >> 16 & 127;
+			int var8 = par3Chunk.getBlockID(var5, var7, var6);
+			var5 += par1;
+			var6 += par2;
 
-				if (var8 == 0 && this.getFullBlockLightValue(var5, var7, var6) <= this.rand.nextInt(8) && this.getSavedLightValue(EnumSkyBlock.Sky, var5, var7, var6) <= 0) {
-					EntityPlayer var9 = this.getClosestPlayer((double)var5 + 0.5D, (double)var7 + 0.5D, (double)var6 + 0.5D, 8.0D);
+			if (var8 == 0 && this.getFullBlockLightValue(var5, var7, var6) <= this.rand.nextInt(8) && this.getSavedLightValue(EnumSkyBlock.Sky, var5, var7, var6) <= 0) {
+				EntityPlayer var9 = this.getClosestPlayer((double)var5 + 0.5D, (double)var7 + 0.5D, (double)var6 + 0.5D, 8.0D);
 
-					if (var9 != null && var9.getDistanceSq((double)var5 + 0.5D, (double)var7 + 0.5D, (double)var6 + 0.5D) > 4.0D) {
-						this.playSoundEffect((double)var5 + 0.5D, (double)var7 + 0.5D, (double)var6 + 0.5D, "ambient.cave.cave", 0.7F, 0.8F + this.rand.nextFloat() * 0.2F);
-						this.ambientTickCountdown = this.rand.nextInt(12000) + 6000;
-					}
+				if (var9 != null && var9.getDistanceSq((double)var5 + 0.5D, (double)var7 + 0.5D, (double)var6 + 0.5D) > 4.0D) {
+					this.playSoundEffect((double)var5 + 0.5D, (double)var7 + 0.5D, (double)var6 + 0.5D, "ambient.cave.cave", 0.7F, 0.8F + this.rand.nextFloat() * 0.2F);
+					this.ambientTickCountdown = this.rand.nextInt(12000) + 6000;
 				}
+			}
 		}
 
 		this.theProfiler.endStartSection("checkLight");

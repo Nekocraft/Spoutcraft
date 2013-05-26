@@ -23,7 +23,7 @@ public class EntityOtherPlayerMP extends EntityPlayer {
 
 		if (par2Str != null && par2Str.length() > 0) {
 			// Spout Start
-			this.skinUrl = "http://nekocraft.com/api/skin/" + ChatColor.stripColor(par2Str);
+			this.skinUrl = "http://cdn.spout.org/game/vanilla/skin/" + ChatColor.stripColor(par2Str) + ".png";
 			this.vip = Resources.getVIP(ChatColor.stripColor(par2Str));
 			// Spout End
 		}

@@ -310,5 +310,5 @@ public abstract class Render {
 		return this.renderManager.getFontRenderer();
 	}
 
-	public void registerIcons(IconRegister par1IconRegister) {}
+	public void updateIcons(IconRegister par1IconRegister) {}
 }

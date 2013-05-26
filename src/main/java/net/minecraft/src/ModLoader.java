@@ -73,7 +73,7 @@ public final class ModLoader {
 	private static final Map packetChannels = new HashMap();
 	public static final Properties props = new Properties();
 	private static BiomeGenBase[] standardBiomes;
-	public static final String VERSION = "ModLoader 1.5.1";
+	public static final String VERSION = "ModLoader 1.5.2";
 	private static NetClientHandler clientHandler = null;
 	private static final List commandList = new LinkedList();
 	private static final Map tradeItems = new HashMap();
@@ -358,11 +358,11 @@ public final class ModLoader {
 		}
 	}
 
-	public static void addRecipe(ItemStack var0, Object ... var1) {
+	public static void addRecipe(ItemStack var0, Object... var1) {
 		CraftingManager.getInstance().addRecipe(var0, var1);
 	}
 
-	public static void addShapelessRecipe(ItemStack var0, Object ... var1) {
+	public static void addShapelessRecipe(ItemStack var0, Object... var1) {
 		CraftingManager.getInstance().addShapelessRecipe(var0, var1);
 	}
 
@@ -549,8 +549,30 @@ public final class ModLoader {
 			field_armorList.setAccessible(true);
 			Field[] var0 = BiomeGenBase.class.getDeclaredFields();
 			LinkedList var1 = new LinkedList();
+			int var2 = 0;
 
-			for (int var2 = 0; var2 < var0.length; ++var2) {
+			while (true) {
+				if (var2 >= var0.length) {
+					standardBiomes = (BiomeGenBase[])((BiomeGenBase[])var1.toArray(new BiomeGenBase[0]));
+
+					try {
+						method_RegisterTileEntity = TileEntity.class.getDeclaredMethod("a", new Class[]{Class.class, String.class});
+					} catch (NoSuchMethodException var6) {
+						method_RegisterTileEntity = TileEntity.class.getDeclaredMethod("addMapping", new Class[]{Class.class, String.class});
+					}
+
+					method_RegisterTileEntity.setAccessible(true);
+
+					try {
+						method_RegisterEntityID = EntityList.class.getDeclaredMethod("a", new Class[]{Class.class, String.class, Integer.TYPE});
+					} catch (NoSuchMethodException var5) {
+						method_RegisterEntityID = EntityList.class.getDeclaredMethod("addMapping", new Class[]{Class.class, String.class, Integer.TYPE});
+					}
+
+					method_RegisterEntityID.setAccessible(true);
+					break;
+				}
+
 				Class var3 = var0[var2].getType();
 
 				if ((var0[var2].getModifiers() & 8) != 0 && var3.isAssignableFrom(BiomeGenBase.class)) {
@@ -560,25 +582,9 @@ public final class ModLoader {
 						var1.add(var4);
 					}
 				}
+
+				++var2;
 			}
-
-			standardBiomes = (BiomeGenBase[])((BiomeGenBase[])var1.toArray(new BiomeGenBase[0]));
-
-			try {
-				method_RegisterTileEntity = TileEntity.class.getDeclaredMethod("a", new Class[] {Class.class, String.class});
-			} catch (NoSuchMethodException var6) {
-				method_RegisterTileEntity = TileEntity.class.getDeclaredMethod("addMapping", new Class[] {Class.class, String.class});
-			}
-
-			method_RegisterTileEntity.setAccessible(true);
-
-			try {
-				method_RegisterEntityID = EntityList.class.getDeclaredMethod("a", new Class[] {Class.class, String.class, Integer.TYPE});
-			} catch (NoSuchMethodException var5) {
-				method_RegisterEntityID = EntityList.class.getDeclaredMethod("addMapping", new Class[] {Class.class, String.class, Integer.TYPE});
-			}
-
-			method_RegisterEntityID.setAccessible(true);
 		} catch (SecurityException var8) {
 			logger.throwing("ModLoader", "init", var8);
 			throwException(var8);
@@ -620,8 +626,8 @@ public final class ModLoader {
 				logger.addHandler(logHandler);
 			}
 
-			logger.fine("ModLoader 1.5.1 Initializing...");
-			System.out.println("ModLoader 1.5.1 Initializing...");
+			logger.fine("ModLoader 1.5.2 Initializing...");
+			System.out.println("ModLoader 1.5.2 Initializing...");
 			File var13 = new File(ModLoader.class.getProtectionDomain().getCodeSource().getLocation().toURI());
 			modDir.mkdirs();
 			readFromClassPath(var13);
@@ -1746,7 +1752,7 @@ public final class ModLoader {
 		var0.append("Mods loaded: ");
 		var0.append(getLoadedMods().size() + 1);
 		var0.append('\n');
-		var0.append("ModLoader 1.5.1");
+		var0.append("ModLoader 1.5.2");
 		var0.append('\n');
 		Iterator var1 = getLoadedMods().iterator();
 
