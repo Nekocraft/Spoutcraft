@@ -324,11 +324,14 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
 	// Spout End
 
 	public Minecraft(Canvas par1Canvas, MinecraftApplet par2MinecraftApplet, int par3, int par4, boolean par5) {
-		StatList.nopInit();
 		// MCPatcher Start
 		MCPatcherUtils.setMinecraft(this);
-		MCPatcherUtils.setVersions("1.5.2", "3.1.0-beta4");
+		MCPatcherUtils.setVersions("1.5.2", "3.0.4");
 		// MCPatcher End
+		//Spout start
+		theMinecraft = this;
+		//Spout end
+		StatList.nopInit();
 		this.fullscreen = false;
 		this.hasCrashed = false;
 		this.timer = new Timer(20.0F);
@@ -503,13 +506,9 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
 		GL11.glMatrixMode(GL11.GL_MODELVIEW);
 		this.checkGLError("Startup");
 		this.sndManager.loadSoundSettings(this.gameSettings);
-		this.renderGlobal = new RenderGlobal(this, this.renderEngine);
-		TexturePackChangeHandler.earlyInitialize("com.prupe.mcpatcher.TileLoader", "init");
-		TexturePackChangeHandler.earlyInitialize("com.prupe.mcpatcher.mod.CTMUtils", "reset");
-		TexturePackChangeHandler.earlyInitialize("com.prupe.mcpatcher.mod.CITUtils", "init");
-		TexturePackChangeHandler.beforeChange1();
+		this.renderGlobal = new RenderGlobal(this, this.renderEngine);		
+		TexturePackChangeHandler.earlyInitialize("com.prupe.mcpatcher.mod.CTMUtils", "reset");		
 		this.renderEngine.refreshTextureMaps();
-		TexturePackChangeHandler.afterChange1();
 		GL11.glViewport(0, 0, this.displayWidth, this.displayHeight);
 		this.effectRenderer = new EffectRenderer(this.theWorld, this.renderEngine);
 
@@ -597,20 +596,29 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
 	public static File getMinecraftDir() {
 		if (minecraftDir == null) {
 			// Spout Start
-			String workingDirName = "minecraft";
-
-			// if (spoutcraftLauncher)
-			// 	workingDirName = "spoutcraft";
-			if (portable) {
-				File portableDir = new File(workingDirName);
-
-				if (portableDir.exists() || portableDir.mkdirs()) {
-					minecraftDir = portableDir;
-				} else {
-					throw new RuntimeException("The working directory could not be created: " + portableDir);
-				}
+			//First try getting working dir from launcher
+			String workingDir = null;
+			if (Minecraft.theMinecraft != null && Minecraft.theMinecraft.mcApplet != null) {
+				workingDir = Minecraft.theMinecraft.mcApplet.getParameter("working_directory");
+			}
+			if (workingDir != null) {
+				minecraftDir = new File(workingDir);
 			} else {
-				minecraftDir = getAppDir(workingDirName);
+				//If that fails, guess at it
+				String workingDirName = "minecraft";
+				// if (spoutcraftLauncher) {
+				// 	workingDirName = "spoutcraft";
+				// }
+				if (portable) {
+					File portableDir = new File(workingDirName);
+					if (portableDir.exists() || portableDir.mkdirs()) {
+						minecraftDir = portableDir;
+					} else {
+						throw new RuntimeException("The working directory could not be created: " + portableDir);
+					}
+				} else {
+					minecraftDir = getAppDir(workingDirName);
+				}
 			}
 
 			// Spout End
@@ -1169,7 +1177,11 @@ public abstract class Minecraft implements Runnable, IPlayerUsage {
 
 				// Spout Start
 				if (theWorld != null) {
-					this.ingameGUI.getChatGUI().printChatMessage(ScreenShotHelper.saveScreenshot(minecraftDir, this.displayWidth, this.displayHeight));
+					if (Configuration.isResizeScreenshots()) {
+						this.ingameGUI.getChatGUI().printChatMessage(ScreenShotHelper.saveScreenshot(minecraftDir, Configuration.getResizedScreenshotWidth(), Configuration.getResizedScreenshotHeight()));
+					} else {
+						this.ingameGUI.getChatGUI().printChatMessage(ScreenShotHelper.saveScreenshot(minecraftDir, this.displayWidth, this.displayHeight));
+					}
 				}
 
 				// Spout End
