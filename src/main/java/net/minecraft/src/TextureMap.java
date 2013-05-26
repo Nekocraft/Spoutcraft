@@ -56,7 +56,7 @@ public class TextureMap implements IconRegister {
 			}
 
 			Minecraft.getMinecraft().renderGlobal.registerDestroyBlockIcons(this);
-			RenderManager.instance.registerIcons(this);
+			RenderManager.instance.updateIcons(this);
 		}
 
 		Item[] var19 = Item.itemsList;
