@@ -25,7 +25,9 @@ import org.spoutcraft.client.config.Configuration;
 
 public class AutosaveButton extends AutomatedButton {
 	public AutosaveButton() {
-		setTooltip("自动保存间隔\n默认频率 (2s) 不推荐.\n会导致\"卡死\".");
+		setTooltip("自动保存间隔\n" +
+				"默认频率 (2s) 不推荐.\n" +
+				"会导致卡顿.");
 	}
 
 	@Override
