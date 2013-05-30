@@ -94,7 +94,7 @@ public class FontUtils {
 
 		return var5;
 	}
-
+	/*
 	private static float getCharWidthf(FontRenderer var0, char var1) {
 		float var2 = (float)var0.getCharWidth(var1);
 		return var2 >= 0.0F && var0.charWidthf != null && var1 < var0.charWidthf.length && var1 >= 0 ? var0.charWidthf[var1] : var2;
@@ -136,6 +136,7 @@ public class FontUtils {
 
 		return var2;
 	}
+	*/
 
 	private static boolean isOpaque(int var0) {
 		int[] var1 = SPACERS;
