@@ -740,35 +740,20 @@ public class NetServerHandler extends NetHandler {
 				}
 			}
 
-			int var5;
-			int var8;
+			int var9;
 
-			for (var5 = 0; var5 < 4; ++var5) {
-				boolean var6 = true;
-
-				if (par1Packet130UpdateSign.signLines[var5].length() > 15) {
-					var6 = false;
-				} else {
-					for (var8 = 0; var8 < par1Packet130UpdateSign.signLines[var5].length(); ++var8) {
-						if (ChatAllowedCharacters.allowedCharacters.indexOf(par1Packet130UpdateSign.signLines[var5].charAt(var8)) < 0) {
-							var6 = false;
-						}
-					}
-				}
-
-				if (!var6) {
-					par1Packet130UpdateSign.signLines[var5] = "!?";
-				}
+			for (var9 = 0; var9 < 4; ++var9) {
+				par1Packet130UpdateSign.signLines[var9] = this.signText(par1Packet130UpdateSign.signLines[var9]);
 			}
 
 			if (var3 instanceof TileEntitySign) {
-				var5 = par1Packet130UpdateSign.xPosition;
-				int var9 = par1Packet130UpdateSign.yPosition;
-				var8 = par1Packet130UpdateSign.zPosition;
+				var9 = par1Packet130UpdateSign.xPosition;
+				int var8 = par1Packet130UpdateSign.yPosition;
+				int var6 = par1Packet130UpdateSign.zPosition;
 				TileEntitySign var7 = (TileEntitySign)var3;
 				System.arraycopy(par1Packet130UpdateSign.signLines, 0, var7.signText, 0, 4);
 				var7.onInventoryChanged();
-				var2.markBlockForUpdate(var5, var9, var8);
+				var2.markBlockForUpdate(var9, var8, var6);
 			}
 		}
 	}
@@ -937,5 +922,24 @@ public class NetServerHandler extends NetHandler {
 				}
 			}
 		}
+	}
+
+	private String signText(String var1) {
+		StringBuilder var2 = new StringBuilder();
+		int var3 = 0;
+
+		for (int var4 = var1.length(); var3 < var4; ++var3) {
+			char var5 = var1.charAt(var3);
+
+			if (ChatAllowedCharacters.isAllowedCharacter(var5)) {
+				if (var2.length() >= 15) {
+					return "!?";
+				}
+
+				var2.append(var5);
+			}
+		}
+
+		return var2.toString();
 	}
 }

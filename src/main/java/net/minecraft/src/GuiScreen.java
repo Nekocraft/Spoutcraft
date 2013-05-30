@@ -126,7 +126,7 @@ public class GuiScreen extends Gui {
 	 */
 	protected void keyTyped(char par1, int par2) {
 		if (par2 == 1) {
-			this.mc.displayGuiScreen((GuiScreen)null);
+			this.mc.displayGuiScreen(null);
 
 			// Spout Start
 			if (mc.currentScreen == null) {
@@ -154,7 +154,7 @@ public class GuiScreen extends Gui {
 	 */
 	public static String getClipboardString() {
 		try {
-			Transferable var0 = Toolkit.getDefaultToolkit().getSystemClipboard().getContents((Object)null);
+			Transferable var0 = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
 
 			if (var0 != null && var0.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 				return (String)var0.getTransferData(DataFlavor.stringFlavor);
