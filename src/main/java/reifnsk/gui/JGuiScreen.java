@@ -165,11 +165,11 @@ public class JGuiScreen extends GuiScreen {
 			if ((var1.longValue() & -1L) == 87L) {
 				theMinecraft.toggleFullscreen();
 			} else {
-				int var2 = (int)(var1.longValue() >>> 48);
-				char var3 = (char)((int)(var1.longValue() >> 32));
-				int var4 = (int)(var1.longValue() & -1L);
-				this.key(var3, var4, var2);
-				System.out.println("K - " + var1 + " - " + var2 + " - " + var3 + " - " + var4);
+				long o = var1.longValue();
+				int modifiersEx = (int)(o >>> 48);
+				char keyChar = (char)(o >>> 32);
+				int mappedKeyCode = (int)(o & 0xFFFFFFFF);
+				this.key(keyChar, mappedKeyCode, modifiersEx);
 			}
 		}
 	}
@@ -638,7 +638,9 @@ public class JGuiScreen extends GuiScreen {
 				keyChar = '\000';
 			}
 
-			screen.keyEventQueue.add(Long.valueOf((e.getModifiersEx() & 0xFFFF) << 48 | (keyChar & 0xFFFF) << 32 | JGuiScreen.getMappedKeyCode(e) & 0xFFFFFFFF));
+			screen.keyEventQueue.add(((long)(e.getModifiersEx() & 0xFFFF) << 48) |
+									((long)(keyChar & 0xFFFF) << 32) |
+									((long)JGuiScreen.getMappedKeyCode(e) & 0xFFFFFFFF));
 		}
 
 		public void keyReleased(KeyEvent e) {
