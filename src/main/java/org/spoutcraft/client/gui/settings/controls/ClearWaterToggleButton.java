@@ -39,6 +39,7 @@ public class ClearWaterToggleButton extends GenericCheckBox {
 		if (!isEnabled()) {
 			return "此选项在服务器不被允许，它被视为作弊.";
 		}
+
 		return super.getTooltip();
 	}
 
@@ -46,9 +47,9 @@ public class ClearWaterToggleButton extends GenericCheckBox {
 	public void onButtonClick() {
 		Configuration.setClearWater(!Configuration.isClearWater());
 		Configuration.write();
-
 		Block.waterStill.setLightOpacity(isChecked() ? 1 : 3);
 		Block.waterMoving.setLightOpacity(isChecked() ? 1 : 3);
+
 		if (Minecraft.theMinecraft.theWorld != null) {
 			Minecraft.theMinecraft.renderGlobal.updateAllRenderers();
 		}

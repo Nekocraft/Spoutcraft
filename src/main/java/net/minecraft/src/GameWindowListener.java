@@ -15,6 +15,7 @@ public final class GameWindowListener extends WindowAdapter {
 			SpoutClient.getHandle().mainThread.join(10000L);
 		} catch (InterruptedException var4) {
 		}
+
 		System.exit(0);
 		// Spout End
 	}

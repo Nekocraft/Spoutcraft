@@ -13,7 +13,6 @@ import org.spoutcraft.client.packet.PacketCustomBlockChunkOverride;
 // Spout End
 
 public class Packet51MapChunk extends Packet {
-
 	/** The x-position of the transmitted chunk, in chunk coordinates. */
 	public int xCh;
 
@@ -106,9 +105,9 @@ public class Packet51MapChunk extends Packet {
 		this.compressedChunkData = new byte[var3];
 		Inflater var4 = new Inflater();
 		var4.setInput(temp, 0, this.tempLength);
-
 		// Spout Start
 		int length = 0;
+
 		try {
 			length = var4.inflate(inflateBuffer);
 		} catch (DataFormatException var9) {
@@ -116,13 +115,16 @@ public class Packet51MapChunk extends Packet {
 		} finally {
 			var4.end();
 		}
+
 		byte[] uncachedData = ChunkNetCache.handle(inflateBuffer, length, this.tempLength, this.includeInitialize ? 16 : var2, xCh, zCh);
+
 		if (uncachedData == null) {
 			yChMin = -1;
 			yChMax = -1;
 		} else {
 			this.compressedChunkData = uncachedData;
 		}
+
 		SpoutClient.getInstance().getPacketManager().sendSpoutPacket(new PacketCustomBlockChunkOverride(xCh, zCh));
 		// Spout End
 	}
@@ -154,7 +156,7 @@ public class Packet51MapChunk extends Packet {
 		return 17 + this.tempLength;
 	}
 
-	public byte[] func_73593_d() {
+	public byte[] getCompressedChunkData() {
 		return this.compressedChunkData;
 	}
 

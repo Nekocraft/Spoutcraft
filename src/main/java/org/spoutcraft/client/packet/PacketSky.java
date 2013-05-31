@@ -80,15 +80,19 @@ public class PacketSky implements SpoutPacket {
 		if (cloudY != 0) {
 			SpoutClient.getInstance().getSkyManager().setCloudHeight(cloudY);
 		}
+
 		if (stars != 0) {
 			SpoutClient.getInstance().getSkyManager().setStarFrequency(stars);
 		}
+
 		if (sunPercent != 0) {
 			SpoutClient.getInstance().getSkyManager().setSunSizePercent(sunPercent);
 		}
+
 		if (moonPercent != 0) {
 			SpoutClient.getInstance().getSkyManager().setMoonSizePercent(moonPercent);
 		}
+
 		if (sun != null) {
 			if (sun.equals("[reset]")) {
 				SpoutClient.getInstance().getSkyManager().setSunTextureUrl(null);
@@ -96,6 +100,7 @@ public class PacketSky implements SpoutPacket {
 				SpoutClient.getInstance().getSkyManager().setSunTextureUrl(sun);
 			}
 		}
+
 		if (moon != null) {
 			if (moon.equals("[reset]")) {
 				SpoutClient.getInstance().getSkyManager().setMoonTextureUrl(null);
@@ -103,6 +108,7 @@ public class PacketSky implements SpoutPacket {
 				SpoutClient.getInstance().getSkyManager().setMoonTextureUrl(moon);
 			}
 		}
+
 		SkyManager sky = SpoutClient.getInstance().getSkyManager();
 
 		// Sky

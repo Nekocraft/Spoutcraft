@@ -132,9 +132,11 @@ public class GenericLabel extends GenericWidget implements BasicLabel {
 		double swidth = 0;
 		String lines[] = getText().split("\\n");
 		MinecraftFont font = Spoutcraft.getClient().getRenderDelegate().getMinecraftFont();
+
 		for (int i = 0; i < lines.length; i++) {
 			swidth = font.getTextWidth(lines[i]) > swidth ? font.getTextWidth(lines[i]) : swidth;
 		}
+
 		return swidth;
 	}
 
@@ -169,25 +171,32 @@ public class GenericLabel extends GenericWidget implements BasicLabel {
 
 		if (isWrapLines()) {
 			ArrayList<String> linesTmp = new ArrayList<String>(lines.length);
-			for (String line:lines) {
+
+			for (String line: lines) {
 				linesTmp.add(line);
 			}
+
 			for (int i = 0; i < linesTmp.size(); i++) {
 				boolean wrapForSpace = true;
 				String line = linesTmp.get(i);
 				String lineTmp = new String(line);
 				int brk = -1;
+
 				while (Spoutcraft.getMinecraftFont().getTextWidth(lineTmp) > super.getWidth() && super.getWidth() >= 5 && !lineTmp.isEmpty()) {
 					brk = lineTmp.lastIndexOf(" ");
+
 					if (brk == -1) {
 						brk = lineTmp.length() - 2;
 						wrapForSpace = false;
 					}
+
 					lineTmp = lineTmp.substring(0, brk);
 				}
+
 				if (brk != -1) {
 					linesTmp.set(i, lineTmp);
-					String otherLine = line.substring(brk + (wrapForSpace?1:0), line.length());
+					String otherLine = line.substring(brk + (wrapForSpace ? 1 : 0), line.length());
+
 					if (!StringUtils.isEmpty(otherLine.trim())) {
 						linesTmp.add(i + 1, otherLine);
 					}

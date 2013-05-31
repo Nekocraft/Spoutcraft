@@ -2,10 +2,6 @@ package net.minecraft.src;
 
 import java.util.Iterator;
 // Spout Start
-import net.minecraft.src.Block;
-import net.minecraft.src.DamageSource;
-import net.minecraft.src.Item;
-import net.minecraft.src.ItemStack;
 
 import org.spoutcraft.api.Spoutcraft;
 import org.spoutcraft.api.material.CustomBlock;
@@ -13,7 +9,6 @@ import org.spoutcraft.api.material.MaterialData;
 // Spout End
 
 public class EntityItem extends Entity {
-
 	/**
 	 * The age of this EntityItem (used to animate it up and down as well as expire it)
 	 */
@@ -105,19 +100,23 @@ public class EntityItem extends Entity {
 
 			if (var3 > 0) {
 				var2 = Block.blocksList[var3].slipperiness * 0.98F;
+
 				// Spout Start
 				if (!worldObj.isRemote) {
 					int x = MathHelper.floor_double(this.posX);
 					int y = MathHelper.floor_double(this.boundingBox.minY) - 1;
 					int z = MathHelper.floor_double(this.posZ);
 					short customId = Spoutcraft.getChunkAt(worldObj, x, y, z).getCustomBlockId(x, y, z);
+
 					if (customId > 0) {
 						CustomBlock block = MaterialData.getCustomBlock(customId);
+
 						if (block != null) {
 							var2 = block.getFriction() * 0.98F;
 						}
 					}
 				}
+
 				// Spout End
 			}
 		}
@@ -278,6 +277,7 @@ public class EntityItem extends Entity {
 					par1EntityPlayer.triggerAchievement(AchievementList.blazeRod);
 				}
 
+				ModLoader.onItemPickup(par1EntityPlayer, var2);
 				this.playSound("random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
 				par1EntityPlayer.onItemPickup(this, var3);
 
@@ -322,7 +322,7 @@ public class EntityItem extends Entity {
 
 		if (var1 == null) {
 			if (this.worldObj != null) {
-				this.worldObj.getWorldLogAgent().func_98232_c("Item entity " + this.entityId + " has no item?!");
+				this.worldObj.getWorldLogAgent().logSevere("Item entity " + this.entityId + " has no item?!");
 			}
 
 			return new ItemStack(Block.stone);

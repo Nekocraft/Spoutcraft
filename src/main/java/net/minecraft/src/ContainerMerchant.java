@@ -1,7 +1,6 @@
 package net.minecraft.src;
 
 public class ContainerMerchant extends Container {
-
 	/** Instance of Merchant. */
 	private IMerchant theMerchant;
 	private InventoryMerchant merchantInventory;

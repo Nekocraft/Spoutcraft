@@ -8,7 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class NBTTagList extends NBTBase {
-
 	/** The array list containing the tags encapsulated in this list. */
 	// Spout Start - private to public
 	public List tagList = new ArrayList();

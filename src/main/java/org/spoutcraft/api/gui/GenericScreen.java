@@ -62,13 +62,15 @@ public abstract class GenericScreen extends GenericWidget implements Screen {
 		Widget[] list = new Widget[widgets.size()];
 		Set<Widget> allwidgets = new HashSet<Widget>();
 		allwidgets.addAll(widgets.keySet());
+
 		if (recursive) {
-			for (Widget w:widgets.keySet()) {
+			for (Widget w: widgets.keySet()) {
 				if (w instanceof Screen) {
 					allwidgets.addAll(((Screen)w).getAttachedWidgetsAsSet(true));
 				}
 			}
 		}
+
 		list = allwidgets.toArray(list);
 
 		// TODO Why is this happening?
@@ -77,6 +79,7 @@ public abstract class GenericScreen extends GenericWidget implements Screen {
 				w.setScreen(this);
 			}
 		}
+
 		return list;
 	}
 
@@ -89,6 +92,7 @@ public abstract class GenericScreen extends GenericWidget implements Screen {
 		if (addon == null) {
 			addon = spoutcraft;
 		}
+
 		widgets.put(widget, addon);
 		widget.setAddon(addon);
 		widget.setScreen(this);
@@ -96,9 +100,10 @@ public abstract class GenericScreen extends GenericWidget implements Screen {
 	}
 
 	public Screen attachWidgets(String addon, Widget ...widgets) {
-		for (Widget widget:widgets) {
+		for (Widget widget: widgets) {
 			attachWidget(addon, widget);
 		}
+
 		return this;
 	}
 
@@ -114,6 +119,7 @@ public abstract class GenericScreen extends GenericWidget implements Screen {
 				removeWidget(i);
 			}
 		}
+
 		return this;
 	}
 
@@ -131,6 +137,7 @@ public abstract class GenericScreen extends GenericWidget implements Screen {
 				return w;
 			}
 		}
+
 		return null;
 	}
 
@@ -142,6 +149,7 @@ public abstract class GenericScreen extends GenericWidget implements Screen {
 			widget.setScreen(this);
 			return true;
 		}
+
 		return false;
 	}
 
@@ -149,11 +157,14 @@ public abstract class GenericScreen extends GenericWidget implements Screen {
 	public void onTick() {
 		int width = Spoutcraft.getClient().getRenderDelegate().getScreenWidth();
 		int height = Spoutcraft.getClient().getRenderDelegate().getScreenHeight();
+
 		if (width != screenWidth || height != screenHeight) {
 			onScreenResized(screenWidth, screenHeight, width, height);
 		}
+
 		screenWidth = width;
 		screenHeight = height;
+
 		for (Widget widget : new HashSet<Widget>(widgets.keySet())) {
 			try {
 				widget.onTick();
@@ -161,6 +172,7 @@ public abstract class GenericScreen extends GenericWidget implements Screen {
 				e.printStackTrace();
 			}
 		}
+
 		for (Widget widget : widgets.keySet()) {
 			try {
 				widget.onAnimate();
@@ -254,13 +266,15 @@ public abstract class GenericScreen extends GenericWidget implements Screen {
 	public Set<Widget> getAttachedWidgetsAsSet(boolean recursive) {
 		Set<Widget> set = new HashSet<Widget>();
 		set.addAll(widgets.keySet());
+
 		if (recursive) {
-			for (Widget w:widgets.keySet()) {
+			for (Widget w: widgets.keySet()) {
 				if (w instanceof Screen) {
 					set.addAll(((Screen)w).getAttachedWidgetsAsSet(true));
 				}
 			}
 		}
+
 		return set;
 	}
 

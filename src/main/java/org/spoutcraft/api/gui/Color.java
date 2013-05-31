@@ -54,10 +54,10 @@ public final class Color implements Animatable {
 	}
 
 	public Color(int argb) {
-		alpha = (short) (argb >>> 24);
-		red = (short) ((argb & 0xFF0000) >>> 16);
-		green = (short) ((argb & 0xFF00) >>> 8);
-		blue = (short) (argb & 0xFF);
+		alpha = (short)(argb >>> 24);
+		red = (short)((argb & 0xFF0000) >>> 16);
+		green = (short)((argb & 0xFF00) >>> 8);
+		blue = (short)(argb & 0xFF);
 	}
 
 	public float getRedF() {
@@ -109,22 +109,22 @@ public final class Color implements Animatable {
 	}
 
 	public Color setRed(float r) {
-		red = (short) (r * 255);
+		red = (short)(r * 255);
 		return this;
 	}
 
 	public Color setGreen(float g) {
-		green = (short) (g * 255);
+		green = (short)(g * 255);
 		return this;
 	}
 
 	public Color setBlue(float b) {
-		blue = (short) (b * 255);
+		blue = (short)(b * 255);
 		return this;
 	}
 
 	public Color setAlpha(float a) {
-		alpha = (short) (a * 255);
+		alpha = (short)(a * 255);
 		return this;
 	}
 

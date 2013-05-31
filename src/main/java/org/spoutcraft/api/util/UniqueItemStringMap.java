@@ -24,9 +24,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class UniqueItemStringMap {
-	private static final ConcurrentHashMap<Integer,String> reverse = new ConcurrentHashMap<Integer,String>();
-	private static final ConcurrentHashMap<Integer,String> reverseStable = new ConcurrentHashMap<Integer,String>();
-	private static final ConcurrentHashMap<String,Integer> forward = new ConcurrentHashMap<String,Integer>();
+	private static final ConcurrentHashMap<Integer, String> reverse = new ConcurrentHashMap<Integer, String>();
+	private static final ConcurrentHashMap<Integer, String> reverseStable = new ConcurrentHashMap<Integer, String>();
+	private static final ConcurrentHashMap<String, Integer> forward = new ConcurrentHashMap<String, Integer>();
 
 	private static final AtomicInteger idCounter = new AtomicInteger(1024);
 
@@ -95,23 +95,24 @@ public class UniqueItemStringMap {
 	 */
 	public static int getId(String string) {
 		string = encodeKey(string);
-
 		Integer id = null;
-
 		boolean success = false;
 		int testId = idCounter.incrementAndGet() & 0x0FFFF;
 
 		while (!success || id == null) {
 			id = forward.get(string);
+
 			if (id != null) {
 				return id;
 			}
 
 			if (reverse.containsKey(testId)) { // ID already in use
 				testId = idCounter.incrementAndGet() & 0x0FFFF;
+
 				if (testId == 65535 || testId < 1024) {
 					throw new RuntimeException("[Spout] Out of custom item ids");
 				}
+
 				continue;
 			}
 
@@ -119,21 +120,20 @@ public class UniqueItemStringMap {
 
 			if (oldString == null) { // Reverse link success
 				Integer oldId = forward.putIfAbsent(string, testId);
+
 				if (oldId != null) { // Forward link failed
 					reverse.remove(testId, string); // Remove reverse link
 					continue;
 				}
+
 				id = testId;
 			} else { // Reverse link failed
 				continue;
 			}
 
 			reverseStable.put(testId, string);
-
 			//setIdInFile(decodeKey(string), id);
-
 			success = true;
-
 		}
 
 		return id;

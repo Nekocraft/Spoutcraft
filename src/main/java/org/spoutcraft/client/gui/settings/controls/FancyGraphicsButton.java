@@ -39,27 +39,32 @@ public class FancyGraphicsButton extends AutomatedButton {
 
 	@Override
 	public String getText() {
-		return "图像: " + (custom ? "自定义" : (Configuration.isFancyGraphics() ? "质量" :"速度"));
+		return "图像: " + (custom ? "自定义" : (Configuration.isFancyGraphics() ? "质量" : "速度"));
 	}
 
 	@Override
 	public void onButtonClick() {
 		Configuration.setFancyGraphics(!Configuration.isFancyGraphics());
+
 		for (CheckBox check : linkedButtons) {
 			if (check.isChecked() != Configuration.isFancyGraphics()) {
 				check.setChecked(Configuration.isFancyGraphics());
 				check.onButtonClick();
 			}
 		}
+
 		Minecraft.theMinecraft.gameSettings.fancyGraphics = Configuration.isFancyGraphics();
+
 		if (Minecraft.theMinecraft.theWorld != null) {
 			Minecraft.theMinecraft.renderGlobal.updateAllRenderers();
 		}
+
 		custom = false;
 	}
 
 	public void setLinkedButtons(List<CheckBox> linked) {
 		linkedButtons = linked;
+
 		for (CheckBox check : linkedButtons) {
 			if (check.isChecked() != Configuration.isFancyGraphics()) {
 				custom = true;

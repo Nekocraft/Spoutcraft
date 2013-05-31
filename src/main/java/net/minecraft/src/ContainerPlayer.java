@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 // Spout End
 
 public class ContainerPlayer extends Container {
-
 	/** The crafting matrix inventory. */
 	public InventoryCrafting craftMatrix = new InventoryCrafting(this, 2, 2);
 	public IInventory craftResult = new InventoryCraftResult();

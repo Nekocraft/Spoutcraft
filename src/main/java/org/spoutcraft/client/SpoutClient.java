@@ -73,7 +73,7 @@ public class SpoutClient extends PropertyObject implements Client {
 	private static SpoutClient instance = null;
 	private static final Thread dataMiningThread = new DataMiningThread();
 	private static final String version = "Unknown Version";
-	public static final String spoutcraftVersion = "1.5.1";
+	public static final String spoutcraftVersion = "1.5.2";
 
 	private final SimpleSkyManager skyManager = new SimpleSkyManager();
 	private final PacketManager packetManager = new PacketManager();
@@ -154,12 +154,9 @@ public class SpoutClient extends PropertyObject implements Client {
 	}
 
 	public static SpoutClient getInstance() {
-		int mb = 1024*1024;
-
 		if (instance == null) {
-			new SpoutClient();
-			Spoutcraft.setClient(instance);
-			System.out.println("Available Memory: " + Runtime.getRuntime().maxMemory() / mb + " mb");
+			Spoutcraft.setClient(new SpoutClient());
+			System.out.println("Starting SpoutClient. Available Memory: " + Runtime.getRuntime().maxMemory() / (1024*1024) + " mb");
 		}
 		return instance;
 	}

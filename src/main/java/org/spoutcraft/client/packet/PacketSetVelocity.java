@@ -63,6 +63,7 @@ public class PacketSetVelocity implements SpoutPacket {
 
 	public void run(int playerId) {
 		Entity e = SpoutClient.getInstance().getEntityFromId(entityId);
+
 		if (e != null && !Double.isNaN(motX) && !Double.isNaN(motY) && !Double.isNaN(motZ)) {
 			e.motionX = motX;
 			e.motionY = motY;

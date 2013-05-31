@@ -55,7 +55,6 @@ public class ZanMinimap {
 	public ZanMinimap() {
 		MinimapConfig.initialize();
 		BlockColor.initDefaultColors();
-
 		map = new Map();
 		texman = new TextureManager();
 		mapcalc = new MapCalculator(this);
@@ -66,7 +65,7 @@ public class ZanMinimap {
 
 	/**
 	 * Heartbeat function called each render by whatever is managing the minimap.
-	 * 
+	 *
 	 * @param mc Minecraft instance to initialize obfhub.game with
 	 */
 	public void onRenderTick() {
@@ -88,7 +87,6 @@ public class ZanMinimap {
 
 		int scWidth = Spoutcraft.getRenderDelegate().getScreenWidth();
 		int scHeight = Spoutcraft.getRenderDelegate().getScreenHeight();
-
 		mapcalc.onRenderTick();
 		renderer.onRenderTick(scWidth, scHeight);
 	}

@@ -6,7 +6,6 @@ import java.util.Map;
 import org.lwjgl.opengl.GL11;
 
 public class TileEntityRenderer {
-
 	/**
 	 * A mapping of TileEntitySpecialRenderers used for each TileEntity that has one
 	 */
@@ -134,9 +133,10 @@ public class TileEntityRenderer {
 		if (var9 != null) {
 			try {
 				var9.renderTileEntityAt(par1TileEntity, par2, par4, par6, par8);
-			// Spout Start
+				// Spout Start
 			} catch (ClassCastException ignore) {
 			}
+
 			// Spout End
 		}
 	}

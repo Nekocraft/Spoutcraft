@@ -88,6 +88,7 @@ public class CraftInventoryPlayer extends CraftInventory implements PlayerInvent
 		for (int i = 0; i < mcItems.length; i++) {
 			ret[i] = new CraftItemStack(mcItems[i]);
 		}
+
 		return ret;
 	}
 
@@ -97,6 +98,7 @@ public class CraftInventoryPlayer extends CraftInventory implements PlayerInvent
 		if (items == null) {
 			items = new ItemStack[4];
 		}
+
 		for (ItemStack item : items) {
 			if (item == null || item.getTypeId() == 0) {
 				clear(cnt++);

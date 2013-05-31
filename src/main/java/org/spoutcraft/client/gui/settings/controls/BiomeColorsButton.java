@@ -32,10 +32,10 @@ public class BiomeColorsButton extends AutomatedCheckBox {
 		this.fancyGraphics = fancyGraphics;
 		this.setChecked(Configuration.isFancyBiomeColors());
 		setTooltip("生物群落颜色\n" +
-                "快速 - 缓存为每个块的草和水的颜色。\n" +
-                "可能会导致颜色块边缘附近的急剧变化。\n" +
-                "花式 - 草和水的正常着色。\n" +
-                "计算水和草对每个块的颜色。");
+				"快速 - 缓存为每个块的草和水的颜色。\n" +
+				"可能会导致颜色块边缘附近的急剧变化。\n" +
+				"花式 - 草和水的正常着色。\n" +
+				"计算水和草对每个块的颜色。");
 	}
 
 	@Override

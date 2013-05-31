@@ -25,7 +25,7 @@ import org.spoutcraft.api.Spoutcraft;
 import org.spoutcraft.api.io.SpoutInputStream;
 import org.spoutcraft.api.io.SpoutOutputStream;
 
-public abstract class GenericControl extends GenericWidget implements Control{
+public abstract class GenericControl extends GenericWidget implements Control {
 	protected boolean enabled = true;
 	protected Color color = new Color(0.878F, 0.878F, 0.878F);
 	protected Color disabledColor = new Color(0.625F, 0.625F, 0.625F);
@@ -92,6 +92,7 @@ public abstract class GenericControl extends GenericWidget implements Control{
 			this.focus = focus;
 			Spoutcraft.getWidgetManager().sendFocusUpdate(this, focus);
 		}
+
 		return this;
 	}
 

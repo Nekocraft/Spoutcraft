@@ -49,7 +49,7 @@ public class ShortcutBindingItem extends ControlsBasicItem {
 		int w2 = font.getStringWidth(keyString);
 		font.drawStringWithShadow(keyString, width - w2, y + 2, 0xffcccccc);
 		String fitting = r.getFittingText(getName(), width - w - w2 - 4);
-		font.drawStringWithShadow(fitting, x + w + 4, y + 2, !isConflicting() ? 0xffffffff:0xffff0000);
+		font.drawStringWithShadow(fitting, x + w + 4, y + 2, !isConflicting() ? 0xffffffff : 0xffff0000);
 	}
 
 	@Override

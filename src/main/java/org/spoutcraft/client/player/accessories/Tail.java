@@ -44,25 +44,32 @@ public class Tail extends Accessory {
 		double d1 = (par1EntityPlayer.field_71096_bN + (par1EntityPlayer.field_71095_bQ - par1EntityPlayer.field_71096_bN) * (double) par2) - (par1EntityPlayer.prevPosY + (par1EntityPlayer.posY - par1EntityPlayer.prevPosY) * (double) par2);
 		double d2 = (par1EntityPlayer.field_71097_bO + (par1EntityPlayer.field_71085_bR - par1EntityPlayer.field_71097_bO) * (double) par2) - (par1EntityPlayer.prevPosZ + (par1EntityPlayer.posZ - par1EntityPlayer.prevPosZ) * (double) par2);
 		float f8 = par1EntityPlayer.prevRenderYawOffset + (par1EntityPlayer.renderYawOffset - par1EntityPlayer.prevRenderYawOffset) * par2;
-		double d3 = MathHelper.sin((f8 * 3.141593F) / 180F);
-		double d4 = -MathHelper.cos((f8 * 3.141593F) / 180F);
+		double d3 = MathHelper.sin((f8 * (float)Math.PI) / 180F);
+		double d4 = -MathHelper.cos((f8 * (float)Math.PI) / 180F);
 		float f9 = (float) d1 * 10F;
+
 		if (f9 < -6F) {
 			f9 = -6F;
 		}
+
 		if (f9 > 32F) {
 			f9 = 32F;
 		}
-		float f10 = (float) (d * d3 + d2 * d4) * 100F;
-		float f11 = (float) (d * d4 - d2 * d3) * 100F;
+
+		float f10 = (float)(d * d3 + d2 * d4) * 100F;
+		float f11 = (float)(d * d4 - d2 * d3) * 100F;
+
 		if (f10 < 0.0F) {
 			f10 = 0.0F;
 		}
+
 		float f12 = par1EntityPlayer.prevCameraYaw + (par1EntityPlayer.cameraYaw - par1EntityPlayer.prevCameraYaw) * par2;
 		f9 += MathHelper.sin((par1EntityPlayer.prevDistanceWalkedModified + (par1EntityPlayer.distanceWalkedModified - par1EntityPlayer.prevDistanceWalkedModified) * par2) * 6F) * 32F * f12;
+
 		if (par1EntityPlayer.isSneaking()) {
 			f9 += 25F;
 		}
+
 		GL11.glRotatef(6F + f10 / 2.0F + f9, 1.0F, 0.0F, 0.0F);
 		GL11.glRotatef(f11 / 2.0F, 0.0F, 0.0F, 1.0F);
 		GL11.glRotatef(-f11 / 2.0F, 0.0F, 0.0F, 0.0F);

@@ -1,31 +1,40 @@
 package net.minecraft.src;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 // Spout Start
 import org.bukkit.ChatColor;
 import org.spoutcraft.api.Spoutcraft;
 // Spout End
+// MinecraftIM Start
+import reifnsk.gui.JEmptyBorder;
+import reifnsk.gui.JGuiMCButton;
+import reifnsk.gui.JGuiScreen;
+import reifnsk.gui.JGuiTextField;
+// MinecraftIM End
 
-public class GuiEditSign extends GuiScreen {
-
-	/**
-	 * This String is just a local copy of the characters allowed in text rendering of minecraft.
-	 */
-	private static final String allowedCharacters = ChatAllowedCharacters.allowedCharacters;
+public class GuiEditSign extends JGuiScreen implements ActionListener {
 
 	/** The title string that is displayed in the top-center of the screen. */
-	protected String screenTitle = "Edit sign message:";
+	protected String screenTitle = "编辑牌子内容:";
 
 	/** Reference to the sign object. */
 	private TileEntitySign entitySign;
 
 	/** Counts the number of screen updates. */
 	private int updateCounter;
+	private JGuiMCButton button = new JGuiMCButton(StringTranslate.getInstance().translateKey("gui.done"));
+	private JGuiTextField input = new JGuiTextField();
 
 	/** The number of the line that is being edited. */
 	private int editLine = 0;
-	private GuiButton field_100001_o;
+
+	/**
+	 * This String is just a local copy of the characters allowed in text rendering of minecraft.
+	 */
+	private static final String allowedCharacters = ChatAllowedCharacters.allowedCharacters;
 
 	// Spout Start
 	private int editColumn = 0;
@@ -33,22 +42,35 @@ public class GuiEditSign extends GuiScreen {
 
 	public GuiEditSign(TileEntitySign par1TileEntitySign) {
 		this.entitySign = par1TileEntitySign;
+		this.add(this.button);
+		this.button.addActionListener(this);
+		this.add(this.input);
+		this.input.setBorder(new JEmptyBorder(2, 2, 2, 2));
+		this.input.setBackground(Integer.MIN_VALUE);
+		this.input.setPrefix("> ");
+		this.input.setLimit(15);
+		this.input.setShadow(true);
+		this.input.setText(this.entitySign.signText[this.editLine]);
+		this.input.requestFocus();
 	}
 
 	/**
 	 * Adds the buttons (and other controls) to the screen in question.
 	 */
 	public void initGui() {
-		this.buttonList.clear();
+		super.initGui();
 		Keyboard.enableRepeatEvents(true);
-		this.buttonList.add(this.field_100001_o = new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120, "Done"));
+		this.button.setBounds(this.width / 2 - 100, this.height / 4 + 120, 200, 20);
+		this.input.setBounds(2, this.height - 14, this.width - 4, 12);
 		this.entitySign.setEditable(false);
 	}
 
-	/**
-	 * Called when the screen is unloaded. Used to disable keyboard repeat events
-	 */
-	public void onGuiClosed() {
+	protected void updateScreenImpl() {
+		super.updateScreenImpl();
+		this.entitySign.signText[this.editLine] = this.input.getText();
+	}
+
+	public void onGuiClosedImpl() {
 		// Spout Start
 		entitySign.lineBeingEdited = -1;
 		entitySign.columnBeingEdited = -1;
@@ -62,6 +84,7 @@ public class GuiEditSign extends GuiScreen {
 		}
 		// Spout End
 		Keyboard.enableRepeatEvents(false);
+		this.entitySign.signText[this.editLine] = this.input.getText();
 		NetClientHandler var1 = this.mc.getNetHandler();
 
 		if (var1 != null) {
@@ -71,29 +94,17 @@ public class GuiEditSign extends GuiScreen {
 		this.entitySign.setEditable(true);
 	}
 
-	/**
-	 * Called from the main game loop to update the screen.
-	 */
-	public void updateScreen() {
-		++this.updateCounter;
-	}
-
-	/**
-	 * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
-	 */
-	protected void actionPerformed(GuiButton par1GuiButton) {
-		if (par1GuiButton.enabled) {
-			if (par1GuiButton.id == 0) {
-				// Spout Start
-				if (!Spoutcraft.hasPermission("spout.plugin.signcolors")) {
-					for (int i = 0; i < entitySign.signText.length; i++) {
-						entitySign.signText[i] = ChatColor.stripColor(entitySign.signText[i]);
-					}
+	public void actionPerformed(ActionEvent var1) {
+	if (var1.getSource() == this.button) {
+			// Spout Start
+			if (!Spoutcraft.hasPermission("spout.plugin.signcolors")) {
+				for (int i = 0; i < entitySign.signText.length; i++) {
+					entitySign.signText[i] = ChatColor.stripColor(entitySign.signText[i]);
 				}
-				// Spout End
-				this.entitySign.onInventoryChanged();
-				this.mc.displayGuiScreen((GuiScreen)null);
 			}
+			// Spout End
+			this.entitySign.onInventoryChanged();
+			this.closeScreen();
 		}
 	}
 
@@ -102,6 +113,10 @@ public class GuiEditSign extends GuiScreen {
 	 */
 	// Spout Start - Rewritten Method
 	protected void keyTyped(char par1, int par2) {
+		if (par2 == 60) {
+			this.saveScreenshot();
+		}
+
 		if (par2 == 200) { // Up
 			this.editLine = this.editLine - 1 & 3;
 			editColumn = entitySign.signText[editLine].length();
@@ -181,7 +196,7 @@ public class GuiEditSign extends GuiScreen {
 				line = before + after;
 				entitySign.signText[editLine] = line;
 			}
-		}
+		}		
 
 		entitySign.recalculateText();
 	}
@@ -225,10 +240,12 @@ public class GuiEditSign extends GuiScreen {
 		}
 
 		// Spout Start
-		//if(this.updateCounter / 6 % 2 == 0) {
+		// if(this.updateCounter / 6 % 2 == 0) {
+		// MinecraftIM:
+		// if (this.input.isVisibleCaretCount()) {
 		this.entitySign.lineBeingEdited = this.editLine;
 		entitySign.columnBeingEdited = editColumn;
-		//}
+		// }
 		// Spout End
 
 		TileEntityRenderer.instance.renderTileEntityAt(this.entitySign, -0.5D, -0.75D, -0.5D, 0.0F);

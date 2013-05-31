@@ -23,7 +23,7 @@ public class EntityOtherPlayerMP extends EntityPlayer {
 
 		if (par2Str != null && par2Str.length() > 0) {
 			// Spout Start
-			this.skinUrl = "http://nekocraft.com/api/skin/" + ChatColor.stripColor(par2Str);
+			this.skinUrl = "http://cdn.spout.org/game/vanilla/skin/" + ChatColor.stripColor(par2Str) + ".png";
 			this.vip = Resources.getVIP(ChatColor.stripColor(par2Str));
 			// Spout End
 		}
@@ -31,12 +31,14 @@ public class EntityOtherPlayerMP extends EntityPlayer {
 		this.noClip = true;
 		this.field_71082_cx = 0.25F;
 		this.renderDistanceWeight = 10.0D;
+
 		// Spout Start
 		if (vip != null) {
 			displayName = vip.getTitle();
 		} else {
 			displayName = username;
 		}
+
 		this.worldObj.releaseEntitySkin(this);
 		worldObj.obtainEntitySkin(this);
 		// Spout End
@@ -74,6 +76,7 @@ public class EntityOtherPlayerMP extends EntityPlayer {
 		if (this.cloakUrl == null || this.playerCloakUrl == null) {
 			super.updateCloak();
 		}
+
 		// Spout End
 	}
 

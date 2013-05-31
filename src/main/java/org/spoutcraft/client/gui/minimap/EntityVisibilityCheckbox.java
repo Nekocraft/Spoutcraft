@@ -25,10 +25,10 @@ import org.spoutcraft.api.gui.CheckBox;
 import org.spoutcraft.api.gui.GenericCheckBox;
 
 public class EntityVisibilityCheckbox extends GenericCheckBox {
-	private Class<? extends Entity> clazz;
+	private Class <? extends Entity > clazz;
 	private boolean save = true;
 
-	public EntityVisibilityCheckbox(Class<? extends Entity> clazz, String texture) {
+	public EntityVisibilityCheckbox(Class <? extends Entity > clazz, String texture) {
 		this.clazz = clazz;
 		String name = texture.substring(0, texture.length() - 4).replaceAll("_", " ").trim();
 		setText(name);
@@ -43,6 +43,7 @@ public class EntityVisibilityCheckbox extends GenericCheckBox {
 			MinimapConfig.getInstance().setEntityVisible(clazz, checked);
 			MinimapConfig.getInstance().save();
 		}
+
 		return super.setChecked(checked);
 	}
 }

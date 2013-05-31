@@ -11,7 +11,7 @@ import net.minecraft.src.Icon;
 import net.minecraft.src.Tessellator;
 import net.minecraft.src.TextureMap;
 
-public class TessellatorUtils {
+public class TessellatorUtils {	
 	private static final Integer MAGIC_VALUE = Integer.valueOf(305419896);
 	private static final Map textureMapNames = new WeakHashMap();
 	private static final Map iconMap = new HashMap();
@@ -31,7 +31,7 @@ public class TessellatorUtils {
 				if (var4 == null) {
 					var4 = var2.toString();
 				}
-
+				
 				var3 = new Tessellator(2097152);
 				copyFields(var0, var3, true);
 				var3.textureMap = var2;
@@ -89,7 +89,7 @@ public class TessellatorUtils {
 				if (!Modifier.isStatic(var11) && var10.isPrimitive() && !var9.getName().equals("rawBufferSize")) {
 					var9.setAccessible(true);
 
-					if (var10 != Integer.TYPE || !MAGIC_VALUE.equals(var9.get(var0))) {
+					if (var10 != Integer.TYPE || !MAGIC_VALUE.equals(var9.get(var0))) {					
 						var5.add(var9);
 					}
 				}
@@ -121,7 +121,6 @@ public class TessellatorUtils {
 
 			try {
 				Object var7 = var6.get(var0);
-
 				var6.set(var1, var7);
 			} catch (IllegalAccessException var8) {
 				var8.printStackTrace();

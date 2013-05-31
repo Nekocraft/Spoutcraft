@@ -5,7 +5,6 @@ import com.prupe.mcpatcher.mod.ColorizeEntity;
 // MCPatcher End
 
 public class ItemArmor extends Item {
-
 	/** Holds the 'base' maxDamage that each armorType have. */
 	private static final int[] maxDamageArray = new int[] {11, 16, 15, 13};
 	private static final String[] field_94606_cu = new String[] {"helmetCloth_overlay", "chestplateCloth_overlay", "leggingsCloth_overlay", "bootsCloth_overlay"};
@@ -156,8 +155,8 @@ public class ItemArmor extends Item {
 		return this.material.getArmorCraftingMaterial() == par2ItemStack.itemID ? true : super.getIsRepairable(par1ItemStack, par2ItemStack);
 	}
 
-	public void updateIcons(IconRegister par1IconRegister) {
-		super.updateIcons(par1IconRegister);
+	public void registerIcons(IconRegister par1IconRegister) {
+		super.registerIcons(par1IconRegister);
 
 		if (this.material == EnumArmorMaterial.CLOTH) {
 			this.field_94605_cw = par1IconRegister.registerIcon(field_94606_cu[this.armorType]);

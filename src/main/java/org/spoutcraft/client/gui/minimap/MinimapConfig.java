@@ -63,7 +63,7 @@ public class MinimapConfig {
 	private Waypoint focussedWaypoint = null;
 	private int scanRadius = 3;
 
-	private final HashSet<Class<? extends Entity>> blockedEntities = new HashSet<Class<? extends Entity>>();
+	private final HashSet < Class <? extends Entity >> blockedEntities = new HashSet < Class <? extends Entity >> ();
 	private boolean showEntities = true;
 	/*
 	 * minimap: enabled: true ... waypoints: world1: home: x: 128 z: -82
@@ -71,12 +71,15 @@ public class MinimapConfig {
 	 */
 	private MinimapConfig(boolean load) {
 		File file = new File(FileUtil.getConfigDir(), "minimap.yml");
+
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
 			} catch (IOException e) { }
 		}
+
 		config = new Configuration(file);
+
 		if (load) {
 			config.load();
 			enabled = config.getBoolean("minimap.visible", enabled);
@@ -97,30 +100,38 @@ public class MinimapConfig {
 			scanRadius = config.getInt("minimap.scanRadius", scanRadius);
 			showEntities = config.getBoolean("minimap.showEntities", true);
 		}
+
 		firstrun = config.getBoolean("minimap.firstrun", firstrun);
-		Map<?, ?> worlds = config.getNodes("waypoints");
+		Map <? , ? > worlds = config.getNodes("waypoints");
+
 		if (worlds != null) {
 			Iterator<?> i = worlds.entrySet().iterator();
+
 			while (i.hasNext()) {
 				Object o = i.next();
+
 				if (o instanceof Entry) {
 					@SuppressWarnings("rawtypes")
-					Entry<?, ?> e = (Entry) o;
+					Entry <? , ? > e = (Entry) o;
+
 					if (e.getKey() instanceof String) {
 						try {
 							String world = (String) e.getKey();
 							ConfigurationNode waypoints = (ConfigurationNode) e.getValue();
-							for (String name:waypoints.getKeys()) {
+
+							for (String name: waypoints.getKeys()) {
 								Map<String, Object> locations = waypoints.getNode(name).getAll();
 								int x, y = 64, z;
 								x = (Integer) locations.get("x");
+
 								if (locations.containsKey("y")) {
 									y = (Integer) locations.get("y");
 								}
+
 								z = (Integer) locations.get("z");
 								boolean enabled = (Integer) locations.get("enabled") == 1;
-
 								boolean deathpoint = false;
+
 								if (locations.containsKey("deathpoint")) {
 									deathpoint = (Integer) locations.get("deathpoint") == 1;
 								}
@@ -139,19 +150,23 @@ public class MinimapConfig {
 				}
 			}
 		}
+
 		List<String> blocked = config.getStringList("blockedEntities", new ArrayList<String>());
+
 		if (blocked != null) {
 			Iterator<String> i = blocked.iterator();
+
 			while (i.hasNext()) {
 				try {
 					Class<?> clazz = ClassLoader.getSystemClassLoader().loadClass(i.next());
-					blockedEntities.add((Class<? extends Entity>) clazz);
+					blockedEntities.add((Class <? extends Entity >) clazz);
 				} catch (ClassNotFoundException e) {
 					i.remove();
 				} catch (ClassCastException e1) {
 				}
 			}
 		}
+
 		config.setProperty("blockedEntities", blocked);
 		config.save();
 	}
@@ -185,10 +200,12 @@ public class MinimapConfig {
 		config.setProperty("minimap.showEntities", showEntities);
 		HashMap<String, Map<String, Map<String, Integer>>> worlds = new HashMap<String, Map<String, Map<String, Integer>>>();
 		Iterator<Entry<String, List<Waypoint>>> i = waypoints.entrySet().iterator();
+
 		while (i.hasNext()) {
 			Entry<String, List<Waypoint>> e = i.next();
 			String world = e.getKey();
 			HashMap<String, Map<String, Integer>> waypoints = new HashMap<String, Map<String, Integer>>();
+
 			for (Waypoint waypoint : e.getValue()) {
 				if (!waypoint.server) {
 					HashMap<String, Integer> values = new HashMap<String, Integer>();
@@ -200,12 +217,14 @@ public class MinimapConfig {
 					waypoints.put(waypoint.name, values);
 				}
 			}
+
 			worlds.put(world, waypoints);
 		}
-		config.setProperty("waypoints", worlds);
 
+		config.setProperty("waypoints", worlds);
 		List<String> blocked = new ArrayList<String>();
-		for (Class<? extends Entity> e:blockedEntities) {
+
+		for (Class <? extends Entity > e: blockedEntities) {
 			blocked.add(e.getName());
 		}
 
@@ -290,15 +309,18 @@ public class MinimapConfig {
 
 	public synchronized List<Waypoint> getWaypoints(String world) {
 		List<Waypoint> list = waypoints.get(world);
+
 		if (list == null) {
 			list = new ArrayList<Waypoint>();
 			waypoints.put(world, list);
 		}
+
 		return list;
 	}
 
 	public synchronized void removeWaypoint(String world, String name) {
 		Iterator<Waypoint> i = getWaypoints(world).iterator();
+
 		while (i.hasNext()) {
 			if (i.next().name.equalsIgnoreCase(name)) {
 				i.remove();
@@ -374,7 +396,7 @@ public class MinimapConfig {
 	}
 
 	public void removeWaypoint(Waypoint clickedWaypoint) {
-		for (List<Waypoint> list:waypoints.values()) {
+		for (List<Waypoint> list: waypoints.values()) {
 			list.remove(clickedWaypoint);
 		}
 	}
@@ -385,10 +407,12 @@ public class MinimapConfig {
 
 	public void addWaypoint(String worldName, Waypoint waypoint) {
 		List<Waypoint> list = waypoints.get(worldName);
+
 		if (list == null) {
 			list = new LinkedList<Waypoint>();
 			waypoints.put(worldName, list);
 		}
+
 		list.add(waypoint);
 	}
 
@@ -416,7 +440,7 @@ public class MinimapConfig {
 		this.scanRadius = radius;
 	}
 
-	public void setEntityVisible(Class<? extends Entity> clazz, boolean visible) {
+	public void setEntityVisible(Class <? extends Entity > clazz, boolean visible) {
 		if (visible) {
 			blockedEntities.remove(clazz);
 		} else {
@@ -424,7 +448,7 @@ public class MinimapConfig {
 		}
 	}
 
-	public boolean isEntityVisible(Class<? extends Entity> clazz) {
+	public boolean isEntityVisible(Class <? extends Entity > clazz) {
 		return !blockedEntities.contains(clazz);
 	}
 

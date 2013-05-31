@@ -21,7 +21,7 @@ package org.spoutcraft.api.material;
 
 import org.spoutcraft.api.block.design.BlockDesign;
 
-public interface Block extends Material{
+public interface Block extends Material {
 	public float getFriction();
 
 	public Block setFriction(float slip);

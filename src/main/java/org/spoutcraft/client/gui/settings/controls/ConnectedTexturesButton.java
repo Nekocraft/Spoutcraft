@@ -23,13 +23,14 @@ import net.minecraft.client.Minecraft;
 
 import com.prupe.mcpatcher.TexturePackChangeHandler;
 
+import org.spoutcraft.client.SpoutClient;
 import org.spoutcraft.client.config.Configuration;
 
 public class ConnectedTexturesButton extends AutomatedCheckBox {
 	public ConnectedTexturesButton() {
-		super("连续材质");
+		super("连接材质");
 		setChecked(Configuration.isConnectedTextures());
-		setTooltip("连接对方美学相同的块的纹理。\n" +
+		setTooltip("连接彼此相邻的相同的块的纹理。\n" +
 				"\n某些纹理包可能会增加额外的增强功能");
 	}
 
@@ -37,8 +38,12 @@ public class ConnectedTexturesButton extends AutomatedCheckBox {
 	public void onButtonClick() {
 		Configuration.setConnectedTextures(!Configuration.isConnectedTextures());
 		Configuration.write();
-
-		TexturePackChangeHandler.scheduleTexturePackRefresh();
+		
+		Minecraft game = SpoutClient.getHandle();
+		TexturePackChangeHandler.earlyInitialize("com.prupe.mcpatcher.mod.CTMUtils", "reset");
+		TexturePackChangeHandler.beforeChange1();
+		game.renderEngine.refreshTextureMaps();
+		TexturePackChangeHandler.afterChange1();
 		if (Minecraft.theMinecraft.theWorld != null) {
 			Minecraft.theMinecraft.renderGlobal.updateAllRenderers();
 		}

@@ -56,6 +56,7 @@ public class MinecraftServiceListener implements ServiceListener {
 	public void serviceResolved(ServiceEvent arg0) {
 		//System.out.println("Service Resolved " + arg0);
 		InetAddress[] addresses = arg0.getInfo().getInetAddresses();
+
 		if (addresses.length > 0) {
 			InetAddress address = addresses[0];
 			ServerItem item = new ServerItem(arg0.getName(), address.getHostAddress(), arg0.getInfo().getPort(), -1);

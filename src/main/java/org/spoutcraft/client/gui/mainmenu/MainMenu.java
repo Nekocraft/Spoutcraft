@@ -82,14 +82,15 @@ public class MainMenu extends GuiScreen {
 	public MainMenu() {
 		splashText = new GenericLabel(getSplashText());
 		updateBackgrounds();
-
 		Holiday holiday = Resources.getHoliday();
+
 		if (holiday != null) {
 			splashText.setText(holiday.getSplash());
 		}
 
 		// Randomize background order
 		Random rand = new Random();
+
 		// Randomize by swapping the first background with a random background in the list
 		// Repeat sufficient times
 		for (int i = 0; i < backgrounds.size() * 2; i++) {
@@ -118,6 +119,7 @@ public class MainMenu extends GuiScreen {
 		int pass = 0;
 		StringBuilder builder = new StringBuilder();
 		backgrounds.clear();
+
 		while (true) {
 			builder.append("/res/background/");
 			builder.append(timeOfDay);
@@ -125,6 +127,7 @@ public class MainMenu extends GuiScreen {
 			builder.append(timeOfDay);
 			builder.append(picture);
 			builder.append(pass == 0 ? ".png" : ".jpg");
+
 			if (CustomTextureManager.getTextureFromJar(builder.toString()) != null) {
 				backgrounds.add(builder.toString());
 				picture++;
@@ -134,15 +137,18 @@ public class MainMenu extends GuiScreen {
 			} else {
 				break;
 			}
+
 			builder.setLength(0); // Reset
 		}
 	}
 
 	private static String getSplashText() {
 		BufferedReader br = null;
+
 		try {
 			if (splashes.isEmpty()) {
 				File splashTextFile = new File(FileUtil.getConfigDir(), "splashes.txt");
+
 				// Refresh every day
 				if (!splashTextFile.exists() || (System.currentTimeMillis() - splashTextFile.lastModified() > (1L * 24 * 60 * 60 * 1000))) {
 					// Nekocraft
@@ -150,25 +156,28 @@ public class MainMenu extends GuiScreen {
 					HttpURLConnection urlConnect = (HttpURLConnection) test.openConnection();
 					System.setProperty("http.agent", "");
 					urlConnect.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/535.19 (KHTML, like Gecko) Chrome/18.0.1025.162 Safari/535.19");
-
 					File temp = new File(FileUtil.getConfigDir(), "splashes.temp");
+
 					if (temp.exists()) {
 						temp.delete();
 					}
 
 					splashTextFile.delete();
-
 					FileUtils.copyInputStreamToFile(urlConnect.getInputStream(), temp);
 					FileUtils.moveFile(temp, splashTextFile);
 				}
+
 				br = new BufferedReader(new FileReader(splashTextFile));
 				String line;
 				splashes.clear();
+
 				while ((line = br.readLine()) != null) {
 					splashes.add(new String(line.getBytes(), "UTF-8"));
 				}
+
 				br.close();
 			}
+
 			return splashes.get((new Random()).nextInt(splashes.size()));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -185,51 +194,45 @@ public class MainMenu extends GuiScreen {
 
 	private static String getTimeFolder() {
 		int hours = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+
 		if (hours < 6) {
 			return "night";
 		}
+
 		if (hours < 12) {
 			return "day";
 		}
+
 		if (hours < 20) {
 			return "evening";
 		}
+
 		return "night";
 	}
 
 	public void initGui() {
 		int textWidth;
-
 		StringTranslate translate = StringTranslate.getInstance();
-
 		singleplayer = new GenericButton(translate.translateKey("menu.singleplayer"));
 		singleplayer.setGeometry(width - 110, height - 135, 100, 20);
-
 		multiplayer = new GenericButton(translate.translateKey("menu.multiplayer"));
 		multiplayer.setGeometry(width - 110, height - 110, 100, 20);
-
 		textures = new GenericButton(translate.translateKey("options.texture.pack"));
 		textures.setGeometry(width - 110, height - 85, 100, 20);
-
 		buildNumber = new GenericLabel(SpoutClient.getClientVersion());
 		textWidth = Spoutcraft.getRenderDelegate().getMinecraftFont().getTextWidth(buildNumber.getText());
 		buildNumber.setTextColor(new Color(0x6CC0DC));
 		buildNumber.setGeometry(Math.min(90 - textWidth, width - 296 - textWidth), height - 79, 75, 20);
-
 		about = new GenericButton("关于");
 		about.setGeometry(Math.min(98, width - 288), height - 85, 51, 20);
-
 		options = new GenericButton(translate.translateKey("menu.options"));
 		options.setGeometry(Math.min(159, width - 227), height - 85, 51, 20);
-
 		quit = new GenericButton(translate.translateKey("menu.quit"));
 		quit.setGeometry(Math.min(220, width - 166), height - 85, 51, 20);
-
 		background.setGeometry(0, 0, width, height);
 		background.setPriority(RenderPriority.Highest);
 		background.setAnchor(WidgetAnchor.TOP_LEFT);
 		background.setLocal(true);
-
 		splashText.setGeometry(Math.min(100, width - 215), height - 135, 200, 12);
 		splashText.setTextColor(new Color(0x6CC0DC));
 		textWidth = Spoutcraft.getRenderDelegate().getMinecraftFont().getTextWidth(splashText.getText());
@@ -241,20 +244,22 @@ public class MainMenu extends GuiScreen {
 		logo.setGeometry(15, height - 230, 256, 98);
 		logo.setLocal(true);
 		logo.setDrawAlphaChannel(true);
-
 		animate = new GenericLabel(ChatColor.ITALIC + "动画");
 		textWidth = Spoutcraft.getRenderDelegate().getMinecraftFont().getTextWidth(animate.getText());
 		textWidth *= 75;
 		textWidth /= 100;
 		animate.setGeometry(width - textWidth - 2, height - 8, textWidth, 10);
 		animate.setScale(0.75F);
+
 		switch (Configuration.getMainMenuState()) {
 			case 1:
 				animate.setTextColor(new Color(0x00EE00));
 				break;
+
 			case 2:
 				animate.setTextColor(new Color(0xFFFF00));
 				break;
+
 			case 3:
 				animate.setTextColor(new Color(0xFF0000));
 				break;
@@ -270,21 +275,27 @@ public class MainMenu extends GuiScreen {
 	@Override
 	public void buttonClicked(Button btn) {
 		hasLoaded = true;
+
 		if (singleplayer == btn) {
 			mc.displayGuiScreen(new GuiSelectWorld(this));
 		}
+
 		if (multiplayer == btn) {
 			mc.displayGuiScreen(new org.spoutcraft.client.gui.server.GuiFavorites(this));
 		}
+
 		if (textures == btn) {
 			mc.displayGuiScreen(new org.spoutcraft.client.gui.texturepacks.GuiTexturePacks());
 		}
+
 		if (about == btn) {
 			this.mc.displayGuiScreen(new org.spoutcraft.client.gui.about.GuiNewAbout(this));
 		}
+
 		if (options == btn) {
 			mc.displayGuiScreen(GuiSimpleOptions.constructOptionsScreen(this));
 		}
+
 		if (quit == btn) {
 			mc.shutdownMinecraftApplet();
 		}
@@ -293,6 +304,7 @@ public class MainMenu extends GuiScreen {
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float scroll) {
 		super.drawScreen(mouseX, mouseY, scroll);
+
 		if (Keyboard.isKeyDown(Keyboard.KEY_M)) {
 			mc.displayGuiScreen(new org.spoutcraft.client.gui.server.GuiFavorites(this));
 		} else if (Keyboard.isKeyDown(Keyboard.KEY_S)) {
@@ -304,25 +316,29 @@ public class MainMenu extends GuiScreen {
 		}
 
 		long time = System.currentTimeMillis();
+
 		if (fpsDelay > 0) {
 			fpsDelay--;
 		} else {
 			long diff = time - lastTime;
-			int fps = (int) (1000 / Math.max(1, diff));
+			int fps = (int)(1000 / Math.max(1, diff));
 			lastFPS = fps;
 			fpsDelay = CLICK_DELAY;
+
 			if (fps < 10) {
 				poorFPSCount++;
 			} else {
 				poorFPSCount = 0;
 			}
+
 			if (poorFPSCount > 3) {
 				Configuration.setMainMenuState(3);
 			}
 		}
-		lastTime = time;
 
+		lastTime = time;
 		debugText.setVisible(false);
+
 		if (Keyboard.isKeyDown(Keyboard.KEY_F3)) {
 			debugText.setVisible(true);
 			debugText.setText("FPS: " + lastFPS);
@@ -331,23 +347,30 @@ public class MainMenu extends GuiScreen {
 		if (clickDelay > 0) {
 			clickDelay--;
 		}
+
 		if (Mouse.isButtonDown(0) && this.isInBoundingRect(animate, mouseX, mouseY) && clickDelay == 0) {
 			Configuration.setMainMenuState(Configuration.getMainMenuState() + 1);
+
 			if (Configuration.getMainMenuState() > 3) {
 				Configuration.setMainMenuState(1);
 			}
+
 			Configuration.write();
+
 			switch (Configuration.getMainMenuState()) {
 				case 1:
 					animate.setTextColor(new Color(0x00EE00));
 					break;
+
 				case 2:
 					animate.setTextColor(new Color(0xFFFF00));
 					break;
+
 				case 3:
 					animate.setTextColor(new Color(0xFF0000));
 					break;
 			}
+
 			clickDelay = CLICK_DELAY;
 		}
 
@@ -396,9 +419,11 @@ class BackgroundTexture extends GenericTexture {
 
 	public void cycleBackground() {
 		picture++;
+
 		if (picture >= backgrounds.size()) {
 			picture = 0;
 		}
+
 		setUrl(backgrounds.get(picture));
 		maxPanTime = PAN_TIME + rand.nextInt(EXTRA_PAN_TIME);
 		zoomIn = rand.nextBoolean();
@@ -409,6 +434,7 @@ class BackgroundTexture extends GenericTexture {
 	public void render() {
 		org.newdawn.slick.opengl.Texture tex = CustomTextureManager.getTextureFromJar(getUrl());
 		GL11.glPushMatrix();
+
 		if (tex != null) {
 			if (Configuration.getMainMenuState() != 3) {
 				animate(tex);
@@ -418,6 +444,7 @@ class BackgroundTexture extends GenericTexture {
 		} else {
 			RenderUtil.drawRectangle(0, 0, (int) getWidth(), (int) getHeight(), 0xff000000);
 		}
+
 		GL11.glPopMatrix();
 	}
 	private static final Color white = new Color(1.0F, 1.0F, 1.0F);
@@ -426,15 +453,11 @@ class BackgroundTexture extends GenericTexture {
 		int adjustedX = ((100 - HEIGHT_PERCENT) / 2) * tex.getImageHeight() * panTime;
 		adjustedX /= maxPanTime;
 		adjustedX /= 100;
-
 		int adjustedY = ((100 - WIDTH_PERCENT) / 2) * tex.getImageWidth() * panTime;
 		adjustedY /= maxPanTime;
 		adjustedY /= 100;
-
 		int adjustedHeight = tex.getImageHeight() - adjustedX;
-
 		int adjustedWidth = tex.getImageWidth() - adjustedY;
-
 		GL11.glScaled(this.getActualWidth() / (adjustedWidth - adjustedX), this.getActualHeight() / (adjustedHeight - adjustedY), 1D);
 		GL11.glTranslatef(-adjustedX, -adjustedY, 0F);
 		((MCRenderDelegate) Spoutcraft.getRenderDelegate()).drawTexture(tex, adjustedWidth, adjustedHeight, white, false, -1, -1, Configuration.getMainMenuState() == 1, GL11.GL_NEAREST);

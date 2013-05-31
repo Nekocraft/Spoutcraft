@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class Packet {
-
 	/** Maps packet id to packet class */
 	public static IntHashMap packetIdToClassMap = new IntHashMap();
 
@@ -45,7 +44,7 @@ public abstract class Packet {
 	 */
 	// Spout Start - static to public static
 	public static void addIdClassMapping(int par0, boolean par1, boolean par2, Class par3Class) {
-	// Spout End
+		// Spout End
 		if (packetIdToClassMap.containsItem(par0)) {
 			throw new IllegalArgumentException("Duplicate packet id:" + par0);
 		} else if (packetClassToIdMap.containsKey(par3Class)) {
@@ -73,7 +72,7 @@ public abstract class Packet {
 			return var2 == null ? null : (Packet)var2.newInstance();
 		} catch (Exception var3) {
 			var3.printStackTrace();
-			par0ILogAgent.func_98232_c("Skipping packet with id " + par1);
+			par0ILogAgent.logSevere("Skipping packet with id " + par1);
 			return null;
 		}
 	}
@@ -144,7 +143,7 @@ public abstract class Packet {
 			++receivedID;
 			receivedSize += (long)var5.getPacketSize();
 		} catch (EOFException var8) {
-			par0ILogAgent.func_98232_c("Reached end of stream");
+			par0ILogAgent.logSevere("Reached end of stream");
 			return null;
 		}
 

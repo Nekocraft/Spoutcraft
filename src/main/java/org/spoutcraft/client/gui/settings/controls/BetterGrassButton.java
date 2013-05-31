@@ -21,7 +21,10 @@ package org.spoutcraft.client.gui.settings.controls;
 
 import net.minecraft.client.Minecraft;
 
+import com.prupe.mcpatcher.TexturePackChangeHandler;
+
 import org.spoutcraft.client.config.Configuration;
+import org.spoutcraft.client.SpoutClient;
 
 public class BetterGrassButton extends AutomatedButton {
 	public BetterGrassButton() {
@@ -30,22 +33,36 @@ public class BetterGrassButton extends AutomatedButton {
 
 	@Override
 	public String getText() {
-		switch(Configuration.getBetterGrass()) {
-			case 0: return "更好的玻璃 / 雪: 关闭";
-			case 1: return "更好的玻璃 / 雪: 快速";
-			case 2: return "更好的玻璃 / 雪: 最好";
+		switch (Configuration.getBetterGrass()) {
+			case 0:
+				return "更好的玻璃 / 雪: 关闭";
+
+			case 1:
+				return "更好的玻璃 / 雪: 快速";
+
+			case 2:
+				return "更好的玻璃 / 雪: 最好";
 		}
+
 		return "未知选项: " + Configuration.getBetterGrass();
 	}
 
 	@Override
 	public void onButtonClick() {
 		Configuration.setBetterGrass(Configuration.getBetterGrass() + 1);
+
 		if (Configuration.getBetterGrass() > 2) {
 			Configuration.setBetterGrass(0);
 		}
-		Configuration.write();
 
+		Configuration.write();
+		
+		Minecraft game = SpoutClient.getHandle();
+		TexturePackChangeHandler.earlyInitialize("com.prupe.mcpatcher.mod.CTMUtils", "reset");
+		TexturePackChangeHandler.beforeChange1();
+		game.renderEngine.refreshTextureMaps();
+		TexturePackChangeHandler.afterChange1();
+		
 		if (Minecraft.theMinecraft.theWorld != null) {
 			Minecraft.theMinecraft.renderGlobal.updateAllRenderers();
 		}

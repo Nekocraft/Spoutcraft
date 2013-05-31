@@ -22,6 +22,7 @@ public class RenderSheep extends RenderLiving {
 			} else {
 				loadTexture(par1EntitySheep.getCustomTexture(org.spoutcraft.api.entity.EntitySkinType.SHEEP_FUR, "/mob/sheep_fur.png"));
 			}
+
 			// Spout End
 			this.loadTexture("/mob/sheep_fur.png");
 			float var4 = 1.0F;

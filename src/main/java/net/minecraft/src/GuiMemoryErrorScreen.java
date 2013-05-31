@@ -1,7 +1,6 @@
 package net.minecraft.src;
 
 public class GuiMemoryErrorScreen extends GuiScreen {
-
 	/**
 	 * Adds the buttons (and other controls) to the screen in question.
 	 */

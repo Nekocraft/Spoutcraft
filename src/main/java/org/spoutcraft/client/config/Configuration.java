@@ -107,18 +107,20 @@ public class Configuration {
 		// Cleanup old
 		File old = new File(FileUtil.getConfigDir(), "spoutcraft.properties");
 		old.delete();
-
 		File configFile = new File(FileUtil.getConfigDir(), "client.yml");
+
 		try {
 			if (!configFile.exists()) {
 				configFile.createNewFile();
 			}
+
 			org.bukkit.util.config.Configuration config = new org.bukkit.util.config.Configuration(configFile);
 			config.load();
-
 			Field[] fields = Configuration.class.getDeclaredFields();
+
 			for (int i = 0; i < fields.length; i++) {
 				Field f = fields[i];
+
 				if (Modifier.isStatic(f.getModifiers()) && !Modifier.isTransient(f.getModifiers())) {
 					f.setAccessible(true);
 					Object value = f.get(null);
@@ -132,7 +134,7 @@ public class Configuration {
 						f.set(null, (float)config.getDouble(f.getName(), (Float)value));
 					} else if (value instanceof Double) {
 						f.set(null, config.getDouble(f.getName(), (Double)value));
-					}  else if (value instanceof String) {
+					} else if (value instanceof String) {
 						f.set(null, config.getString(f.getName(), (String)value));
 					}
 				}
@@ -140,25 +142,30 @@ public class Configuration {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		updateMCConfig();
 	}
 
 	public static synchronized void write() {
 		dirty = false;
 		File configFile = new File(FileUtil.getConfigDir(), "client.yml");
+
 		try {
 			if (!configFile.exists()) {
 				configFile.createNewFile();
 			}
+
 			org.bukkit.util.config.Configuration config = new org.bukkit.util.config.Configuration(configFile);
 			config.load();
 			Field[] fields = Configuration.class.getDeclaredFields();
+
 			for (Field f : fields) {
 				if (Modifier.isStatic(f.getModifiers()) && !Modifier.isTransient(f.getModifiers())) {
 					Object value = f.get(null);
 					config.setProperty(f.getName(), value);
 				}
 			}
+
 			config.save();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -170,12 +177,12 @@ public class Configuration {
 		Minecraft.theMinecraft.gameSettings.anaglyph = Configuration.isAnaglyph3D();
 		Minecraft.theMinecraft.gameSettings.renderDistance = Configuration.getRenderDistance();
 		Minecraft.theMinecraft.gameSettings.fancyGraphics = Configuration.isFancyGraphics();
-		Minecraft.theMinecraft.gameSettings.advancedOpengl = Configuration.getAdvancedOpenGL() !=0;
+		Minecraft.theMinecraft.gameSettings.advancedOpengl = Configuration.getAdvancedOpenGL() != 0;
 		Minecraft.theMinecraft.gameSettings.guiScale = Configuration.getGuiScale();
 		Minecraft.theMinecraft.gameSettings.viewBobbing = Configuration.isViewBobbing();
 		Minecraft.theMinecraft.gameSettings.gammaSetting = Configuration.getBrightnessSlider();
-
 		Minecraft.theMinecraft.gameSettings.limitFramerate = Configuration.getPerformance();
+
 		if (vsync != (Configuration.getPerformance() == 3)) {
 			vsync = Configuration.getPerformance() == 3;
 			org.lwjgl.opengl.Display.setVSyncEnabled(vsync);
@@ -192,9 +199,11 @@ public class Configuration {
 		if (isOpenGL(3)) {
 			return 1;
 		}
+
 		if (isOpenGL(2)) {
 			return 2;
 		}
+
 		return 3;
 	}
 
@@ -202,17 +211,18 @@ public class Configuration {
 		try {
 			String version = GL11.glGetString(GL11.GL_VERSION);
 			return Integer.parseInt(String.valueOf(version.charAt(0))) >= v;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return false;
 		}
 	}
 
 	public static synchronized void restoreDefaults() {
 		Field[] fields = Configuration.class.getDeclaredFields();
+
 		for (int i = 0; i < fields.length; i++) {
 			Field f = fields[i];
 			Object value = defaultSettings.get(f.getName());
+
 			if (value != null && f != null) {
 				try {
 					f.setAccessible(true);
@@ -222,6 +232,7 @@ public class Configuration {
 				}
 			}
 		}
+
 		write();
 		updateMCConfig();
 	}
@@ -727,28 +738,28 @@ public class Configuration {
 			write();
 		}
 	}
-	
+
 	public static void setAASampling() {
 		if (aaSampling == 0) {
 			aaSampling = 2;
 			return;
 		}
-		
+
 		if (aaSampling == 2) {
 			aaSampling = 4;
 			return;
 		}
-		
+
 		if (aaSampling == 4) {
 			aaSampling = 6;
 			return;
 		}
-		
+
 		if (aaSampling == 6) {
 			aaSampling = 8;
 			return;
 		}
-		
+
 		if (aaSampling == 8) {
 			aaSampling = 0;
 			return;
@@ -758,20 +769,20 @@ public class Configuration {
 	public static int getAASampling() {
 		return aaSampling;
 	}
-	
+
 	public static boolean isShowingChatColorAssist() {
 		return chatColorAssist;
 	}
-	
+
 	public static synchronized void setChatColorAssist(boolean chatColorAssist) {
 		Configuration.chatColorAssist = chatColorAssist;
 		onPropertyChange();
 	}
-	
+
 	public static synchronized boolean isShowingHotbarText() {
 		return showHotbarText;
 	}
-	
+
 	public static synchronized void setShowingHotbarText(boolean showingHotbarText) {
 		Configuration.showHotbarText = showingHotbarText;
 		onPropertyChange();

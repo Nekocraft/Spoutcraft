@@ -35,6 +35,7 @@ public class VersionFile {
 
 	public boolean create() {
 		File vFile = new File(FileUtil.getCacheDir(), "version");
+
 		try {
 			BufferedWriter out = new BufferedWriter(new FileWriter(vFile));
 			out.write(this.version);
@@ -43,6 +44,7 @@ public class VersionFile {
 			e.printStackTrace();
 			return false;
 		}
+
 		return true;
 	}
 }

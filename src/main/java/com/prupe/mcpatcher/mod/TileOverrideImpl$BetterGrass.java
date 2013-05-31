@@ -52,9 +52,7 @@ final class TileOverrideImpl$BetterGrass implements ITileOverride {
 	}
 
 	public Icon getTile(IBlockAccess var1, Block var2, Icon var3, int var4, int var5, int var6, int var7) {
-		if (var7 < 2) {
-			return null;
-		} else {
+		if (var7 >= 2 && var7 <= 5) {
 			int[] var8 = OFFSET_MATRIX[var7 - 2];
 
 			if (var1.getBlockId(var4 + var8[0], var5 - 1, var6 + var8[1]) == this.blockID) {
@@ -63,6 +61,8 @@ final class TileOverrideImpl$BetterGrass implements ITileOverride {
 			} else {
 				return null;
 			}
+		} else {
+			return null;
 		}
 	}
 

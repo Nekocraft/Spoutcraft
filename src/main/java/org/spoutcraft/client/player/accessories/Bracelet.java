@@ -23,7 +23,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModelBiped;
 import net.minecraft.src.ModelRenderer;
 
-public class Bracelet extends Accessory{
+public class Bracelet extends Accessory {
 	public ModelRenderer bipedFrontBracelet;
 	public ModelRenderer bipedLeftBracelet;
 	public ModelRenderer bipedBackBracelet;

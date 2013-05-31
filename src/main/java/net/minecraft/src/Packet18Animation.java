@@ -16,7 +16,6 @@ import org.spoutcraft.client.packet.PacketRenderDistance;
 // Spout End
 
 public class Packet18Animation extends Packet {
-
 	/** The entity ID, in this case it's the player ID. */
 	public int entityId;
 	public int animate;
@@ -58,13 +57,15 @@ public class Packet18Animation extends Packet {
 			SpoutClient.getInstance().getPacketManager().sendSpoutPacket(new PacketRenderDistance((byte)Minecraft.theMinecraft.gameSettings.renderDistance));
 			SpoutClient.getInstance().getPacketManager().sendSpoutPacket(new PacketFullVersion(SpoutClient.getClientVersion()));
 			System.out.println("Detected SpoutPlugin enabled server.");
-			if (this.mc.currentScreen instanceof GuiDownloadTerrain) { 
+
+			if (this.mc.currentScreen instanceof GuiDownloadTerrain) {
 				this.mc.displayGuiScreen(null, false);
 				this.mc.displayGuiScreen(new org.spoutcraft.client.gui.precache.GuiPrecache());
 			}
 		} else {
 			par1NetHandler.handleAnimation(this);
 		}
+
 		// Spout End
 	}
 

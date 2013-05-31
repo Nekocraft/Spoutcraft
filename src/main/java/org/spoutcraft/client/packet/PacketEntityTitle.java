@@ -54,15 +54,19 @@ public class PacketEntityTitle implements SpoutPacket {
 
 	public void run(int id) {
 		Entity e = SpoutClient.getInstance().getEntityFromId(entityId);
+
 		if (e != null && e instanceof EntityLiving) {
 			CraftLivingEntity living = (CraftLivingEntity)e.spoutEnty;
+
 			// Check to see if this title is our username, if so, use defaults
 			if (e instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer)e;
+
 				if (player.vip != null && title.equals(player.username)) {
 					title = player.vip.getTitle();
 				}
 			}
+
 			if (title.equals("reset")) {
 				living.resetTitle();
 				SpoutcraftWorld spworld = (SpoutcraftWorld) living.getWorld();

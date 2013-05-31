@@ -6,7 +6,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.glu.GLU;
 
 public class ActiveRenderInfo {
-
 	/** The calculated view object X coordinate */
 	public static float objectX = 0.0F;
 

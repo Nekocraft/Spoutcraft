@@ -142,9 +142,11 @@ public class ChatTextBox extends GenericWidget implements Widget {
 	public void increaseAge() {
 		synchronized (chatMessages) {
 			Iterator<ChatMessage> iter = chatMessages.iterator();
+
 			while (iter.hasNext()) {
 				ChatMessage message = iter.next();
 				message.onTick();
+
 				if (message.getAge() > getFadeoutTicks()) {
 					break;
 				}
@@ -216,8 +218,10 @@ public class ChatTextBox extends GenericWidget implements Widget {
 		if (message.getUnparsedMessage().trim().equals("")) {
 			return;
 		}
+
 		synchronized (chatMessages) {
 			chatMessages.add(0, message);
+
 			while (chatMessages.size() > 3000) {
 				chatMessages.remove(chatMessages.size() - 1);
 			}
@@ -226,7 +230,7 @@ public class ChatTextBox extends GenericWidget implements Widget {
 
 	public static void reparse() {
 		synchronized (chatMessages) {
-			for (ChatMessage message:chatMessages) {
+			for (ChatMessage message: chatMessages) {
 				message.reparse();
 			}
 		}
@@ -250,6 +254,7 @@ public class ChatTextBox extends GenericWidget implements Widget {
 				return chatMessages.get(pos).getMessage();
 			}
 		}
+
 		return "";
 	}
 
@@ -257,11 +262,13 @@ public class ChatTextBox extends GenericWidget implements Widget {
 		synchronized (chatMessages) {
 			if (pos > -1 && pos < chatMessages.size()) {
 				String player = chatMessages.get(pos).getPlayer();
+
 				if (player != null) {
 					return player;
 				}
 			}
 		}
+
 		return "";
 	}
 

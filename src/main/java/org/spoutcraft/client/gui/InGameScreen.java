@@ -47,7 +47,6 @@ public class InGameScreen extends GenericScreen implements InGameHUD {
 		this.hunger = new HungerBar();
 		this.exp = new ExpBar();
 		this.playerList = new ServerPlayerList();
-
 		attachWidgets("Spoutcraft", health, bubble, chat, chatText, armor, hunger, exp, playerList);
 	}
 
@@ -60,14 +59,17 @@ public class InGameScreen extends GenericScreen implements InGameHUD {
 		if (SpoutClient.getHandle().currentScreen == null) {
 			activePopup = null;
 		}
+
 		if (activePopup != null) {
 			activePopup.onTick();
 		} else {
 			PopupScreen queued = queuedScreens.poll();
+
 			if (queued != null) {
 				attachPopupScreen(queued);
 			}
 		}
+
 		super.onTick();
 	}
 
@@ -77,6 +79,7 @@ public class InGameScreen extends GenericScreen implements InGameHUD {
 			super.attachWidget(addon, widget);
 			return this;
 		}
+
 		throw new UnsupportedOperationException("Unsupported widget type");
 	}
 
@@ -100,6 +103,7 @@ public class InGameScreen extends GenericScreen implements InGameHUD {
 		} else if (widget instanceof ServerPlayerList) {
 			playerList = (ServerPlayerList)widget;
 		}
+
 		return super.updateWidget(widget);
 	}
 
@@ -108,27 +112,35 @@ public class InGameScreen extends GenericScreen implements InGameHUD {
 		if (widget instanceof HealthBar) {
 			throw new UnsupportedOperationException("Cannot remove the health bar. Use setVisible(false) to hide it instead");
 		}
+
 		if (widget instanceof BubbleBar) {
 			throw new UnsupportedOperationException("Cannot remove the bubble bar. Use setVisible(false) to hide it instead");
 		}
+
 		if (widget instanceof ChatTextBox) {
 			throw new UnsupportedOperationException("Cannot remove the chat text box. Use setVisible(false) to hide it instead");
 		}
+
 		if (widget instanceof ChatBar) {
 			throw new UnsupportedOperationException("Cannot remove the chat bar. Use setVisible(false) to hide it instead");
 		}
+
 		if (widget instanceof ArmorBar) {
 			throw new UnsupportedOperationException("Cannot remove the armor bar. Use setVisible(false) to hide it instead");
 		}
+
 		if (widget instanceof HungerBar) {
 			throw new UnsupportedOperationException("Cannot remove the hunger bar. Use setVisible(false) to hide it instead");
 		}
+
 		if (widget instanceof ExpBar) {
 			throw new UnsupportedOperationException("Cannot remove the exp bar. Use setVisible(false) to hide it instead");
 		}
+
 		if (widget instanceof ServerPlayerList) {
 			throw new UnsupportedOperationException("Cannot remove the player list. Use setVisisble(false) to hide it instead");
 		}
+
 		return super.removeWidget(widget);
 	}
 
@@ -185,6 +197,7 @@ public class InGameScreen extends GenericScreen implements InGameHUD {
 			SpoutClient.getHandle().displayGuiScreen(new CustomScreen(screen));
 			return true;
 		}
+
 		queuedScreens.add(screen);
 		return false;
 	}
@@ -193,6 +206,7 @@ public class InGameScreen extends GenericScreen implements InGameHUD {
 		if (widget instanceof Screen) {
 			return false;
 		}
+
 		return true;
 	}
 

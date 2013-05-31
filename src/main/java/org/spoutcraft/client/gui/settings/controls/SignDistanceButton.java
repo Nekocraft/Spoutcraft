@@ -41,6 +41,7 @@ public class SignDistanceButton extends AutomatedButton {
 		} else {
 			Configuration.setSignDistance(8);
 		}
+
 		Configuration.write();
 	}
 }

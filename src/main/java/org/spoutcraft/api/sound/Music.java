@@ -79,6 +79,7 @@ public enum Music {
 		for (Music i : values()) {
 			lookupName.put(i.getName() + (1 + i.getSoundId()) + ".ogg", i);
 			lookupId.put(i.getId(), i);
+
 			if (i.getId() > last) {
 				last = i.getId();
 			}

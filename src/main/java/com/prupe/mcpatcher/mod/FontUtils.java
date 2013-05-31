@@ -14,6 +14,17 @@ public class FontUtils {
 	public static final int[] SPACERS = new int[] {33721342, 41975936, 234881023};
 	private static final boolean showLines = false;
 
+	public static String getFontName(String var0) {
+		var0 = var0.replaceFirst("_hd\\.png$", ".png");
+		String var1 = var0.replaceFirst("\\.png$", "_hd.png");
+
+		if (TexturePackAPI.hasResource(var1)) {
+			return var1;
+		} else {
+			return var0;
+		}
+	}
+
 	public static float[] computeCharWidths(FontRenderer var0, String var1, BufferedImage var2, int[] var3, int[] var4) {
 		float[] var5 = new float[var4.length];
 		int var6 = var2.getWidth();
@@ -83,15 +94,16 @@ public class FontUtils {
 
 		return var5;
 	}
-
+	/*
 	private static float getCharWidthf(FontRenderer var0, char var1) {
 		float var2 = (float)var0.getCharWidth(var1);
-		return var2 >= 0.0F && var1 < var0.charWidthf.length && var1 >= 0 ? var0.charWidthf[var1] : var2;
+		return var2 >= 0.0F && var0.charWidthf != null && var1 < var0.charWidthf.length && var1 >= 0 ? var0.charWidthf[var1] : var2;
 	}
 
 	public static float getStringWidthf(FontRenderer var0, String var1) {
 		float var2 = 0.0F;
 		var1 = org.bukkit.ChatColor.stripColor(var1); // Spout - Strip Colors & Formatting Codes to calculate spacing properly.
+		
 		if (var1 != null) {
 			boolean var3 = false;
 
@@ -104,14 +116,14 @@ public class FontUtils {
 					var5 = var1.charAt(var4);
 
 					if (var5 != 108 && var5 != 76) {
-						if (var5 == 114 || var5 == 82 || var5 >= 48 && var5 <= 57 || var5 >= 97 && var5 <= 102 || var5 >= 65 && var5 <= 70) {
+						if (var5 == 114 || var5 == 82) {
 							var3 = false;
 						}
 					} else {
 						var3 = true;
 					}
 
-					var6 = getCharWidthf(var0, var5);
+					var6 = 0.0F;
 				}
 
 				var2 += var6;
@@ -124,6 +136,7 @@ public class FontUtils {
 
 		return var2;
 	}
+	*/
 
 	private static boolean isOpaque(int var0) {
 		int[] var1 = SPACERS;
@@ -138,6 +151,10 @@ public class FontUtils {
 		}
 
 		return (var0 >> 24 & 240) > 0;
+	}
+
+	private static boolean printThis(int var0) {
+		return "ABCDEF abcdef".indexOf(var0) >= 0;
 	}
 
 	private static float defaultSpaceWidth(float[] var0) {

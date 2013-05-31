@@ -23,7 +23,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModelBiped;
 import net.minecraft.src.ModelRenderer;
 
-public class NotchHat extends Accessory{
+public class NotchHat extends Accessory {
 	public ModelRenderer NotchHatTop;
 	public ModelRenderer NotchHatBottom;
 

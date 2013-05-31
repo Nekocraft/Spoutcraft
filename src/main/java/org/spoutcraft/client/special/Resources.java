@@ -30,9 +30,9 @@ import org.bukkit.util.config.Configuration;
 import org.spoutcraft.client.io.FileUtil;
 
 public enum Resources implements YAMLResource {
-	Special (new File(FileUtil.getSpoutcraftBaseDir(), "config" + File.separator + "special.yml")),
+	Special(new File(FileUtil.getSpoutcraftBaseDir(), "config" + File.separator + "special.yml")),
 
-	VIP (new File(FileUtil.getSpoutcraftBaseDir(), "config" + File.separator + "vip.yml")),
+	VIP(new File(FileUtil.getSpoutcraftBaseDir(), "config" + File.separator + "vip.yml")),
 	;
 
 	final BaseYAMLResource resource;
@@ -49,11 +49,14 @@ public enum Resources implements YAMLResource {
 	}
 
 	private static List<Holiday> holidays = null;
+
 	public static synchronized Holiday getHoliday() {
 		if (holidays == null) {
 			holidays = new ArrayList<Holiday>();
+
 			try {
 				Configuration config = Special.getYAML();
+
 				for (String key : config.getKeys()) {
 					try {
 						@SuppressWarnings("unchecked")
@@ -75,11 +78,13 @@ public enum Resources implements YAMLResource {
 		}
 
 		long time = System.currentTimeMillis() / 1000;
+
 		for (Holiday holiday : holidays) {
 			if (time > holiday.getStart() && time < holiday.getEnd()) {
 				return holiday;
 			}
 		}
+
 		return null;
 	}
 
@@ -89,6 +94,7 @@ public enum Resources implements YAMLResource {
 		if (vips == null) {
 			vips = new ConcurrentHashMap<String, VIP>();
 			Configuration config = VIP.getYAML();
+
 			for (String key : config.getKeys()) {
 				try {
 					Map<String, Object> values = (Map<String, Object>) config.getProperty(key);
@@ -98,9 +104,11 @@ public enum Resources implements YAMLResource {
 					String cape = (String) values.get("cape");
 					String armor = (String) values.get("armor");
 					float scale = 1f;
+
 					if (values.containsKey("scale")) {
 						scale = ((Number) values.get("scale")).floatValue();
 					}
+
 					Map<String, Integer> particles = (Map<String, Integer>) values.get("particles");
 					Map<String, String> acs = (Map<String, String>) values.get("accessories");
 					VIP vip = new VIP(key, title, cape, particles, acs, armor, scale);

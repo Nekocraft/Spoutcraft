@@ -39,12 +39,13 @@ public class MapWidgetRenderer extends Thread {
 				try {
 					Point coords = renderQueue.remove();
 					MapWidget.drawChunk(coords.getX(), coords.getY(), true);
-				} catch(NoSuchElementException e) {
+				} catch (NoSuchElementException e) {
 					break;
-				} catch(Exception e) {
+				} catch (Exception e) {
 					continue;
 				}
 			}
+
 			try {
 				Thread.sleep(200);
 			} catch (InterruptedException e) {

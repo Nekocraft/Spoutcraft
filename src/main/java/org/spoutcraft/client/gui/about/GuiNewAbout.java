@@ -61,7 +61,7 @@ public class GuiNewAbout extends GuiSpoutScreen {
 
 	private static void updateRoot() {
 		try {
-			root = (HashMap<String, Object>) (new Yaml()).load((new URL("http://get.spout.org/about.yml")).openStream());
+			root = (HashMap<String, Object>)(new Yaml()).load((new URL("http://get.spout.org/about.yml")).openStream());
 		} catch (Exception ex) {
 			Logger.getLogger(GuiNewAbout.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -77,61 +77,74 @@ public class GuiNewAbout extends GuiSpoutScreen {
 		buttonDone = new GenericButton("Main Menu");
 		scroll = new GenericScrollArea();
 		labelSpoutcraftVersion = new GenericLabel(SpoutClient.getClientVersion() + "\nLicensed under LGPLv3");
-		labelMinecraftVersion = new GenericLabel(MainMenu.mcVersion + "\nCopyright Mojang AB" );
+		labelMinecraftVersion = new GenericLabel(MainMenu.mcVersion + "\nCopyright Mojang AB");
 		labelSpoutcraftVersion.setAlign(WidgetAnchor.TOP_RIGHT);
 		textureSpoutcraft = new ClientTexture("/res/logo/spoutcraft.png");
 		textureMinecraft = new ClientTexture("/res/logo/minecraft.png");
-
 		getScreen().attachWidgets("Spoutcraft", title, buttonDone, scroll, labelMinecraftVersion, labelSpoutcraftVersion, textureMinecraft, textureSpoutcraft);
-
 		load();
 	}
 
 	@SuppressWarnings("unchecked")
 	public void load() {
 		scroll.removeWidgets("Spoutcraft");
+
 		try {
 			if (root.containsKey("options")) {
 				HashMap<String, Object> options = (HashMap<String, Object>) root
 						.get("options");
+
 				if (options.containsKey("section-margin")) {
 					sectionMargin = (Integer) options.get("section-margin");
 				}
+
 				if (options.containsKey("column-margin")) {
 					columnMargin = (Integer) options.get("column-margin");
 				}
 			}
+
 			if (root.containsKey("columns")) {
 				LinkedHashMap<String, Object> columns = (LinkedHashMap<String, Object>) root
 						.get("columns");
+
 				for (Object col : columns.values()) {
 					List<Section> sections = new LinkedList<Section>();
 					LinkedHashMap<String, Object> secs = (LinkedHashMap<String, Object>) col;
+
 					for (Object sec : secs.values()) {
 						LinkedHashMap<String, Object> section = (LinkedHashMap<String, Object>) sec;
 						String title = "Untitled";
+
 						if (section.containsKey("title")) {
 							title = (String) section.get("title");
 						}
+
 						Set<String> keys = section.keySet();
+
 						if (keys.size() > 2) {
 							continue;
 						}
+
 						String sectionType = "";
+
 						for (String key : keys) {
 							if (!key.equals("title")) {
 								sectionType = key;
 							}
 						}
+
 						Section sectionObject = Section.getSection(sectionType);
+
 						if (sectionObject == null) {
 							continue;
 						}
+
 						sectionObject.init(this, title, section.get(sectionType));
 						scroll.attachWidgets("Spoutcraft", sectionObject
 								.getWidgets().toArray(new Widget[0]));
 						sections.add(sectionObject);
 					}
+
 					this.columns.add(sections);
 				}
 			}
@@ -145,40 +158,39 @@ public class GuiNewAbout extends GuiSpoutScreen {
 	@Override
 	protected void layoutWidgets() {
 		int top = 10;
-
 		int swidth = mc.fontRenderer.getStringWidth(title.getText());
 		title.setY(top).setX(width / 2 - swidth / 2).setHeight(11)
-				.setWidth(swidth);
-
+		.setWidth(swidth);
 		int viewheight = height - title.getY() - 16 - 53;
-
 		scroll.setGeometry(5, title.getY() + 16, width - 10, viewheight);
-
 		textureSpoutcraft.setGeometry(width - 133, height - 48, 128, 32);
 		textureMinecraft.setGeometry(5, height - 46, 128, 20);
-
 		labelMinecraftVersion.setGeometry(5, height - 25, width - (width / 2 - 50) - 5, 21);
 		labelSpoutcraftVersion.setGeometry(width - 5, height - 25, width - (width / 2 + 55), 21);
 		buttonDone.setGeometry(width / 2 - 50, height - 25, 100, 20);
-
 		int columnCount = columns.size();
+
 		if (columnCount > 0) {
 			int columnWidth = (width - 10 - 16 - (columnCount + 1)
 					* columnMargin)
 					/ (columnCount);
 			int columnX = columnMargin;
 			Iterator<List<Section>> iter = columns.iterator();
+
 			while (iter.hasNext()) {
 				List<Section> column = iter.next();
 				int sectionY = columnMargin;
+
 				for (Section section : column) {
 					section.setX(columnX);
 					section.setY(sectionY);
 					section.setWidth(columnWidth);
 					sectionY += section.getHeight() + sectionMargin;
 				}
+
 				columnX += columnWidth + columnMargin;
 			}
+
 			scroll.updateInnerSize();
 		}
 	}

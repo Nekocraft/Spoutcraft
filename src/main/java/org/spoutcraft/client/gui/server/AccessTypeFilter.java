@@ -28,15 +28,17 @@ import org.spoutcraft.client.gui.database.UrlElement;
 
 public class AccessTypeFilter extends GenericComboBox implements UrlElement {
 	private String[] strings = { "全部", "开放", "白名单", "灰名单", "黑名单"};
-	private int [] ids = {-1, 0, 1, 2, 3};
+	private int [] ids = { -1, 0, 1, 2, 3};
 	AbstractAPIModel model;
 
 	public AccessTypeFilter(AbstractAPIModel model) {
 		this.model = model;
 		List<String> l = new ArrayList<String>();
-		for (String type:strings) {
+
+		for (String type: strings) {
 			l.add(type);
 		}
+
 		setItems(l);
 		setSelection(0);
 	}

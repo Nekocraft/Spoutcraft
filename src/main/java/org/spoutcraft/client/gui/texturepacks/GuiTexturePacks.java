@@ -52,12 +52,12 @@ public class GuiTexturePacks extends GuiScreen {
 
 	private void createInstances() {
 		model.setCurrentGui(this);
+
 		if (instancesCreated) {
 			return;
 		}
 
 		StringTranslate t = StringTranslate.getInstance();
-
 		model.update();
 		screenTitle = new GenericLabel(t.translateKey("texturePack.title", "Texture Packs"));
 		loadingTexture = new GenericLabel(ChatColor.GREEN + t.translateKey("spout.texturepack.loading", "Loading texture..."));
@@ -70,42 +70,30 @@ public class GuiTexturePacks extends GuiScreen {
 
 	public void initGui() {
 		createInstances();
-
 		int top = 10;
-
 		int swidth = mc.fontRenderer.getStringWidth(screenTitle.getText());
 		screenTitle.setY(top).setX(width / 2 - swidth / 2).setHeight(11).setWidth(swidth);
 		getScreen().attachWidget("Spoutcraft", screenTitle);
-
 		swidth = mc.fontRenderer.getStringWidth(loadingTexture.getText());
 		loadingTexture.setVisible(false);
 		loadingTexture.setY(top).setX(width / 2 + swidth).setHeight(11).setWidth(swidth);
 		getScreen().attachWidget("Spoutcraft", loadingTexture);
-
-		top+=15;
-
+		top += 15;
 		view.setX(5).setY(top).setWidth(width - 10).setHeight(height - top - 55);
 		getScreen().attachWidget("Spoutcraft", view);
-
 		top += 5 + view.getHeight();
-
 		int totalWidth = Math.min(width - 10, 200 * 3 + 10);
 		int cellWidth = (totalWidth - 10) / 3;
 		int left = width / 2 - totalWidth / 2;
 		int center = left + 5 + cellWidth;
 		int right = center + 5 + cellWidth;
-
 		buttonSelect.setX(center).setY(top).setWidth(cellWidth).setHeight(20);
 		getScreen().attachWidget("Spoutcraft", buttonSelect);
-
 		buttonDelete.setX(left).setY(top).setWidth(cellWidth).setHeight(20);
 		getScreen().attachWidget("Spoutcraft", buttonDelete);
-
 		buttonOpenFolder.setX(right).setY(top).setWidth(cellWidth).setHeight(20);
 		getScreen().attachWidget("Spoutcraft", buttonOpenFolder);
-
 		top += 25;
-
 		buttonDone.setX(center).setY(top).setWidth(cellWidth).setHeight(20);
 		getScreen().attachWidget("Spoutcraft", buttonDone);
 
@@ -128,6 +116,7 @@ public class GuiTexturePacks extends GuiScreen {
 		if (btn.equals(buttonDone)) {
 			SpoutClient.getHandle().displayGuiScreen(new org.spoutcraft.client.gui.mainmenu.MainMenu());
 		}
+
 		if (btn.equals(buttonOpenFolder)) {
 			try {
 				Desktop.getDesktop().open(SpoutClient.getInstance().getTexturePackFolder());
@@ -135,9 +124,11 @@ public class GuiTexturePacks extends GuiScreen {
 				e.printStackTrace();
 			}
 		}
+
 		if (btn.equals(buttonSelect) && view.getSelectedRow() != -1) {
 			TexturePackItem item = model.getItem(view.getSelectedRow());
 			boolean current = item.getPack() == SpoutClient.getHandle().texturePackList.getSelectedTexturePack();
+
 			if (!current) {
 				item.select();
 				updateButtons();
@@ -154,6 +145,7 @@ public class GuiTexturePacks extends GuiScreen {
 			TexturePackItem item = model.getItem(view.getSelectedRow());
 			boolean current = item.getPack() == SpoutClient.getHandle().texturePackList.getSelectedTexturePack();
 			buttonSelect.setEnabled(true);
+
 			if (current) {
 				buttonSelect.setText(t.translateKey("spout.texturepack.preview.button", "Preview"));
 				buttonSelect.setEnabled(false);
@@ -161,21 +153,25 @@ public class GuiTexturePacks extends GuiScreen {
 			} else {
 				buttonSelect.setText(t.translateKey("spout.texturepack.select", "Select"));
 			}
+
 			buttonDelete.setEnabled(!current && (item.getPack() instanceof TexturePackCustom));
-		} catch(Exception e) {}
+		} catch (Exception e) {}
 	}
 
 	public void deleteCurrentTexturepack() {
 		for (int tries = 0; tries < 3; tries++) {
 			try {
 				ITexturePack pack = model.getItem(view.getSelectedRow()).getPack();
+
 				if (pack instanceof TexturePackCustom) {
 					TexturePackCustom custom = (TexturePackCustom) pack;
 					custom.closeTexturePackFile();
 					File d = new File(SpoutClient.getInstance().getTexturePackFolder(), custom.texturePackFileName);
+
 					if (!d.exists()) {
 						d = new File(new File(Minecraft.getAppDir("minecraft"), "texturepacks"), custom.texturePackFileName);
 					}
+
 					d.setWritable(true);
 					FileUtils.forceDelete(d);
 					model.update();
@@ -186,7 +182,7 @@ public class GuiTexturePacks extends GuiScreen {
 
 					Thread.sleep(25);
 				}
-			} catch(Exception e) {
+			} catch (Exception e) {
 			}
 		}
 	}

@@ -51,14 +51,10 @@ public class Configuration extends ConfigurationNode {
 
 	public Configuration(File file) {
 		super(new HashMap<String, Object>());
-
 		DumperOptions options = new DumperOptions();
-
 		options.setIndent(4);
 		options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-
 		yaml = new Yaml(new SafeConstructor(), new Representer(), options);
-
 		this.file = file;
 	}
 
@@ -91,7 +87,6 @@ public class Configuration extends ConfigurationNode {
 	 */
 	public boolean save() {
 		FileOutputStream stream = null;
-
 		File parent = file.getParentFile();
 
 		if (parent != null) {
@@ -102,7 +97,8 @@ public class Configuration extends ConfigurationNode {
 			stream = new FileOutputStream(file);
 			yaml.dump(root, new OutputStreamWriter(stream, "UTF-8"));
 			return true;
-		} catch (IOException e) {} finally {
+		} catch (IOException e) {}
+		finally {
 			try {
 				if (stream != null) {
 					stream.close();

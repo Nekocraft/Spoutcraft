@@ -26,9 +26,11 @@ public class CRCManager {
 
 	public static long getCRC(String fileName) {
 		Long result = fileNameToCRC.get(fileName);
+
 		if (result == null) {
 			return -1;
 		}
+
 		return result;
 	}
 

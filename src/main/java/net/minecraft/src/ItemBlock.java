@@ -26,7 +26,7 @@ public class ItemBlock extends Item {
 	 * Returns 0 for /terrain.png, 1 for /gui/items.png
 	 */
 	public int getSpriteNumber() {
-		return Block.blocksList[this.blockID].func_94327_t_() != null ? 1 : 0;
+		return Block.blocksList[this.blockID].getItemIconName() != null ? 1 : 0;
 	}
 
 	/**
@@ -89,7 +89,7 @@ public class ItemBlock extends Item {
 					Block.blocksList[this.blockID].onPostBlockPlaced(par3World, par4, par5, par6, var14);
 				}
 
-				par3World.playSoundEffect((double) ((float) par4 + 0.5F), (double) ((float) par5 + 0.5F), (double) ((float) par6 + 0.5F), var12.stepSound.getPlaceSound(), (var12.stepSound.getVolume() + 1.0F) / 2.0F, var12.stepSound.getPitch() * 0.8F);
+				par3World.playSoundEffect((double)((float) par4 + 0.5F), (double)((float) par5 + 0.5F), (double)((float) par6 + 0.5F), var12.stepSound.getPlaceSound(), (var12.stepSound.getVolume() + 1.0F) / 2.0F, var12.stepSound.getPitch() * 0.8F);
 				--par1ItemStack.stackSize;
 			}
 
@@ -168,8 +168,8 @@ public class ItemBlock extends Item {
 		Block.blocksList[this.blockID].getSubBlocks(par1, par2CreativeTabs, par3List);
 	}
 
-	public void updateIcons(IconRegister par1IconRegister) {
-		String var2 = Block.blocksList[this.blockID].func_94327_t_();
+	public void registerIcons(IconRegister par1IconRegister) {
+		String var2 = Block.blocksList[this.blockID].getItemIconName();
 
 		if (var2 != null) {
 			this.field_94588_b = par1IconRegister.registerIcon(var2);

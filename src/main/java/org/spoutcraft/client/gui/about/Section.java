@@ -33,13 +33,13 @@ public abstract class Section {
 	private int width = 100;
 	private Label labelTitle;
 
-	private static HashMap<String, Class<? extends Section>> types = new HashMap<String, Class<? extends Section>>();
+	private static HashMap < String, Class <? extends Section >> types = new HashMap < String, Class <? extends Section >> ();
 	static {
 		type("text", TextSection.class);
 		type("table", TableSection.class);
 		type("images", ImageSection.class);
 	}
-	private static void type(String identify, Class<? extends Section> clazz) {
+	private static void type(String identify, Class <? extends Section > clazz) {
 		types.put(identify, clazz);
 	}
 	public static Section getSection(String type) {
@@ -50,6 +50,7 @@ public abstract class Section {
 			} catch (IllegalAccessException e) {
 			}
 		}
+
 		return null;
 	}
 

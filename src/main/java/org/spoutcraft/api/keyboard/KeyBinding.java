@@ -85,12 +85,14 @@ public final class KeyBinding extends AbstractBinding implements Serializable {
 	public boolean equals(Object obj) {
 		if (obj instanceof KeyBinding) {
 			KeyBinding other = (KeyBinding)obj;
+
 			if (uuid != null && other.uuid != null) {
 				return other.uuid.equals(this.uuid);
 			} else {
 				return this == obj;
 			}
 		}
+
 		return false;
 	}
 
@@ -126,6 +128,7 @@ public final class KeyBinding extends AbstractBinding implements Serializable {
 		if (myDelegate == null && uuid == null) {
 			return false;
 		}
+
 		return super.matches(key, modifiers);
 	}
 }

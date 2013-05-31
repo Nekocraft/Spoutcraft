@@ -49,14 +49,17 @@ public class CustomTextureManager {
 
 	public static void downloadTexture(String plugin, String url, boolean ignoreEnding) {
 		String fileName = FileUtil.getFileName(url);
+
 		if (!ignoreEnding && !FileUtil.isImageFile(fileName)) {
 			System.out.println("Rejecting download of invalid texture: " + fileName);
 		} else if (!isTextureDownloading(url) && !isTextureDownloaded(plugin, url)) {
 			File dir = FileUtil.getTempDir();
+
 			if (plugin != null) {
 				dir = new File(FileUtil.getCacheDir(), plugin);
 				dir.mkdir();
 			}
+
 			Download download = new Download(fileName, dir, url, null);
 			FileDownloadThread.getInstance().addToDownloadQueue(download);
 		}
@@ -81,16 +84,20 @@ public class CustomTextureManager {
 	public static File getTextureFile(String plugin, String url) {
 		String fileName = FileUtil.getFileName(url);
 		File cache = cacheTextureFiles.get(plugin + File.separator + fileName);
+
 		if (cache != null) {
 			return cache;
 		}
+
 		if (plugin != null) {
 			File file = FileUtil.findFile(plugin, fileName);
+
 			if (file != null) {
 				cacheTextureFiles.put(plugin + File.separator + fileName, file);
 				return file;
 			}
 		}
+
 		return new File(FileUtil.getTempDir(), fileName);
 	}
 
@@ -98,12 +105,16 @@ public class CustomTextureManager {
 		if (textures.containsKey(path)) {
 			return textures.get(path);
 		}
+
 		Texture texture = null;
+
 		try {
 			FileInputStream stream = new FileInputStream(path);
+
 			if (stream.available() > 0) {
 				texture = TextureLoader.getTexture(path.toLowerCase().endsWith(".png") ? "PNG" : "JPG", stream, true,  GL11.GL_NEAREST);
 			}
+
 			stream.close();
 		} catch (IOException e) {
 		}
@@ -111,6 +122,7 @@ public class CustomTextureManager {
 		if (texture != null) {
 			textures.put(path, texture);
 		}
+
 		return texture;
 	}
 
@@ -120,21 +132,25 @@ public class CustomTextureManager {
 		}
 
 		Texture texture = null;
+
 		// Check inside jar
 		try {
 			InputStream stream = Minecraft.class.getResourceAsStream(path);
 			texture = TextureLoader.getTexture(path.toLowerCase().endsWith(".png") ? "PNG" : "JPG", stream, true,  GL11.GL_NEAREST);
 			stream.close();
 		} catch (Exception e) { }
+
 		// Check MCP/Eclipse Path
 		if (texture == null) {
 			String pathToJar;
 			File jar = new File(CustomTextureManager.class.getProtectionDomain().getCodeSource().getLocation().getFile());
+
 			try {
 				pathToJar = jar.getCanonicalPath();
 			} catch (IOException e1) {
 				pathToJar = jar.getAbsolutePath();
 			}
+
 			try {
 				pathToJar = URLDecoder.decode(pathToJar, "UTF-8");
 			} catch (java.io.UnsupportedEncodingException ignore) { }
@@ -161,6 +177,7 @@ public class CustomTextureManager {
 		for (Texture texture : textures.values()) {
 			texture.release();
 		}
+
 		cacheTextureFiles.clear();
 		textures.clear();
 		ZanMinimap.instance.texman.reset();
@@ -168,15 +185,18 @@ public class CustomTextureManager {
 
 	public static Texture getTextureFromUrl(String url) {
 		Texture tex = getTextureFromUrl(null, url);
+
 		if (tex == null) {
 			CustomTextureManager.downloadTexture(url, true);
 			tex = CustomTextureManager.getTextureFromJar("/res/block/spout.png");
 		}
+
 		return tex;
 	}
 
 	public static Texture getTextureFromUrl(String plugin, String url) {
 		File texture = getTextureFile(plugin, url);
+
 		try {
 			return getTextureFromPath(texture.getCanonicalPath());
 		} catch (IOException e) {
@@ -193,12 +213,15 @@ public class CustomTextureManager {
 		if (!isTextureDownloaded(plugin, url)) {
 			return null;
 		}
+
 		File download = new File(FileUtil.getTempDir(), FileUtil.getFileName(url));
+
 		try {
 			return download.getCanonicalPath();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
 }

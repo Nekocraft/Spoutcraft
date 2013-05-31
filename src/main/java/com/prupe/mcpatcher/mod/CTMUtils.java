@@ -1,6 +1,7 @@
 package com.prupe.mcpatcher.mod;
 
 import com.prupe.mcpatcher.Config;
+import com.prupe.mcpatcher.MCLogger;
 import com.prupe.mcpatcher.TexturePackChangeHandler;
 import com.prupe.mcpatcher.mod.CTMUtils$1;
 import com.prupe.mcpatcher.mod.CTMUtils$2;
@@ -21,14 +22,16 @@ import net.minecraft.src.Stitcher;
 import net.minecraft.src.Tessellator;
 import net.minecraft.src.Texture;
 import net.minecraft.src.TextureMap;
-// Spout Start
+
+//Spout Start
 import org.spoutcraft.client.config.Configuration;
-// Spout End
+//Spout End
 
 public class CTMUtils {
-	private static final boolean enableStandard = Configuration.isConnectedTextures();
-	private static final boolean enableNonStandard = Configuration.isConnectedTextures();
-	private static final boolean enableGrass = Configuration.isFancyGrass();
+	private static final MCLogger logger = MCLogger.getLogger("Connected Textures", "CTM");
+	private static final boolean enableStandard = Config.getBoolean("Connected Textures", "standard", true);
+	private static final boolean enableNonStandard = Config.getBoolean("Connected Textures", "nonStandard", true);
+	private static final boolean enableGrass = Config.getBoolean("Connected Textures", "grass", false);
 	private static final int splitTextures = Config.getInt("Connected Textures", "splitTextures", 1);
 	private static final int maxRecursion = Config.getInt("Connected Textures", "maxRecursion", 4);
 	static final int BLOCK_ID_LOG = 17;
@@ -99,7 +102,7 @@ public class CTMUtils {
 	private static Icon getTile(RenderBlocks var0, Block var1, int var2, int var3, Icon var4, Tessellator var5) {
 		lastOverride = null;
 
-		if (checkFace(var2)) {
+		if (checkFace(var2) && checkRenderType(var1)) {
 			CTMUtils$3 var6 = new CTMUtils$3(var1, var4, var2, var3);
 			lastOverride = var6.go();
 
@@ -141,7 +144,7 @@ public class CTMUtils {
 			if (var2.equals("terrain")) {
 				terrainMap = var0;
 
-				if (enableGrass) {
+				if (Configuration.betterGrass !=0) {
 					betterGrass = new TileOverrideImpl$BetterGrass(var0, 2, "grass");
 					registerOverride(betterGrass);
 					registerOverride(new TileOverrideImpl$BetterGrass(var0, 110, "mycel"));
@@ -236,6 +239,17 @@ public class CTMUtils {
 		return var10000;
 	}
 
+	private static boolean checkRenderType(Block var0) {
+		switch (var0.getRenderType()) {
+			case 11:
+			case 21:
+				return false;
+
+			default:
+				return true;
+		}
+	}
+
 	private static boolean skipDefaultRendering(Block var0) {
 		return RenderPassAPI.instance.skipDefaultRendering(var0);
 	}
@@ -279,6 +293,7 @@ public class CTMUtils {
 	}
 
 	private static ITileOverride[] registerOverride(ITileOverride[] var0, ITileOverride var1, String var2) {
+		
 		if (var0 == null) {
 			return new ITileOverride[] {var1};
 		} else {
@@ -321,15 +336,19 @@ public class CTMUtils {
 	}
 
 	static boolean access$800() {
-		return enableStandard;
+		return Configuration.isConnectedTextures();
 	}
 
 	static boolean access$900() {
-		return enableNonStandard;
+		return Configuration.isConnectedTextures();
 	}
 
 	static TileLoader access$500() {
 		return tileLoader;
+	}
+	
+	static MCLogger access$600() {
+		return logger;
 	}
 
 	static void access$1000(ITileOverride var0) {
@@ -364,7 +383,7 @@ public class CTMUtils {
 			;
 		}
 
-		int var0 = Minecraft.getGLMaximumTextureSize();
+		int var0 = Minecraft.getGLMaximumTextureSize();		
 		MAX_CTM_TEXTURE_SIZE = var0 * var0 * 7 / 8;
 		changeHandler = new CTMUtils$1("Connected Textures", 2);
 		TexturePackChangeHandler.register(changeHandler);

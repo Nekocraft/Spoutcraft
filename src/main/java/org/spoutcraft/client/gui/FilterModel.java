@@ -35,19 +35,20 @@ public abstract class FilterModel extends AbstractListModel {
 
 	public void refresh() {
 		items.clear();
-
 		refreshContents();
-
 		filteredItems.clear();
 
-		for (ListWidgetItem item:items) {
+		for (ListWidgetItem item: items) {
 			boolean matches = true;
-			for (FilterItem filter:filters) {
+
+			for (FilterItem filter: filters) {
 				matches = filter.matches(item);
+
 				if (!matches) {
 					break;
 				}
 			}
+
 			if (matches) {
 				filteredItems.add(item);
 			}
@@ -63,6 +64,7 @@ public abstract class FilterModel extends AbstractListModel {
 		if (row >= 0 && row < filteredItems.size()) {
 			return filteredItems.get(row);
 		}
+
 		return null;
 	}
 

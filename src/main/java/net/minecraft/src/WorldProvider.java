@@ -6,7 +6,6 @@ import com.prupe.mcpatcher.mod.Colorizer;
 // MCPatcher End
 
 public abstract class WorldProvider {
-
 	/** world object being used */
 	public World worldObj;
 	public WorldType terrainType;
@@ -61,19 +60,14 @@ public abstract class WorldProvider {
 	 * creates a new world chunk manager for WorldProvider
 	 */
 	protected void registerWorldChunkManager() {
-		if (this.worldObj.getWorldInfo().getTerrainType() == WorldType.FLAT) {
-			FlatGeneratorInfo var1 = FlatGeneratorInfo.createFlatGeneratorFromString(this.worldObj.getWorldInfo().getGeneratorOptions());
-			this.worldChunkMgr = new WorldChunkManagerHell(BiomeGenBase.biomeList[var1.getBiome()], 0.5F, 0.5F);
-		} else {
-			this.worldChunkMgr = new WorldChunkManager(this.worldObj);
-		}
+		this.worldChunkMgr = this.terrainType.getChunkManager(this.worldObj);
 	}
 
 	/**
 	 * Returns a new chunk provider which generates chunks for this world
 	 */
 	public IChunkProvider createChunkGenerator() {
-		return (IChunkProvider)(this.terrainType == WorldType.FLAT ? new ChunkProviderFlat(this.worldObj, this.worldObj.getSeed(), this.worldObj.getWorldInfo().isMapFeaturesEnabled(), this.field_82913_c) : new ChunkProviderGenerate(this.worldObj, this.worldObj.getSeed(), this.worldObj.getWorldInfo().isMapFeaturesEnabled()));
+		return this.terrainType.getChunkGenerator(this.worldObj, this.field_82913_c);
 	}
 
 	/**
@@ -166,6 +160,7 @@ public abstract class WorldProvider {
 			var5 = 0.84705883F;
 			var6 = 1.0F;
 		}
+
 		// MCPatcher End
 		var4 *= var3 * 0.94F + 0.06F;
 		var5 *= var3 * 0.94F + 0.06F;
@@ -203,7 +198,7 @@ public abstract class WorldProvider {
 	}
 
 	public int getAverageGroundLevel() {
-		return this.terrainType == WorldType.FLAT ? 4 : 64;
+		return this.terrainType.getSeaLevel(this.worldObj);
 	}
 
 	/**
@@ -211,7 +206,7 @@ public abstract class WorldProvider {
 	 * offset.
 	 */
 	public boolean getWorldHasVoidParticles() {
-		return this.terrainType != WorldType.FLAT && !this.hasNoSky;
+		return this.terrainType.hasVoidParticles(this.hasNoSky);
 	}
 
 	/**
@@ -220,7 +215,7 @@ public abstract class WorldProvider {
 	 * (256*0.03125), or 8.
 	 */
 	public double getVoidFogYFactor() {
-		return this.terrainType == WorldType.FLAT ? 1.0D : 0.03125D;
+		return this.terrainType.voidFadeMagnitude();
 	}
 
 	/**

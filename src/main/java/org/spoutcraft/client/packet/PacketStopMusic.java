@@ -56,6 +56,7 @@ public class PacketStopMusic implements SpoutPacket {
 		} else {
 			SpoutClient.getHandle().sndManager.fadeOut(fadeTime);
 		}
+
 		if (resetTimer) {
 			SpoutClient.getHandle().sndManager.resetTime();
 		}

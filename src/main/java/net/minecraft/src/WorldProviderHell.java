@@ -9,7 +9,6 @@ import org.spoutcraft.client.SpoutClient;
 // Spout End
 
 public class WorldProviderHell extends WorldProvider {
-
 	/**
 	 * creates a new world chunk manager for WorldProvider
 	 */
@@ -26,13 +25,15 @@ public class WorldProviderHell extends WorldProvider {
 	public Vec3 getFogColor(float par1, float par2) {
 		// Spout Start
 		Color fogColor = SpoutClient.getInstance().getSkyManager().getFogColor();
+
 		if (fogColor != null) {
 			return Vec3.createVectorHelper(fogColor.getRedF(), fogColor.getGreenF(), fogColor.getBlueF());
 		} else {
-		// MCPatcher Start
-		return this.worldObj.getWorldVec3Pool().getVecFromPool((double)ColorizeWorld.netherFogColor[0], (double)ColorizeWorld.netherFogColor[1], (double)ColorizeWorld.netherFogColor[2]);
-		// MCPatcher End
+			// MCPatcher Start
+			return this.worldObj.getWorldVec3Pool().getVecFromPool((double)ColorizeWorld.netherFogColor[0], (double)ColorizeWorld.netherFogColor[1], (double)ColorizeWorld.netherFogColor[2]);
+			// MCPatcher End
 		}
+
 		// Spout End
 	}
 

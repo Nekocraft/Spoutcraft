@@ -1,6 +1,7 @@
 package com.prupe.mcpatcher.mod;
 
 import com.prupe.mcpatcher.Config;
+import com.prupe.mcpatcher.MCLogger;
 import com.prupe.mcpatcher.TexturePackAPI;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -19,8 +20,10 @@ import net.minecraft.src.TextureManager;
 import net.minecraft.src.TextureMap;
 
 public class TileLoader {
+	private static final MCLogger logger = MCLogger.getLogger("Connected Textures", "CTM");
 	private static final boolean debugTextures = Config.getBoolean("Connected Textures", "debugTextures", false);
 	private static String overrideTextureName;
+	private final MCLogger subLogger;
 	private final Map tileTextures = new HashMap();
 	private final Map loadedIcons = new HashMap();
 
@@ -33,15 +36,25 @@ public class TileLoader {
 			var3 = var0 + var1 + var2;
 		}
 
+		logger.finer("getOverridePath(%s, %s, %s) -> %s", new Object[] {var0, var1, var2, var3});
 		return var3;
 	}
 
 	public static String getOverrideTextureName(String var0) {
 		if (overrideTextureName == null) {
+			if (var0.matches("^\\d+$")) {
+				logger.warning("no override set for %s", new Object[] {var0});
+			}
+
 			return var0;
 		} else {
+			logger.finer("getOverrideTextureName(%s) -> %s", new Object[] {var0, overrideTextureName});
 			return overrideTextureName;
 		}
+	}
+
+	TileLoader(MCLogger var1) {
+		this.subLogger = var1;
 	}
 
 	static BufferedImage generateDebugTexture(String var0, int var1, int var2, boolean var3) {
@@ -85,38 +98,38 @@ public class TileLoader {
 			return true;
 		} else {
 			Object var4;
-			label81: {
-				boolean var7;
+			label94: {
+				boolean var5;
 
 				try {
 					overrideTextureName = var1;
 
-					if (!debugTextures && TexturePackAPI.hasResource(var1)) {
-						var4 = TextureManager.instance().createTexture(var1.replaceFirst("^/", ""));
+					if (debugTextures || !TexturePackAPI.hasResource(var1)) {
+						BufferedImage var11 = generateDebugTexture(var1, 64, 64, var3);
+						Texture var6 = TextureManager.instance().makeTexture(var1, 2, var11.getWidth(), var11.getHeight(), 10496, 6408, 9728, 9728, false, var11);
 
-						if (var4 != null && !((List)var4).isEmpty()) {
-							break label81;
+						if (var6 == null) {
+							boolean var7 = false;
+							return var7;
 						}
 
-						boolean var11 = false;
-						return var11;
-					}
-
-					BufferedImage var5 = generateDebugTexture(var1, 64, 64, var3);
-					Texture var6 = TextureManager.instance().makeTexture(var1, 2, var5.getWidth(), var5.getHeight(), 10496, 6408, 9728, 9728, false, var5);
-
-					if (var6 != null) {
 						var4 = new ArrayList();
 						((List)var4).add(var6);
-						break label81;
+						break label94;
 					}
 
-					var7 = false;
+					var4 = TextureManager.instance().createTexture(var1.replaceFirst("^/", ""));
+
+					if (var4 != null && !((List)var4).isEmpty()) {
+						break label94;
+					}
+
+					var5 = false;
 				} finally {
 					overrideTextureName = null;
 				}
 
-				return var7;
+				return var5;
 			}
 			var2.add(var1);
 			this.tileTextures.put(var1, var4);
@@ -145,6 +158,9 @@ public class TileLoader {
 						TessellatorUtils.registerIcon(var1, var5[var6]);
 						this.loadedIcons.put(var7, var5[var6]);
 						String var11 = var8.size() > 1 ? ", " + var8.size() + " frames" : "";
+						this.subLogger.finer("%s -> icon: %dx%d%s", new Object[] {var7, Integer.valueOf(var9.getWidth()), Integer.valueOf(var9.getHeight()), var11});
+					} else {
+						this.subLogger.error("tile for %s unexpectedly missing", new Object[] {var7});
 					}
 				}
 			}

@@ -45,6 +45,7 @@ public enum RenderDistance {
 				return rd;
 			}
 		}
+
 		return null;
 	}
 }

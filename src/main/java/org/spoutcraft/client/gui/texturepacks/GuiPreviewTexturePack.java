@@ -53,7 +53,6 @@ public class GuiPreviewTexturePack extends GuiSpoutScreen {
 	@Override
 	protected void createInstances() {
 		StringTranslate t = StringTranslate.getInstance();
-
 		buttonDone = new GenericButton(t.translateKey("gui.done", "Done"));
 		scroll = new GenericScrollArea();
 		title = new GenericLabel(t.translateKey("spout.texturepack.preview.title", "Texture Pack Preview"));
@@ -63,38 +62,38 @@ public class GuiPreviewTexturePack extends GuiSpoutScreen {
 			if (item == null) {
 				continue;
 			}
+
 			GenericItemWidget icon = new GenericItemWidget(new ItemStack(item.itemID));
 			previewIcons.add(icon);
 		}
+
 		scroll.attachWidgets("Spoutcraft", previewIcons.toArray(new Widget[0]));
 	}
 
 	@Override
 	protected void layoutWidgets() {
 		int top = 10;
-
 		int swidth = mc.fontRenderer.getStringWidth(title.getText());
 		title.setY(top).setX(width / 2 - swidth / 2).setHeight(11).setWidth(swidth);
-
 		scroll.setGeometry(5, title.getY() + 16, width - 10, height - title.getY() - 16 - 5 - 5 - 20);
-
 		buttonDone.setGeometry(width / 2 - 50, height - 25, 100, 20);
-
 		int SIZE = 32;
-
 		int fitting = (width - 26) / (SIZE + 5);
-
 		int i = 0;
 		int line = 0;
+
 		for (ItemWidget icon : previewIcons) {
 			icon.setGeometry(0, 0, SIZE, SIZE);
 			icon.setX(i % fitting * (SIZE + 5) + 5);
 			icon.setY(line * (SIZE + 5) + 5);
+
 			if (i % fitting == fitting - 1) {
 				line ++;
 			}
+
 			i++;
 		}
+
 		scroll.updateInnerSize();
 	}
 

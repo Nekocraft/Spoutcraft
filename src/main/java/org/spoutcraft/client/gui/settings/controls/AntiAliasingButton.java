@@ -38,8 +38,7 @@ public class AntiAliasingButton extends AutomatedButton {
 
 	@Override
 	public void onButtonClick() {
-		Configuration.setAASampling();		
+		Configuration.setAASampling();
 		Configuration.write();
-		
 	}
 }

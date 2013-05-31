@@ -39,7 +39,8 @@ public class GuiCommandsSlot extends GenericListWidget {
 
 	public void updateItems() {
 		clear();
-		for (String cmd:shortcut.getCommands()) {
+
+		for (String cmd: shortcut.getCommands()) {
 			addItem(new CommandLWI(cmd));
 		}
 	}
@@ -49,6 +50,7 @@ public class GuiCommandsSlot extends GenericListWidget {
 		if (doubleClick) {
 			parent.editCommand(item);
 		}
+
 		parent.updateButtons();
 	}
 
@@ -74,6 +76,7 @@ public class GuiCommandsSlot extends GenericListWidget {
 		public void render(int x, int y, int width, int height) {
 			FontRenderer font = SpoutClient.getHandle().fontRenderer;
 			parent.drawString(font, cmd, x + 2, y + 2, 0xffffff);
+
 			if (cmd.startsWith("/")) {
 				parent.drawString(font, "Command", x + 2, y + 13, 0xaaaaaa);
 			} else {

@@ -80,17 +80,12 @@ public class MutableLocation extends MutableVector implements Location {
 
 	public Vector getDirection() {
 		Vector vector = new MutableVector();
-
 		double rotX = this.getYaw();
 		double rotY = this.getPitch();
-
 		vector.setY(-Math.sin(Math.toRadians(rotY)));
-
 		double h = Math.cos(Math.toRadians(rotY));
-
 		vector.setX(-h * Math.sin(Math.toRadians(rotX)));
 		vector.setZ(h * Math.cos(Math.toRadians(rotX)));
-
 		return vector;
 	}
 
@@ -100,6 +95,7 @@ public class MutableLocation extends MutableVector implements Location {
 			Location other = (Location) obj;
 			return (new EqualsBuilder()).append(getX(), other.getX()).append(getY(), other.getY()).append(getZ(), other.getZ()).append(getYaw(), other.getYaw()).append(getPitch(), other.getPitch()).isEquals();
 		}
+
 		return false;
 	}
 

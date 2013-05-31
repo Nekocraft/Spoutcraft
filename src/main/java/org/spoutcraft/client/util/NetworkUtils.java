@@ -51,7 +51,9 @@ public class NetworkUtils {
 			con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.100 Safari/534.30");
 			BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 			String str;
+
 			while ((str = in.readLine()) != null);
+
 			in.close();
 		} catch (Exception e) {
 		}
@@ -109,6 +111,7 @@ public class NetworkUtils {
 		if (srv && (port == ServerItem.DEFAULT_PORT) && (HOSTNAME_PATTERN.matcher(hostname).find())) {
 			try {
 				InetSocketAddress address = resolve(hostname);
+
 				if (address != null) {
 					return address;
 				}
@@ -147,6 +150,7 @@ public class NetworkUtils {
 			if (records.length > 1) {
 				for (int i = 1; i < records.length; i++) {
 					SRVRecord record = (SRVRecord)records[i];
+
 					if (record.getPriority() < srv.getPriority()) {
 						srv = record;
 					}

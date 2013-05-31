@@ -46,6 +46,7 @@ public abstract class GuiSpoutScreen extends GuiScreen {
 		if (!instancesCreated) {
 			createInstances();
 		}
+
 		layoutWidgets();
 		instancesCreated = true;
 	}
@@ -66,9 +67,9 @@ public abstract class GuiSpoutScreen extends GuiScreen {
 		if (!instancesCreated) {
 			createInstances();
 		}
+
 		layoutWidgets();
 		instancesCreated = true;
-
 		bg = (GenericGradient) new GenericGradient().setHeight(this.height).setWidth(this.width);
 	}
 }

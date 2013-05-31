@@ -32,7 +32,7 @@ import org.spoutcraft.api.util.MutableLocation;
 import org.spoutcraft.api.util.MutableVector;
 import org.spoutcraft.api.util.Vector;
 
-public class SpoutInputStream extends InputStream{
+public class SpoutInputStream extends InputStream {
 	ByteBuffer buffer;
 	public SpoutInputStream(ByteBuffer buffer) {
 		this.buffer = buffer;
@@ -54,7 +54,7 @@ public class SpoutInputStream extends InputStream{
 		double x = readDouble();
 		double y = readDouble();
 		double z = readDouble();
-		return new MutableVector(x,y,z);
+		return new MutableVector(x, y, z);
 	}
 
 	public ItemStack readItemStack(ItemStack item) {
@@ -123,9 +123,11 @@ public class SpoutInputStream extends InputStream{
 	public String readString() {
 		short size =  buffer.getShort();
 		StringBuilder builder = new StringBuilder(size);
+
 		for (int i = 0; i < size; i++) {
 			builder.append(buffer.getChar());
 		}
+
 		return builder.toString();
 	}
 
@@ -134,12 +136,15 @@ public class SpoutInputStream extends InputStream{
 	public Color readColor() {
 		int flags = read();
 		int argb = readInt();
+
 		if ((flags & FLAG_COLORINVALID) > 0) {
 			return Color.invalid();
 		}
+
 		if ((flags & FLAG_COLOROVERRIDE) > 0) {
 			return Color.override();
 		}
+
 		return new Color(argb);
 	}
 

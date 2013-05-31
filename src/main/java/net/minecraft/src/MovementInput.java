@@ -1,11 +1,9 @@
 package net.minecraft.src;
 
 // Spout Start
-import net.minecraft.src.EntityPlayer;
 // Spout End
 
 public class MovementInput {
-
 	/**
 	 * The speed at which the player is strafing. Postive numbers to the left and negative to the right.
 	 */

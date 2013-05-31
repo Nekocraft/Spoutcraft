@@ -76,7 +76,8 @@ public class GuiScreen extends Gui {
 
 		// Limit main menu framerate to 120 FPS as long as we aren't in a game already
 		if (this.mc.theWorld == null) {
-			long sleeptime = (this.renderEndNanoTime + (long) (1000000000 / limitedFramerate) - System.nanoTime()) / 1000000L;
+			long sleeptime = (this.renderEndNanoTime + (long)(1000000000 / limitedFramerate) - System.nanoTime()) / 1000000L;
+
 			if (sleeptime > 0L && sleeptime < 500L) {
 				try {
 					Thread.sleep(sleeptime);
@@ -90,9 +91,11 @@ public class GuiScreen extends Gui {
 
 		int i = 0;
 		int j = 0;
-		if(mc.thePlayer != null) {
+
+		if (mc.thePlayer != null) {
 			InventoryPlayer inventoryplayer = mc.thePlayer.inventory;
-			if(inventoryplayer.getItemStack() != null) {
+
+			if (inventoryplayer.getItemStack() != null) {
 				RenderHelper.disableStandardItemLighting();
 				RenderHelper.enableGUIStandardItemLighting();
 				GL11.glTranslatef(0.0F, 0.0F, 32F);
@@ -123,11 +126,13 @@ public class GuiScreen extends Gui {
 	 */
 	protected void keyTyped(char par1, int par2) {
 		if (par2 == 1) {
-			this.mc.displayGuiScreen((GuiScreen)null);
+			this.mc.displayGuiScreen(null);
+
 			// Spout Start
 			if (mc.currentScreen == null) {
-			this.mc.setIngameFocus();
+				this.mc.setIngameFocus();
 			}
+
 			// Spout End
 		}
 	}
@@ -139,6 +144,7 @@ public class GuiScreen extends Gui {
 				screen.attachWidget(w.getAddon(), w);
 			}
 		}
+
 		this.screen = screen;
 	}
 	// Spout End
@@ -148,7 +154,7 @@ public class GuiScreen extends Gui {
 	 */
 	public static String getClipboardString() {
 		try {
-			Transferable var0 = Toolkit.getDefaultToolkit().getSystemClipboard().getContents((Object)null);
+			Transferable var0 = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
 
 			if (var0 != null && var0.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 				return (String)var0.getTransferData(DataFlavor.stringFlavor);
@@ -164,38 +170,48 @@ public class GuiScreen extends Gui {
 	// Making these protected so you can always override behaviour you don't want.
 	protected void mouseClickedPre(int mouseX, int mouseY, int eventButton) {
 		mouseClicked(mouseX, mouseY, eventButton); // Call vanilla method
+
 		if (getScreen() == null) {
 			return;
 		}
+
 		screen.setMouseX(mouseX);
 		screen.setMouseY(mouseY);
-
 		ComboBox openCombobox = null;
 
 		if (eventButton == 0) {
 			boolean handled = false;
+
 			for (int i = 4; i >= 0; i--) {
 				Widget lastWidget = null;
+
 				for (Widget widget : screen.getAttachedWidgets(true)) {
 					lastWidget = widget;
+
 					if (widget.getPriority().getId() != i) {
 						continue;
 					}
+
 					if (widget instanceof Control) {
 						Control control = (Control) widget;
+
 						if (control.isEnabled() && control.isVisible() && isInBoundingRect(control, mouseX, mouseY)) {
 							if (control.getScreen() instanceof Scrollable) {
 								if (!isInBoundingRect(control.getScreen(), mouseX, mouseY)) {
 									continue;
 								}
 							}
+
 							control.setFocus(true);
+
 							if (control instanceof Scrollable) {
 								handled = handled || handleClickOnScrollable((Scrollable) control, mouseX, mouseY);
+
 								if (!handled && control instanceof ListWidget) {
 									handled = handled || handleClickOnListWidget((ListWidget) control, mouseX, mouseY);
 								}
 							}
+
 							if (!handled) {
 								if (control instanceof Button) {
 									handleButtonClick((Button) control);
@@ -215,18 +231,22 @@ public class GuiScreen extends Gui {
 
 					if (lastWidget instanceof ComboBox) {
 						ComboBox box = (ComboBox) lastWidget;
+
 						if (box.isOpen()) {
 							openCombobox = box;
 						}
 					}
+
 					if (handled) {
 						break;
 					}
 				}
+
 				if (handled) {
 					if (lastWidget == openCombobox) {
 						openCombobox = null;
 					}
+
 					playSoundFX("random.click", 1.0F, 1.0F);
 					break;
 				}
@@ -235,6 +255,7 @@ public class GuiScreen extends Gui {
 			for (Widget widget : screen.getAttachedWidgets(true)) {
 				if (widget instanceof Control) {
 					Control c = (Control) widget;
+
 					if (c.isEnabled() && c.isVisible() && isInBoundingRect(widget, mouseX, mouseY)) {
 						if (widget instanceof Slot) {
 							handleClickOnSlot((Slot) widget, 1);
@@ -244,6 +265,7 @@ public class GuiScreen extends Gui {
 				}
 			}
 		}
+
 		if (openCombobox != null) {
 			openCombobox.closeList();
 		}
@@ -251,35 +273,46 @@ public class GuiScreen extends Gui {
 
 	private void handleClickOnSlot(Slot slot, int button) {
 		System.out.println("handleClickOnSlot: " + slot + ", " + button);
+
 		try {
 			if (mc.thePlayer == null) {
 				return;
 			}
-			PacketSlotClick packet = new PacketSlotClick(slot, button,Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT));
+
+			PacketSlotClick packet = new PacketSlotClick(slot, button, Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT));
 			SpoutClient.getInstance().getPacketManager().sendSpoutPacket(packet);
 			ItemStack stackOnCursor = new ItemStack(0);
+
 			if (mc.thePlayer.inventory.getItemStack() != null) {
 				net.minecraft.src.ItemStack mcStack = mc.thePlayer.inventory.getItemStack();
 				stackOnCursor = new ItemStack(mcStack.itemID, mcStack.stackSize, (short) mcStack.getItemDamage());
 			}
+
 			ItemStack stackInSlot = slot.getItem();
+
 			if ((stackOnCursor == null || stackOnCursor.getTypeId() == 0) && stackInSlot.getTypeId() == 0) {
 				return; // Nothing to do
 			}
+
 			if (stackOnCursor.getTypeId() == 0 && stackInSlot.getTypeId() != 0 && button == 1) { // Split item
 				int amountSlot = stackInSlot.getAmount() / 2;
 				int amountCursor = stackInSlot.getAmount() - amountSlot;
+
 				if (stackInSlot.getAmount() == 1) {
 					amountSlot = 0;
 					amountCursor = 1;
 				}
+
 				stackOnCursor = stackInSlot.clone();
 				stackOnCursor.setAmount(amountCursor);
 				stackInSlot.setAmount(amountSlot);
+
 				if (amountSlot == 0) {
 					stackInSlot = new ItemStack(0);
 				}
+
 				boolean success = slot.onItemTake(stackOnCursor);
+
 				if (success) {
 					slot.setItem(stackInSlot);
 				} else {
@@ -288,30 +321,39 @@ public class GuiScreen extends Gui {
 			} else if (stackOnCursor != null && (stackInSlot.getTypeId() == 0 || (stackInSlot.getTypeId() == stackOnCursor.getTypeId() && stackInSlot.getDurability() == stackOnCursor.getDurability()))) { //Put item
 				ItemStack toPut = stackOnCursor.clone();
 				int putAmount = toPut.getAmount();
+
 				if (button == 1) {
 					putAmount = 1;
 				}
+
 				int amount = stackInSlot.getTypeId() == 0 ? 0 : stackInSlot.getAmount();
 				amount += putAmount;
 				System.out.println(amount);
 				int maxStackSize = toPut.getMaxStackSize();
+
 				if (maxStackSize == -1) {
 					maxStackSize = 64;
 				}
+
 				if (amount > maxStackSize) {
 					putAmount -= amount - maxStackSize;
 					amount = maxStackSize;
 				}
+
 				if (putAmount <= 0) {
 					return;
 				}
+
 				toPut.setAmount(putAmount);
 				boolean success = slot.onItemPut(toPut);
+
 				if (success) {
 					stackOnCursor.setAmount(stackOnCursor.getAmount() - putAmount);
+
 					if (stackOnCursor.getAmount() == 0) {
 						stackOnCursor = new ItemStack(0);
 					}
+
 					ItemStack put = toPut.clone();
 					put.setAmount(amount);
 					slot.setItem(put);
@@ -321,6 +363,7 @@ public class GuiScreen extends Gui {
 					slot.onItemShiftClicked();
 				} else { // Take item
 					boolean success = slot.onItemTake(stackInSlot);
+
 					if (success) {
 						stackOnCursor = stackInSlot;
 						slot.setItem(new ItemStack(0));
@@ -328,6 +371,7 @@ public class GuiScreen extends Gui {
 				}
 			} else if (stackOnCursor.getTypeId() != stackInSlot.getTypeId() || stackOnCursor.getDurability() != stackInSlot.getDurability()) { // Exchange slot stack and cursor stack
 				boolean success = slot.onItemExchange(stackInSlot, stackOnCursor.clone());
+
 				if (success) {
 					slot.setItem(stackOnCursor.clone());
 					stackOnCursor = stackInSlot;
@@ -340,7 +384,7 @@ public class GuiScreen extends Gui {
 				net.minecraft.src.ItemStack mcStack = new net.minecraft.src.ItemStack(stackOnCursor.getTypeId(), stackOnCursor.getAmount(), stackOnCursor.getDurability());
 				mc.thePlayer.inventory.setItemStack(mcStack);
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -350,33 +394,40 @@ public class GuiScreen extends Gui {
 	}
 
 	private boolean handleClickOnListWidget(ListWidget lw, int mouseX, int mouseY) {
-		int x = (int) (mouseX - lw.getActualX());
-		int y = (int) (mouseY - lw.getActualY());
+		int x = (int)(mouseX - lw.getActualX());
+		int y = (int)(mouseY - lw.getActualY());
+
 		if (x < 5) {
 			return false;
 		}
+
 		int scroll = lw.getScrollPosition(Orientation.VERTICAL);
 		y += scroll;
 		y -= 5;
 		int currentHeight = 0;
 		int n = 0;
-		for (ListWidgetItem item : lw.getItems()) {
 
+		for (ListWidgetItem item : lw.getItems()) {
 			if (currentHeight <= y && y <= currentHeight + item.getHeight()) {
 				boolean doubleclick = false;
+
 				if (System.currentTimeMillis() - 200 < lastClick) {
 					doubleclick = true;
 				}
+
 				lw.setSelection(n);
 				PacketControlAction action = null;
+
 				if (!doubleclick) {
 					action = new PacketControlAction(lw.getScreen(), lw, "click", lw.getSelectedRow());
 				} else {
 					action = new PacketControlAction(lw.getScreen(), lw, "doubleclick", lw.getSelectedRow());
 				}
+
 				ListWidgetItem current = lw.getSelectedItem();
 				current.onClick(x - 5, y - currentHeight, doubleclick);
 				lw.onSelected(lw.getSelectedRow(), doubleclick);
+
 				if (lw instanceof ComboBoxView) {
 					PacketComboBox packet = new PacketComboBox(((ComboBoxView) lw).getComboBox());
 					SpoutClient.getInstance().getPacketManager().sendSpoutPacket(packet);
@@ -387,38 +438,46 @@ public class GuiScreen extends Gui {
 				lastClick = System.currentTimeMillis();
 				return true;
 			}
+
 			n++;
 			currentHeight += item.getHeight();
 		}
+
 		return false;
 	}
 
 	private boolean handleClickOnScrollable(Scrollable lw, int mouseX, int mouseY) {
-		int x = (int) (mouseX - lw.getActualX());
-		int y = (int) (mouseY - lw.getActualY());
+		int x = (int)(mouseX - lw.getActualX());
+		int y = (int)(mouseY - lw.getActualY());
 		int scrollY = lw.getScrollPosition(Orientation.VERTICAL);
 		int scrollX = lw.getScrollPosition(Orientation.HORIZONTAL);
+
 		if (x > lw.getWidth() - 16 && lw.needsScrollBar(Orientation.VERTICAL)) {
 			double scrollFactor = 0;
 			double p = (double) scrollY / (double) lw.getMaximumScrollPosition(Orientation.VERTICAL);
 			scrollFactor = 3 + p * (lw.getViewportSize(Orientation.VERTICAL) - 16.0 - 6.0);
+
 			if (scrollFactor <= y && y <= scrollFactor + 16) {
 				holding = lw;
 				holdingScrollBar = Orientation.VERTICAL;
 			}
 		}
+
 		if (y > lw.getHeight() - 16 && lw.needsScrollBar(Orientation.HORIZONTAL)) {
 			double scrollFactor = 0;
 			double p = (double) scrollX / (double) lw.getMaximumScrollPosition(Orientation.HORIZONTAL);
 			scrollFactor = 3 + p * (lw.getViewportSize(Orientation.HORIZONTAL) - 16.0 - 6.0);
+
 			if (scrollFactor <= x && x <= scrollFactor + 16) {
 				holding = lw;
 				holdingScrollBar = Orientation.HORIZONTAL;
 			}
 		}
+
 		if (holding != null) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -427,13 +486,16 @@ public class GuiScreen extends Gui {
 			CheckBox check = (CheckBox) control;
 			check.setChecked(!check.isChecked());
 		}
+
 		if (control instanceof RadioButton) {
 			RadioButton radio = (RadioButton) control;
 			radio.setSelected(true);
 		}
+
 		this.buttonClicked((Button) control);
 		SpoutClient.getInstance().getPacketManager().sendSpoutPacket(new PacketControlAction(screen, control, 1));
 		((Button) control).onButtonClick();
+
 		if (control instanceof GenericComboBox) {
 			PacketComboBox packet = new PacketComboBox((GenericComboBox) control);
 			SpoutClient.getInstance().getPacketManager().sendSpoutPacket(packet);
@@ -473,19 +535,24 @@ public class GuiScreen extends Gui {
 	protected void mouseMovedOrUpPre(int mouseX, int mouseY, int eventButton) {
 		lastMouseMove = System.currentTimeMillis();
 		mouseMovedOrUp(mouseX, mouseY, eventButton);
+
 		if (getScreen() == null) {
 			return;
 		}
+
 		screen.setMouseX(mouseX);
 		screen.setMouseY(mouseY);
+
 		for (Widget widget : screen.getAttachedWidgets(true)) {
 			if (widget instanceof Control) {
 				Control control = (Control) widget;
+
 				if (control.isEnabled() && control.isVisible()) {
 					if (eventButton == 0) {
 						if (control.isFocus() && !isInBoundingRect(control, mouseX, mouseY)) { // released control
 							control.setFocus(false);
 						}
+
 						if (control instanceof Slider && ((Slider) control).isDragging()) {
 							((Slider) control).setDragging(false);
 							SpoutClient.getInstance().getPacketManager().sendSpoutPacket(new PacketControlAction(screen, control, ((Slider) control).getSliderPosition()));
@@ -495,16 +562,19 @@ public class GuiScreen extends Gui {
 				}
 			}
 		}
+
 		if (holding != null && holdingScrollBar != null) {
 			double p = 0;
+
 			if (holdingScrollBar == Orientation.VERTICAL) {
-				int y = (int) (mouseY - holding.getActualY());
+				int y = (int)(mouseY - holding.getActualY());
 				p = (double) y / holding.getViewportSize(Orientation.VERTICAL);
 			} else {
-				int x = (int) (mouseX - holding.getActualX());
+				int x = (int)(mouseX - holding.getActualX());
 				p = (double) x / holding.getViewportSize(Orientation.HORIZONTAL);
 			}
-			holding.setScrollPosition(holdingScrollBar, (int) ((double) holding.getMaximumScrollPosition(holdingScrollBar) * p));
+
+			holding.setScrollPosition(holdingScrollBar, (int)((double) holding.getMaximumScrollPosition(holdingScrollBar) * p));
 
 			if (eventButton == 0) {
 				holding = null;
@@ -545,12 +615,14 @@ public class GuiScreen extends Gui {
 		this.width = par2;
 		this.height = par3;
 		this.buttonList.clear();
+
 		// Spout Start
 		if (!(this instanceof CustomScreen) && screen != null && !firstrun) {
 			for (Widget w : screen.getAttachedWidgets()) {
 				screen.removeWidget(w);
 			}
 		}
+
 		firstrun = false;
 		bg = (GenericGradient) new GenericGradient().setHeight(this.height).setWidth(this.width);
 		// Spout End
@@ -580,6 +652,7 @@ public class GuiScreen extends Gui {
 				PacketKeyPress packet = new PacketKeyPress(i, keyReleased, (MovementInputFromOptions) player.movementInput, screen);
 				SpoutClient.getInstance().getPacketManager().sendSpoutPacket(packet);
 			}
+
 			((SimpleKeyBindingManager)SpoutClient.getInstance().getKeyBindingManager()).pressKey(Keyboard.getEventKey(), Keyboard.getEventKeyState(), ScreenUtil.getType(this).getCode());
 			// Spout End
 			this.handleKeyboardInput();
@@ -593,10 +666,12 @@ public class GuiScreen extends Gui {
 	public void handleMouseInput() {
 		int x;
 		int y;
+
 		if (Mouse.getEventButtonState()) {
 			if (this.mc.gameSettings.touchscreen && this.field_92018_d++ > 0) {
 				return;
 			}
+
 			x = Mouse.getEventX() * this.width / this.mc.displayWidth;
 			y = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
 			this.mouseClickedPre(x, y, Mouse.getEventButton());
@@ -604,11 +679,14 @@ public class GuiScreen extends Gui {
 			if (this.mc.gameSettings.touchscreen && this.field_92018_d++ > 0) {
 				return;
 			}
+
 			x = Mouse.getEventX() * this.width / this.mc.displayWidth;
 			y = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
 			this.mouseMovedOrUpPre(x, y, Mouse.getEventButton());
 		}
+
 		int scroll = Mouse.getEventDWheel();
+
 		if (scroll != 0) {
 			scroll *= 7;
 			handleScroll(x, y, scroll);
@@ -617,19 +695,23 @@ public class GuiScreen extends Gui {
 
 	protected void handleScroll(int x, int y, int scroll) {
 		Orientation axis = Orientation.VERTICAL;
+
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
 			axis = Orientation.HORIZONTAL;
 		}
+
 		for (Widget w : getScreen().getAttachedWidgets(true)) {
 			if (w != null && isInBoundingRect(w, x, y)) {
 				if (w instanceof Scrollable) {
 					// Stupid LWJGL not recognizing vertical scrolls :(
 					Scrollable lw = (Scrollable) w;
+
 					if (axis == Orientation.VERTICAL) {
 						lw.scroll(0, -scroll / 30);
 					} else {
 						lw.scroll(-scroll / 30, 0);
 					}
+
 					PacketControlAction action = new PacketControlAction(lw.getScreen() != null ? lw.getScreen() : getScreen(), lw, axis.toString(), lw.getScrollPosition(axis));
 					SpoutClient.getInstance().getPacketManager().sendSpoutPacket(action);
 				}
@@ -644,6 +726,7 @@ public class GuiScreen extends Gui {
 	public void handleKeyboardInput() {
 		// Spout Start
 		boolean handled = false;
+
 		if (Keyboard.getEventKey() == Keyboard.KEY_ESCAPE) {
 			Keyboard.enableRepeatEvents(false);
 		} else if (getScreen() != null) {
@@ -654,6 +737,7 @@ public class GuiScreen extends Gui {
 			for (Widget widget : screen.getAttachedWidgets(true)) {
 				if (widget instanceof Control) {
 					Control control = (Control) widget;
+
 					if (control.isFocus()) {
 						if (Keyboard.getEventKeyState()) {
 							handled = control.onKeyPressed(org.spoutcraft.api.gui.Keyboard.getKey(Keyboard.getEventKey()));
@@ -661,28 +745,35 @@ public class GuiScreen extends Gui {
 							handled = control.onKeyReleased(org.spoutcraft.api.gui.Keyboard.getKey(Keyboard.getEventKey()));
 						}
 					}
+
 					if (handled) {
 						break;
 					}
 				}
+
 				if (!Keyboard.getEventKeyState()) {
 					break;
 				}
+
 				if (widget instanceof TextField) {
 					TextField tf = (TextField) widget;
+
 					// Handle tabbing get all textfields of this screen and start looking for the next bigger tab-index
 					if (tab) {
 						if (tf.isFocus()) {
 							focusedTF = tf;
 						}
+
 						tabIndexMap.put(tf.getTabIndex(), tf);
-					// Pass typed key to text processor
+						// Pass typed key to text processor
 					} else if (tf.isEnabled() && tf.isFocus()) {
 						if (tf.getTextProcessor().handleInput(Keyboard.getEventCharacter(), Keyboard.getEventKey())) {
 							tf.onTextFieldChange();
 							ScheduledTextFieldUpdate updateThread = null;
+
 							if (scheduledTextFieldUpdates.containsKey(tf)) {
 								updateThread = scheduledTextFieldUpdates.get(tf);
+
 								if (updateThread.isAlive()) {
 									updateThread.delay();
 								} else {
@@ -694,14 +785,18 @@ public class GuiScreen extends Gui {
 								updateThread.start();
 							}
 						}
+
 						handled = true;
 						break;
 					}
 				}
+
 				if (widget instanceof ListWidget) {
 					ListWidget lw = (ListWidget) widget;
+
 					if (lw.isEnabled() && lw.isFocus()) {
 						PacketControlAction action = null;
+
 						if (Keyboard.getEventKey() == Keyboard.KEY_DOWN && Keyboard.getEventKeyState()) {
 							handled = true;
 							lw.shiftSelection(1);
@@ -709,6 +804,7 @@ public class GuiScreen extends Gui {
 							lw.getSelectedItem().onClick(-1, -1, false);
 							action = new PacketControlAction(lw.getScreen() != null ? lw.getScreen() : getScreen(), lw, "selected", lw.getSelectedRow());
 						}
+
 						if (Keyboard.getEventKey() == Keyboard.KEY_UP && Keyboard.getEventKeyState()) {
 							handled = true;
 							lw.shiftSelection(-1);
@@ -716,14 +812,17 @@ public class GuiScreen extends Gui {
 							lw.getSelectedItem().onClick(-1, -1, false);
 							action = new PacketControlAction(lw.getScreen() != null ? lw.getScreen() : getScreen(), lw, "selected", lw.getSelectedRow());
 						}
+
 						if (Keyboard.getEventKey() == Keyboard.KEY_RETURN && Keyboard.getEventKeyState()) {
 							handled = true;
+
 							if (lw.getSelectedRow() != -1) {
 								lw.onSelected(lw.getSelectedRow(), true);
 								lw.getSelectedItem().onClick(-1, -1, true);
 								action = new PacketControlAction(lw.getScreen() != null ? lw.getScreen() : getScreen(), lw, "doubleclick", lw.getSelectedRow());
 							}
 						}
+
 						if (action != null) {
 							SpoutClient.getInstance().getPacketManager().sendSpoutPacket(action);
 							break;
@@ -735,9 +834,11 @@ public class GuiScreen extends Gui {
 			// Start looking for the next bigger tab-index
 			if (tab && focusedTF != null) {
 				Integer index = tabIndexMap.higherKey(focusedTF.getTabIndex());
+
 				if (index == null) {
 					index = tabIndexMap.ceilingKey(0);
 				}
+
 				if (index != null) {
 					focusedTF.setFocus(false);
 					tabIndexMap.get(index).setFocus(true);
@@ -745,36 +846,45 @@ public class GuiScreen extends Gui {
 				}
 			}
 		}
+
 		if (!handled) {
 			// Start of Nekocraft-patched Code
 			if (Keyboard.getEventKeyState()) {
 				do {
 					int eventkey = Keyboard.getEventKey();
 					char eventchar = Keyboard.getEventCharacter();
+
 					if (eventkey == 87) {
 						this.mc.toggleFullscreen();
 						return;
 					}
+
 					if (this.isMacOs && eventkey == 28 && eventchar == 0) {
-							eventkey = 29;
+						eventkey = 29;
 					}
-					if (eventchar > 0x7F && eventchar <= 0xFF && Keyboard.next()){
+
+					if (eventchar > 0x7F && eventchar <= 0xFF && Keyboard.next()) {
 						int eventkey2 = Keyboard.getEventKey();
 						char eventchar2 = Keyboard.getEventCharacter();
-						try{
-							eventchar2 = new String(new byte[]{ (byte) eventchar, (byte) eventchar2 },"GBK").charAt(0);
+
+						try {
+							eventchar2 = new String(new byte[] { (byte) eventchar, (byte) eventchar2 }, "GBK").charAt(0);
 							this.keyTyped(eventchar2, eventkey);
-						}catch(Throwable t){
+						} catch (Throwable t) {
 							this.keyTyped(eventchar, eventkey);
 							this.keyTyped(eventchar2, eventkey2);
 						}
+
 						return;
 					}
+
 					this.keyTyped(eventchar, eventkey);
 				} while (Keyboard.next());
 			}
+
 			// End of Nekocraft-patched code
 		}
+
 		// Spout End
 	}
 
@@ -841,8 +951,10 @@ public class GuiScreen extends Gui {
 		if (getScreen() == null) {
 			return;
 		}
+
 		// Draw ALL the widgets!
 		screen.render();
+
 		if (shouldShowTooltip()) {
 			drawTooltips(x, y);
 		}
@@ -852,6 +964,7 @@ public class GuiScreen extends Gui {
 	protected void drawTooltips(int x, int y) {
 		// Draw the tooltip!
 		String tooltip = "";
+
 		// Widget tooltipWidget = null;
 		for (RenderPriority priority : RenderPriority.values()) {
 			for (Widget widget : screen.getAttachedWidgets(true)) { // We need ALL the tooltips now
@@ -862,6 +975,7 @@ public class GuiScreen extends Gui {
 								continue;
 							}
 						}
+
 						tooltip = widget.getTooltip();
 						//tooltipWidget = widget;
 						// No return here, when a widget that is over it comes next, tooltip will be overwritten.
@@ -879,22 +993,29 @@ public class GuiScreen extends Gui {
 
 	public void drawTooltip(String tooltip, int x, int y) {
 		GL11.glPushMatrix();
-		String lines[] = this.fontRenderer.wrapFormattedStringToWidth(tooltip,(width-22)).split("\n");	//Autowrap tooltips to reported screen width
+		String lines[] = this.fontRenderer.wrapFormattedStringToWidth(tooltip, (width - 22)).split("\n");	//Autowrap tooltips to reported screen width
 		int tooltipWidth = 0;
 		int tooltipHeight = 8 * lines.length + 3;
+
 		for (String line : lines) {
 			tooltipWidth = Math.max(this.fontRenderer.getStringWidth(line), tooltipWidth);
 		}
+
 		int offsetX = 0;
+
 		if (x + tooltipWidth > width) {
 			offsetX = -tooltipWidth - 11;
+
 			if (offsetX + x < 0) {
 				offsetX = -x;
 			}
 		}
+
 		int offsetY = 0;
+
 		if (y + tooltipHeight + 2 > height) {
 			offsetY = -tooltipHeight;
+
 			if (offsetY + y < 0) {
 				offsetY = -y;
 			}
@@ -902,10 +1023,11 @@ public class GuiScreen extends Gui {
 
 		x += 6;
 		y -= 6;
-
 		int j2 = 0;
+
 		for (int k2 = 0; k2 < lines.length; k2++) {
 			int i3 = fontRenderer.getStringWidth(lines[k2]);
+
 			if (i3 > j2) {
 				j2 = i3;
 			}
@@ -915,9 +1037,11 @@ public class GuiScreen extends Gui {
 		int j3 = y + offsetY;
 		int k3 = j2;
 		int l3 = 8;
+
 		if (lines.length > 1) {
 			l3 += (lines.length - 1) * 10;
 		}
+
 		// zLevel = 300F;
 		int i4 = 0xf0100010;
 		drawGradientRect(l2 - 3, j3 - 4, l2 + k3 + 3, j3 - 3, i4, i4);
@@ -927,21 +1051,21 @@ public class GuiScreen extends Gui {
 		drawGradientRect(l2 + k3 + 3, j3 - 3, l2 + k3 + 4, j3 + l3 + 3, i4, i4);
 		int j4 = 0x505000ff;
 		int k4 = (j4 & 0xfefefe) >> 1 | j4 & 0xff000000;
-			drawGradientRect(l2 - 3, (j3 - 3) + 1, (l2 - 3) + 1, (j3 + l3 + 3) - 1, j4, k4);
-			drawGradientRect(l2 + k3 + 2, (j3 - 3) + 1, l2 + k3 + 3, (j3 + l3 + 3) - 1, j4, k4);
-			drawGradientRect(l2 - 3, j3 - 3, l2 + k3 + 3, (j3 - 3) + 1, j4, j4);
-			drawGradientRect(l2 - 3, j3 + l3 + 2, l2 + k3 + 3, j3 + l3 + 3, k4, k4);
+		drawGradientRect(l2 - 3, (j3 - 3) + 1, (l2 - 3) + 1, (j3 + l3 + 3) - 1, j4, k4);
+		drawGradientRect(l2 + k3 + 2, (j3 - 3) + 1, l2 + k3 + 3, (j3 + l3 + 3) - 1, j4, k4);
+		drawGradientRect(l2 - 3, j3 - 3, l2 + k3 + 3, (j3 - 3) + 1, j4, j4);
+		drawGradientRect(l2 - 3, j3 + l3 + 2, l2 + k3 + 3, j3 + l3 + 3, k4, k4);
+		//this.drawGradientRect(x - 3 + offsetX, y - 3 + offsetY, x +
+		//tooltipWidth + 3 + offsetX, y + tooltipHeight + offsetY, -1073741824, -1073741824);
+		//int i = 0;
+		GL11.glColor4f(1f, 1f, 1f, 1f);
 
-			//this.drawGradientRect(x - 3 + offsetX, y - 3 + offsetY, x +
-			//tooltipWidth + 3 + offsetX, y + tooltipHeight + offsetY, -1073741824, -1073741824);
+		for (String line : lines) {
+			this.fontRenderer.drawStringWithShadow(line, l2, j3, -1);
+			j3 += 10;
+		}
 
-			//int i = 0;
-			GL11.glColor4f(1f, 1f, 1f, 1f);
-			for (String line : lines) {
-				this.fontRenderer.drawStringWithShadow(line, l2, j3, -1);
-				j3 += 10;
-			}
-			GL11.glPopMatrix();
+		GL11.glPopMatrix();
 	}
 
 	public boolean isInBoundingRect(Widget widget, int x, int y) {
@@ -951,9 +1075,11 @@ public class GuiScreen extends Gui {
 		int width = (int) widget.getWidth();
 		int right = left + width;
 		int bottom = top + height;
+
 		if (left <= x && x < right && top <= y && y < bottom) {
 			return true;
 		}
+
 		return false;
 	}
 
@@ -962,21 +1088,26 @@ public class GuiScreen extends Gui {
 		int top = widgetY;
 		int right = left + width;
 		int bottom = top + height;
+
 		if (left <= x && x < right && top <= y && y < bottom) {
 			return true;
 		}
+
 		return false;
 	}
 
 	public Screen getScreen() {
 		if (screen == null) {
 			ScreenType type = ScreenUtil.getType(this);
+
 			if (type == ScreenType.GAME_SCREEN || type == ScreenType.CUSTOM_SCREEN) {
 				return screen;
 			}
+
 			screen = new GenericOverlayScreen();
 			((OverlayScreen) screen).setScreenType(type);
 		}
+
 		return screen;
 	}
 

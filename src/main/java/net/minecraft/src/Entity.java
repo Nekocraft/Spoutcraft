@@ -102,7 +102,7 @@ public abstract class Entity {
 
 	/** The distance walked multiplied by 0.6 */
 	public float distanceWalkedModified;
-	public float field_82151_R;
+	public float distanceWalkedOnStepModified;
 	public float fallDistance;
 
 	/**
@@ -198,7 +198,7 @@ public abstract class Entity {
 
 	/** Which dimension the player is in (-1 = the Nether, 0 = normal world) */
 	public int dimension;
-	protected int field_82152_aq;
+	protected int teleportDirection;
 	private boolean invulnerable;
 	private UUID entityUniqueID;
 	// Spout Start
@@ -225,7 +225,7 @@ public abstract class Entity {
 		this.height = 1.8F;
 		this.prevDistanceWalkedModified = 0.0F;
 		this.distanceWalkedModified = 0.0F;
-		this.field_82151_R = 0.0F;
+		this.distanceWalkedOnStepModified = 0.0F;
 		this.fallDistance = 0.0F;
 		this.nextStepDistance = 1;
 		this.ySize = 0.0F;
@@ -242,7 +242,7 @@ public abstract class Entity {
 		this.isImmuneToFire = false;
 		this.dataWatcher = new DataWatcher();
 		this.addedToChunk = false;
-		this.field_82152_aq = 0;
+		this.teleportDirection = 0;
 		this.invulnerable = false;
 		this.entityUniqueID = UUID.randomUUID();
 		this.myEntitySize = EnumEntitySize.SIZE_2;
@@ -390,6 +390,7 @@ public abstract class Entity {
 		if (this.ridingEntity != null && this.ridingEntity.isDead) {
 			this.ridingEntity = null;
 		}
+
 		// Spout Start
 		partiallyInWater = isInsideOfMaterial(Material.water, -1);
 		// Spout End
@@ -780,10 +781,10 @@ public abstract class Entity {
 				}
 
 				this.distanceWalkedModified = (float)((double)this.distanceWalkedModified + (double)MathHelper.sqrt_double(var37 * var37 + var27 * var27) * 0.6D);
-				this.field_82151_R = (float)((double)this.field_82151_R + (double)MathHelper.sqrt_double(var37 * var37 + var25 * var25 + var27 * var27) * 0.6D);
+				this.distanceWalkedOnStepModified = (float)((double)this.distanceWalkedOnStepModified + (double)MathHelper.sqrt_double(var37 * var37 + var25 * var25 + var27 * var27) * 0.6D);
 
-				if (this.field_82151_R > (float)this.nextStepDistance && var32 > 0) {
-					this.nextStepDistance = (int)this.field_82151_R + 1;
+				if (this.distanceWalkedOnStepModified > (float)this.nextStepDistance && var32 > 0) {
+					this.nextStepDistance = (int)this.distanceWalkedOnStepModified + 1;
 
 					if (this.isInWater()) {
 						float var34 = MathHelper.sqrt_double(this.motionX * this.motionX * 0.20000000298023224D + this.motionY * this.motionY + this.motionZ * this.motionZ * 0.20000000298023224D) * 0.35F;
@@ -987,7 +988,7 @@ public abstract class Entity {
 
 	public boolean isInsideOfMaterial(Material material, float offset) {
 		double var2 = this.posY + (double)this.getEyeHeight() + offset;
-	// Spout End
+		// Spout End
 		int var4 = MathHelper.floor_double(this.posX);
 		int var5 = MathHelper.floor_float((float)MathHelper.floor_double(var2));
 		int var6 = MathHelper.floor_double(this.posZ);
@@ -995,7 +996,7 @@ public abstract class Entity {
 
 		// Spout Start
 		if (var7 != 0 && Block.blocksList[var7].blockMaterial == material) {
-		// Spout End
+			// Spout End
 			float var8 = BlockFluid.getFluidHeightPercent(this.worldObj.getBlockMetadata(var4, var5, var6)) - 0.11111111F;
 			float var9 = (float)(var5 + 1) - var8;
 			return var2 < (double)var9;
@@ -1263,7 +1264,7 @@ public abstract class Entity {
 		return null;
 	}
 
-	public boolean func_98035_c(NBTTagCompound par1NBTTagCompound) {
+	public boolean addNotRiddenEntityID(NBTTagCompound par1NBTTagCompound) {
 		String var2 = this.getEntityString();
 
 		if (!this.isDead && var2 != null) {
@@ -1310,13 +1311,13 @@ public abstract class Entity {
 			par1NBTTagCompound.setBoolean("Invulnerable", this.invulnerable);
 			par1NBTTagCompound.setInteger("PortalCooldown", this.timeUntilPortal);
 			par1NBTTagCompound.setLong("UUIDMost", this.entityUniqueID.getMostSignificantBits());
-			par1NBTTagCompound.setLong("UUIDLeast", this.entityUniqueID.getLeastSignificantBits()); 
+			par1NBTTagCompound.setLong("UUIDLeast", this.entityUniqueID.getLeastSignificantBits());
 			this.writeEntityToNBT(par1NBTTagCompound);
 
 			if (this.ridingEntity != null) {
 				NBTTagCompound var2 = new NBTTagCompound("Riding");
 
-				if (this.ridingEntity.func_98035_c(var2)) {
+				if (this.ridingEntity.addNotRiddenEntityID(var2)) {
 					par1NBTTagCompound.setTag("Riding", var2);
 				}
 			}
@@ -1375,9 +1376,11 @@ public abstract class Entity {
 			long lsb = par1NBTTagCompound.getLong("ID_LSB");
 			long msb = par1NBTTagCompound.getLong("ID_MSB");
 			UUID id = new UUID(msb, lsb);
+
 			if (!id.equals(new UUID(0, 0))) {
 				uniqueId = id;
 			}
+
 			// Spout End
 			this.readEntityFromNBT(par1NBTTagCompound);
 		} catch (Throwable var5) {
@@ -1638,7 +1641,7 @@ public abstract class Entity {
 					int var14 = (int)(this.posZ + var11);
 					AxisAlignedBB var2 = this.boundingBox.getOffsetBoundingBox(var9, 1.0D, var11);
 
-					if (this.worldObj.getAllCollidingBoundingBoxes(var2).isEmpty()) {
+					if (this.worldObj.getCollidingBlockBounds(var2).isEmpty()) {
 						if (this.worldObj.doesBlockHaveSolidTopSurface(var13, (int)this.posY, var14)) {
 							this.setLocationAndAngles(this.posX + var9, this.posY + 1.0D, this.posZ + var11, this.rotationYaw, this.rotationPitch);
 							return;
@@ -1704,7 +1707,7 @@ public abstract class Entity {
 			double var3 = this.prevPosZ - this.posZ;
 
 			if (!this.worldObj.isRemote && !this.inPortal) {
-				this.field_82152_aq = Direction.getMovementDirection(var1, var3);
+				this.teleportDirection = Direction.getMovementDirection(var1, var3);
 			}
 
 			this.inPortal = true;
@@ -1788,15 +1791,15 @@ public abstract class Entity {
 		this.setFlag(3, par1);
 	}
 
-	public boolean getHasActivePotion() {
+	public boolean isInvisible() {
 		return this.getFlag(5);
 	}
 
 	public boolean func_98034_c(EntityPlayer par1EntityPlayer) {
-		return this.getHasActivePotion();
+		return this.isInvisible();
 	}
 
-	public void setHasActivePotion(boolean par1) {
+	public void setInvisible(boolean par1) {
 		this.setFlag(5, par1);
 	}
 
@@ -1821,7 +1824,7 @@ public abstract class Entity {
 	 */
 	// Spout Start - protected to public
 	public void setFlag(int par1, boolean par2) {
-	// Spout End
+		// Spout End
 		byte var3 = this.dataWatcher.getWatchableObjectByte(0);
 
 		if (par2) {
@@ -1866,7 +1869,7 @@ public abstract class Entity {
 		double var10 = par1 - (double)var7;
 		double var12 = par3 - (double)var8;
 		double var14 = par5 - (double)var9;
-		List var16 = this.worldObj.getAllCollidingBoundingBoxes(this.boundingBox);
+		List var16 = this.worldObj.getCollidingBlockBounds(this.boundingBox);
 
 		if (var16.isEmpty() && !this.worldObj.func_85174_u(var7, var8, var9)) {
 			return false;
@@ -2015,7 +2018,7 @@ public abstract class Entity {
 		par1Entity.writeToNBT(var3);
 		this.readFromNBT(var3);
 		this.timeUntilPortal = par1Entity.timeUntilPortal;
-		this.field_82152_aq = par1Entity.field_82152_aq;
+		this.teleportDirection = par1Entity.teleportDirection;
 	}
 
 	/**
@@ -2061,8 +2064,8 @@ public abstract class Entity {
 		return 3;
 	}
 
-	public int func_82148_at() {
-		return this.field_82152_aq;
+	public int getTeleportDirection() {
+		return this.teleportDirection;
 	}
 
 	/**
@@ -2077,7 +2080,7 @@ public abstract class Entity {
 		par1CrashReportCategory.addCrashSection("Entity ID", Integer.valueOf(this.entityId));
 		par1CrashReportCategory.addCrashSectionCallable("Entity Name", new CallableEntityName(this));
 		par1CrashReportCategory.addCrashSection("Entity\'s Exact location", String.format("%.2f, %.2f, %.2f", new Object[] {Double.valueOf(this.posX), Double.valueOf(this.posY), Double.valueOf(this.posZ)}));
-		par1CrashReportCategory.addCrashSection("Entity\'s Block location", CrashReportCategory.func_85071_a(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)));
+		par1CrashReportCategory.addCrashSection("Entity\'s Block location", CrashReportCategory.getLocationInfo(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)));
 		par1CrashReportCategory.addCrashSection("Entity\'s Momentum", String.format("%.2f, %.2f, %.2f", new Object[] {Double.valueOf(this.motionX), Double.valueOf(this.motionY), Double.valueOf(this.motionZ)}));
 	}
 
@@ -2092,7 +2095,10 @@ public abstract class Entity {
 		return true;
 	}
 
-	public String func_96090_ax() {
+	/**
+	 * Returns the translated name of the entity.
+	 */
+	public String getTranslatedEntityName() {
 		return this.getEntityName();
 	}
 }

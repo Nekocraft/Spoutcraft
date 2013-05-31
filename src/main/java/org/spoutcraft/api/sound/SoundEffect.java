@@ -646,6 +646,7 @@ public enum SoundEffect {
 		for (SoundEffect i : values()) {
 			lookupName.put(i.getName(), i);
 			lookupId.put(i.getId(), i);
+
 			if (i.getId() > last) {
 				last = i.getId();
 			}

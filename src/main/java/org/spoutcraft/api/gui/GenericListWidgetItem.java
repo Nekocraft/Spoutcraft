@@ -45,7 +45,6 @@ public class GenericListWidgetItem extends PropertyObject implements PropertyInt
 			public void set(Object value) {
 				setTitle((String) value);
 			}
-
 			public Object get() {
 				return getTitle();
 			}
@@ -54,7 +53,6 @@ public class GenericListWidgetItem extends PropertyObject implements PropertyInt
 			public void set(Object value) {
 				setText((String) value);
 			}
-
 			public Object get() {
 				return getText();
 			}
@@ -63,7 +61,6 @@ public class GenericListWidgetItem extends PropertyObject implements PropertyInt
 			public void set(Object value) {
 				setIconUrl((String) value);
 			}
-
 			public Object get() {
 				return getIconUrl();
 			}
@@ -99,6 +96,7 @@ public class GenericListWidgetItem extends PropertyObject implements PropertyInt
 		if (!(other instanceof GenericListWidgetItem)) {
 			return false;
 		}
+
 		GenericListWidgetItem li = (GenericListWidgetItem) other;
 		return (new EqualsBuilder()).append(this.text, li.text).append(this.title, li.title).append(this.iconUrl, li.iconUrl).isEquals();
 	}

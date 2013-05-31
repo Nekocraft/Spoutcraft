@@ -2,6 +2,7 @@ package net.minecraft.src;
 
 import java.io.File;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,7 +10,6 @@ import java.util.Map;
 import java.util.Random;
 
 public class SoundPool {
-
 	/** The RNG used by SoundPool. */
 	private Random rand = new Random();
 
@@ -33,30 +33,34 @@ public class SoundPool {
 	 */
 	public SoundPoolEntry addSound(String par1Str, File par2File) {
 		try {
-			String var3 = par1Str;
-			par1Str = par1Str.substring(0, par1Str.indexOf("."));
-
-			if (this.isGetRandomSound) {
-				while (Character.isDigit(par1Str.charAt(par1Str.length() - 1))) {
-					par1Str = par1Str.substring(0, par1Str.length() - 1);
-				}
-			}
-
-			par1Str = par1Str.replaceAll("/", ".");
-
-			if (!this.nameToSoundPoolEntriesMapping.containsKey(par1Str)) {
-				this.nameToSoundPoolEntriesMapping.put(par1Str, new ArrayList());
-			}
-
-			SoundPoolEntry var4 = new SoundPoolEntry(var3, par2File.toURI().toURL());
-			((List)this.nameToSoundPoolEntriesMapping.get(par1Str)).add(var4);
-			this.allSoundPoolEntries.add(var4);
-			++this.numberOfSoundPoolEntries;
-			return var4;
-		} catch (MalformedURLException var5) {
-			var5.printStackTrace();
-			throw new RuntimeException(var5);
+			return this.addSound(par1Str, par2File.toURI().toURL());
+		} catch (MalformedURLException var4) {
+			var4.printStackTrace();
+			throw new RuntimeException(var4);
 		}
+	}
+
+	public SoundPoolEntry addSound(String var1, URL var2) {
+		String var3 = var1;
+		var1 = var1.substring(0, var1.indexOf("."));
+
+		if (this.isGetRandomSound) {
+			while (Character.isDigit(var1.charAt(var1.length() - 1))) {
+				var1 = var1.substring(0, var1.length() - 1);
+			}
+		}
+
+		var1 = var1.replaceAll("/", ".");
+
+		if (!this.nameToSoundPoolEntriesMapping.containsKey(var1)) {
+			this.nameToSoundPoolEntriesMapping.put(var1, new ArrayList());
+		}
+
+		SoundPoolEntry var4 = new SoundPoolEntry(var3, var2);
+		((List)this.nameToSoundPoolEntriesMapping.get(var1)).add(var4);
+		this.allSoundPoolEntries.add(var4);
+		++this.numberOfSoundPoolEntries;
+		return var4;
 	}
 
 	/**
@@ -77,22 +81,24 @@ public class SoundPool {
 	// Spout Start
 	public SoundPoolEntry getSoundFromSoundPool(String s, int id) {
 		List list = (List)nameToSoundPoolEntriesMapping.get(s);
+
 		if (list == null) {
 			return null;
 		}
+
 		return (SoundPoolEntry)list.get(id);
 	}
 
 	public SoundPoolEntry addCustomSound(String sound, File file) {
 		try {
-			if(!nameToSoundPoolEntriesMapping.containsKey(sound)) {
+			if (!nameToSoundPoolEntriesMapping.containsKey(sound)) {
 				nameToSoundPoolEntriesMapping.put(sound, new ArrayList());
 			}
+
 			SoundPoolEntry soundpoolentry = new SoundPoolEntry(sound, file.toURI().toURL());
 			((List)nameToSoundPoolEntriesMapping.get(sound)).add(soundpoolentry);
 			return soundpoolentry;
-		}
-		catch(MalformedURLException malformedurlexception) {
+		} catch (MalformedURLException malformedurlexception) {
 			return null;
 		}
 	}

@@ -34,9 +34,11 @@ public class FilterButton extends GenericCheckBox implements UrlElement {
 
 	public CheckBox setChecked(boolean check, boolean update) {
 		super.setChecked(check);
+
 		if (update) {
 			model.updateUrl();
 		}
+
 		return this;
 	}
 

@@ -42,15 +42,19 @@ public class ClipboardThread extends Thread {
 			} catch (InterruptedException e1) {
 				Thread.currentThread().interrupt();
 			}
+
 			try {
 				Transferable contents = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
+
 				if (contents.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 					String text = null;
+
 					try {
 						text = (String) contents.getTransferData(DataFlavor.stringFlavor);
 					} catch (UnsupportedFlavorException e) {
 					} catch (IOException e) {
 					}
+
 					if (text != null) {
 						if (!text.equals(prevClipboardText)) {
 							prevClipboardText = text;

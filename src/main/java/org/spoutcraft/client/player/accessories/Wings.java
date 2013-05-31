@@ -23,7 +23,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModelBiped;
 import net.minecraft.src.ModelRenderer;
 
-public class Wings extends Accessory{
+public class Wings extends Accessory {
 	ModelRenderer LeftWingPart1;
 	ModelRenderer LeftWingPart2;
 	ModelRenderer LeftWingPart3;
@@ -156,9 +156,9 @@ public class Wings extends Accessory{
 	}
 
 	private void setRotation(ModelRenderer model, float x, float y, float z) {
-	  model.rotateAngleX = x;
-	  model.rotateAngleY = y;
-	  model.rotateAngleZ = z;
+		model.rotateAngleX = x;
+		model.rotateAngleY = y;
+		model.rotateAngleZ = z;
 	}
 
 	@Override

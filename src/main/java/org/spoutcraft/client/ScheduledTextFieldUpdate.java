@@ -38,6 +38,7 @@ public class ScheduledTextFieldUpdate implements Runnable {
 
 	public void run() {
 		delay();
+
 		while (!expired()) {
 			try {
 				Thread.sleep(SLEEP_TIME);
@@ -45,6 +46,7 @@ public class ScheduledTextFieldUpdate implements Runnable {
 				break;
 			}
 		}
+
 		textField.onTypingFinished();
 		SpoutClient.getInstance().getPacketManager().sendSpoutPacket(new PacketControlAction(screen, textField, textField.getText(), textField.getCursorPosition()));
 	}

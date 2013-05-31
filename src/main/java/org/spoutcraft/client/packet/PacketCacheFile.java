@@ -47,11 +47,13 @@ public class PacketCacheFile implements CompressablePacket {
 
 	public PacketCacheFile(String plugin, File file) {
 		this.plugin = plugin;
+
 		try {
 			this.fileData = FileUtils.readFileToByteArray(file);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 		this.fileName = FileUtil.getFileName(file.getPath());
 	}
 
@@ -64,15 +66,18 @@ public class PacketCacheFile implements CompressablePacket {
 			deflater.finish();
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(fileData.length);
 			byte[] buffer = new byte[1024];
+
 			while (!deflater.finished()) {
 				int bytesCompressed = deflater.deflate(buffer);
 				bos.write(buffer, 0, bytesCompressed);
 			}
+
 			try {
 				bos.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+
 			fileData = bos.toByteArray();
 			compressed = true;
 		}
@@ -86,10 +91,9 @@ public class PacketCacheFile implements CompressablePacket {
 		if (compressed) {
 			Inflater decompressor = new Inflater();
 			decompressor.setInput(fileData);
-
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(fileData.length);
-
 			byte[] buf = new byte[1024];
+
 			while (!decompressor.finished()) {
 				try {
 					int count = decompressor.inflate(buf);
@@ -97,6 +101,7 @@ public class PacketCacheFile implements CompressablePacket {
 				} catch (DataFormatException e) {
 				}
 			}
+
 			try {
 				bos.close();
 			} catch (IOException e) {
@@ -125,23 +130,30 @@ public class PacketCacheFile implements CompressablePacket {
 
 	public void run(int playerId) {
 		this.fileName = FileUtil.getFileName(this.fileName);
+
 		if (!FileUtil.canCache(fileName)) {
 			System.out.println("WARNING, " + plugin + " tried to cache an invalid file type: " + fileName);
 			return;
 		}
+
 		File directory = new File(FileUtil.getCacheDir(), plugin);
+
 		if (!directory.exists()) {
 			directory.mkdir();
 		}
+
 		File cache = new File(directory, fileName);
+
 		try {
 			FileUtils.writeByteArrayToFile(cache, fileData);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
 		if (cache.exists() && FileUtil.isImageFile(fileName)) {
 			CustomTextureManager.getTextureFromUrl(plugin, fileName);
 		}
+
 		((EntityClientPlayerMP)Minecraft.theMinecraft.thePlayer).sendQueue.addToSendQueue(new Packet0KeepAlive());
 	}
 

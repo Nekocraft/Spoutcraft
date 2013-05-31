@@ -49,8 +49,7 @@ public class HDImageBufferDownload implements IImageBuffer {
 			for (int i = 0; i < imageData.length; i++) {
 				imageData[i] &= 0xFFFFFF;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 

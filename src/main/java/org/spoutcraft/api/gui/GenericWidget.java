@@ -54,10 +54,10 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 	protected float animValue = 1f;
 	protected short animCount = 0;
 	protected short animTicks = 20;
-	protected final byte ANIM_REPEAT = (1<<0);
-	protected final byte ANIM_RESET = (1<<1);
-	protected final byte ANIM_RUNNING = (1<<2);
-	protected final byte ANIM_STOPPING = (1<<3);
+	protected final byte ANIM_REPEAT = (1 << 0);
+	protected final byte ANIM_RESET = (1 << 1);
+	protected final byte ANIM_RUNNING = (1 << 2);
+	protected final byte ANIM_STOPPING = (1 << 3);
 	protected byte animFlags = 0;
 	protected transient int animTick = 0; // Current tick
 	protected transient int animFrame = 0; // Current frame
@@ -72,7 +72,6 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 			public void set(Object value) {
 				setGeometry((Rectangle) value);
 			}
-
 			public Object get() {
 				return getGeometry();
 			}
@@ -144,6 +143,7 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 		if (addon != null) {
 			this.addon = addon;
 		}
+
 		return this;
 	}
 
@@ -169,10 +169,13 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 		if (this.screen != null && screen != null && screen != this.screen) {
 			this.screen.removeWidget(this);
 		}
+
 		this.screen = screen;
+
 		if (addon != null) {
 			this.addon = addon;
 		}
+
 		return this;
 	}
 
@@ -221,35 +224,41 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 
 	public double getScreenX() {
 		double left = getX() * (anchor == WidgetAnchor.SCALE ? (getScreen() != null ? (getScreen().getWidth() / 427f) : 1) : 1);
+
 		switch (anchor) {
 			case TOP_CENTER:
 			case CENTER_CENTER:
 			case BOTTOM_CENTER:
 				left += getScreenWidth() / 2;
 				break;
+
 			case TOP_RIGHT:
 			case CENTER_RIGHT:
 			case BOTTOM_RIGHT:
 				left += getScreenWidth();
 				break;
 		}
+
 		return left;
 	}
 
 	public double getScreenY() {
 		double top = getY() * (anchor == WidgetAnchor.SCALE ? (getScreen() != null ? (getScreen().getHeight() / 240f) : 1) : 1);
+
 		switch (anchor) {
 			case CENTER_LEFT:
 			case CENTER_CENTER:
 			case CENTER_RIGHT:
 				top += getScreenHeight() / 2;
 				break;
+
 			case BOTTOM_LEFT:
 			case BOTTOM_CENTER:
 			case BOTTOM_RIGHT:
 				top += getScreenHeight();
 				break;
 		}
+
 		return top;
 	}
 
@@ -257,6 +266,7 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 		if (getScreen() == null) {
 			return Spoutcraft.getRenderDelegate().getScreenWidth();
 		}
+
 		return getScreen().getWidth();
 	}
 
@@ -264,6 +274,7 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 		if (getScreen() == null) {
 			return Spoutcraft.getRenderDelegate().getScreenHeight();
 		}
+
 		return getScreen().getHeight();
 	}
 
@@ -330,6 +341,7 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 		if (this.container != null && container != null && container != this.container) {
 			this.container.removeChild(this);
 		}
+
 		this.container = container;
 	}
 
@@ -338,6 +350,7 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 			this.fixed = fixed;
 			updateSize();
 		}
+
 		return this;
 	}
 
@@ -365,6 +378,7 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 			this.marginLeft = marginLeft;
 			updateSize();
 		}
+
 		return this;
 	}
 
@@ -373,6 +387,7 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 			this.marginTop = marginTop;
 			updateSize();
 		}
+
 		return this;
 	}
 
@@ -381,6 +396,7 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 			this.marginRight = marginRight;
 			updateSize();
 		}
+
 		return this;
 	}
 
@@ -389,6 +405,7 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 			this.marginBottom = marginBottom;
 			updateSize();
 		}
+
 		return this;
 	}
 
@@ -397,6 +414,7 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 			this.marginLeft = marginLeft;
 			updateSize();
 		}
+
 		return this;
 	}
 
@@ -418,11 +436,13 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 
 	public Widget setMinWidth(int min) {
 		min = Math.max(min, 0);
+
 		if (minWidth != min) {
 			minWidth = min;
 			updateSize();
 			setWidth((int) getWidth()); // Enforce our new size if needed
 		}
+
 		return this;
 	}
 
@@ -432,11 +452,13 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 
 	public Widget setMaxWidth(int max) {
 		max = max <= 0 ? 427 : max;
+
 		if (maxWidth != max) {
 			maxWidth = max;
 			updateSize();
 			setWidth((int) getWidth()); // Enforce our new size if needed
 		}
+
 		return this;
 	}
 
@@ -446,11 +468,13 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 
 	public Widget setMinHeight(int min) {
 		min = Math.max(min, 0);
+
 		if (minHeight != min) {
 			minHeight = min;
 			updateSize();
 			setHeight((int) getHeight()); // Enforce our new size if needed
 		}
+
 		return this;
 	}
 
@@ -460,11 +484,13 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 
 	public Widget setMaxHeight(int max) {
 		max = max <= 0 ? 240 : max;
+
 		if (maxHeight != max) {
 			maxHeight = max;
 			updateSize();
 			setHeight((int) getHeight()); // Enforce our new size if needed
 		}
+
 		return this;
 	}
 
@@ -488,17 +514,17 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 		try {
 			Widget copy = getType().getWidgetClass().newInstance();
 			copy.setGeometry(getGeometry().clone()) //
-					.setVisible(isVisible()) //
-					.setPriority(getPriority()) //
-					.setTooltip(getTooltip()) //
-					.setAnchor(getAnchor()) //
-					.setMargin(getMarginTop(), getMarginRight(), getMarginBottom(), getMarginLeft()) //
-					.setMinWidth(getMinWidth()) //
-					.setMaxWidth(getMaxWidth()) //
-					.setMinHeight(getMinHeight()) //
-					.setMaxHeight(getMaxHeight()) //
-					.setFixed(isFixed()) //
-					.animate(animType, animValue, animCount, animTicks, (animFlags & ANIM_REPEAT) != 0, (animFlags & ANIM_RESET) != 0);
+			.setVisible(isVisible()) //
+			.setPriority(getPriority()) //
+			.setTooltip(getTooltip()) //
+			.setAnchor(getAnchor()) //
+			.setMargin(getMarginTop(), getMarginRight(), getMarginBottom(), getMarginLeft()) //
+			.setMinWidth(getMinWidth()) //
+			.setMaxWidth(getMaxWidth()) //
+			.setMinHeight(getMinHeight()) //
+			.setMaxHeight(getMaxHeight()) //
+			.setFixed(isFixed()) //
+			.animate(animType, animValue, animCount, animTicks, (animFlags & ANIM_REPEAT) != 0, (animFlags & ANIM_RESET) != 0);
 			return copy;
 		} catch (Exception e) {
 			throw new IllegalStateException("Unable to create a copy of " + getClass() + ". Does it have a valid widget type?");
@@ -509,6 +535,7 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 		if (container != null) {
 			container.updateSize();
 		}
+
 		return this;
 	}
 
@@ -552,11 +579,12 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 		if (!type.check(this)) {
 			throw new UnsupportedOperationException("Cannot use Animation." + type.name() + " on " + getType().toString());
 		}
+
 		animType = type;
 		animValue = value;
 		animCount = count;
 		animTicks = ticks;
-		animFlags = (byte) ((repeat ? ANIM_REPEAT : 0) | (reset ? ANIM_RESET : 0));
+		animFlags = (byte)((repeat ? ANIM_REPEAT : 0) | (reset ? ANIM_RESET : 0));
 		animTick = 0;
 		animFrame = 0;
 		return this;
@@ -565,28 +593,36 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 	public Widget animateStart() {
 		if (animType != WidgetAnim.NONE) {
 			animFlags |= ANIM_RUNNING;
+
 			switch (animType) {
 				case POS_X:
 					animStart = getX();
 					break;
+
 				case POS_Y:
 					animStart = getY();
 					break;
+
 				case WIDTH:
 					animStart = (int) getWidth();
 					break;
+
 				case HEIGHT:
 					animStart = (int) getHeight();
 					break;
+
 				case OFFSET_LEFT:
 					animStart = ((Texture) this).getLeft();
 					break;
+
 				case OFFSET_TOP:
 					animStart = ((Texture) this).getTop();
 					break;
 			}
+
 			animStart -= animFrame * animCount;
 		}
+
 		return this;
 	}
 
@@ -596,6 +632,7 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 		} else {
 			animFlags &= ~ANIM_RUNNING;
 		}
+
 		return this;
 	}
 
@@ -603,33 +640,43 @@ public abstract class GenericWidget extends PropertyObject implements Widget {
 		if ((animFlags & ANIM_RUNNING) == 0 || animTicks == 0 || ++animTick % animTicks != 0) {
 			return;
 		}
+
 		// We're running, and it's ready for our next frame...
 		if (++animFrame == animCount) {
 			animFrame = 0;
+
 			if ((animFlags & ANIM_STOPPING) != 0 || (animFlags & ANIM_REPEAT) == 0) {
 				animFlags &= ~ANIM_RUNNING;
+
 				if ((animFlags & ANIM_RESET) == 0) {
 					return;
 				}
 			}
 		}
+
 		int value = animStart + (int)Math.floor(animFrame * animValue);
+
 		switch (animType) {
 			case POS_X:
 				setX(value);
 				break;
+
 			case POS_Y:
 				setY(value);
 				break;
+
 			case WIDTH:
 				setWidth(value);
 				break;
+
 			case HEIGHT:
 				setHeight(value);
 				break;
+
 			case OFFSET_LEFT:
 				((Texture) this).setLeft(value);
 				break;
+
 			case OFFSET_TOP:
 				((Texture) this).setTop(value);
 				break;

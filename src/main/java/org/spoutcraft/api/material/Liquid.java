@@ -19,6 +19,6 @@
  */
 package org.spoutcraft.api.material;
 
-public interface Liquid extends Block{
+public interface Liquid extends Block {
 	public boolean isFlowing();
 }

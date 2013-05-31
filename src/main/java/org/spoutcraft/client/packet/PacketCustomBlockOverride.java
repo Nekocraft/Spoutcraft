@@ -38,7 +38,7 @@ public class PacketCustomBlockOverride implements SpoutPacket {
 
 	public PacketCustomBlockOverride(int x, int y, int z, Integer blockId, Byte data) {
 		this.x = x;
-		this.y = (short) (y & 0xFFFF);
+		this.y = (short)(y & 0xFFFF);
 		this.z = z;
 		setBlockId(blockId);
 		setBlockData(data);

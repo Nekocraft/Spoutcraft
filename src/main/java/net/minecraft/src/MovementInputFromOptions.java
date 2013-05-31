@@ -11,19 +11,19 @@ public class MovementInputFromOptions extends MovementInput {
 
 	// Spout Start - Keep parameter
 	public void updatePlayerMoveState(EntityPlayer par1EntityPlayer) {
-	// Spout End
+		// Spout End
 		this.moveStrafe = 0.0F;
 		this.moveForward = 0.0F;
 
 		// Spout Start - Forward toggle
 		if (this.gameSettings.keyBindForward.pressed || par1EntityPlayer.autoforwardToggle) {
-		// Spout End
+			// Spout End
 			++this.moveForward;
 		}
 
 		// Spout Start - Forward toggle
 		if (this.gameSettings.keyBindBack.pressed || par1EntityPlayer.autoBackwardToggle) {
-		// Spout End
+			// Spout End
 			--this.moveForward;
 		}
 
@@ -34,9 +34,11 @@ public class MovementInputFromOptions extends MovementInput {
 		if (this.gameSettings.keyBindRight.pressed) {
 			--this.moveStrafe;
 		}
+
 		// Spout Start
 		this.flyingDown = this.gameSettings.keyFlyDown.pressed;
 		this.flyingUp = this.gameSettings.keyFlyUp.pressed;
+
 		if (par1EntityPlayer.capabilities.isFlying) {
 			this.moveStrafe = 0.0F;
 			this.moveForward = 0.0F;
@@ -57,8 +59,8 @@ public class MovementInputFromOptions extends MovementInput {
 				--this.moveStrafe;
 			}
 		}
-		// Spout End
 
+		// Spout End
 		this.jump = this.gameSettings.keyBindJump.pressed;
 		// Spout Start - Sneak toggle
 		this.sneak = this.gameSettings.keyBindSneak.pressed || par1EntityPlayer.sneakToggle;

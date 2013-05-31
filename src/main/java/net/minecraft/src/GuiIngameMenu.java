@@ -7,13 +7,12 @@ import org.spoutcraft.client.gui.settings.GuiSimpleOptions;
 // Spout End
 
 public class GuiIngameMenu extends GuiScreen {
-
 	/** Also counts the number of updates, not certain as to why yet. */
 	private int updateCounter2 = 0;
 
 	/** Counts the number of screen updates. */
 	private int updateCounter = 0;
-	
+
 	// Spout Start
 	private boolean fromSingle = false;
 
@@ -51,23 +50,28 @@ public class GuiIngameMenu extends GuiScreen {
 				break;
 
 			case 1:
+
 				// Spout Start
 				if (this.mc.isIntegratedServerRunning()) {
 					fromSingle = true;
 				}
+
 				HeightMapAgent.save();
 				// Spout End
 				par1GuiButton.enabled = false;
 				this.mc.statFileWriter.readStat(StatList.leaveGameStat, 1);
 				this.mc.theWorld.sendQuittingDisconnectingPacket();
 				this.mc.loadWorld((WorldClient)null);
+
 				// Spout Start
 				if (fromSingle) {
-					this.mc.displayGuiScreen(new GuiSelectWorld(this));	
-				} else {				
+					this.mc.displayGuiScreen(new GuiSelectWorld(this));
+				} else {
 					this.mc.displayGuiScreen(new org.spoutcraft.client.gui.server.GuiFavorites(this));
 				}
+
 				break;
+
 				// Spout End
 			case 2:
 			case 3:

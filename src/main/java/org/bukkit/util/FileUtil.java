@@ -28,7 +28,6 @@ public class FileUtil {
 		try {
 			in = new FileInputStream(inFile).getChannel();
 			out = new FileOutputStream(outFile).getChannel();
-
 			long pos = 0;
 			long size = in.size();
 
@@ -42,6 +41,7 @@ public class FileUtil {
 				if (in != null) {
 					in.close();
 				}
+
 				if (out != null) {
 					out.close();
 				}

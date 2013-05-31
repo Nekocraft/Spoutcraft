@@ -21,7 +21,7 @@ package org.spoutcraft.api.material.block;
 
 import org.spoutcraft.api.material.SolidBlock;
 
-public class Solid extends GenericBlock implements SolidBlock{
+public class Solid extends GenericBlock implements SolidBlock {
 	private final boolean falling;
 	public Solid(String name, int id, int data, boolean falling) {
 		super(name, id, data);

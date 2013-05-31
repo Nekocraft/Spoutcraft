@@ -59,15 +59,18 @@ public class PacketSendPrecache implements CompressablePacket {
 			deflater.finish();
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(fileData.length);
 			byte[] buffer = new byte[1024];
+
 			while (!deflater.finished()) {
 				int bytesCompressed = deflater.deflate(buffer);
 				bos.write(buffer, 0, bytesCompressed);
 			}
+
 			try {
 				bos.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+
 			fileData = bos.toByteArray();
 			compressed = true;
 		}
@@ -81,10 +84,9 @@ public class PacketSendPrecache implements CompressablePacket {
 		if (compressed) {
 			Inflater decompressor = new Inflater();
 			decompressor.setInput(fileData);
-
 			ByteArrayOutputStream bos = new ByteArrayOutputStream(fileData.length);
-
 			byte[] buf = new byte[1024];
+
 			while (!decompressor.finished()) {
 				try {
 					int count = decompressor.inflate(buf);
@@ -92,6 +94,7 @@ public class PacketSendPrecache implements CompressablePacket {
 				} catch (DataFormatException e) {
 				}
 			}
+
 			try {
 				bos.close();
 			} catch (IOException e) {
@@ -132,6 +135,7 @@ public class PacketSendPrecache implements CompressablePacket {
 	public void run(int playerId) {
 		// Packet recieved, grabbing the zip file
 		File zip = PrecacheManager.getPluginPreCacheFile(plugin, version);
+
 		if (zip.exists()) {
 			zip.delete();
 		}
@@ -143,9 +147,11 @@ public class PacketSendPrecache implements CompressablePacket {
 		}
 
 		PrecacheTuple plugin = PrecacheManager.getPrecacheTuple(this.plugin, version);
+
 		if (plugin != null) {
 			PrecacheManager.setCached(plugin);
 		}
+
 		PrecacheManager.doNextCache();
 	}
 }

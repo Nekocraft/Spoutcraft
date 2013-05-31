@@ -46,8 +46,10 @@ public class ReconnectManager {
 		if (infoString.contains("disconnect.disconnected")) {
 			if (reason.indexOf("[Serverport]") == 0 || reason.indexOf("[Redirect]") == 0) {
 				String[] split = reason.split(":");
+
 				if (split.length == 3) {
 					hostName = split[1].trim();
+
 					try {
 						portNum = Integer.parseInt(split[2].trim());
 					} catch (Exception e) {

@@ -70,30 +70,38 @@ public class PacketPreCacheFile implements SpoutPacket {
 			System.out.println("WARNING, " + plugin + " tried to cache an invalid file type: " + file);
 			return;
 		}
+
 		final File directory = new File(FileUtil.getCacheDir(), plugin);
+
 		if (!directory.exists()) {
 			directory.mkdir();
 		}
+
 		final String fileName = FileUtil.getFileName(file);
 		final File expected = new File(directory, fileName);
 		this.cached = expected.exists();
 		System.out.println("Received Precache for [" + fileName + "]. File " + (expected.exists() ? ("exists" + (cached ? " and is valid" : "and is invalid")) : "does not exist"));
+
 		if (!cached) {
 			final long finalCRC = expectedCRC;
 			CRCManager.setCRC(fileName, finalCRC);
+
 			if (expected.exists()) {
 				expected.delete();
 			}
+
 			// Request copy of file
 			if (!url) {
 				SpoutClient.getInstance().getPacketManager().sendSpoutPacket(this);
 			} else { // Begin download
 				Runnable queued = null;
+
 				if (FileUtil.isImageFile(fileName)) {
 					queued = new Runnable() {
 						public void run() {
 							long crc = FileUtil.getCRC(expected, new byte[16384]);
 							System.out.println("Downloaded File " + fileName + "'s CRC " + crc + ", expected CRC: " + expectedCRC);
+
 							if (crc == finalCRC) {
 								CustomTextureManager.getTextureFromUrl(plugin, fileName);
 							} else {
@@ -102,6 +110,7 @@ public class PacketPreCacheFile implements SpoutPacket {
 						}
 					};
 				}
+
 				Download data = new Download(fileName, directory, file, queued);
 				FileDownloadThread.getInstance().addToDownloadQueue(data);
 			}

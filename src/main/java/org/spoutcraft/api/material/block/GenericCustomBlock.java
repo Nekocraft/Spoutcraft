@@ -72,7 +72,7 @@ public class GenericCustomBlock implements CustomBlock {
 	 */
 	public GenericCustomBlock(String addon, String name, boolean isOpaque, CustomItem item) {
 		opaque = isOpaque;
-		this.blockId = isOpaque ? 1 :20;
+		this.blockId = isOpaque ? 1 : 20;
 		this.addon = addon;
 		this.item = item;
 		this.name = item.getName();
@@ -111,6 +111,7 @@ public class GenericCustomBlock implements CustomBlock {
 
 	public void setName(String name) {
 		this.name = name;
+
 		if (item != null) {
 			item.setName(name);
 		}
@@ -227,7 +228,7 @@ public class GenericCustomBlock implements CustomBlock {
 		item = new GenericCustomItem(addon, name, customId);
 		MaterialData.addCustomBlock(this);
 		this.setItemDrop(new ItemStack(this, 1));
-		this.blockId = isOpaque() ? 1 :20;
+		this.blockId = isOpaque() ? 1 : 20;
 	}
 
 	public int getVersion() {

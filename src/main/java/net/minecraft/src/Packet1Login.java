@@ -8,7 +8,6 @@ import org.spoutcraft.client.DataMiningThread;
 // Spout End
 
 public class Packet1Login extends Packet {
-
 	/** The player's entity ID */
 	public int clientEntityId = 0;
 	public WorldType terrainType;

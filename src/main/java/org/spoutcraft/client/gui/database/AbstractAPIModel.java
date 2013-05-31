@@ -37,7 +37,6 @@ import org.spoutcraft.api.gui.AbstractListModel;
 import org.spoutcraft.api.gui.GenericListWidgetItem;
 import org.spoutcraft.api.gui.ListWidgetItem;
 import org.spoutcraft.client.SpoutClient;
-import org.spoutcraft.client.gui.database.UrlElement;
 
 public abstract class AbstractAPIModel extends AbstractListModel {
 	protected List<UrlElement> urlElements = new LinkedList<UrlElement>();
@@ -61,7 +60,7 @@ public abstract class AbstractAPIModel extends AbstractListModel {
 	protected List<ListWidgetItem> getEffectiveList() {
 		List<ListWidgetItem> ret = new ArrayList<ListWidgetItem>();
 
-		for (ListWidgetItem item:entries) {
+		for (ListWidgetItem item: entries) {
 			ret.add(item);
 		}
 
@@ -69,6 +68,7 @@ public abstract class AbstractAPIModel extends AbstractListModel {
 			itemLoadNextItems = new GenericListWidgetItem("More items on the server.", "Click to load", "");
 			ret.add(itemLoadNextItems);
 		}
+
 		return ret;
 	}
 
@@ -78,9 +78,11 @@ public abstract class AbstractAPIModel extends AbstractListModel {
 			effectiveCache = getEffectiveList();
 			sizeChanged();
 		}
+
 		if (row < 0 || row >= effectiveCache.size()) {
 			return null;
 		}
+
 		return effectiveCache.get(row);
 	}
 
@@ -90,11 +92,13 @@ public abstract class AbstractAPIModel extends AbstractListModel {
 			effectiveCache = getEffectiveList();
 			sizeChanged();
 		}
+
 		return effectiveCache.size();
 	}
 
 	public void refreshAPIData(final String url, final int page, final boolean clear) {
 		currentUrl = url;
+
 		if (currentLoader != null && currentLoader.isAlive()) {
 			currentLoader.interrupt();
 			System.out.println("Stopped previous loading");
@@ -105,6 +109,7 @@ public abstract class AbstractAPIModel extends AbstractListModel {
 			@Override
 			public void run() {
 				BufferedReader reader = null;
+
 				try {
 					System.setProperty("http.agent", "");
 					setLoading(true);
@@ -113,9 +118,7 @@ public abstract class AbstractAPIModel extends AbstractListModel {
 					//System.out.println("Loading " + url1.toString());
 					URLConnection conn = url1.openConnection();
 					conn.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
-
 					reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
 					Yaml yaml = new Yaml();
 					ArrayList<Object> yamlObj = (ArrayList<Object>) yaml.load(reader);
 					//System.out.println("Loaded in " + (System.currentTimeMillis() - start) + " ms");
@@ -123,9 +126,7 @@ public abstract class AbstractAPIModel extends AbstractListModel {
 					HashMap<String, Object> hash = (HashMap<String, Object>) apiData.remove(0);
 					int after = Integer.valueOf((String) hash.get("after"));
 					moreItems = after > 0;
-
 					refreshList(clear);
-
 				} catch (IOException e1) {
 					e1.printStackTrace();
 					// Put a fancy error message on the list!
@@ -136,9 +137,9 @@ public abstract class AbstractAPIModel extends AbstractListModel {
 					effectiveCache.add(new GenericListWidgetItem(ChatColor.RED + "Could not load items!", e1.getMessage(), ""));
 					return;
 				} catch (Exception e) {
-				}
-				finally {
+				} finally {
 					setLoading(false);
+
 					try {
 						reader.close();
 					} catch (Exception e) {
@@ -151,9 +152,11 @@ public abstract class AbstractAPIModel extends AbstractListModel {
 
 	public void clear() {
 		entries.clear();
+
 		if (effectiveCache != null) {
 			effectiveCache.clear();
 		}
+
 		moreItems = false;
 	}
 
@@ -165,6 +168,7 @@ public abstract class AbstractAPIModel extends AbstractListModel {
 
 	public void setLoading(boolean l) {
 		loading = l;
+
 		if (currentGui != null) {
 			currentGui.updateButtons();
 		}
@@ -191,15 +195,18 @@ public abstract class AbstractAPIModel extends AbstractListModel {
 	public void updateUrl() {
 		String url = API + "?";
 		int i = 0;
-		for (UrlElement element:urlElements) {
+
+		for (UrlElement element: urlElements) {
 			if (element.isActive()) {
 				if (i > 0) {
-					url+="&";
+					url += "&";
 				}
+
 				url += element.getUrlPart();
 				i++; // Only increment for active elements
 			}
 		}
+
 		if (i != 0) {
 			refreshAPIData(url, 0, true);
 		}
@@ -230,6 +237,7 @@ public abstract class AbstractAPIModel extends AbstractListModel {
 		if (currentGui != null) {
 			currentGui.updateButtons();
 		}
+
 		if (effectiveCache.get(item) == itemLoadNextItems) {
 			loadNextPage();
 			itemLoadNextItems.setTitle("Loading ...");

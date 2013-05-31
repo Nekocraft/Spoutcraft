@@ -16,7 +16,6 @@ import org.spoutcraft.client.SpoutClient;
 // MCPatcher End
 
 public class Tessellator {
-
 	/**
 	 * Boolean used to check whether quads should be drawn as two triangles. Initialized to false and never changed.
 	 */
@@ -145,7 +144,7 @@ public class Tessellator {
 	public Map children;
 
 	public Tessellator(int par1) {
-	// MCPatcher End
+		// MCPatcher End
 		this.bufferSize = par1;
 		this.byteBuffer = GLAllocation.createDirectByteBuffer(par1 * 4);
 		this.intBuffer = this.byteBuffer.asIntBuffer();
@@ -171,6 +170,7 @@ public class Tessellator {
 	public int draw() {
 		// MCPatcher Start
 		int var1 = TessellatorUtils.drawChildren(0, this);
+
 		// MCPatcher End
 		if (!this.isDrawing) {
 			throw new IllegalStateException("Not tesselating!");
@@ -184,8 +184,8 @@ public class Tessellator {
 				} else if (this.texture > 0) {
 					GL11.glBindTexture(GL11.GL_TEXTURE_2D, this.texture);
 				}
-				// MCPatcher && Spout End
 
+				// MCPatcher && Spout End
 				this.intBuffer.clear();
 				this.intBuffer.put(this.rawBuffer, 0, this.rawBufferIndex);
 				this.byteBuffer.position(0);
@@ -291,7 +291,7 @@ public class Tessellator {
 	 */
 	// MCPatcher Start - private to public
 	public void reset() {
-	// MCPatcher End
+		// MCPatcher End
 		this.vertexCount = 0;
 		this.byteBuffer.clear();
 		this.rawBufferIndex = 0;

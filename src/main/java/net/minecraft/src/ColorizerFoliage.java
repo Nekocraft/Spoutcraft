@@ -6,7 +6,6 @@ import com.prupe.mcpatcher.mod.Colorizer;
 // MCPatcher End
 
 public class ColorizerFoliage {
-
 	/** Color buffer for foliage */
 	// MCPatcher Start - private to public
 	public static int[] foliageBuffer = new int[65536];

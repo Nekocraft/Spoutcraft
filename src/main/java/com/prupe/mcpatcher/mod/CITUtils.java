@@ -1,5 +1,6 @@
 package com.prupe.mcpatcher.mod;
 
+import com.prupe.mcpatcher.MCLogger;
 import com.prupe.mcpatcher.TexturePackAPI;
 import com.prupe.mcpatcher.mod.CITUtils$ItemOverride;
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import net.minecraft.src.Stitcher;
 import net.minecraft.src.TextureMap;
 
 public class CITUtils {
+	private static final MCLogger logger = MCLogger.getLogger("Custom Item Textures", "CIT");
 	private static TileLoader tileLoader;
 	private static CITUtils$ItemOverride[][] overrides = new CITUtils$ItemOverride[Item.itemsList.length][];
 
@@ -35,7 +37,7 @@ public class CITUtils {
 	}
 
 	static void refresh() {
-		tileLoader = new TileLoader();
+		tileLoader = new TileLoader(logger);
 		Arrays.fill(overrides, (Object)null);
 		String[] var0 = TexturePackAPI.listResources("/cit", ".properties");
 		int var1 = var0.length;
@@ -50,6 +52,7 @@ public class CITUtils {
 				while (var5.hasNext()) {
 					int var6 = ((Integer)var5.next()).intValue();
 					overrides[var6] = registerOverride(overrides[var6], var4);
+					logger.fine("registered %s to item %d (%s)", new Object[] {var4, Integer.valueOf(var6), getItemName(var6)});
 				}
 			}
 		}
@@ -115,5 +118,9 @@ public class CITUtils {
 
 	static TileLoader access$100() {
 		return tileLoader;
+	}
+
+	static MCLogger access$200() {
+		return logger;
 	}
 }

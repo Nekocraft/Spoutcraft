@@ -35,28 +35,28 @@ public class FileMap {
 	private final RandomAccessFile FATFile;
 	private final RandomAccessFile indexFile;
 	private final AtomicLong[] hashes;
-	private final ConcurrentHashMap<Long,Integer> FAT = new ConcurrentHashMap<Long,Integer>();
+	private final ConcurrentHashMap<Long, Integer> FAT = new ConcurrentHashMap<Long, Integer>();
 
 	public FileMap(File dir, String filename, long size, int entries) throws IOException {
 		this.size = size;
 		this.entries = entries;
-
 		dataFile = new RandomAccessFile(new File(dir, filename + ".dat"), "rw");
 		FATFile = new RandomAccessFile(new File(dir, filename + ".fat"), "rw");
 		indexFile = new RandomAccessFile(new File(dir, filename + ".index"), "rw");
 
-		if (dataFile.length() < size*entries) {
+		if (dataFile.length() < size * entries) {
 			dataFile.setLength(this.size * this.entries);
 		}
 
-		if (FATFile.length() < entries*8) {
-			FATFile.setLength(entries*8);
+		if (FATFile.length() < entries * 8) {
+			FATFile.setLength(entries * 8);
 			FATFile.seek(0);
-			FATFile.write(new byte[entries*8]);
+			FATFile.write(new byte[entries * 8]);
 		}
 
 		hashes = new AtomicLong[entries];
 		FATFile.seek(0);
+
 		for (int i = 0; i < entries; i++) {
 			long hash = FATFile.readLong();
 			hashes[i] = new AtomicLong(hash);
@@ -81,7 +81,7 @@ public class FileMap {
 	public void wipe() throws IOException {
 		for (int i = 0; i < entries; i++) {
 			FATFile.seek(0);
-			FATFile.write(new byte[entries*8]);
+			FATFile.write(new byte[entries * 8]);
 		}
 	}
 
@@ -89,19 +89,22 @@ public class FileMap {
 		if (data == null) {
 			throw new IllegalArgumentException("Null data passed to FileIO.write()");
 		}
+
 		if (data.length != size) {
 			throw new IllegalArgumentException("Data array of incorrect length (" + data.length + ") passed to FileIO.write()");
 		}
+
 		if (PartitionChunk.hash(data) != hash) {
 			throw new IllegalArgumentException("Hash mismatch for data passed to FileIO.write()");
 		}
+
 		if (index < 0) {
 			throw new IllegalArgumentException("negative index");
 		}
+
 		index = index % entries;
 		long oldHash = hashes[index].get();
 		FAT.remove(oldHash, index);
-
 		writeFAT(index, hash);
 		writeData(index, data);
 	}
@@ -110,10 +113,12 @@ public class FileMap {
 		if (index < 0) {
 			throw new IllegalArgumentException("negative index");
 		}
+
 		index = index % entries;
 		long hash = readFAT(index);
 		data = readData(index, data);
 		long dataHash = PartitionChunk.hash(data);
+
 		if (dataHash != hash) {
 			return null;
 		} else {
@@ -123,12 +128,15 @@ public class FileMap {
 
 	public byte[] readByHash(long hash, byte[] data) throws IOException {
 		Integer index = hashToIndex(hash);
+
 		if (index == null || index < 0) {
 			return null;
 		}
+
 		index = index % entries;
 		data = readData(index, data);
 		long dataHash = PartitionChunk.hash(data);
+
 		if (dataHash != hash) {
 			this.writeFAT(index, 0);
 			return null;
@@ -152,6 +160,7 @@ public class FileMap {
 			index = entries - index;
 			index = index % entries;
 		}
+
 		index = index % entries;
 		return hashes[index].get();
 	}
@@ -177,7 +186,7 @@ public class FileMap {
 	}
 
 	private long readFAT(int index) throws IOException {
-		FATFile.seek((index % entries)*8);
+		FATFile.seek((index % entries) * 8);
 		return FATFile.readLong();
 	}
 
@@ -186,27 +195,31 @@ public class FileMap {
 		Long oldHash = hashes[index].get();
 		FAT.remove(oldHash);
 		hashes[index].set(hash);
+
 		if (hash != 0) {
 			FAT.put(hash, index);
 		}
 
-		FATFile.seek(index*8);
+		FATFile.seek(index * 8);
 		FATFile.writeLong(hash);
 	}
 
 	private byte[] readData(int index, byte[] data) throws IOException {
 		index = index % entries;
-		dataFile.seek(size*index);
+		dataFile.seek(size * index);
+
 		if (data == null || data.length != size) {
 			data = new byte[(int)size];
 		}
+
 		dataFile.readFully(data);
 		return data;
 	}
 
 	private void writeData(int index, byte[] data) throws IOException {
 		index = index % entries;
-		dataFile.seek(size*index);
+		dataFile.seek(size * index);
+
 		if (data == null || data.length != size) {
 			throw new IllegalArgumentException("Incorrect byte array length");
 		} else {

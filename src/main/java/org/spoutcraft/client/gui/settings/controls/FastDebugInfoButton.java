@@ -33,19 +33,27 @@ public class FastDebugInfoButton extends GenericButton {
 	@Override
 	public String getText() {
 		switch (Configuration.getFastDebug()) {
-			case 0: return "调试信息: 完整";
-			case 1: return "调试信息: 快速";
-			case 2: return "调试信息: FPS";
+			case 0:
+				return "调试信息: 完整";
+
+			case 1:
+				return "调试信息: 快速";
+
+			case 2:
+				return "调试信息: FPS";
 		}
+
 		return "Unknown State: " + Configuration.getFastDebug();
 	}
 
 	@Override
 	public void onButtonClick() {
 		Configuration.setFastDebug(Configuration.getFastDebug() + 1);
+
 		if (Configuration.getFastDebug() > 2) {
 			Configuration.setFastDebug(0);
 		}
+
 		Configuration.write();
 	}
 }

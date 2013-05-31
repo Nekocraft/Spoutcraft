@@ -11,91 +11,91 @@ public enum ChatColor {
 	/**
 	 * Represents black
 	 */
-	BLACK('0', 0x00),
+	BLACK('0', 0x00, "黑色"),
 	/**
 	 * Represents dark blue
 	 */
-	DARK_BLUE('1', 0x1),
+	DARK_BLUE('1', 0x1, "深蓝"),
 	/**
 	 * Represents dark green
 	 */
-	DARK_GREEN('2', 0x2),
+	DARK_GREEN('2', 0x2, "深绿"),
 	/**
 	 * Represents dark blue (aqua)
 	 */
-	DARK_AQUA('3', 0x3),
+	DARK_AQUA('3', 0x3, "深青"),
 	/**
 	 * Represents dark red
 	 */
-	DARK_RED('4', 0x4),
+	DARK_RED('4', 0x4, "深红"),
 	/**
 	 * Represents dark purple
 	 */
-	DARK_PURPLE('5', 0x5),
+	DARK_PURPLE('5', 0x5, "深紫"),
 	/**
 	 * Represents gold
 	 */
-	GOLD('6', 0x6),
+	GOLD('6', 0x6, "金色"),
 	/**
 	 * Represents gray
 	 */
-	GRAY('7', 0x7),
+	GRAY('7', 0x7, "灰色"),
 	/**
 	 * Represents dark gray
 	 */
-	DARK_GRAY('8', 0x8),
+	DARK_GRAY('8', 0x8, "深灰"),
 	/**
 	 * Represents blue
 	 */
-	BLUE('9', 0x9),
+	BLUE('9', 0x9, "蓝色"),
 	/**
 	 * Represents green
 	 */
-	GREEN('a', 0xA),
+	GREEN('a', 0xA, "绿色"),
 	/**
 	 * Represents aqua
 	 */
-	AQUA('b', 0xB),
+	AQUA('b', 0xB, "青色"),
 	/**
 	 * Represents red
 	 */
-	RED('c', 0xC),
+	RED('c', 0xC, "红色"),
 	/**
 	 * Represents light purple
 	 */
-	LIGHT_PURPLE('d', 0xD),
+	LIGHT_PURPLE('d', 0xD, "浅紫"),
 	/**
 	 * Represents yellow
 	 */
-	YELLOW('e', 0xE),
+	YELLOW('e', 0xE, "黄色"),
 	/**
 	 * Represents white
 	 */
-	WHITE('f', 0xF),
+	WHITE('f', 0xF, "白色"),
 	/**
 	 * Represents magical characters that change around randomly
 	 */
-	MAGIC('k', 0x10, true),
+	MAGIC('k', 0x10, true, "魔法"),
 	/**
 	 * Makes the text bold.
 	 */
-	BOLD('l', 0x11, true),
+	BOLD('l', 0x11, true, "加粗"),
 	/**
 	 * Makes a line appear through the text.
 	 */
-	STRIKETHROUGH('m', 0x12, true),
+	STRIKETHROUGH('m', 0x12, true, "删除线"),
 	/**
 	 * Makes the text appear underlined.
 	 */
-	UNDERLINE('n', 0x13, true),
+	UNDERLINE('n', 0x13, true, "下划线"),
 	/**
 	 * Makes the text italic.
 	 */
-	ITALIC('o', 0x14, true),
+	ITALIC('o', 0x14, true, "斜体"),
 	/**
 	 * Resets all previous chat colors or formats.
 	 */
-	RESET('r', 0x15);
+	RESET('r', 0x15, "重置");
 
 	/**
 	 * The special character which prefixes all chat colour codes. Use this if you need to dynamically
@@ -108,18 +108,20 @@ public enum ChatColor {
 	private final char code;
 	private final boolean isFormat;
 	private final String toString;
+	private final String name;
 	private final static Map<Integer, ChatColor> BY_ID = new HashMap<Integer, ChatColor>();
 	private final static Map<Character, ChatColor> BY_CHAR = new HashMap<Character, ChatColor>();
 
-	private ChatColor(char code, int intCode) {
-		this(code, intCode, false);
+	private ChatColor(char code, int intCode, String name) {
+		this(code, intCode, false, name);
 	}
 
-	private ChatColor(char code, int intCode, boolean isFormat) {
+	private ChatColor(char code, int intCode, boolean isFormat, String name) {
 		this.code = code;
 		this.intCode = intCode;
 		this.isFormat = isFormat;
 		this.toString = new String(new char[] {COLOR_CHAR, code});
+		this.name = name;
 	}
 
 	/**
@@ -129,6 +131,10 @@ public enum ChatColor {
 	 */
 	public char getChar() {
 		return code;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	@Override
@@ -205,12 +211,14 @@ public enum ChatColor {
 	 */
 	public static String translateAlternateColorCodes(char altColorChar, String textToTranslate) {
 		char[] b = textToTranslate.toCharArray();
+
 		for (int i = 0; i < b.length - 1; i++) {
-			if (b[i] == altColorChar && "0123456789AaBbCcDdEeFfKkLlMmNnOoRr".indexOf(b[i+1]) > -1) {
+			if (b[i] == altColorChar && "0123456789AaBbCcDdEeFfKkLlMmNnOoRr".indexOf(b[i + 1]) > -1) {
 				b[i] = ChatColor.COLOR_CHAR;
-				b[i+1] = Character.toLowerCase(b[i+1]);
+				b[i + 1] = Character.toLowerCase(b[i + 1]);
 			}
 		}
+
 		return new String(b);
 	}
 

@@ -74,8 +74,8 @@ public class GenericTextField extends GenericControl implements TextField {
 	public void writeData(SpoutOutputStream output) throws IOException {
 		super.writeData(output);
 		output.writeColor(getFieldColor());
-		output.writeColor( getBorderColor());
-		output.writeChar((char) (getMaximumLines() & MASK_MAXLINES | (getTabIndex() << 7) & MASK_TABINDEX | (isPasswordField() ? FLAG_PASSWORD : 0)));
+		output.writeColor(getBorderColor());
+		output.writeChar((char)(getMaximumLines() & MASK_MAXLINES | (getTabIndex() << 7) & MASK_TABINDEX | (isPasswordField() ? FLAG_PASSWORD : 0)));
 		output.writeChar((char) getCursorPosition());
 		output.writeChar((char) getMaximumCharacters());
 		output.writeString(getText());
@@ -173,6 +173,7 @@ public class GenericTextField extends GenericControl implements TextField {
 		if (this.password != password) {
 			setTextProcessor((password) ? new PasswordTextProcessor() : new GenericTextProcessor());
 		}
+
 		this.password = password;
 		return this;
 	}
@@ -188,6 +189,7 @@ public class GenericTextField extends GenericControl implements TextField {
 		if (focus) {
 			Keyboard.setRepeatingEvents(true);
 		}
+
 		return super.setFocus(focus);
 	}
 

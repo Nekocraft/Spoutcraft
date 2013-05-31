@@ -486,7 +486,8 @@ public class EntityRenderer {
 	 */
 	private void setupCameraTransform(float par1, int par2) {
 		// Spout Start
-		this.farPlaneDistance = (float) (32 << 3 - this.mc.gameSettings.renderDistance);
+		this.farPlaneDistance = (float)(32 << 3 - this.mc.gameSettings.renderDistance);
+
 		if (Configuration.isFarView()) {
 			if (this.farPlaneDistance < 256.0F) {
 				this.farPlaneDistance *= 3.0F;
@@ -500,6 +501,7 @@ public class EntityRenderer {
 		} else {
 			this.farPlaneDistance *= 0.83F;
 		}
+
 		// Spout End
 		GL11.glMatrixMode(GL11.GL_PROJECTION);
 		GL11.glLoadIdentity();
@@ -817,6 +819,7 @@ public class EntityRenderer {
 		// Spout Start
 		World world = this.mc.theWorld;
 		Block.leaves.setGraphicsLevel(Configuration.isFancyTrees());
+
 		if (!Configuration.isWeather() && world != null && world.worldInfo != null) {
 			world.worldInfo.setRaining(false);
 		}
@@ -824,6 +827,7 @@ public class EntityRenderer {
 		if (world != null) {
 			long rawTime = world.getWorldTime();
 			long time = rawTime % 24000L;
+
 			if (Configuration.getTime() == 2) { // Day
 				if (time <= 1000L) {
 					world.worldInfo.setWorldTime(rawTime - time + 1001L);
@@ -842,8 +846,8 @@ public class EntityRenderer {
 				}
 			}
 		}
-		// Spout End
 
+		// Spout End
 		this.mc.mcProfiler.startSection("lightTex");
 
 		if (this.lightmapUpdateNeeded) {
@@ -922,13 +926,15 @@ public class EntityRenderer {
 							this.mc.gameSettings.showDebugInfo = true;
 						}
 					}
-					// Spout End
 
+					// Spout End
 					this.mc.ingameGUI.renderGameOverlay(par1, this.mc.currentScreen != null, var16, var17);
+
 					// Spout Start
 					if (Configuration.getFastDebug() != 0) {
 						this.mc.gameSettings.showDebugInfo = false;
 					}
+
 					// Spout End
 				}
 
@@ -957,7 +963,7 @@ public class EntityRenderer {
 					throw new ReportedException(var10);
 				}
 
-				if (this.mc.currentScreen!= null) {
+				if (this.mc.currentScreen != null) {
 					this.mc.currentScreen.drawScreenPre(var16, var17, par1);
 				} else {
 					System.out.println("SpoutDebug:  CurrentScreen was null prior to trying to drawScreenPre");
@@ -996,7 +1002,7 @@ public class EntityRenderer {
 
 		// Spout Start
 		for (int var13 = 0; var13 < (this.mc.gameSettings.anaglyph ? 2 : 1); ++var13) {
-		// Spout End
+			// Spout End
 			if (this.mc.gameSettings.anaglyph) {
 				anaglyphField = var13;
 
@@ -1020,7 +1026,7 @@ public class EntityRenderer {
 
 			// Spout Start
 			if (this.mc.gameSettings.renderDistance < 2 || Configuration.isFarView()) {
-			// Spout End
+				// Spout End
 				this.setupFog(-1, par1);
 				this.mc.mcProfiler.endStartSection("sky");
 				var5.renderSky(par1);
@@ -1031,7 +1037,7 @@ public class EntityRenderer {
 
 			// MCPatcher Start
 			if (RenderPass.setAmbientOcclusion(this.mc.gameSettings.ambientOcclusion >= 2)) {
-			// MCPatcher End
+				// MCPatcher End
 				GL11.glShadeModel(GL11.GL_SMOOTH);
 			}
 
@@ -1055,6 +1061,7 @@ public class EntityRenderer {
 			if (var4.posY < 128.0D) {
 				this.renderCloudsCheck(var5, par1);
 			}
+
 			this.mc.mcProfiler.endStartSection("prepareterrain");
 			this.setupFog(0, par1);
 			GL11.glEnable(GL11.GL_FOG);
@@ -1105,7 +1112,7 @@ public class EntityRenderer {
 
 				// Spout End
 				if (RenderPass.setAmbientOcclusion(this.mc.gameSettings.ambientOcclusion >= 2)) {
-				// Spout Start
+					// Spout Start
 					GL11.glShadeModel(GL11.GL_SMOOTH);
 				}
 
@@ -1202,12 +1209,15 @@ public class EntityRenderer {
 		if (!Configuration.isWeather()) {
 			return;
 		}
+
 		if (SpoutWorth.getInstance().isBelowIdeal()) {
 			var1 /= 4.0F;
 		}
+
 		if (!Configuration.isFancyWeather()) {
 			var1 /= 2.0F;
 		}
+
 		// Spout End
 
 		if (!this.mc.gameSettings.fancyGraphics) {
@@ -1283,6 +1293,7 @@ public class EntityRenderer {
 		if (!Configuration.isWeather()) {
 			return;
 		}
+
 		// Spout End
 		float var2 = this.mc.theWorld.getRainStrength(par1);
 
@@ -1324,7 +1335,7 @@ public class EntityRenderer {
 
 			// Spout Start
 			if (Configuration.isFancyWeather()) {
-			// Spout End
+				// Spout End
 				var16 = 10;
 			}
 
@@ -1468,8 +1479,8 @@ public class EntityRenderer {
 			this.fogColorGreen = Colorizer.setColor[1];
 			this.fogColorBlue = Colorizer.setColor[2];
 		}
-		// MCPatcher End
 
+		// MCPatcher End
 		var4 = 1.0F - (float)Math.pow((double)var4, 0.25D);
 		Vec3 var5 = var2.getSkyColor(this.mc.renderViewEntity, par1);
 		float var6 = (float)var5.xCoord;
@@ -1673,12 +1684,15 @@ public class EntityRenderer {
 					GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_EXP);
 					// Spout Start
 					float density = 0.1F;
+
 					if (var3.isPotionActive(Potion.waterBreathing)) {
 						density = 0.05F;
 					}
+
 					if (Configuration.isClearWater()) {
 						density = 0.02F;
 					}
+
 					GL11.glFogf(GL11.GL_FOG_DENSITY, density);
 					// Spout End
 					GL11.glFogf(GL11.GL_FOG_DENSITY, 0.1F);
@@ -1695,12 +1709,14 @@ public class EntityRenderer {
 					GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_EXP);
 					// Spout Start
 					float density = 0.1F;
+
 					if (Configuration.isClearWater() || (var3.isPotionActive(Potion.waterBreathing))) {
 						density = 0.05F;
 					} else {
 						density = 0.1F;
 					}
-					 GL11.glFogf(GL11.GL_FOG_DENSITY, density);
+
+					GL11.glFogf(GL11.GL_FOG_DENSITY, density);
 					// Spout End
 					var6 = 0.4F;
 					var12 = 0.4F;
@@ -1752,8 +1768,8 @@ public class EntityRenderer {
 						var6 = 0.8F * this.farPlaneDistance;
 						var12 = this.farPlaneDistance;
 					}
-					// Spout End
 
+					// Spout End
 					GL11.glFogi(GL11.GL_FOG_MODE, GL11.GL_LINEAR);
 
 					if (par1 < 0) {
@@ -1769,10 +1785,11 @@ public class EntityRenderer {
 						//TODO: Previous fog calculation may work better.
 						//GL11.glFogi(34138, 34139);
 						if (Configuration.isFancyFog()) {
-							GL11.glFogi('\u855a', '\u855b');
+							GL11.glFogi(34138, 34139);
 						} else {
-							GL11.glFogi('\u855a', '\u855c');
+							GL11.glFogi(34138, 34140);
 						}
+
 						// Spout End
 					}
 

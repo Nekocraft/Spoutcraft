@@ -85,12 +85,13 @@ public class GenericScrollArea extends GenericScrollable implements ScrollArea {
 	}
 
 	public Screen attachWidgets(String addon, Widget ...widgets) {
-		for (Widget widget:widgets) {
+		for (Widget widget: widgets) {
 			this.widgets.put(widget, addon);
 			widget.setAddon(addon);
 			widget.setAnchor(WidgetAnchor.TOP_LEFT);
 			widget.setScreen(this);
 		}
+
 		updateInnerSize();
 		return this;
 	}
@@ -98,10 +99,12 @@ public class GenericScrollArea extends GenericScrollable implements ScrollArea {
 	public void updateInnerSize() {
 		int height = 0;
 		int width = 0;
-		for (Widget w:widgets.keySet()) {
+
+		for (Widget w: widgets.keySet()) {
 			height = (int) Math.max(height, w.getY() + w.getHeight());
 			width = (int) Math.max(width, w.getX() + w.getWidth());
 		}
+
 		setInnerSize(Orientation.HORIZONTAL, width);
 		setInnerSize(Orientation.VERTICAL, height + 5);
 	}
@@ -119,6 +122,7 @@ public class GenericScrollArea extends GenericScrollable implements ScrollArea {
 				removeWidget(i);
 			}
 		}
+
 		updateInnerSize();
 		return this;
 	}
@@ -137,6 +141,7 @@ public class GenericScrollArea extends GenericScrollable implements ScrollArea {
 				return w;
 			}
 		}
+
 		return null;
 	}
 
@@ -148,6 +153,7 @@ public class GenericScrollArea extends GenericScrollable implements ScrollArea {
 			widget.setScreen(this);
 			return true;
 		}
+
 		return false;
 	}
 
@@ -156,6 +162,7 @@ public class GenericScrollArea extends GenericScrollable implements ScrollArea {
 		for (Widget widget : widgets.keySet()) {
 			widget.onTick();
 		}
+
 		screenWidth = Spoutcraft.getClient().getRenderDelegate().getScreenWidth();
 		screenHeight = Spoutcraft.getClient().getRenderDelegate().getScreenHeight();
 	}
@@ -222,13 +229,15 @@ public class GenericScrollArea extends GenericScrollable implements ScrollArea {
 		Widget[] list = new Widget[widgets.size()];
 		Set<Widget> allwidgets = new HashSet<Widget>();
 		allwidgets.addAll(widgets.keySet());
+
 		if (recursive) {
-			for (Widget w:widgets.keySet()) {
+			for (Widget w: widgets.keySet()) {
 				if (w instanceof Screen) {
 					allwidgets.addAll(((Screen)w).getAttachedWidgetsAsSet(true));
 				}
 			}
 		}
+
 		allwidgets.toArray(list);
 		return list;
 	}
@@ -236,13 +245,15 @@ public class GenericScrollArea extends GenericScrollable implements ScrollArea {
 	public Set<Widget> getAttachedWidgetsAsSet(boolean recursive) {
 		Set<Widget> allwidgets = new HashSet<Widget>();
 		allwidgets.addAll(widgets.keySet());
+
 		if (recursive) {
-			for (Widget w:widgets.keySet()) {
+			for (Widget w: widgets.keySet()) {
 				if (w instanceof Screen) {
 					allwidgets.addAll(((Screen)w).getAttachedWidgetsAsSet(true));
 				}
 			}
 		}
+
 		return allwidgets;
 	}
 }

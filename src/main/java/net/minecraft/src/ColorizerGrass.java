@@ -1,7 +1,6 @@
 package net.minecraft.src;
 
 public class ColorizerGrass {
-
 	/** Color buffer for grass */
 	// MCPatcher Start - private -> public
 	public static int[] grassBuffer = new int[65536];

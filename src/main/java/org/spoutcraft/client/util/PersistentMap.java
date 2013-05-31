@@ -40,15 +40,18 @@ public class PersistentMap {
 
 	public byte[] get(Long key, byte[] data) throws IOException {
 		byte[] value = cache.get(key);
-		if (value != null) {
-			return value;
-		}
-		value = overwriteBackup.get(key);
-		if (value != null) {
-			return value;
-		}
-		value = f.readByHash(key, data);
 
+		if (value != null) {
+			return value;
+		}
+
+		value = overwriteBackup.get(key);
+
+		if (value != null) {
+			return value;
+		}
+
+		value = f.readByHash(key, data);
 		return value;
 	}
 
@@ -71,18 +74,22 @@ public class PersistentMap {
 
 	public void put(Long key, byte[] data) throws IOException {
 		Integer index = f.hashToIndex(key);
+
 		if (index != null) {
 			return;
 		}
+
 		index = f.getIndex();
 		f.incrementIndex();
 		Long oldHash = f.indexToHash(index);
 		byte[] oldData = new byte[(int)size];
 		oldData = f.readByIndex(index, oldData);
+
 		if (oldData != null) {
 			overwriteBackup.put(oldHash, oldData);
 			overwriteQueue.add(oldHash);
 		}
+
 		f.write(index, key, data);
 
 		if (!cache.contains(key)) {
@@ -103,6 +110,7 @@ public class PersistentMap {
 
 	public boolean corruptionTest(long hash) {
 		Integer index = f.hashToIndex(hash);
+
 		try {
 			if (index != null) {
 				f.corruptIndex(index);

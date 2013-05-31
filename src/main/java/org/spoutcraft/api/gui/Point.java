@@ -21,7 +21,7 @@ package org.spoutcraft.api.gui;
 
 import org.spoutcraft.api.animation.Animatable;
 
-public class Point implements Animatable{
+public class Point implements Animatable {
 	private int x, y;
 
 	public Point() {
@@ -67,8 +67,8 @@ public class Point implements Animatable{
 	public Animatable getValueAt(double p, Animatable startValue, Animatable endValue) {
 		Point p1 = (Point) startValue;
 		Point p2 = (Point) endValue;
-		int x = (int) (p1.x + (p2.x - p1.x) * p);
-		int y = (int) (p1.y + (p2.y - p1.y) * p);
+		int x = (int)(p1.x + (p2.x - p1.x) * p);
+		int y = (int)(p1.y + (p2.y - p1.y) * p);
 		return new Point(x, y);
 	}
 }

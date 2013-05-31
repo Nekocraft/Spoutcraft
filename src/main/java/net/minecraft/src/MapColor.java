@@ -1,7 +1,6 @@
 package net.minecraft.src;
 
 public class MapColor {
-
 	/**
 	 * Holds all the 16 colors used on maps, very similar of a pallete system.
 	 */

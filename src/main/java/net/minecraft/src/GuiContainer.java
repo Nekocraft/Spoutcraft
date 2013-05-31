@@ -24,7 +24,6 @@ import org.spoutcraft.client.inventory.CraftItemStack;
 // Spout End
 
 public abstract class GuiContainer extends GuiScreen {
-
 	/** Stacks renderer. Icons, stack size, health, etc... */
 	// Spout Start
 	protected static RenderItem itemRenderer;
@@ -110,22 +109,24 @@ public abstract class GuiContainer extends GuiScreen {
 
 			if (type == ScreenType.PLAYER_INVENTORY) {
 				if (!this.mc.thePlayer.getActivePotionEffects().isEmpty()) {
-					orderByAlphabet.setGeometry((guiLeft+146), (guiTop+65), 27, 13);
-					orderById.setGeometry((guiLeft+176), (guiTop+65), 22, 13);
+					orderByAlphabet.setGeometry((guiLeft + 146), (guiTop + 65), 27, 13);
+					orderById.setGeometry((guiLeft + 176), (guiTop + 65), 22, 13);
 				} else {
-					orderByAlphabet.setGeometry((guiLeft+86), (guiTop+65), 27, 13);
-					orderById.setGeometry((guiLeft+116), (guiTop+65), 22, 13);
+					orderByAlphabet.setGeometry((guiLeft + 86), (guiTop + 65), 27, 13);
+					orderById.setGeometry((guiLeft + 116), (guiTop + 65), 22, 13);
 				}
 			} else if (type == ScreenType.CHEST_INVENTORY) {
-				orderByAlphabet.setGeometry((guiLeft+115), (guiTop+3), 27, 12);
-				orderById.setGeometry((guiLeft+145), (guiTop+3), 22, 12);
+				orderByAlphabet.setGeometry((guiLeft + 115), (guiTop + 3), 27, 12);
+				orderById.setGeometry((guiLeft + 145), (guiTop + 3), 22, 12);
 			}
 
 			IInventory inv = inventorySlots.getIInventory();
+
 			if (inv != null && inventorySlots.isSortableInventory()) {
 				getScreen().attachWidgets("Spoutcraft", orderByAlphabet, orderById);
 			}
 		}
+
 		// Spout End
 	}
 
@@ -144,6 +145,7 @@ public abstract class GuiContainer extends GuiScreen {
 		if (btn == orderByAlphabet || btn == orderById) {
 			try {
 				IInventory inv = inventorySlots.getIInventory();
+
 				if (inv != null) {
 					if (inv instanceof InventoryPlayer) {
 						compactInventory(inv, true);
@@ -161,11 +163,13 @@ public abstract class GuiContainer extends GuiScreen {
 
 	public int getNumItems(IInventory inventory) {
 		int used = 0;
+
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
 			if (inventory.getStackInSlot(i) != null) {
 				used++;
 			}
 		}
+
 		return used;
 	}
 
@@ -173,29 +177,34 @@ public abstract class GuiContainer extends GuiScreen {
 		// To keep mp compatibility, fake window clicks
 		for (int i = 0; i < inventory.getSizeInventory(); i++) {
 			ItemStack item = inventory.getStackInSlot(i);
-			if (item != null && item.stackSize < item.getMaxStackSize()) {
 
+			if (item != null && item.stackSize < item.getMaxStackSize()) {
 				// Find a place to put this
 				int orig = i;
+
 				// Avoid the hotbar
 				if (orig < 9 && player) {
 					continue;
 				}
+
 				handleMouseClick(null, orig, 0, 0); // Pick up the item
 
 				for (int j = 0; j < inventory.getSizeInventory(); j++) {
 					if (j != i) {
 						ItemStack other = inventory.getStackInSlot(j);
+
 						if (other != null && other.itemID == item.itemID && other.getItemDamage() == item.getItemDamage()) {
 							int slot = j;
+
 							// Avoid the hotbar
 							if (slot < 9 && player) {
 								continue;
 							}
-							handleMouseClick(null, slot, 0, 0); // Merge with the existing stack we found
 
+							handleMouseClick(null, slot, 0, 0); // Merge with the existing stack we found
 							// Move onto the next item to merge if this one is completely used up
 							ItemStack cursor = Minecraft.theMinecraft.thePlayer.inventory.getItemStack();
+
 							if (cursor == null) {
 								break;
 							}
@@ -205,6 +214,7 @@ public abstract class GuiContainer extends GuiScreen {
 
 				// If we didn't merge all of the item, put it back
 				ItemStack cursor = Minecraft.theMinecraft.thePlayer.inventory.getItemStack();
+
 				if (cursor != null) {
 					handleMouseClick(null, orig, 0, 0);
 				}
@@ -216,17 +226,21 @@ public abstract class GuiContainer extends GuiScreen {
 	public void sortPlayerInventory(boolean byName) {
 		// To keep mp compatibility, fake window clicks
 		InventoryPlayer inventory = Minecraft.theMinecraft.thePlayer.inventory;
+
 		for (int itemPass = 0; itemPass < getNumItems(inventory); itemPass++) {
 			for (int pass = 0; pass < inventory.mainInventory.length; pass++) {
 				ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+
 				for (int i = 0; i < inventory.mainInventory.length; i++) {
 					ItemStack item = inventory.mainInventory[i];
+
 					if (item == null || i < 9) {
 						items.add(null);
 					} else {
 						items.add(new PositionedItemStack(item, i));
 					}
 				}
+
 				Collections.sort(items, new MCItemStackComparator(byName));
 
 				while (true) {
@@ -234,25 +248,30 @@ public abstract class GuiContainer extends GuiScreen {
 						PositionedItemStack item = (PositionedItemStack) items.get(pass);
 						// Left click pick up item
 						int origSlot = item.position;
+
 						if (origSlot < 9) {
 							break;
 						}
+
 						int newSlot = pass;
+
 						if (origSlot != newSlot) {
 							// Left click pick up item
 							handleMouseClick(null, origSlot, 0, 0);
-
 							// Left click place item down
 							handleMouseClick(null, newSlot, 0, 0);
-
 							ItemStack cursor = Minecraft.theMinecraft.thePlayer.inventory.getItemStack();
+
 							if (cursor != null) {
 								handleMouseClick(null, origSlot, 0, 0);
 							}
 						}
+
 						break;
 					}
+
 					pass++;
+
 					if (pass >= inventory.mainInventory.length) {
 						break;
 					}
@@ -267,14 +286,17 @@ public abstract class GuiContainer extends GuiScreen {
 		for (int itemPass = 0; itemPass < getNumItems(inventory); itemPass++) {
 			for (int pass = 0; pass < inventory.getSizeInventory(); pass++) {
 				ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+
 				for (int i = 0; i < inventory.getSizeInventory(); i++) {
 					ItemStack item = inventory.getStackInSlot(i);
+
 					if (item == null) {
 						items.add(null);
 					} else {
 						items.add(new PositionedItemStack(item, i));
 					}
 				}
+
 				Collections.sort(items, new MCItemStackComparator(byName));
 
 				while (true) {
@@ -283,20 +305,23 @@ public abstract class GuiContainer extends GuiScreen {
 						//Left click pick up item
 						Slot origSlot = getSlotFromPosition(item.position);
 						Slot newSlot = getSlotFromPosition(pass);
+
 						if (newSlot != origSlot) {
 							handleMouseClick(origSlot, 0, 0, 0);
-
 							// Left click place item down
 							handleMouseClick(newSlot, 0, 0, 0);
-
 							ItemStack cursor = Minecraft.theMinecraft.thePlayer.inventory.getItemStack();
+
 							if (cursor != null) {
 								handleMouseClick(origSlot, 0, 0, 0);
 							}
 						}
+
 						break;
 					}
+
 					pass++;
+
 					if (pass >= inventory.getSizeInventory()) {
 						break;
 					}
@@ -407,7 +432,7 @@ public abstract class GuiContainer extends GuiScreen {
 		this.zLevel = 200.0F;
 		itemRenderer.zLevel = 200.0F;
 		itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.renderEngine, par1ItemStack, par2, par3);
-		itemRenderer.renderItemStack(this.fontRenderer, this.mc.renderEngine, par1ItemStack, par2, par3 - (this.draggedStack == null ? 0 : 8), par4Str);
+		itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.renderEngine, par1ItemStack, par2, par3 - (this.draggedStack == null ? 0 : 8), par4Str);
 		this.zLevel = 0.0F;
 		itemRenderer.zLevel = 0.0F;
 	}
@@ -456,31 +481,31 @@ public abstract class GuiContainer extends GuiScreen {
 			this.drawGradientRect(var6 + var5 + 3, var7 - 3, var6 + var5 + 4, var7 + var9 + 3, var10, var10);
 			int var11 = 1347420415;
 			int var12 = (var11 & 16711422) >> 1 | var11 & -16777216;
-				this.drawGradientRect(var6 - 3, var7 - 3 + 1, var6 - 3 + 1, var7 + var9 + 3 - 1, var11, var12);
-				this.drawGradientRect(var6 + var5 + 2, var7 - 3 + 1, var6 + var5 + 3, var7 + var9 + 3 - 1, var11, var12);
-				this.drawGradientRect(var6 - 3, var7 - 3, var6 + var5 + 3, var7 - 3 + 1, var11, var11);
-				this.drawGradientRect(var6 - 3, var7 + var9 + 2, var6 + var5 + 3, var7 + var9 + 3, var12, var12);
+			this.drawGradientRect(var6 - 3, var7 - 3 + 1, var6 - 3 + 1, var7 + var9 + 3 - 1, var11, var12);
+			this.drawGradientRect(var6 + var5 + 2, var7 - 3 + 1, var6 + var5 + 3, var7 + var9 + 3 - 1, var11, var12);
+			this.drawGradientRect(var6 - 3, var7 - 3, var6 + var5 + 3, var7 - 3 + 1, var11, var11);
+			this.drawGradientRect(var6 - 3, var7 + var9 + 2, var6 + var5 + 3, var7 + var9 + 3, var12, var12);
 
-				for (int var13 = 0; var13 < var4.size(); ++var13) {
-					String var14 = (String)var4.get(var13);
+			for (int var13 = 0; var13 < var4.size(); ++var13) {
+				String var14 = (String)var4.get(var13);
 
-					if (var13 == 0) {
-						var14 = "\u00a7" + Integer.toHexString(par1ItemStack.getRarity().rarityColor) + var14;
-					} else {
-						var14 = EnumChatFormatting.GRAY + var14;
-					}
-
-					this.fontRenderer.drawStringWithShadow(var14, var6, var7, -1);
-
-					if (var13 == 0) {
-						var7 += 2;
-					}
-
-					var7 += 10;
+				if (var13 == 0) {
+					var14 = "\u00a7" + Integer.toHexString(par1ItemStack.getRarity().rarityColor) + var14;
+				} else {
+					var14 = EnumChatFormatting.GRAY + var14;
 				}
 
-				this.zLevel = 0.0F;
-				itemRenderer.zLevel = 0.0F;
+				this.fontRenderer.drawStringWithShadow(var14, var6, var7, -1);
+
+				if (var13 == 0) {
+					var7 += 2;
+				}
+
+				var7 += 10;
+			}
+
+			this.zLevel = 0.0F;
+			itemRenderer.zLevel = 0.0F;
 		}
 	}
 
@@ -507,17 +532,17 @@ public abstract class GuiContainer extends GuiScreen {
 		this.drawGradientRect(var5 + var4 + 3, var6 - 3, var5 + var4 + 4, var6 + var8 + 3, var9, var9);
 		int var10 = 1347420415;
 		int var11 = (var10 & 16711422) >> 1 | var10 & -16777216;
-				this.drawGradientRect(var5 - 3, var6 - 3 + 1, var5 - 3 + 1, var6 + var8 + 3 - 1, var10, var11);
-				this.drawGradientRect(var5 + var4 + 2, var6 - 3 + 1, var5 + var4 + 3, var6 + var8 + 3 - 1, var10, var11);
-				this.drawGradientRect(var5 - 3, var6 - 3, var5 + var4 + 3, var6 - 3 + 1, var10, var10);
-				this.drawGradientRect(var5 - 3, var6 + var8 + 2, var5 + var4 + 3, var6 + var8 + 3, var11, var11);
-				this.fontRenderer.drawStringWithShadow(par1Str, var5, var6, -1);
-				this.zLevel = 0.0F;
-				itemRenderer.zLevel = 0.0F;
-				GL11.glEnable(GL11.GL_LIGHTING);
-				GL11.glEnable(GL11.GL_DEPTH_TEST);
-				RenderHelper.enableStandardItemLighting();
-				GL11.glEnable(GL12.GL_RESCALE_NORMAL);
+		this.drawGradientRect(var5 - 3, var6 - 3 + 1, var5 - 3 + 1, var6 + var8 + 3 - 1, var10, var11);
+		this.drawGradientRect(var5 + var4 + 2, var6 - 3 + 1, var5 + var4 + 3, var6 + var8 + 3 - 1, var10, var11);
+		this.drawGradientRect(var5 - 3, var6 - 3, var5 + var4 + 3, var6 - 3 + 1, var10, var10);
+		this.drawGradientRect(var5 - 3, var6 + var8 + 2, var5 + var4 + 3, var6 + var8 + 3, var11, var11);
+		this.fontRenderer.drawStringWithShadow(par1Str, var5, var6, -1);
+		this.zLevel = 0.0F;
+		itemRenderer.zLevel = 0.0F;
+		GL11.glEnable(GL11.GL_LIGHTING);
+		GL11.glEnable(GL11.GL_DEPTH_TEST);
+		RenderHelper.enableStandardItemLighting();
+		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 	}
 
 	/**
@@ -592,7 +617,7 @@ public abstract class GuiContainer extends GuiScreen {
 
 			GL11.glEnable(GL11.GL_DEPTH_TEST);
 			itemRenderer.renderItemAndEffectIntoGUI(this.fontRenderer, this.mc.renderEngine, var4, var2, var3);
-			itemRenderer.renderItemStack(this.fontRenderer, this.mc.renderEngine, var4, var2, var3, var8);
+			itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.renderEngine, var4, var2, var3, var8);
 		}
 
 		itemRenderer.zLevel = 0.0F;
@@ -660,6 +685,7 @@ public abstract class GuiContainer extends GuiScreen {
 			if (var8) {
 				// Spout Start
 				boolean isSpoutSlot = false;
+
 				for (Widget w : getScreen().getAttachedWidgets(true)) {
 					if (isInBoundingRect(w, par1, par2)) {
 						if (w instanceof org.spoutcraft.api.gui.Slot) {
@@ -668,9 +694,11 @@ public abstract class GuiContainer extends GuiScreen {
 						}
 					}
 				}
+
 				if (!isSpoutSlot) {
 					var9 = -999;
 				}
+
 				// Spout End
 			}
 
@@ -884,6 +912,5 @@ class PositionedItemStack extends ItemStack {
 		super(item.itemID, item.stackSize, item.getItemDamage());
 		this.position = position;
 	}
-
 }
 // Spout End

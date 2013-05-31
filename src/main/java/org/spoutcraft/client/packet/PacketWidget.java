@@ -49,6 +49,7 @@ public class PacketWidget implements SpoutPacket {
 
 	static {
 		nags = new int[WidgetType.getNumWidgetTypes()];
+
 		for (int i = 0; i < WidgetType.getNumWidgetTypes(); i++) {
 			nags[i] = CustomPacket.NAG_MSG_AMT;
 		}
@@ -66,14 +67,12 @@ public class PacketWidget implements SpoutPacket {
 		int id = input.readInt();
 		screen = input.readUUID();
 		widgetId = input.readUUID();
-
 		int size = input.readInt();
 		version = input.readShort();
 		byte[] widgetData = new byte[size];
 		input.read(widgetData);
 		this.widgetData = ByteBuffer.wrap(widgetData);
 		widgetType = WidgetType.getWidgetFromId(id);
-
 		/*SpoutInputStream data = new SpoutInputStream(ByteBuffer.wrap(widgetData));
 		if (widgetType != null) {
 			try {
@@ -96,13 +95,11 @@ public class PacketWidget implements SpoutPacket {
 		output.writeInt(widget.getType().getId());
 		output.writeUUID(widget.getScreen().getId());
 		output.writeUUID(widget.getId());
-
 		SpoutOutputStream data = new SpoutOutputStream();
 		widget.writeData(data);
 		ByteBuffer buffer = data.getRawBuffer();
 		byte[] widgetData = new byte[buffer.capacity() - buffer.remaining()];
 		System.arraycopy(buffer.array(), 0, widgetData, 0, widgetData.length);
-
 		output.writeInt(widgetData.length);
 		output.writeShort((short) widget.getVersion());
 		output.write(widgetData);
@@ -112,26 +109,29 @@ public class PacketWidget implements SpoutPacket {
 		try {
 			if (allWidgets.containsKey(widgetId)) {
 				widget = allWidgets.get(widgetId);
+
 				if (widget.getVersion() == version) {
 					widget.readData(new SpoutInputStream(widgetData));
 				}
 			} else {
 				widget = widgetType.getWidgetClass().newInstance();
-
 				// Hackish way to set the ID without a setter
 				((GenericWidget) widget).setId(widgetId);
+
 				if (widget.getVersion() == version) {
 					widget.readData(new SpoutInputStream(widgetData));
 				} else {
 					if (nags[widgetType.getId()]-- > 0) {
 						System.out.println("Received invalid widget: " + widgetType.getWidgetClass().getSimpleName() + " v: " + version + " current v: " + widget.getVersion());
 					}
+
 					widget = null;
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		if (widget != null) {
 			allWidgets.put(widgetId, widget);
 			InGameHUD mainScreen = SpoutClient.getInstance().getActivePlayer().getMainScreen();
@@ -141,6 +141,7 @@ public class PacketWidget implements SpoutPacket {
 			if (SpoutClient.getHandle().currentScreen != null) {
 				overlay = SpoutClient.getHandle().currentScreen.getScreen();
 			}
+
 			// Determine if this is a popup screen and if we need to update it
 			if (widget instanceof PopupScreen) {
 				if (popup != null) {

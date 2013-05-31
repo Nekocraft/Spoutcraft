@@ -35,14 +35,31 @@ public class DifficultyButton extends GenericButton {
 		if (Minecraft.theMinecraft.theWorld != null && Minecraft.theMinecraft.theWorld.getWorldInfo().isHardcoreModeEnabled()) {
 			return "难度: 极限";
 		}
+
 		String difficulty;
-		switch(Minecraft.theMinecraft.gameSettings.difficulty) {
-			case 0: difficulty = "和平"; break;
-			case 1: difficulty = "简单"; break;
-			case 2: difficulty = "普通"; break;
-			case 3: difficulty = "困难"; break;
-			default: difficulty = "未知"; break;
+
+		switch (Minecraft.theMinecraft.gameSettings.difficulty) {
+			case 0:
+				difficulty = "和平";
+				break;
+
+			case 1:
+				difficulty = "简单";
+				break;
+
+			case 2:
+				difficulty = "普通";
+				break;
+
+			case 3:
+				difficulty = "困难";
+				break;
+
+			default:
+				difficulty = "未知";
+				break;
 		}
+
 		return "难度: " + difficulty;
 	}
 
@@ -51,12 +68,15 @@ public class DifficultyButton extends GenericButton {
 		if (Minecraft.theMinecraft.theWorld == null) {
 			return "不能改变游戏之外的难度";
 		}
+
 		if (!Minecraft.theMinecraft.isSingleplayer()) {
 			return "无法更改多人难度";
 		}
+
 		if (Minecraft.theMinecraft.theWorld.getWorldInfo().isHardcoreModeEnabled()) {
 			return "在极限模式无法改变难度";
 		}
+
 		return super.getTooltip();
 	}
 
@@ -65,21 +85,26 @@ public class DifficultyButton extends GenericButton {
 		if (Minecraft.theMinecraft.theWorld == null) {
 			return false;
 		}
+
 		if (!Minecraft.theMinecraft.isSingleplayer()) {
 			return false;
 		}
+
 		if (Minecraft.theMinecraft.theWorld.getWorldInfo().isHardcoreModeEnabled()) {
 			return false;
 		}
+
 		return true;
 	}
 
 	@Override
 	public void onButtonClick() {
 		Minecraft.theMinecraft.gameSettings.difficulty++;
+
 		if (Minecraft.theMinecraft.gameSettings.difficulty > 3) {
 			Minecraft.theMinecraft.gameSettings.difficulty = 0;
 		}
+
 		Minecraft.theMinecraft.gameSettings.saveOptions();
 	}
 }

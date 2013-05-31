@@ -64,12 +64,13 @@ public class TextSection extends Section {
 
 	@Override
 	public int getHeight() {
-		return (int) (super.getHeight() + labelText.getHeight() + 5);
+		return (int)(super.getHeight() + labelText.getHeight() + 5);
 	}
 
 	@Override
 	public void init(GuiNewAbout screen, String title, Object yaml) {
 		setTitle(title);
+
 		if (yaml instanceof String) {
 			setText((String) yaml);
 		}

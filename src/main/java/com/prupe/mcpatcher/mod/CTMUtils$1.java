@@ -39,7 +39,7 @@ final class CTMUtils$1 extends TexturePackChangeHandler {
 		Arrays.fill(CTMUtils.access$200(), (Object)null);
 		CTMUtils.access$300().clear();
 		CTMUtils.access$400().clear();
-		CTMUtils.access$502(new TileLoader());
+		CTMUtils.access$502(new TileLoader(CTMUtils.access$600()));
 		CTMUtils.access$702((TileOverrideImpl$BetterGrass)null);
 		CITUtils.refresh();
 
@@ -79,6 +79,7 @@ final class CTMUtils$1 extends TexturePackChangeHandler {
 				var2.refreshTextures();
 
 				if (!CTMUtils.access$1200()) {
+					//CTMUtils.access$600().severe("CTMUtils.registerIcons was never called!  Possible conflict in TextureMap.class", new Object[0]);
 					break;
 				}
 

@@ -34,7 +34,7 @@ public class PacketScreenAction implements SpoutPacket {
 	}
 
 	public PacketScreenAction(ScreenAction action, ScreenType screen) {
- 		this.action = (byte)action.getId();
+		this.action = (byte)action.getId();
 		this.screen = (byte)screen.getCode();
 	}
 
@@ -53,13 +53,15 @@ public class PacketScreenAction implements SpoutPacket {
 	}
 
 	public void run(int playerId) {
-		switch(ScreenAction.getScreenActionFromId(action)) {
+		switch (ScreenAction.getScreenActionFromId(action)) {
 			case Open:
 				SpoutClient.getHandle().displayPreviousScreen();
 				break;
+
 			case Close:
 				SpoutClient.getHandle().displayPreviousScreen();
 				break;
+
 			case Force_Close:
 				SpoutClient.getHandle().displayGuiScreen(null, false);
 				break;

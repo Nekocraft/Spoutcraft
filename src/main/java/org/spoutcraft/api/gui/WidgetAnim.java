@@ -82,8 +82,10 @@ public enum WidgetAnim {
 				if (widget instanceof Texture) {
 					return true;
 				}
+
 				return false;
 		}
+
 		return true;
 	}
 }

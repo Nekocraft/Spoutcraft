@@ -1,7 +1,9 @@
 package net.minecraft.src;
 
+// MCPatcher Start
 import com.prupe.mcpatcher.mod.CTMUtils;
 import com.prupe.mcpatcher.mod.TileLoader;
+// MCPatcher End
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,7 +18,6 @@ import java.util.Map;
 import net.minecraft.client.Minecraft;
 
 public class TextureMap implements IconRegister {
-
 	/** 0 = terrain.png, 1 = items.png */
 	private final int textureType;
 	private final String textureName;
@@ -65,7 +66,7 @@ public class TextureMap implements IconRegister {
 			Item var22 = var19[var3];
 
 			if (var22 != null && var22.getSpriteNumber() == this.textureType) {
-				var22.updateIcons(this);
+				var22.registerIcons(this);
 			}
 		}
 
@@ -151,7 +152,7 @@ public class TextureMap implements IconRegister {
 		}
 
 		this.atlasTexture.writeImage("debug.stitched_" + this.textureName + ".png");
-		this.atlasTexture.createTexture();
+		this.atlasTexture.uploadTexture();
 	}
 
 	public void updateAnimations() {

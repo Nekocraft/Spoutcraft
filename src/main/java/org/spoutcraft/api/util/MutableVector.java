@@ -193,7 +193,6 @@ public class MutableVector implements Vector {
 	 */
 	public float angle(Vector other) {
 		double dot = dot(other) / (length() * other.length());
-
 		return (float) Math.acos(dot);
 	}
 
@@ -286,7 +285,6 @@ public class MutableVector implements Vector {
 		double newX = y * o.getZ() - o.getY() * z;
 		double newY = z * o.getX() - o.getZ() * x;
 		double newZ = x * o.getY() - o.getX() * y;
-
 		x = newX;
 		y = newY;
 		z = newZ;
@@ -300,11 +298,9 @@ public class MutableVector implements Vector {
 	 */
 	public Vector normalize() {
 		double length = length();
-
 		x /= length;
 		y /= length;
 		z /= length;
-
 		return this;
 	}
 
@@ -507,7 +503,6 @@ public class MutableVector implements Vector {
 		}
 
 		Vector other = (Vector) obj;
-
 		return Math.abs(x - other.getX()) < epsilon && Math.abs(y - other.getY()) < epsilon && Math.abs(z - other.getZ()) < epsilon && (this.getClass().equals(obj.getClass()));
 	}
 
@@ -519,10 +514,9 @@ public class MutableVector implements Vector {
 	@Override
 	public int hashCode() {
 		int hash = 7;
-
-		hash = 79 * hash + (int) (Double.doubleToLongBits(this.x) ^ (Double.doubleToLongBits(this.x) >>> 32));
-		hash = 79 * hash + (int) (Double.doubleToLongBits(this.y) ^ (Double.doubleToLongBits(this.y) >>> 32));
-		hash = 79 * hash + (int) (Double.doubleToLongBits(this.z) ^ (Double.doubleToLongBits(this.z) >>> 32));
+		hash = 79 * hash + (int)(Double.doubleToLongBits(this.x) ^ (Double.doubleToLongBits(this.x) >>> 32));
+		hash = 79 * hash + (int)(Double.doubleToLongBits(this.y) ^ (Double.doubleToLongBits(this.y) >>> 32));
+		hash = 79 * hash + (int)(Double.doubleToLongBits(this.z) ^ (Double.doubleToLongBits(this.z) >>> 32));
 		return hash;
 	}
 
@@ -534,6 +528,7 @@ public class MutableVector implements Vector {
 	@Override
 	public Vector clone() {
 		Vector v;
+
 		try {
 			v = (Vector) super.clone();
 			v.setX(x);
@@ -543,6 +538,7 @@ public class MutableVector implements Vector {
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
 

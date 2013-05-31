@@ -23,7 +23,6 @@ import org.spoutcraft.client.packet.*;
 // Spout End
 
 public class SoundManager {
-
 	/** A reference to the sound system. */
 	private static SoundSystem sndSystem;
 
@@ -116,8 +115,10 @@ public class SoundManager {
 		if (loaded) {
 			if (this.options.musicVolume == 0.0F) {
 				sndSystem.stop("BgMusic");
+				sndSystem.stop("streaming");
 			} else {
 				sndSystem.setVolume("BgMusic", this.options.musicVolume);
+				sndSystem.setVolume("streaming", this.options.musicVolume);
 			}
 		}
 	}
@@ -169,9 +170,11 @@ public class SoundManager {
 					// Spout Start
 					if (SpoutClient.getInstance().isSpoutEnabled()) {
 						EntityPlayer player = SpoutClient.getHandle().thePlayer;
+
 						if (player instanceof EntityClientPlayerMP) {
 							if (waitingSound == null) {
 								Music music = Music.getMusicFromName(var1.soundName);
+
 								if (music != null) {
 									waitingSound = var1;
 									SpoutClient.getInstance().getPacketManager().sendSpoutPacket(new PacketMusicChange(music.getId(), (int)options.musicVolume * 100));
@@ -193,6 +196,7 @@ public class SoundManager {
 							}
 						}
 					}
+
 					// Spout End
 					this.ticksBeforeMusic = this.rand.nextInt(12000) + 12000;
 					sndSystem.backgroundMusic("BgMusic", var1.soundUrl, var1.soundName, false);
@@ -353,8 +357,8 @@ public class SoundManager {
 
 	/**
 	 * If a sound is already playing from the given entity, update the position and velocity of that sound to match the
-	 * entity. Otherwise, start playing a sound from that entity. Args: The sound name, the entity, the volume, the pitch,
-	 * unknown flag
+	 * entity. Otherwise, start playing a sound from that entity. Setting the last flag to true will prevent other sounds
+	 * from overriding this one. Args: The sound name, the entity, the volume, the pitch, priority
 	 */
 	public void playEntitySound(String par1Str, Entity par2Entity, float par3, float par4, boolean par5) {
 		if (par2Entity != null) {
@@ -447,14 +451,18 @@ public class SoundManager {
 			}
 
 			float f5 = 16F;
-			if (f3 > 1.0F){
+
+			if (f3 > 1.0F) {
 				f5 *= f3;
 			}
+
 			sndSystem.newSource(f3 > 1.0F, s1, soundpoolentry.soundUrl, soundpoolentry.soundName, false, f, f1, f2, 2, f5);
 			sndSystem.setPitch(s1, f4);
+
 			if (f3 > 1.0F) {
 				f3 = 1.0F;
 			}
+
 			f3 *= volume;
 			sndSystem.setVolume(s1, f3 * options.soundVolume);
 			sndSystem.play(s1);
@@ -473,10 +481,13 @@ public class SoundManager {
 		if (!loaded || options.soundVolume == 0.0F) {
 			return;
 		}
+
 		if (soundEffectsLimit-- <= 0) {
 			return;
 		}
+
 		SoundPoolEntry soundpoolentry = soundPoolSounds.getRandomSoundFromSoundPool(s);
+
 		if (soundpoolentry != null) {
 			latestSoundID = (latestSoundID + 1) % 256;
 			String s1;
@@ -486,10 +497,13 @@ public class SoundManager {
 			} else {
 				s1 = (new StringBuilder()).append("sound_").append(soundId).toString();
 			}
+
 			sndSystem.newSource(false, s1, soundpoolentry.soundUrl, soundpoolentry.soundName, false, 0.0F, 0.0F, 0.0F, 0, 0.0F);
+
 			if (f > 1.0F) {
 				f = 1.0F;
 			}
+
 			f *= 0.25F;
 			f *= volume;
 			sndSystem.setPitch(s1, f1);
@@ -506,9 +520,10 @@ public class SoundManager {
 		if (!loaded || options.musicVolume == 0.0F) {
 			return;
 		}
-		stopMusic();
 
+		stopMusic();
 		SoundPoolEntry soundpoolentry = soundPoolMusic.getSoundFromSoundPool(music, id);
+
 		if (soundpoolentry != null) {
 			ticksBeforeMusic = rand.nextInt(12000) + 12000;
 
@@ -518,6 +533,7 @@ public class SoundManager {
 			} else {
 				sndSystem.backgroundMusic("BgMusic", soundpoolentry.soundUrl, soundpoolentry.soundName, false);
 			}
+
 			sndSystem.setVolume("BgMusic", options.musicVolume * volume);
 			sndSystem.play("BgMusic");
 		}
@@ -537,13 +553,16 @@ public class SoundManager {
 		}
 
 		SoundPoolEntry soundpoolentry = soundPoolSounds.getRandomSoundFromSoundPool(music);
+
 		if (soundpoolentry != null) {
 			String source;
+
 			if (distance > 0F) {
 				source = sndSystem.quickStream(false, soundpoolentry.soundUrl, soundpoolentry.soundName, false, x, y, z, 2, distance);
 			} else {
 				source = sndSystem.quickStream(false, soundpoolentry.soundUrl, soundpoolentry.soundName, false, 0.0F, 0.0F, 0.0F, 0, 0.0F);
 			}
+
 			sndSystem.setVolume(source, volume * options.soundVolume);
 			sndSystem.play(source);
 		}
@@ -586,7 +605,7 @@ public class SoundManager {
 			sndSystem.fadeOut("BgMusic", null, time);
 		}
 
-		if (sndSystem.playing("streaming")){
+		if (sndSystem.playing("streaming")) {
 			sndSystem.fadeOut("streaming", null, time);
 		}
 	}

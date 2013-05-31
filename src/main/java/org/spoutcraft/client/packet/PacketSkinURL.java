@@ -70,16 +70,20 @@ public class PacketSkinURL implements SpoutPacket {
 
 	public void run(int PlayerId) {
 		EntityPlayer e = SpoutClient.getInstance().getPlayerFromId(entityId);
+
 		if (e != null) {
 			// Check if these are the Minecraft skin/cape, if so, use defaults instead
 			String mcSkin = "http://s3.amazonaws.com/MinecraftSkins/" + e.username + ".png";
 			String mcCape = "http://s3.amazonaws.com/MinecraftCloaks/" + e.username + ".png";
+
 			if (!"none".equals(this.skinURL)) {
 				//System.out.println(e.username + " is going to be sent skinURL: " + skinURL + " from SpoutPlugin's API.");
 			}
+
 			if (this.skinURL.equalsIgnoreCase(mcSkin)) {
 				this.skinURL = "http://cdn.spout.org/game/vanilla/skin/" + e.username + ".png";
 			}
+
 			if (this.cloakURL.equalsIgnoreCase(mcCape)) {
 				if (e.vip != null && e.vip.getCape() != null) {
 					this.cloakURL = e.vip.getCape();
@@ -91,6 +95,7 @@ public class PacketSkinURL implements SpoutPacket {
 			if (!"none".equals(this.skinURL)) {
 				e.skinUrl = this.skinURL;
 			}
+
 			if (!"none".equals(this.cloakURL)) {
 				e.updateCloak(cloakURL);
 			}
@@ -98,8 +103,8 @@ public class PacketSkinURL implements SpoutPacket {
 			if (release) {
 				e.worldObj.releaseEntitySkin(e);
 			}
-			e.worldObj.obtainEntitySkin(e);
 
+			e.worldObj.obtainEntitySkin(e);
 		}
 	}
 

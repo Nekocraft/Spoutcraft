@@ -100,134 +100,107 @@ public class GuiServerList extends GuiAPIDisplay {
 		int top = 5;
 		labelTitle.setY(top + 7).setX(width / 2 - mc.fontRenderer.getStringWidth("Public Server List") / 2);
 		getScreen().attachWidget("Spoutcraft", labelTitle);
-
 		buttonRefresh.setX(width - 5 - 100).setY(top).setWidth(100).setHeight(20);
 		getScreen().attachWidget("Spoutcraft", buttonRefresh);
-
-		search.setWidth(128).setHeight(18).setX(6).setY(top+1);
+		search.setWidth(128).setHeight(18).setX(6).setY(top + 1);
 		getScreen().attachWidget("Spoutcraft", search);
 		model.addUrlElement(search);
-
-		top+=25;
-
+		top += 25;
 		filters.setWidth(130).setHeight(height - top - 55);
 		filters.setX(5).setY(top);
 		getScreen().attachWidget("Spoutcraft", filters);
-
 		// Filter init {
 		int ftop = 5;
 		filterTitle.setX(5).setY(ftop).setHeight(11).setWidth(100);
 		filters.attachWidget("Spoutcraft", filterTitle);
 		ftop += 16;
-
 		featured.setAllowSorting(false);
 		featured.setWidth(100).setHeight(20).setX(5).setY(ftop);
 		filters.attachWidget("Spoutcraft", featured);
 		model.addUrlElement(featured);
 		ftop += 25;
-
 		trending.setAllowSorting(false);
 		trending.setWidth(100).setHeight(20).setX(5).setY(ftop);
 		filters.attachWidget("Spoutcraft", trending);
 		model.addUrlElement(trending);
 		ftop += 25;
-
 		popular.setAllowSorting(false);
 		popular.setWidth(100).setHeight(20).setX(5).setY(ftop);
 		filters.attachWidget("Spoutcraft", popular);
 		model.addUrlElement(popular);
 		ftop += 25;
-
 		random.setWidth(100).setHeight(20).setX(5).setY(ftop);
 		filters.attachWidget("Spoutcraft", random);
 		model.addUrlElement(random);
 		ftop += 25;
-
 		byName.setWidth(100).setHeight(20).setX(5).setY(ftop);
 		filters.attachWidget("Spoutcraft", byName);
 		model.addUrlElement(byName);
 		ftop += 25;
-
 		byFreeSlots.setWidth(100).setHeight(20).setX(5).setY(ftop);
 		byFreeSlots.setTooltip("Sorts by the number of free slots\non the server (maxplayers - players)");
 		filters.attachWidget("Spoutcraft", byFreeSlots);
 		model.addUrlElement(byFreeSlots);
 		ftop += 25;
-
 		byPlayers.setWidth(100).setHeight(20).setX(5).setY(ftop);
 		byPlayers.setTooltip("Sorts by the actual number of\nonline players on the server");
 		filters.attachWidget("Spoutcraft", byPlayers);
 		model.addUrlElement(byPlayers);
 		ftop += 25;
-
 		/*byPing.setWidth(100).setHeight(20).setX(5).setY(ftop);
 		filters.attachWidget("Spoutcraft", byPing);
 		model.addUrlElement(byPing);
 		ftop += 25;*/
-
 		hasPlayers.setWidth(100).setHeight(20).setX(5).setY(ftop);
 		filters.attachWidget("Spoutcraft", hasPlayers);
 		model.addUrlElement(hasPlayers);
 		ftop += 25;
-
 		notFull.setWidth(100).setHeight(20).setX(5).setY(ftop);
 		filters.attachWidget("Spoutcraft", notFull);
 		model.addUrlElement(notFull);
 		ftop += 25;
-
 		accessType.setWidth(100).setHeight(20).setX(5).setY(ftop);
 		filters.attachWidget("Spoutcraft", accessType);
 		model.addUrlElement(accessType);
 		ftop += 25;
-
 		buttonCountry.setWidth(100).setHeight(20).setX(5).setY(ftop);
 		filters.attachWidget("Spoutcraft", buttonCountry);
 		model.addUrlElement(buttonCountry);
 		ftop += 25;
-
 		// Stretch to real width
 		int fw = filters.getViewportSize(Orientation.HORIZONTAL);
-		fw-=10;
-		for (Widget w:filters.getAttachedWidgets()) {
+		fw -= 10;
+
+		for (Widget w: filters.getAttachedWidgets()) {
 			w.setWidth(fw);
 		}
 
 		if (!instancesCreated) {
 			featured.setSelected(true);
 		}
+
 		// Filter init }
-
-		view.setX((int) filters.getWidth() + filters.getX() + 5).setY(top).setWidth((int) (width - filters.getWidth() - 10 - filters.getX())).setHeight(height - top - 55);
+		view.setX((int) filters.getWidth() + filters.getX() + 5).setY(top).setWidth((int)(width - filters.getWidth() - 10 - filters.getX())).setHeight(height - top - 55);
 		getScreen().attachWidget("Spoutcraft", view);
-
 		top += view.getHeight() + 5;
-
 		int totalWidth = Math.min(width - 9, 200 * 3 + 10);
 		int cellWidth = (totalWidth - 10) / 3;
 		int left = width / 2 - totalWidth / 2;
 		int center = left + cellWidth + 5;
 		int right = center + cellWidth + 5;
-
 		buttonReset.setX(left).setY(top).setWidth(cellWidth).setHeight(20);
 		getScreen().attachWidget("Spoutcraft", buttonReset);
-
 		buttonInfo.setX(center).setY(top).setWidth(cellWidth).setHeight(20);
 		getScreen().attachWidget("Spoutcraft", buttonInfo);
-
 		buttonJoin.setHeight(20).setWidth(cellWidth).setX(right).setY(top);
 		getScreen().attachWidget("Spoutcraft", buttonJoin);
-
-		top+=25;
-
+		top += 25;
 		buttonAddServer.setHeight(20).setWidth(cellWidth).setX(left).setY(top);
 		getScreen().attachWidget("Spoutcraft", buttonAddServer);
-
 		buttonFavorites.setHeight(20).setWidth(cellWidth).setX(center).setY(top);
 		getScreen().attachWidget("Spoutcraft", buttonFavorites);
-
 		buttonMainMenu.setHeight(20).setWidth(cellWidth).setX(right).setY(top);
 		getScreen().attachWidget("Spoutcraft", buttonMainMenu);
-
 		updateButtons();
 		instancesCreated = true;
 	}
@@ -240,32 +213,40 @@ public class GuiServerList extends GuiAPIDisplay {
 		if (btn.equals(buttonMainMenu)) {
 			mc.displayGuiScreen(new org.spoutcraft.client.gui.mainmenu.MainMenu());
 		}
+
 		if (btn.equals(buttonFavorites)) {
 			GuiFavorites fav = new GuiFavorites(new org.spoutcraft.client.gui.mainmenu.MainMenu());
 			mc.displayGuiScreen(fav);
 			fav.refresh();
 		}
+
 		if (btn.equals(buttonJoin)) {
 			ServerItem item = (ServerItem) view.getSelectedItem();
+
 			if (item != null) {
 				item.onClick(-1, -1, true);
 			} else {
 				updateButtons();
 			}
 		}
+
 		if (btn.equals(buttonRefresh)) {
 			model.updateUrl();
 		}
+
 		if (btn.equals(buttonReset)) {
 			model.clearElementFilters();
 			featured.setSelected(true);
 			model.updateUrl();
 		}
+
 		if (btn.equals(buttonAddServer)) {
 			Sys.openURL("http://servers.spout.org/submit");
 		}
+
 		if (btn.equals(buttonInfo)) {
 			ServerItem item = (ServerItem) view.getSelectedItem();
+
 			if (item != null) {
 				mc.displayGuiScreen(new GuiServerInfo(item, this));
 			} else {
@@ -276,23 +257,24 @@ public class GuiServerList extends GuiAPIDisplay {
 
 	public void updateButtons() {
 		boolean b = true;
+
 		if (view.getSelectedRow() == -1 || !(view.getSelectedItem() instanceof ServerItem)) {
 			b = false;
 		}
-		
+
 		buttonJoin.setEnabled(b);
-		
+
 		if (view.getSelectedItem() instanceof ServerItem) {
 			ServerItem item = (ServerItem) view.getSelectedItem();
 			buttonJoin.setEnabled(item.isCompatible(SpoutClient.spoutcraftVersion));
 		}
-		
+
 		buttonInfo.setEnabled(b);
 
 		if (model.isLoading()) {
 			buttonRefresh.setEnabled(false);
 			buttonRefresh.setText("Loading...");
-			buttonRefresh.setDisabledColor(new Color(0f,1f,0f));
+			buttonRefresh.setDisabledColor(new Color(0f, 1f, 0f));
 		} else {
 			buttonRefresh.setEnabled(true);
 			buttonRefresh.setText("Refresh");
@@ -309,6 +291,7 @@ public class GuiServerList extends GuiAPIDisplay {
 			color.setGreen(1f - (float)darkness);
 			buttonRefresh.setDisabledColor(color);
 		}
+
 		super.updateScreen();
 	}
 }

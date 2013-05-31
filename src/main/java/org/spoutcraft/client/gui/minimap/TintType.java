@@ -35,6 +35,7 @@ public enum TintType {
 
 	static {
 		map = new HashMap<String, TintType>();
+
 		for (TintType t : TintType.values()) {
 			map.put(t.name(), t);
 		}

@@ -55,6 +55,7 @@ public class PacketPlaySound implements SpoutPacket {
 	public void writeData(SpoutOutputStream output) throws IOException {
 		output.writeShort(soundId);
 		output.writeBoolean(location);
+
 		if (!location) {
 			output.writeInt(-1);
 			output.writeInt(-1);
@@ -66,26 +67,32 @@ public class PacketPlaySound implements SpoutPacket {
 			output.writeInt(z);
 			output.writeInt(distance);
 		}
+
 		output.writeInt(volume);
 	}
 
 	public void run(int entityId) {
 		EntityPlayer e = SpoutClient.getInstance().getPlayerFromId(entityId);
+
 		if (e != null) {
-				SoundManager sndManager = SpoutClient.getHandle().sndManager;
-				if (soundId > -1 && soundId <= SoundEffect.getMaxId()) {
-					SoundEffect effect = SoundEffect.getSoundEffectFromId(soundId);
-					if (!location) {
-						sndManager.playSoundFX(effect.getName(), 0.5F, 0.7F, effect.getVariationId(), volume / 100F);
-					} else {
-						sndManager.playSound(effect.getName(), x, y, z, 0.5F, (distance / 16F), effect.getVariationId(), volume / 100F);
-					}
+			SoundManager sndManager = SpoutClient.getHandle().sndManager;
+
+			if (soundId > -1 && soundId <= SoundEffect.getMaxId()) {
+				SoundEffect effect = SoundEffect.getSoundEffectFromId(soundId);
+
+				if (!location) {
+					sndManager.playSoundFX(effect.getName(), 0.5F, 0.7F, effect.getVariationId(), volume / 100F);
+				} else {
+					sndManager.playSound(effect.getName(), x, y, z, 0.5F, (distance / 16F), effect.getVariationId(), volume / 100F);
 				}
-				soundId -= (1 + SoundEffect.getMaxId());
-				if (soundId > -1 && soundId <= Music.getMaxId()) {
-					Music music = Music.getMusicFromId(soundId);
-					sndManager.playMusic(music.getName(), music.getSoundId(), volume / 100F);
-				}
+			}
+
+			soundId -= (1 + SoundEffect.getMaxId());
+
+			if (soundId > -1 && soundId <= Music.getMaxId()) {
+				Music music = Music.getMusicFromId(soundId);
+				sndManager.playMusic(music.getName(), music.getSoundId(), volume / 100F);
+			}
 		}
 	}
 

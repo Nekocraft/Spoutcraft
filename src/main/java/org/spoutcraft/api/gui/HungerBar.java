@@ -63,7 +63,7 @@ public class HungerBar extends GenericWidget {
 
 	@Override
 	public double getScreenY() {
-		int diff = (int) (240 - this.getY());
+		int diff = (int)(240 - this.getY());
 		return getScreen() != null ? getScreen().getHeight() - diff : this.getY();
 	}
 

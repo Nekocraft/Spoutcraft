@@ -40,6 +40,7 @@ public enum ScreenAction {
 				return action;
 			}
 		}
+
 		return null;
 	}
 }

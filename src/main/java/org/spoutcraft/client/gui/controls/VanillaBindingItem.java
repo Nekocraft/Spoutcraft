@@ -44,7 +44,7 @@ public class VanillaBindingItem extends ControlsBasicItem {
 		FontRenderer font = SpoutClient.getHandle().fontRenderer;
 		font.drawStringWithShadow("V", x + 2, y + 2, 0xffffff00);
 		int w = font.getStringWidth("V");
-		font.drawStringWithShadow(getName(), x + w + 4, y + 2, !isConflicting() ? 0xffffffff:0xffff0000);
+		font.drawStringWithShadow(getName(), x + w + 4, y + 2, !isConflicting() ? 0xffffffff : 0xffff0000);
 		String keyString = parent.getEditingItem() == this ? "> <" : getDisplayKey();;
 		w = font.getStringWidth(keyString);
 		font.drawStringWithShadow(keyString, width - w, y + 2, 0xffcccccc);
@@ -54,6 +54,7 @@ public class VanillaBindingItem extends ControlsBasicItem {
 		if (binding.keyCode == -128) {
 			return "Unbound";
 		}
+
 		return GameSettings.getKeyDisplayString(getKey());
 	}
 
@@ -86,22 +87,24 @@ public class VanillaBindingItem extends ControlsBasicItem {
 			GameSettings settings = SpoutClient.getHandle().gameSettings;
 			SpoutcraftBindingItem item = (SpoutcraftBindingItem)other;
 			boolean flightKey = item.binding == settings.keyFlyBack ||
-				item.binding == settings.keyFlyLeft ||
-				item.binding == settings.keyFlyForward ||
-				item.binding == settings.keyFlyRight ||
-				item.binding == settings.keyFlyUp ||
-				item.binding == settings.keyFlyDown;
+					item.binding == settings.keyFlyLeft ||
+					item.binding == settings.keyFlyForward ||
+					item.binding == settings.keyFlyRight ||
+					item.binding == settings.keyFlyUp ||
+					item.binding == settings.keyFlyDown;
 			boolean movementKey = binding == settings.keyBindBack ||
-				binding == settings.keyBindLeft ||
-				binding == settings.keyBindForward ||
-				binding == settings.keyBindRight ||
-				binding == settings.keyBindJump ||
-				binding == settings.keyBindSneak;
+					binding == settings.keyBindLeft ||
+					binding == settings.keyBindForward ||
+					binding == settings.keyBindRight ||
+					binding == settings.keyBindJump ||
+					binding == settings.keyBindSneak;
+
 			// Allow overlaps
 			if (flightKey && movementKey) {
 				return false;
 			}
 		}
+
 		return super.conflicts(other);
 	}
 }

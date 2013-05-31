@@ -103,11 +103,13 @@ public class EntityText extends Entity {
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
+
 		if (duration > 0) {
 			if (duration < ticksExisted) {
 				this.setDead();
 			}
 		}
+
 		moveEntity(motionX, motionY, motionZ);
 	}
 

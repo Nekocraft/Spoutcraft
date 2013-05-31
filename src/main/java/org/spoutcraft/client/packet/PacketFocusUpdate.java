@@ -57,8 +57,10 @@ public class PacketFocusUpdate implements SpoutPacket {
 	public void run(int playerId) {
 		InGameHUD screen = SpoutClient.getInstance().getActivePlayer().getMainScreen();
 		PopupScreen popup = screen.getActivePopup();
+
 		if (popup != null) {
 			Widget w = popup.getWidget(widgetId);
+
 			if (w != null && w instanceof Control) {
 				((Control)w).setFocus(focus);
 			}

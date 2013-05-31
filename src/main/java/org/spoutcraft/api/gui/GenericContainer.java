@@ -43,9 +43,11 @@ public class GenericContainer extends GenericWidget implements Container {
 	public GenericContainer(Widget... children) {
 		// Shortcuts because we don't have any of the insertChild values setup yet
 		this.children.addAll(Arrays.asList(children));
+
 		for (Widget child : children) {
 			child.setContainer(this);
 		}
+
 		updateSize();
 	}
 
@@ -59,16 +61,19 @@ public class GenericContainer extends GenericWidget implements Container {
 		} else {
 			this.children.add(index, child);
 		}
+
 		child.setContainer(this);
 		child.savePos();
 		child.shiftXPos(super.getX());
 		child.shiftYPos(super.getY());
 		child.setAnchor(super.getAnchor());
+
 		// Relay out if we are already using layout - otherwise this will return immediately
 		if (getScreen() != null) {
 			String addon = child.getAddon();
 			getScreen().attachWidget(addon, child);
 		}
+
 		updateSize();
 		deferLayout();
 		return this;
@@ -78,6 +83,7 @@ public class GenericContainer extends GenericWidget implements Container {
 		for (Widget child : children) {
 			this.insertChild(-1, child);
 		}
+
 		return this;
 	}
 
@@ -90,27 +96,33 @@ public class GenericContainer extends GenericWidget implements Container {
 	@Override
 	public Container setVisible(boolean enable) {
 		super.setVisible(enable);
+
 		for (Widget widget : children) {
 			widget.setVisible(enable);
 		}
+
 		return this;
 	}
 
 	@Override
 	public Container setPriority(RenderPriority priority) {
 		super.setPriority(priority);
+
 		for (Widget widget : children) {
 			widget.setPriority(priority);
 		}
+
 		return this;
 	}
 
 	@Override
 	public Container setAnchor(WidgetAnchor anchor) {
 		super.setAnchor(anchor);
+
 		for (Widget widget : children) {
 			widget.setAnchor(anchor);
 		}
+
 		return this;
 	}
 
@@ -122,9 +134,11 @@ public class GenericContainer extends GenericWidget implements Container {
 	public Widget setX(int pos) {
 		int delta = pos - super.getX();
 		super.setX(pos);
+
 		for (Widget widget : children) {
 			widget.shiftXPos(delta);
 		}
+
 		return this;
 	}
 
@@ -132,9 +146,11 @@ public class GenericContainer extends GenericWidget implements Container {
 	public Widget setY(int pos) {
 		int delta = pos - super.getY();
 		super.setY(pos);
+
 		for (Widget widget : children) {
 			widget.shiftYPos(delta);
 		}
+
 		return this;
 	}
 
@@ -142,9 +158,11 @@ public class GenericContainer extends GenericWidget implements Container {
 		children.remove(child);
 		child.setContainer(null);
 		child.restorePos();
+
 		if (this.screen != null) {
 			this.screen.removeWidget(child);
 		}
+
 		updateSize();
 		deferLayout();
 		return this;
@@ -159,6 +177,7 @@ public class GenericContainer extends GenericWidget implements Container {
 				this.screen.removeWidget(child);
 			}
 		}
+
 		super.setScreen(screen);
 		return this;
 	}
@@ -169,6 +188,7 @@ public class GenericContainer extends GenericWidget implements Container {
 			super.setHeight(height);
 			this.deferLayout();
 		}
+
 		return this;
 	}
 
@@ -178,6 +198,7 @@ public class GenericContainer extends GenericWidget implements Container {
 			super.setWidth(width);
 			this.deferLayout();
 		}
+
 		return this;
 	}
 
@@ -186,6 +207,7 @@ public class GenericContainer extends GenericWidget implements Container {
 			this.type = type;
 			deferLayout();
 		}
+
 		return this;
 	}
 
@@ -198,6 +220,7 @@ public class GenericContainer extends GenericWidget implements Container {
 			this.align = align;
 			deferLayout();
 		}
+
 		return this;
 	}
 
@@ -210,6 +233,7 @@ public class GenericContainer extends GenericWidget implements Container {
 			this.reverse = reverse;
 			deferLayout();
 		}
+
 		return this;
 	}
 
@@ -227,17 +251,20 @@ public class GenericContainer extends GenericWidget implements Container {
 			recalculating = true; // Prevent us from getting into a loop
 			List<Widget> visibleChildren = new ArrayList<Widget>();
 			int totalwidth = 0, totalheight = 0, newwidth, newheight, vcount = 0, hcount = 0;
-			int availableWidth = (int) (auto ? getWidth() : getMinWidth()), availableHeight = (int) (auto ? getHeight() : getMinHeight());
+			int availableWidth = (int)(auto ? getWidth() : getMinWidth()), availableHeight = (int)(auto ? getHeight() : getMinHeight());
+
 			// We only layout visible children, invisible ones have zero physical presence on screen
 			for (Widget widget : children) {
 				if (widget.isVisible()) {
 					visibleChildren.add(widget);
 				}
 			}
+
 			// Reverse drawing order if we need to
 			if (reverse) {
 				Collections.reverse(visibleChildren);
 			}
+
 			// First - get the total space by fixed widgets and borders
 			if (type == ContainerType.OVERLAY) {
 				newwidth = availableWidth;
@@ -246,25 +273,31 @@ public class GenericContainer extends GenericWidget implements Container {
 				for (Widget widget : visibleChildren) {
 					int horiz = widget.getMarginLeft() + widget.getMarginRight();
 					int vert = widget.getMarginTop() + widget.getMarginBottom();
+
 					if (widget.isFixed()) {
 						horiz += widget.getWidth();
 						vert += widget.getHeight();
 					}
+
 					if (type == ContainerType.VERTICAL) {
 						totalheight += vert;
+
 						if (!widget.isFixed()) {
 							vcount++;
 						}
 					} else if (type == ContainerType.HORIZONTAL) {
 						totalwidth += horiz;
+
 						if (!widget.isFixed()) {
 							hcount++;
 						}
 					}
 				}
+
 				// Work out the width and height for children
 				newwidth = (availableWidth - totalwidth) / Math.max(1, hcount);
 				newheight = (availableHeight - totalheight) / Math.max(1, vcount);
+
 				// Deal with minWidth and minHeight - change newwidth/newheight if needed
 				for (Widget widget : visibleChildren) {
 					if (!widget.isFixed()) {
@@ -289,14 +322,18 @@ public class GenericContainer extends GenericWidget implements Container {
 						}
 					}
 				}
+
 				newheight = Math.max(newheight, 0);
 				newwidth = Math.max(newwidth, 0);
 			}
+
 			totalheight = totalwidth = 0;
+
 			// Resize any non-fixed widgets
 			for (Widget widget : visibleChildren) {
 				if (!widget.isFixed()) {
 					int realheight, realwidth;
+
 					if (auto) {
 						realheight = Math.max(widget.getMinHeight(), Math.min(newheight - widget.getMarginTop() - widget.getMarginBottom(), widget.getMaxHeight()));
 						realwidth = Math.max(widget.getMinWidth(), Math.min(newwidth - widget.getMarginLeft() - widget.getMarginRight(), widget.getMaxWidth()));
@@ -304,49 +341,60 @@ public class GenericContainer extends GenericWidget implements Container {
 						realheight = widget.getMinHeight() == 0 ? newheight - widget.getMarginTop() - widget.getMarginBottom() : widget.getMinHeight();
 						realwidth = widget.getMinWidth() == 0 ? newwidth - widget.getMarginLeft() - widget.getMarginRight() : widget.getMinWidth();
 					}
+
 					if (widget.getHeight() != realheight || widget.getWidth() != realwidth) {
 						widget.setHeight(realheight).setWidth(realwidth);
 					}
 				}
+
 				if (type == ContainerType.VERTICAL) {
 					totalheight += widget.getHeight() + widget.getMarginTop() + widget.getMarginBottom();
 				} else {
 					totalheight = (int) Math.max(totalheight, widget.getHeight() + widget.getMarginTop() + widget.getMarginBottom());
 				}
+
 				if (type == ContainerType.HORIZONTAL) {
 					totalwidth += widget.getWidth() + widget.getMarginLeft() + widget.getMarginRight();
 				} else {
 					totalwidth = (int) Math.max(totalwidth, widget.getWidth() + widget.getMarginLeft() + widget.getMarginRight());
 				}
 			}
+
 			// Work out the new top-left position taking into account Align
 			int left = super.getX();
 			int top = super.getY();
+
 			if (align == WidgetAnchor.TOP_CENTER || align == WidgetAnchor.CENTER_CENTER || align == WidgetAnchor.BOTTOM_CENTER) {
 				left += (super.getWidth() - totalwidth) / 2;
 			} else if (align == WidgetAnchor.TOP_RIGHT || align == WidgetAnchor.CENTER_RIGHT || align == WidgetAnchor.BOTTOM_RIGHT) {
 				left += super.getWidth() - totalwidth;
 			}
+
 			if (align == WidgetAnchor.CENTER_LEFT || align == WidgetAnchor.CENTER_CENTER || align == WidgetAnchor.CENTER_RIGHT) {
 				top += (super.getHeight() - totalheight) / 2;
 			} else if (align == WidgetAnchor.BOTTOM_LEFT || align == WidgetAnchor.BOTTOM_CENTER || align == WidgetAnchor.BOTTOM_RIGHT) {
 				top += super.getHeight() - totalheight;
 			}
+
 			// Move all children into the correct position
 			for (Widget widget : visibleChildren) {
 				int realtop = top + widget.getMarginTop();
 				int realleft = left + widget.getMarginLeft();
+
 				if (widget.getY() != realtop || widget.getX() != realleft) {
 					widget.setY(realtop).setX(realleft);
 				}
+
 				if (type == ContainerType.VERTICAL) {
 					top += widget.getHeight() + widget.getMarginTop() + widget.getMarginBottom();
 				} else if (type == ContainerType.HORIZONTAL) {
 					left += widget.getWidth() + widget.getMarginLeft() + widget.getMarginRight();
 				}
 			}
+
 			recalculating = false;
 		}
+
 		needsLayout = false;
 		return this;
 	}
@@ -383,14 +431,17 @@ public class GenericContainer extends GenericWidget implements Container {
 		if (!recalculating && !isFixed()) {
 			recalculating = true; // Prevent us from getting into a loop due to both trickle down and push up
 			int minwidth = 0, maxwidth = 0, minheight = 0, maxheight = 0,  minhoriz, maxhoriz, minvert, maxvert;
+
 			// Work out the minimum and maximum dimensions for the contents of this container
 			for (Widget widget : children) {
 				if (widget.isVisible()) {
 					if (widget instanceof Container) { // Trickle down to children
 						((Container) widget).updateSize();
 					}
+
 					minhoriz = maxhoriz = widget.getMarginLeft() + widget.getMarginRight();
 					minvert = maxvert = widget.getMarginTop() + widget.getMarginBottom();
+
 					if (widget.isFixed()) {
 						minhoriz += widget.getWidth();
 						maxhoriz += widget.getWidth();
@@ -402,22 +453,26 @@ public class GenericContainer extends GenericWidget implements Container {
 						minvert += widget.getMinHeight();
 						maxvert += widget.getMaxHeight();
 					}
+
 					if (type == ContainerType.HORIZONTAL) {
 						minwidth += minhoriz;
 						maxwidth += maxhoriz;
 					} else {
 						minwidth = Math.max(minwidth, minhoriz);
+
 						if (type == ContainerType.OVERLAY) {
 							maxwidth = Math.max(maxwidth, maxhoriz);
 						} else {
 							maxwidth = Math.min(maxwidth, maxhoriz);
 						}
 					}
+
 					if (type == ContainerType.VERTICAL) {
 						minheight += minvert;
 						maxheight += maxvert;
 					} else {
 						minheight = Math.max(minheight, minvert);
+
 						if (type == ContainerType.OVERLAY) {
 							maxheight = Math.max(maxheight, maxvert);
 						} else {
@@ -426,10 +481,12 @@ public class GenericContainer extends GenericWidget implements Container {
 					}
 				}
 			}
+
 			minwidth = Math.min(minwidth, 427);
 			maxwidth = Math.min(maxwidth == 0 ? 427 : maxwidth, 427);
 			minheight = Math.min(minheight, 240);
 			maxheight = Math.min(maxheight == 0 ? 240 : maxheight, 240);
+
 			// Check if the dimensions have changed
 			if (minwidth != minWidthCalc || maxwidth != maxWidthCalc || minheight != minHeightCalc || maxheight != maxHeightCalc) {
 				minWidthCalc = minwidth;
@@ -437,13 +494,16 @@ public class GenericContainer extends GenericWidget implements Container {
 				minHeightCalc = minheight;
 				maxHeightCalc = maxheight;
 				deferLayout();
+
 				if (hasContainer()) { // Push up to parents
 					getContainer().updateSize();
 					getContainer().deferLayout();
 				}
 			}
+
 			recalculating = false;
 		}
+
 		return this;
 	}
 

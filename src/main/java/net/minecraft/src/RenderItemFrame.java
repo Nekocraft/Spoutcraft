@@ -45,7 +45,7 @@ public class RenderItemFrame extends Render {
 		this.renderBlocksInstance.clearOverrideBlockTexture();
 		this.renderBlocksInstance.unlockBlockBounds();
 		GL11.glPopMatrix();
-		this.renderBlocksInstance.setOverrideBlockTexture(Block.planks.getBlockTextureFromSideAndMetadata(1, 2));
+		this.renderBlocksInstance.setOverrideBlockTexture(Block.planks.getIcon(1, 2));
 		GL11.glPushMatrix();
 		this.renderBlocksInstance.overrideBlockBounds(0.0D, (double)(0.5F - var5), (double)(0.5F - var5), (double)(var3 + 1.0E-4F), (double)(var3 + 0.5F - var5), (double)(0.5F + var5));
 		this.renderBlocksInstance.renderBlockAsItem(var2, 0, 1.0F);
@@ -89,7 +89,7 @@ public class RenderItemFrame extends Render {
 					GL11.glTranslatef((-0.453125F * (float)Direction.offsetX[par1EntityItemFrame.hangingDirection]), -0.18F, -0.453125F * ((float)Direction.offsetZ[par1EntityItemFrame.hangingDirection] - 0.25F));
 				}
 			} else {
-			GL11.glTranslatef(-0.453125F * (float)Direction.offsetX[par1EntityItemFrame.hangingDirection], -0.18F, -0.453125F * (float)Direction.offsetZ[par1EntityItemFrame.hangingDirection]);
+				GL11.glTranslatef(-0.453125F * (float)Direction.offsetX[par1EntityItemFrame.hangingDirection], -0.18F, -0.453125F * (float)Direction.offsetZ[par1EntityItemFrame.hangingDirection]);
 			}
 			// Spout End
 			GL11.glRotatef(180.0F + par1EntityItemFrame.rotationYaw, 0.0F, 1.0F, 0.0F);

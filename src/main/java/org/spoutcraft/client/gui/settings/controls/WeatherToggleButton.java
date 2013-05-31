@@ -39,6 +39,7 @@ public class WeatherToggleButton extends GenericCheckBox {
 		if (!isEnabled()) {
 			return "此选项在服务器不被允许，它被视为作弊.";
 		}
+
 		return super.getTooltip();
 	}
 

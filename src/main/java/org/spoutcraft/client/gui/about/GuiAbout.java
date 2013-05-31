@@ -75,8 +75,9 @@ public class GuiAbout extends GuiScreen {
 	@Override
 	public void mouseClicked(int mouseX, int mouseY, int click) {
 		holdingScrollBar = false;
-		int height = getInvertedScaledHeight(this.height );
+		int height = getInvertedScaledHeight(this.height);
 		String browseUrl = null;
+
 		if (mouseX >= this.width - 12 && mouseY <= this.width) {
 			// Do nothing if we clicked on the slider bar itself
 			if (mouseY > height + 16 && mouseY < this.height - 50) {
@@ -95,6 +96,7 @@ public class GuiAbout extends GuiScreen {
 		} else if (this.isInBoundingRect(this.width / 2 + 30, getScaledHeight(sourceY), 10, sourceWidth, mouseX, mouseY)) {
 			browseUrl = "https://github.com/SpoutDev";
 		}
+
 		if (browseUrl != null) {
 			try {
 				URL url =  new URL(browseUrl);
@@ -108,9 +110,11 @@ public class GuiAbout extends GuiScreen {
 	@Override
 	public void mouseMovedOrUp(int mouseX, int mouseY, int click) {
 		hoveringLink = false;
+
 		if (click != 0) { // Still dragging
 			if (holdingScrollBar) {
 				int height = getInvertedScaledHeight(this.height);
+
 				if (mouseY > height + 16) {
 					setScrolled(getScrolled() + 0.01f);
 				} else if (mouseY < height) {
@@ -120,9 +124,11 @@ public class GuiAbout extends GuiScreen {
 		} else {
 			holdingScrollBar = false;
 		}
+
 		if (this.isInBoundingRect(this.width / 2 + 30, getScaledHeight(sourceY), 10, sourceWidth, mouseX, mouseY)) {
 			hoveringLink = true;
 		}
+
 		super.mouseMovedOrUp(mouseX, mouseY, click);
 	}
 
@@ -130,6 +136,7 @@ public class GuiAbout extends GuiScreen {
 	public void handleMouseInput() {
 		super.handleMouseInput();
 		int scroll = Mouse.getEventDWheel();
+
 		if (scroll != 0) {
 			setScrolled(getScrolled() - (scroll / (SCROLL_FACTOR * SCREEN_SIZE)));
 		}
@@ -165,9 +172,8 @@ public class GuiAbout extends GuiScreen {
 	public void drawScreen(int x, int y, float z) {
 		super.drawBackground(0);
 		GL11.glPushMatrix();
-
-		GL11.glDisable(2896 /*GL_LIGHTING*/);
-		GL11.glDisable(2912 /*GL_FOG*/);
+		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glDisable(GL11.GL_FOG);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		bg.setTopColor(background1);
 		bg.setBottomColor(background2);
@@ -176,7 +182,6 @@ public class GuiAbout extends GuiScreen {
 		bg.setX(0);
 		bg.setWidth(this.width - 12);
 		bg.render();
-
 		scrollArea.setY(30);
 		scrollArea.setHeight(this.height - 50);
 		scrollArea.setX(this.width - 12);
@@ -184,90 +189,128 @@ public class GuiAbout extends GuiScreen {
 		scrollArea.setTopColor(scrollBarColor);
 		scrollArea.setBottomColor(scrollBarColor2);
 		scrollArea.render();
-
 		// Right half
 		int top = 0;
-		drawScaledString("What is Spoutcraft?", this.width / 2 - 200, top, 0xffffff); top += 10;
-		drawScaledString("Spoutcraft is a modification for the", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("Minecraft client that plays exactly", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("like the official game. Its goal is", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("to give developers an easy to use", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("platform for building and distributing", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("mods, while providing a rich", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("gameplay experience for users.", this.width / 2 - 200, top, 0x808080); top += 10;
-
+		drawScaledString("What is Spoutcraft?", this.width / 2 - 200, top, 0xffffff);
+		top += 10;
+		drawScaledString("Spoutcraft is a modification for the", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("Minecraft client that plays exactly", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("like the official game. Its goal is", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("to give developers an easy to use", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("platform for building and distributing", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("mods, while providing a rich", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("gameplay experience for users.", this.width / 2 - 200, top, 0x808080);
+		top += 10;
 		top += 20;
-
-		drawScaledString("What is Spout?", this.width / 2 - 200, top, 0xffffff); top += 10;
-		drawScaledString("Spout is a Bukkit plugin development", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("platform that allows for previously", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("impossible tasks, such as custom items", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("blocks, mobs, animals, and vehicles. ", this.width / 2 - 200, top, 0x808080); top += 10;
-
+		drawScaledString("What is Spout?", this.width / 2 - 200, top, 0xffffff);
+		top += 10;
+		drawScaledString("Spout is a Bukkit plugin development", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("platform that allows for previously", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("impossible tasks, such as custom items", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("blocks, mobs, animals, and vehicles. ", this.width / 2 - 200, top, 0x808080);
+		top += 10;
 		top += 20;
-
-		drawScaledString("Who is SpoutDev?", this.width / 2 - 200, top, 0xffffff); top += 10;
-		drawScaledString("SpoutDev is the team behind Spout, ", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("SpoutAPI, Spoutcraft,", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("and Spoutcraft Launcher.", this.width / 2 - 200, top, 0x808080); top += 10;
-
+		drawScaledString("Who is SpoutDev?", this.width / 2 - 200, top, 0xffffff);
+		top += 10;
+		drawScaledString("SpoutDev is the team behind Spout, ", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("SpoutAPI, Spoutcraft,", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("and Spoutcraft Launcher.", this.width / 2 - 200, top, 0x808080);
+		top += 10;
 		top += 20;
-
-		drawScaledString("Contributors", this.width / 2 - 200, top, 0xffffff); top += 10;
-		drawScaledString("The Bukkit Team - Bukkit Server API", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("lahwran - Fast Events Code", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("lahwran - Minimap Logic", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("Celtic Minstrel - Code", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("Zeerix - Threading Code", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("Karlthepagan - OptiTick Code", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("Kahr - HD Textures Code", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("Jeckari - Custom Texture Code", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("Rycochet - GUI Code", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("knowbuddy - GUI Optimizations", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("TomyLobo - Mipmapping Code", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("Apache Foundation - Code", this.width / 2 - 200, top, 0x808080); top += 10;
-		drawScaledString("ThVortex - FontRenderer fixes", this.width / 2 - 200, top, 0x808080); top += 10;
-
+		drawScaledString("Contributors", this.width / 2 - 200, top, 0xffffff);
+		top += 10;
+		drawScaledString("The Bukkit Team - Bukkit Server API", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("lahwran - Fast Events Code", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("lahwran - Minimap Logic", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("Celtic Minstrel - Code", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("Zeerix - Threading Code", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("Karlthepagan - OptiTick Code", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("Kahr - HD Textures Code", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("Jeckari - Custom Texture Code", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("Rycochet - GUI Code", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("knowbuddy - GUI Optimizations", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("TomyLobo - Mipmapping Code", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("Apache Foundation - Code", this.width / 2 - 200, top, 0x808080);
+		top += 10;
+		drawScaledString("ThVortex - FontRenderer fixes", this.width / 2 - 200, top, 0x808080);
+		top += 10;
 		// Left half
 		top = 0;
-		drawScaledString("Sponsors", this.width / 2 + 30, top, 0xffffff); top += 10;
-
+		drawScaledString("Sponsors", this.width / 2 + 30, top, 0xffffff);
+		top += 10;
 		top = 130;
-
-		drawScaledString("Team", this.width / 2 + 30, top, 0xffffff); top += 10;
-		drawScaledString("Afforess - Lead Developer", this.width / 2 + 30, top, 0x808080); top += 10;
-		drawScaledString("Wulfspider - Co-Lead & Support", this.width / 2 + 30, top, 0x808080); top += 10;
-		drawScaledString("alta189 - Co-Lead & Developer", this.width / 2 + 30, top, 0x808080); top += 10;
-		drawScaledString("Top_Cat - Developer", this.width / 2 + 30, top, 0x808080); top += 10;
-		drawScaledString("raphfrk - Developer", this.width / 2 + 30, top, 0x808080); top += 10;
-		drawScaledString("narrowtux - Developer", this.width / 2 + 30, top, 0x808080); top += 10;
-		drawScaledString("Olloth - Developer", this.width / 2 + 30, top, 0x808080); top += 10;
-		drawScaledString("Rycochet - Developer", this.width / 2 + 30, top, 0x808080); top += 10;
-		drawScaledString("RoyAwesome - Developer", this.width / 2 + 30, top, 0x808080); top += 10;
-		drawScaledString("zml2008 - Developer", this.width / 2 + 30, top, 0x808080); top += 10;
-		drawScaledString("Zidane - Developer", this.width / 2 + 30, top, 0x808080); top += 10;
-
+		drawScaledString("Team", this.width / 2 + 30, top, 0xffffff);
+		top += 10;
+		drawScaledString("Afforess - Lead Developer", this.width / 2 + 30, top, 0x808080);
+		top += 10;
+		drawScaledString("Wulfspider - Co-Lead & Support", this.width / 2 + 30, top, 0x808080);
+		top += 10;
+		drawScaledString("alta189 - Co-Lead & Developer", this.width / 2 + 30, top, 0x808080);
+		top += 10;
+		drawScaledString("Top_Cat - Developer", this.width / 2 + 30, top, 0x808080);
+		top += 10;
+		drawScaledString("raphfrk - Developer", this.width / 2 + 30, top, 0x808080);
+		top += 10;
+		drawScaledString("narrowtux - Developer", this.width / 2 + 30, top, 0x808080);
+		top += 10;
+		drawScaledString("Olloth - Developer", this.width / 2 + 30, top, 0x808080);
+		top += 10;
+		drawScaledString("Rycochet - Developer", this.width / 2 + 30, top, 0x808080);
+		top += 10;
+		drawScaledString("RoyAwesome - Developer", this.width / 2 + 30, top, 0x808080);
+		top += 10;
+		drawScaledString("zml2008 - Developer", this.width / 2 + 30, top, 0x808080);
+		top += 10;
+		drawScaledString("Zidane - Developer", this.width / 2 + 30, top, 0x808080);
+		top += 10;
 		top += 20;
-
-		drawScaledString("Contact", this.width / 2 + 30, top, 0xffffff); top += 10;
-		drawScaledString("Email: dev@spout.org", this.width / 2 + 30, top, 0x808080); top += 10;
-		drawScaledString("Website: spout.org", this.width / 2 + 30, top, 0x808080); top += 10;
-		drawScaledString("#spout on irc.esper.net", this.width / 2 + 30, top, 0x808080); top += 10;
-
+		drawScaledString("Contact", this.width / 2 + 30, top, 0xffffff);
+		top += 10;
+		drawScaledString("Email: dev@spout.org", this.width / 2 + 30, top, 0x808080);
+		top += 10;
+		drawScaledString("Website: spout.org", this.width / 2 + 30, top, 0x808080);
+		top += 10;
+		drawScaledString("#spout on irc.esper.net", this.width / 2 + 30, top, 0x808080);
+		top += 10;
 		top += 20;
-
-		drawScaledString("Note", this.width / 2 + 30, top, 0xffffff); top += 10;
-		drawScaledString("Spoutcraft, Spout, and related", this.width / 2 + 30, top, 0x808080); top += 10;
-		drawScaledString("projects are open source. You", this.width / 2 + 30, top, 0x808080); top += 10;
-		drawScaledString("can browse the source code at", this.width / 2 + 30, top, 0x808080);  top += 10;
+		drawScaledString("Note", this.width / 2 + 30, top, 0xffffff);
+		top += 10;
+		drawScaledString("Spoutcraft, Spout, and related", this.width / 2 + 30, top, 0x808080);
+		top += 10;
+		drawScaledString("projects are open source. You", this.width / 2 + 30, top, 0x808080);
+		top += 10;
+		drawScaledString("can browse the source code at", this.width / 2 + 30, top, 0x808080);
+		top += 10;
 		sourceY = top;
 		sourceWidth = this.fontRenderer.getStringWidth("https://github.com/SpoutDev");
-		drawScaledString("https://github.com/SpoutDev", this.width / 2 + 30, sourceY, hoveringLink ? 0x65A5D1 : 0x176093); top += 10;
-
+		drawScaledString("https://github.com/SpoutDev", this.width / 2 + 30, sourceY, hoveringLink ? 0x65A5D1 : 0x176093);
+		top += 10;
 		top += 20;
-
 		int beastNodeX = (this.width / 2 + 30);
 		int beastNodeY = getScaledHeight(15);
+
 		if (beastNodeLogo != null) {
 			GL11.glPushMatrix();
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -294,6 +337,7 @@ public class GuiAbout extends GuiScreen {
 
 		int minecraftBizX = (this.width / 2 + 30);
 		int minecraftBizY = getScaledHeight(85);
+
 		if (minecraftBizLogo != null) {
 			GL11.glPushMatrix();
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
@@ -321,22 +365,21 @@ public class GuiAbout extends GuiScreen {
 		// Draw tooltips
 		if (isInBoundingRect(beastNodeX, beastNodeY, 33, 147, x, y)) {
 			drawTooltip(
-				"BeastNode provides high quality Minecraft and web hosting at affordable\n" +
-				"prices and is generously sponsoring the Spout project with its hosting\n" +
-				"& server needs. Mine, build, craft, and chat with your own high quality\n" +
-				"Minecraft server with FREE mumble voice server and web hosting.", x, y);
+					"BeastNode provides high quality Minecraft and web hosting at affordable\n" +
+					"prices and is generously sponsoring the Spout project with its hosting\n" +
+					"& server needs. Mine, build, craft, and chat with your own high quality\n" +
+					"Minecraft server with FREE mumble voice server and web hosting.", x, y);
 		} else if (isInBoundingRect(minecraftBizX, minecraftBizY, 33, 147, x, y)) {
 			drawTooltip(
-				"Your Minecraft community in a new dimension!", x, y);
+					"Your Minecraft community in a new dimension!", x, y);
 		}
 
-		GL11.glDisable(2896 /*GL_LIGHTING*/);
+		GL11.glDisable(GL11.GL_LIGHTING);
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		SpoutClient.getHandle().renderEngine.bindTexture("/gui/gui.png");
 		RenderUtil.drawTexturedModalRectangle(this.width - 14, getInvertedScaledHeight(this.height), 0, 208, 16, 16, 0f);
-
-		GL11.glDisable(2912 /*GL_FOG*/);
-		GL11.glDisable(2929 /*GL_DEPTH_TEST*/);
+		GL11.glDisable(GL11.GL_FOG);
+		GL11.glDisable(GL11.GL_DEPTH_TEST);
 		this.overlayBackground(0, 30, 255, 255);
 		this.overlayBackground(this.height - 50, this.height, 255, 255);
 		drawCenteredString(this.fontRenderer, "About", this.width / 2, 16, 0xffffff);
@@ -354,7 +397,7 @@ public class GuiAbout extends GuiScreen {
 			GL11.glDisable(GL11.GL_DEPTH_TEST);
 			GL11.glDisable(GL11.GL_BLEND);
 			GL11.glDepthMask(false);
-			GL11.glEnable(3008 /*GL_ALPHA_TEST*/);
+			GL11.glEnable(GL11.GL_ALPHA_TEST);
 			GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 			GL11.glTranslatef((this.width - 140), (this.height - 45), 0); // Moves texture into place
 			SpoutClient.getHandle().renderEngine.bindTexture(spoutcraftTexture.getTextureID());
@@ -375,22 +418,19 @@ public class GuiAbout extends GuiScreen {
 
 		drawString(this.fontRenderer, "Unknown Version", (int)(this.width * 0.034f), this.height - 20, 0xffffff);
 		drawString(this.fontRenderer, "Copyright Mojang AB", (int)(this.width * 0.034f), this.height - 10, 0x808080);
-
 		String version = SpoutClient.getClientVersion();
 		drawString(this.fontRenderer, version, (int)(this.width - 45) - fontRenderer.getStringWidth(version) + fontRenderer.getStringWidth("0"), this.height - 20, 0xffffff);
 		drawString(this.fontRenderer, "Licensed under LGPLv3", (int)(this.width - 129), this.height - 10, 0x808080);
-
 		((GuiButton)this.buttonList.get(0)).xPosition = this.width / 2 - 50;
 		((GuiButton)this.buttonList.get(0)).yPosition = this.height - 25;
 		((GuiButton)this.buttonList.get(0)).drawButton(this.mc, x, y);
 		//super.drawScreen(x, x, z);
-
 		// Shadow magic
-		GL11.glEnable(3042 /*GL_BLEND*/);
-		GL11.glBlendFunc(770, 771);
-		GL11.glDisable(3008 /*GL_ALPHA_TEST*/);
-		GL11.glShadeModel(7425 /*GL_SMOOTH*/);
-		GL11.glDisable(3553 /*GL_TEXTURE_2D*/);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		GL11.glDisable(GL11.GL_ALPHA_TEST);
+		GL11.glShadeModel(GL11.GL_SMOOTH);
+		GL11.glDisable(GL11.GL_TEXTURE_2D);
 		Tessellator var16 = Tessellator.instance;
 		byte var19 = 4;
 		var16.startDrawingQuads();
@@ -409,9 +449,7 @@ public class GuiAbout extends GuiScreen {
 		var16.addVertexWithUV(this.width - 12, (double)(this.height - 50 - var19), 0.0D, 1.0D, 0.0D);
 		var16.addVertexWithUV(0, (double)(this.height - 50 - var19), 0.0D, 0.0D, 0.0D);
 		var16.draw();
-
-		GL11.glEnable(3008 /*GL_ALPHA_TEST*/);
-
+		GL11.glEnable(GL11.GL_ALPHA_TEST);
 		GL11.glPopMatrix();
 	}
 

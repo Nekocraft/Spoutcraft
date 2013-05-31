@@ -42,6 +42,7 @@ public class BaseYAMLResource implements YAMLResource {
 			cached.load();
 			return true;
 		}
+
 		return false;
 	}
 }

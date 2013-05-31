@@ -38,6 +38,7 @@ public class MipMapSlider extends GenericSlider {
 		if (this.getSliderPosition() == 0F) {
 			return "地形的贴图: OFF";
 		}
+
 		return "地形的贴图: " + (int)(this.getSliderPosition() * 100) + "%";
 	}
 

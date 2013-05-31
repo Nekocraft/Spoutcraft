@@ -150,7 +150,7 @@ public interface Inventory {
 	 * @param materialId The materialId to look for
 	 * @return The Slots found.
 	 */
-	public HashMap<Integer, ? extends ItemStack> all(int materialId);
+	public HashMap < Integer, ? extends ItemStack > all(int materialId);
 
 	/**
 	 * Find all slots in the inventory containing any ItemStacks with the given material
@@ -158,7 +158,7 @@ public interface Inventory {
 	 * @param materialId The material to look for
 	 * @return The Slots found.
 	 */
-	public HashMap<Integer, ? extends ItemStack> all(Material material);
+	public HashMap < Integer, ? extends ItemStack > all(Material material);
 
 	/**
 	 * Find all slots in the inventory containing any ItemStacks with the given ItemStack
@@ -167,7 +167,7 @@ public interface Inventory {
 	 * @param item The ItemStack to match against
 	 * @return The Slots found.
 	 */
-	public HashMap<Integer, ? extends ItemStack> all(ItemStack item);
+	public HashMap < Integer, ? extends ItemStack > all(ItemStack item);
 
 	/**
 	 * Find the first slot in the inventory containing an ItemStack with the given materialId

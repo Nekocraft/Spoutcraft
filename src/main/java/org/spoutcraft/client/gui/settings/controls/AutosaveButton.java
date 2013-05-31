@@ -25,28 +25,44 @@ import org.spoutcraft.client.config.Configuration;
 
 public class AutosaveButton extends AutomatedButton {
 	public AutosaveButton() {
-		setTooltip("自动保存间隔\n默认频率 (2s) 不推荐.\n会导致\"卡死\".");
+		setTooltip("自动保存间隔\n" +
+				"默认频率 (2s) 不推荐.\n" +
+				"会导致卡顿.");
 	}
 
 	@Override
 	public String getText() {
-		switch(Configuration.getAutosave()) {
-			case 0: return "自动保存: 30 min";
-			case 1: return "自动保存: 3 min";
-			case 2: return "自动保存: 1 min";
-			case 3: return "自动保存: 30 sec";
-			case 4: return "自动保存: 10 sec";
-			case 5: return "自动保存: 2 sec";
+		switch (Configuration.getAutosave()) {
+			case 0:
+				return "自动保存: 30 min";
+
+			case 1:
+				return "自动保存: 3 min";
+
+			case 2:
+				return "自动保存: 1 min";
+
+			case 3:
+				return "自动保存: 30 sec";
+
+			case 4:
+				return "自动保存: 10 sec";
+
+			case 5:
+				return "自动保存: 2 sec";
 		}
+
 		return "未知选项: " + Configuration.getAutosave();
 	}
 
 	@Override
 	public void onButtonClick() {
 		Configuration.setAutosave(Configuration.getAutosave() + 1);
+
 		if (Configuration.getAutosave() > 5) {
 			Configuration.setAutosave(0);
 		}
+
 		Configuration.write();
 
 		if (Minecraft.theMinecraft.theWorld != null) {
@@ -55,14 +71,27 @@ public class AutosaveButton extends AutomatedButton {
 	}
 
 	public static int getAutosaveTicks() {
-		switch(Configuration.getAutosave()) {
-			case 0: return 30 * 60 * 20;
-			case 1: return 3 * 60 * 20;
-			case 2: return 60 * 20;
-			case 3: return 30 * 20;
-			case 4: return 10 * 20;
-			case 5: return 2 * 20;
-			default: return 40;
+		switch (Configuration.getAutosave()) {
+			case 0:
+				return 30 * 60 * 20;
+
+			case 1:
+				return 3 * 60 * 20;
+
+			case 2:
+				return 60 * 20;
+
+			case 3:
+				return 30 * 20;
+
+			case 4:
+				return 10 * 20;
+
+			case 5:
+				return 2 * 20;
+
+			default:
+				return 40;
 		}
 	}
 }

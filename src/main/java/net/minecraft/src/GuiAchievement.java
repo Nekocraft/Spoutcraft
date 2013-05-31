@@ -5,7 +5,6 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 
 public class GuiAchievement extends Gui {
-
 	/** Holds the instance of the game (Minecraft) */
 	private Minecraft theGame;
 
@@ -62,7 +61,7 @@ public class GuiAchievement extends Gui {
 
 	// Spout Start
 	public void queueNotification(String title, String message, int toRender) {
-		queueNotification(title, message, toRender, (short) -1, -1);
+		queueNotification(title, message, toRender, (short) - 1, -1);
 	}
 
 	public void queueNotification(String title, String message, int toRender, short data, int time) {
@@ -108,6 +107,7 @@ public class GuiAchievement extends Gui {
 		// Spout Start
 		if ((this.theAchievement != null || this.customNotification == true) && this.achievementTime != 0L) {
 			double delayTime = 3000.0D;
+
 			if (customNotification) {
 				if (time < 1) {
 					delayTime = 7500;
@@ -115,8 +115,9 @@ public class GuiAchievement extends Gui {
 					delayTime = time;
 				}
 			}
+
 			double var1 = (double)(Minecraft.getSystemTime() - this.achievementTime) / delayTime;
-		// Spout End
+			// Spout End
 
 			if (!this.haveAchiement && (var1 < 0.0D || var1 > 1.0D)) {
 				this.achievementTime = 0L;
@@ -161,16 +162,19 @@ public class GuiAchievement extends Gui {
 				GL11.glEnable(GL11.GL_LIGHTING);
 				// Spout Start
 				ItemStack toRender = theAchievement != null ? theAchievement.theItemStack : null;
-				if (customNotification){
+
+				if (customNotification) {
 					if (data < 1) {
 						toRender = new ItemStack(itemId, 1, 0);
 					} else {
 						toRender = new ItemStack(itemId, 1, data);
 					}
 				}
+
 				if (toRender != null) {
 					this.itemRender.renderItemIntoGUI(this.theGame.fontRenderer, this.theGame.renderEngine, toRender, var5 + 8, var6 + 8);
 				}
+
 				// Spout End
 				GL11.glDisable(GL11.GL_LIGHTING);
 				GL11.glDepthMask(true);

@@ -21,7 +21,7 @@ package org.spoutcraft.api.material.block;
 
 import org.spoutcraft.api.material.Plant;
 
-public class Sapling extends GenericBlock implements Plant{
+public class Sapling extends GenericBlock implements Plant {
 	public Sapling(String name, int data) {
 		super(name, 6, data);
 	}

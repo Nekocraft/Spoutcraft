@@ -1,11 +1,11 @@
 package net.minecraft.src;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.Tessellator;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
 //MCPatcher Start
+import com.prupe.mcpatcher.mod.CITUtils;
 import com.prupe.mcpatcher.mod.ColorizeBlock;
 //MCPatcher End
 // Spout Start
@@ -18,7 +18,6 @@ import org.spoutcraft.client.SpoutClient;
 //Spout End
 
 public class ItemRenderer {
-
 	/** A reference to the Minecraft object. */
 	private Minecraft mc;
 	private ItemStack itemToRender = null;
@@ -49,22 +48,26 @@ public class ItemRenderer {
 	 */
 	public void renderItem(EntityLiving par1EntityLiving, ItemStack par2ItemStack, int par3) {
 		GL11.glPushMatrix();
-
 		// Spout Start
 		Block var4block = Block.blocksList[par2ItemStack.itemID];
 		boolean custom = false;
 		BlockDesign design = null;
+
 		if (par2ItemStack.itemID == 318) {
 			org.spoutcraft.api.material.CustomItem item = MaterialData.getCustomItem(par2ItemStack.getItemDamage());
+
 			if (item != null) {
 				String textureURI = item.getTexture();
+
 				if (textureURI == null) {
 					org.spoutcraft.api.material.CustomBlock block = MaterialData.getCustomBlock(par2ItemStack.getItemDamage());
 					design = block != null ? block.getBlockDesign() : null;
 					textureURI = design != null ? design.getTexureURL() : null;
 				}
+
 				if (textureURI != null) {
 					Texture texture = CustomTextureManager.getTextureFromUrl(item.getAddon(), textureURI);
+
 					if (texture != null) {
 						SpoutClient.getHandle().renderEngine.bindTexture(texture.getTextureID());
 						custom = true;
@@ -83,12 +86,12 @@ public class ItemRenderer {
 
 		if (design != null) {
 			design.renderItemstack(null, -0.5F, -0.5F, -0.5F, 0, 1F, rand);
-		}
-		else if(var4block != null && RenderBlocks.renderItemIn3d(var4block.getRenderType())) {
+		} else if (var4block != null && RenderBlocks.renderItemIn3d(var4block.getRenderType())) {
 			this.renderBlocksInstance.renderBlockAsItem(Block.blocksList[par2ItemStack.itemID], par2ItemStack.getItemDamage(), 1.0F);
 		} else {
 			Tessellator var5 = Tessellator.instance;
 			Icon var4 = par1EntityLiving.getItemIcon(par2ItemStack, par3);
+
 			if (var4 == null) {
 				GL11.glPopMatrix();
 				return;
@@ -100,12 +103,14 @@ public class ItemRenderer {
 			float var9 = var4.getMaxV();
 			float var10 = 0.0F;
 			float var11 = 0.3F;
-			if (custom){
+
+			if (custom) {
 				var6 = 0;
 				var7 = 1;
 				var8 = 1;
 				var9 = 0;
 			}
+
 			// Spout end
 			GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 			GL11.glTranslatef(-var10, -var11, 0.0F);
@@ -120,7 +125,7 @@ public class ItemRenderer {
 			}
 
 			renderItemIn2D(var5, var7, var8, var6, var9, var4.getSheetWidth(), var4.getSheetHeight(), 0.0625F);
-
+			
 			if (par2ItemStack != null && par2ItemStack.hasEffect() && par3 == 0) {
 				GL11.glDepthFunc(GL11.GL_EQUAL);
 				GL11.glDisable(GL11.GL_LIGHTING);
@@ -150,6 +155,7 @@ public class ItemRenderer {
 				GL11.glEnable(GL11.GL_LIGHTING);
 				GL11.glDepthFunc(GL11.GL_LEQUAL);
 			}
+
 			GL11.glDisable(GL12.GL_RESCALE_NORMAL);
 		}
 
@@ -455,7 +461,7 @@ public class ItemRenderer {
 			}
 
 			GL11.glPopMatrix();
-		} else if (!var3.getHasActivePotion()) {
+		} else if (!var3.isInvisible()) {
 			GL11.glPushMatrix();
 			var7 = 0.8F;
 			var20 = var3.getSwingProgress(par1);

@@ -38,6 +38,7 @@ public class VIP {
 		this.armorBaseUrl = armor;
 		this.scale = scale;
 		this.acs = acs;
+
 		if (particles != null) {
 			this.particles = new HashMap<String, Integer>(particles);
 		} else {
@@ -61,10 +62,12 @@ public class VIP {
 	public boolean equals(Object obj) {
 		if (obj instanceof VIP) {
 			VIP other = (VIP) obj;
+
 			if (other.username.equals(username)) {
 				return true;
 			}
 		}
+
 		return false;
 	}
 

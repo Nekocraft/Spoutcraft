@@ -27,6 +27,7 @@ public class EntityReddustFX extends EntityFX {
 				par10 = Colorizer.setColor[1];
 				par11 = Colorizer.setColor[2];
 			}
+
 			// MCPatcher End
 		}
 

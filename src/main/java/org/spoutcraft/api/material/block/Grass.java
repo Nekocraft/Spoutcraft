@@ -21,7 +21,7 @@ package org.spoutcraft.api.material.block;
 
 import org.spoutcraft.api.material.Plant;
 
-public class Grass extends GenericBlock implements Plant{
+public class Grass extends GenericBlock implements Plant {
 	public Grass(String name) {
 		super(name, 2);
 	}

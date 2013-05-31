@@ -192,6 +192,7 @@ class CITUtils$ItemOverride {
 
 	private void error(String var1, Object ... var2) {
 		this.error = true;
+		//CITUtils.access$200().error(this.propertiesName + ": " + var1, var2);
 	}
 
 	private static boolean matchNBT(String[] var0, int var1, String var2, NBTBase var3) {

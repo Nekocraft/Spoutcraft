@@ -37,6 +37,7 @@ public class ScreenShotHelper {
 		ByteBuffer buffer = BufferUtils.createByteBuffer(screenWidth * screenHeight * 3);
 		byte[] pixelData = new byte[screenWidth * screenHeight * 3];
 		int[] imageData = new int[screenWidth * screenHeight];
+
 		try {
 			// Spout Start - Renamed from file1
 			File screenshotsDir = new File(file, "screenshots");
@@ -58,13 +59,16 @@ public class ScreenShotHelper {
 			buffer.clear();
 			String s1 = (new StringBuilder()).append("").append(dateFormat.format(new Date())).toString();
 			File file2;
+
 			if (imageFileName == null) {
 				for (int k = 1; (file2 = new File(screenshotsDir, (new StringBuilder()).append(s1).append(k != 1 ? (new StringBuilder()).append("_").append(k).toString() : "").append(".png").toString())).exists(); k++) {
 				}
 			} else {
 				file2 = new File(screenshotsDir, imageFileName);
 			}
+
 			buffer.get(pixelData);
+
 			for (int l = 0; l < screenWidth; l++) {
 				for (int i1 = 0; i1 < screenHeight; i1++) {
 					int j1 = l + (screenHeight - i1 - 1) * screenWidth;
@@ -74,7 +78,6 @@ public class ScreenShotHelper {
 					int j2 = 0xff000000 | k1 << 16 | l1 << 8 | i2;
 					imageData[l + i1 * screenWidth] = j2;
 				}
-
 			}
 
 			BufferedImage bufferedimage = new BufferedImage(screenWidth, screenHeight, 1);
@@ -98,6 +101,7 @@ public class ScreenShotHelper {
 		GL11.glReadPixels(0, 0, screenWidth, screenHeight, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buffer);
 		buffer.clear();
 		buffer.get(pixelData);
+
 		for (int l = 0; l < screenWidth; l++) {
 			for (int i1 = 0; i1 < screenHeight; i1++) {
 				int j1 = l + (screenHeight - i1 - 1) * screenWidth;
@@ -108,6 +112,7 @@ public class ScreenShotHelper {
 				imageData[l + i1 * screenWidth] = j2;
 			}
 		}
+
 		BufferedImage bufferedimage = new BufferedImage(screenWidth, screenHeight, 1);
 		bufferedimage.setRGB(0, 0, screenWidth, screenHeight, imageData, 0, screenWidth);
 		return bufferedimage;
@@ -150,6 +155,7 @@ public class ScreenShotHelper {
 		GL11.glGetTexImage(GL11.GL_TEXTURE_2D, 0, GL11.GL_RGB, GL11.GL_UNSIGNED_BYTE, buffer);
 		buffer.clear();
 		buffer.get(pixelData);
+
 		for (int l = 0; l < screenWidth; l++) {
 			for (int i1 = 0; i1 < screenHeight; i1++) {
 				int j1 = l + (screenHeight - i1 - 1) * screenWidth;
@@ -160,6 +166,7 @@ public class ScreenShotHelper {
 				imageData[l + i1 * screenWidth] = j2;
 			}
 		}
+
 		BufferedImage bufferedimage = new BufferedImage(screenWidth, screenHeight, 1);
 		bufferedimage.setRGB(0, 0, screenWidth, screenHeight, imageData, 0, screenWidth);
 		return bufferedimage;

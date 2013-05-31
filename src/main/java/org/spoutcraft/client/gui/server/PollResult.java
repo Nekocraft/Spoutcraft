@@ -128,11 +128,13 @@ public class PollResult {
 	public static PollResult getPoll(String ip, int port, int uid) {
 		String hash = ip + ":" + port;
 		PollResult result = recentResults.get(hash.hashCode());
+
 		if (result == null) {
 			result = new PollResult(ip, port, uid);
 			recentResults.put(hash.hashCode(), result);
 			result.poll();
 		}
+
 		return result;
 	}
 
@@ -187,28 +189,30 @@ public class PollResult {
 					sleep(10);
 				} catch (InterruptedException e) {}
 			}
+
 			numPolling ++;
 			polling = true;
 			favorites.setPolling(true);
 			Socket sock = null;
 			DataInputStream input = null;
 			DataOutputStream output = null;
+
 			try {
 				long start = System.currentTimeMillis();
 				sock = new Socket();
 				sock.setSoTimeout(10000);
 				InetSocketAddress address = NetworkUtils.resolve(ip, port);
+
 				if (address.isUnresolved()) {
 					ping = PING_UNKNOWN;
 					return;
 				}
+
 				sock.connect(address, 10000);
 				sock.setTcpNoDelay(true);
 				sock.setTrafficClass(18);
-
 				input = new DataInputStream(sock.getInputStream());
 				output = new DataOutputStream(sock.getOutputStream());
-
 				// Packet ID is 254
 				output.write(254);
 				// Writes 1 for getting extended server information since 1.4
@@ -222,55 +226,63 @@ public class PollResult {
 
 				StringBuilder builder = new StringBuilder();
 				short size = input.readShort();
+
 				for (int i = 0; i < size; i++) {
 					builder.append(input.readChar());
 				}
 
 				long end = System.currentTimeMillis();
 				String sPacket = builder.toString();
-				ping = (int) (end - start);
+				ping = (int)(end - start);
 
 				// Check if we have new format here (1.4), and fall back to old format if not
 				if (sPacket.startsWith("\u00a71")) {
 					String split[] = sPacket.split("\u0000");
 					protocolVersion = Integer.valueOf(split[1]);
 					version = split[2];
+
 					synchronized (motd) {
 						motd = split[3];
 					}
+
 					players = Integer.valueOf(split[4]);
 					maxPlayers = Integer.valueOf(split[5]);
-				}
-				else {
+				} else {
 					String split[] = sPacket.split("\u00a7");
+
 					synchronized (motd) {
 						motd = split[0];
 					}
+
 					players = Integer.valueOf(split[1]);
 					maxPlayers = Integer.valueOf(split[2]);
 				}
-			} catch(java.net.UnknownHostException e) {
+			} catch (java.net.UnknownHostException e) {
 				ping = PING_UNKNOWN;
-			} catch(IOException e) {
+			} catch (IOException e) {
 				ping = PING_TIMEOUT;
 			} catch (Exception e) {
 				ping = PING_BAD_MESSAGE;
 			} finally {
 				polling = false;
 				numPolling--;
+
 				if (numPolling == 0) {
 					favorites.setPolling(false);
 				}
+
 				if (SpoutClient.getHandle().currentScreen instanceof GuiServerInfo) {
 					GuiServerInfo screen = (GuiServerInfo) SpoutClient.getHandle().currentScreen;
 					screen.updateData();
 				}
+
 				sendDCData();
+
 				try {
 					sock.close();
 					input.close();
 					output.close();
-				} catch(Exception e) {}
+				} catch (Exception e) {}
 			}
 		}
 	}
@@ -286,6 +298,7 @@ public class PollResult {
 		if (send != null) {
 			return;
 		}
+
 		send = new Thread() {
 			public void run() {
 				while (numPolling > 0) {
@@ -295,35 +308,41 @@ public class PollResult {
 						return;
 					}
 				}
+
 				String api = MirrorUtils.getMirrorUrl("/senddata.php", "http://servers.spout.org/senddata.php");
 				String json = "{";
 				int res = 0;
-				for (PollResult result:recentResults.valueCollection()) {
+
+				for (PollResult result: recentResults.valueCollection()) {
 					if (result.databaseId != -1 && !result.sent) {
 						int ping = result.ping > 0 ? result.ping : -1;
+
 						if (res > 0) {
 							json += ",";
 						}
-						json +="\"" + res + "\":{";
 
+						json += "\"" + res + "\":{";
 						json += keyValue("uid", result.databaseId) + ",";
 						json += keyValue("ping", ping) + ",";
 						json += keyValue("players", result.players) + ",";
 						json += keyValue("maxplayers", result.maxPlayers);
-						json +="}";
+						json += "}";
 						result.sent = true;
 						res ++;
 					}
 				}
+
 				json += "}";
 
 				if (res > 0) {
 					URL url;
+
 					try {
 						url = new URL(api);
 					} catch (MalformedURLException e) {
 						return;
 					}
+
 					try {
 						String data = URLEncoder.encode("json", "UTF-8") + "=" + URLEncoder.encode(json, "UTF-8");
 						URLConnection conn = url.openConnection();
@@ -331,19 +350,19 @@ public class PollResult {
 						OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
 						wr.write(data);
 						wr.flush();
-
 						BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
 						while (rd.readLine() != null) {
 						}
+
 						wr.close();
 						rd.close();
 					} catch (IOException e) {
 					}
-
 				}
+
 				send = null;
 			}
-
 			public String keyValue(String key, Object value) {
 				if (value instanceof Number) {
 					return "\"" + key + "\":" + value;

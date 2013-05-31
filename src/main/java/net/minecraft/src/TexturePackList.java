@@ -21,7 +21,6 @@ import com.prupe.mcpatcher.TexturePackAPI;
 import com.prupe.mcpatcher.TexturePackChangeHandler;
 
 public class TexturePackList {
-
 	/**
 	 * An instance of TexturePackDefault for the always available builtin texture pack.
 	 */
@@ -66,7 +65,7 @@ public class TexturePackList {
 	 */
 	// Spout Start - private to public
 	public void createTexturePackDirs() {
-	// Spout End
+		// Spout End
 		if (!this.texturePackDir.isDirectory()) {
 			this.texturePackDir.delete();
 			this.texturePackDir.mkdirs();
@@ -122,7 +121,7 @@ public class TexturePackList {
 		HashMap var3 = new HashMap();
 		GuiProgress var4 = new GuiProgress();
 		var3.put("X-Minecraft-Username", this.mc.session.username);
-		var3.put("X-Minecraft-Version", "1.5.1");
+		var3.put("X-Minecraft-Version", "1.5.2");
 		var3.put("X-Minecraft-Supported-Resolutions", "16");
 		this.isDownloading = true;
 		this.mc.displayGuiScreen(var4);

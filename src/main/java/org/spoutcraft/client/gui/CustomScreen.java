@@ -49,6 +49,7 @@ public class CustomScreen extends GuiScreen {
 				this.drawDefaultBackground();
 			}
 		}
+
 		bg.setVisible(screen.isBgVisible());
 		drawWidgets(x, y, z);
 	}

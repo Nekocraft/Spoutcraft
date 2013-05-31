@@ -48,12 +48,14 @@ public class PacketPreCacheCompleted implements SpoutPacket {
 	public void run(int playerId) {
 		FileDownloadThread.preCacheCompleted.set(System.currentTimeMillis());
 		SpoutClient.getInstance().getPacketManager().sendSpoutPacket(this);
+
 		if (!(SpoutClient.getHandle().currentScreen instanceof CustomScreen) && !(SpoutClient.getHandle().currentScreen instanceof GuiYesNo)) {
 			// Closes downloading terrain
 			SpoutClient.getHandle().displayGuiScreen(null, false);
 			// Prevent closing a plugin created menu from opening the downloading terrain
 			SpoutClient.getHandle().clearPreviousScreen();
 		}
+
 		if (SpoutClient.getHandle().currentScreen instanceof GuiPrecache) {
 			// Closes downloading terrain
 			SpoutClient.getHandle().displayGuiScreen(null, false);

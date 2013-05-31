@@ -51,6 +51,7 @@ public class CraftLivingEntity extends CraftEntity {
 		if (ignoreSneaking) {
 			return getEntityLiving().height;
 		}
+
 		return getEyeHeight();
 	}
 
@@ -67,6 +68,7 @@ public class CraftLivingEntity extends CraftEntity {
 			handle.mountEntity(null);
 			return true;
 		}
+
 		return false;
 	}
 
@@ -78,6 +80,7 @@ public class CraftLivingEntity extends CraftEntity {
 		if (ticks < 0) {
 			throw new IllegalArgumentException("The Remaining Air can not be below 0");
 		}
+
 		getEntityLiving().setAir(ticks);
 	}
 
@@ -89,6 +92,7 @@ public class CraftLivingEntity extends CraftEntity {
 		if (ticks <= 0) {
 			throw new IllegalArgumentException("The Maximum Air can not be below 1");
 		}
+
 		getEntityLiving().maxAir = ticks;
 	}
 
@@ -142,6 +146,7 @@ public class CraftLivingEntity extends CraftEntity {
 
 	public void resetTitle() {
 		getEntityLiving().displayName = null;
+
 		if (handle instanceof EntityPlayer) {
 			getEntityLiving().displayName = ((EntityPlayer)handle).username;
 		}

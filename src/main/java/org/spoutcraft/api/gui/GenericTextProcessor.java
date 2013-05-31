@@ -52,35 +52,43 @@ public class GenericTextProcessor implements TextProcessor {
 
 	protected boolean cursorUp() {
 		int line = getCursorLine();
+
 		if (line > 0) {
 			int start = (line == 1) ? 0 : lineBreaks.get(line - 2);
 			cursor = start + Math.min(lineBreaks.get(line - 1) - start - 1, cursor - lineBreaks.get(line - 1));
 		} else {
 			cursor = 0;
 		}
+
 		return true;
 	}
 
 	protected boolean cursorDown() {
 		int line = getCursorLine();
+
 		if (line + 1 < lineBreaks.size()) {
 			int start = (line == 0) ? 0 : lineBreaks.get(line - 1);
 			cursor = lineBreaks.get(line) + Math.min(lineBreaks.get(line + 1) - lineBreaks.get(line) - 1, cursor - start);
 		} else {
 			cursor = textBuffer.length();
 		}
+
 		return true;
 	}
 
 	protected boolean cursorLeft() {
-		if (cursor > 0)
+		if (cursor > 0) {
 			--cursor;
+		}
+
 		return true;
 	}
 
 	protected boolean cursorRight() {
-		if (cursor < textBuffer.length())
+		if (cursor < textBuffer.length()) {
 			++cursor;
+		}
+
 		return true;
 	}
 
@@ -113,6 +121,7 @@ public class GenericTextProcessor implements TextProcessor {
 		if (cursor == textBuffer.length() && getCharAt(cursor - 1) == CHAR_NEWLINE) {
 			return lineBreaks.size();
 		}
+
 		return Math.max(0, lineBreaks.size() - 1);
 	}
 
@@ -128,12 +137,15 @@ public class GenericTextProcessor implements TextProcessor {
 
 	protected int getNextWordPosition(int offset) {
 		int i = textBuffer.indexOf(STR_SPACE, offset) + 1;
+
 		if (i == 0) {
 			i = textBuffer.indexOf(STR_NEWLINE, offset) + 1;
 		}
+
 		if (i == 0) {
 			i = textBuffer.length();
 		}
+
 		return i;
 	}
 
@@ -166,6 +178,7 @@ public class GenericTextProcessor implements TextProcessor {
 			textBuffer.delete(position, position + 1);
 			return formatText();
 		}
+
 		return false;
 	}
 
@@ -178,6 +191,7 @@ public class GenericTextProcessor implements TextProcessor {
 			int start = (line > 0) ? lineBreaks.get(line - 1) : 0;
 			return delete(start, lineBreaks.get(line), start);
 		}
+
 		return false;
 	}
 
@@ -188,6 +202,7 @@ public class GenericTextProcessor implements TextProcessor {
 			correctCursor();
 			return formatText();
 		}
+
 		return false;
 	}
 
@@ -202,11 +217,14 @@ public class GenericTextProcessor implements TextProcessor {
 		if (charLimit > 0 && textBuffer.length() >= charLimit) {
 			return false;
 		}
+
 		textBuffer.insert(cursor++, c);
+
 		if (!formatText()) { // If function call wasn't successful, revert changes
 			deleteChar(--cursor);
 			return false;
 		}
+
 		return true;
 	}
 
@@ -216,11 +234,13 @@ public class GenericTextProcessor implements TextProcessor {
 		}
 
 		textBuffer.insert(cursor, s);
+
 		if (!formatText()) { // If function call wasn't successful, revert changes
 			textBuffer.delete(cursor, cursor + s.length());
 			formatText();
 			return false;
 		}
+
 		cursor += s.length();
 		return true;
 	}
@@ -231,6 +251,7 @@ public class GenericTextProcessor implements TextProcessor {
 
 	public void setText(String str) {
 		clear();
+
 		if (str.length() > 0) {
 			if (charLimit > 0 && str.length() > charLimit) {
 				str = str.substring(0, charLimit);
@@ -252,14 +273,15 @@ public class GenericTextProcessor implements TextProcessor {
 		boolean previousSpace = false;
 		boolean skipIterator = false;
 		final int spaceCharWidth = font.getTextWidth(STR_SPACE);
-
 		// Virtually split text in parts that don't exceed the line width
 		lineBreaks.clear();
+
 		while (st.hasMoreTokens() || skipIterator) {
 			// Get word and its length
 			if (!skipIterator) {
 				word = st.nextToken();
 			}
+
 			skipIterator = false;
 			wordWidth = font.getTextWidth(word);
 			position += word.length();
@@ -269,7 +291,7 @@ public class GenericTextProcessor implements TextProcessor {
 				lineWidth = 0;
 				lineBreaks.add(position);
 				continue;
-			// Allow one whitespace not to be handled as part of the previous word (word-wrapping)
+				// Allow one whitespace not to be handled as part of the previous word (word-wrapping)
 			} else if (!previousSpace && word.equals(STR_SPACE)) {
 				lineWidth += spaceCharWidth;
 				previousSpace = true;
@@ -279,25 +301,31 @@ public class GenericTextProcessor implements TextProcessor {
 			// Split very long words
 			if (wordWidth > width) {
 				int i = word.length();
-				while (i > 0 && wordWidth > width)
+
+				while (i > 0 && wordWidth > width) {
 					wordWidth -= font.getTextWidth(String.valueOf(word.charAt(--i)));
+				}
+
 				position = position - word.length() + i;
 				lineBreaks.add(position);
 				lineWidth = 0;
 				word = word.substring(i);
 				skipIterator = true;
-			// Check if this word would exceed the max-width of the line
+				// Check if this word would exceed the max-width of the line
 			} else if (lineWidth + wordWidth > width) {
 				if (lineBreaks.size() + 1 < lineLimit) {
 					lineBreaks.add(position - word.length());
 					lineWidth = wordWidth;
-				} else
+				} else {
 					return false;
+				}
 			} else {
 				lineWidth += wordWidth;
 			}
+
 			previousSpace = false;
 		}
+
 		// Check if we're at line limit
 		if (lineBreaks.size() >= lineLimit) {
 			return false;
@@ -310,6 +338,7 @@ public class GenericTextProcessor implements TextProcessor {
 
 		// Split text into parts using the virtual line breaks
 		formattedText.clear();
+
 		for (int i = 0; i < lineBreaks.size() && i < lineLimit; ++i) {
 			position = lineBreaks.get(i);
 			String buffer = textBuffer.substring(positionOld, position);
@@ -317,6 +346,7 @@ public class GenericTextProcessor implements TextProcessor {
 			formattedText.add(buffer);
 			positionOld = position;
 		}
+
 		return true;
 	}
 
@@ -346,6 +376,7 @@ public class GenericTextProcessor implements TextProcessor {
 
 	public void setWidth(int width) {
 		this.width = width;
+
 		if (!formatText()) {
 			clear();
 		}
@@ -353,10 +384,12 @@ public class GenericTextProcessor implements TextProcessor {
 
 	public boolean handleInput(char key, int keyId) {
 		boolean ctrl = Keyboard.isKeyDown(Keyboard.KEY_LCONTROL) || Keyboard.isKeyDown(Keyboard.KEY_RCONTROL);
+
 		if (keyId == Keyboard.KEY_RETURN.getKeyCode()) {
 			insert(CHAR_NEWLINE);
 			return true;
 		}
+
 		if (keyId == Keyboard.KEY_BACK.getKeyCode()) {
 			if (ctrl) {
 				int p = getPreviousWordPosition(cursor);
@@ -364,8 +397,10 @@ public class GenericTextProcessor implements TextProcessor {
 			} else if (cursor > 0) {
 				return deleteChar(--cursor);
 			}
+
 			return false;
 		}
+
 		if (keyId == Keyboard.KEY_DELETE.getKeyCode()) {
 			if (ctrl) {
 				return delete(cursor, getNextWordPosition(cursor), cursor);
@@ -373,63 +408,77 @@ public class GenericTextProcessor implements TextProcessor {
 				return deleteChar();
 			}
 		}
+
 		if (keyId == Keyboard.KEY_LEFT.getKeyCode()) {
 			if (ctrl) {
 				cursor = getPreviousWordPosition(cursor - 1);
 			} else {
 				cursorLeft();
 			}
+
 			return false;
 		}
+
 		if (keyId == Keyboard.KEY_RIGHT.getKeyCode()) {
 			if (ctrl) {
 				cursor = getNextWordPosition(cursor + 1);
 			} else {
 				cursorRight();
 			}
+
 			return false;
 		}
+
 		if (keyId == Keyboard.KEY_UP.getKeyCode()) {
 			cursorUp();
 			return false;
 		}
+
 		if (keyId == Keyboard.KEY_DOWN.getKeyCode()) {
 			cursorDown();
 			return false;
 		}
+
 		if (keyId == Keyboard.KEY_HOME.getKeyCode()) {
 			cursor = 0;
 			return false;
 		}
+
 		if (keyId == Keyboard.KEY_END.getKeyCode()) {
 			cursor = textBuffer.length();
 			return false;
 		}
+
 		if (keyId == Keyboard.KEY_V.getKeyCode()) {
 			if (ctrl) {
 				return insert(getClipboardString());
 			}
 		}
+
 		if (keyId == Keyboard.KEY_C.getKeyCode()) {
 			if (ctrl) {
 				clear();
 				return true;
 			}
 		}
+
 		if (keyId == Keyboard.KEY_D.getKeyCode()) {
 			if (ctrl) {
 				return deleteLine();
 			}
 		}
+
 		if (font.isAllowedChar(key)) {
 			return insert(key);
 		}
+
 		return false;
 	}
 
 	private static String getClipboardString() {
 		try {
 			Transferable transfer = Toolkit.getDefaultToolkit().getSystemClipboard().getContents((Object) null);
+
 			if (transfer != null && transfer.isDataFlavorSupported(DataFlavor.stringFlavor)) {
 				String var1 = (String) transfer.getTransferData(DataFlavor.stringFlavor);
 				return var1;

@@ -7,7 +7,6 @@ import net.minecraft.client.Minecraft;
 // Spout End
 
 class ThreadConnectToServer extends Thread {
-
 	/** The IP address or domain used to connect. */
 	final String ip;
 
@@ -36,7 +35,7 @@ class ThreadConnectToServer extends Thread {
 			GuiConnecting.getNetClientHandler(this.connectingGui).addToSendQueue(new Packet250CustomPayload("REGISTER", "ChkCache:setHash".getBytes()));
 			GuiConnecting.getNetClientHandler(this.connectingGui).addToSendQueue(new Packet250CustomPayload("AutoProto:HShake", "VanillaProtocol".getBytes()));
 			// Spout End
-			GuiConnecting.getNetClientHandler(this.connectingGui).addToSendQueue(new Packet2ClientProtocol(60, GuiConnecting.func_74254_c(this.connectingGui).session.username, this.ip, this.port));
+			GuiConnecting.getNetClientHandler(this.connectingGui).addToSendQueue(new Packet2ClientProtocol(61, GuiConnecting.func_74254_c(this.connectingGui).session.username, this.ip, this.port));
 		} catch (UnknownHostException var2) {
 			if (GuiConnecting.isCancelled(this.connectingGui)) {
 				return;
@@ -56,6 +55,7 @@ class ThreadConnectToServer extends Thread {
 			} else {
 				displayConnectionIssue(ip, port, var3.getMessage());
 			}
+
 			// Spout End
 		} catch (Exception var4) {
 			if (GuiConnecting.isCancelled(this.connectingGui)) {

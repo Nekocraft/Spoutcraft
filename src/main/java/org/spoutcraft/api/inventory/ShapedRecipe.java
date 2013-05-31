@@ -51,22 +51,24 @@ public class ShapedRecipe implements Recipe {
 		if (shape == null || shape.length > 3 || shape.length < 1) {
 			throw new IllegalArgumentException("Crafting recipes should be 1, 2, or 3 rows.");
 		}
+
 		for (String row : shape) {
 			if (row == null || row.length() > 3 || row.length() < 1) {
 				throw new IllegalArgumentException("Crafting rows should be 1, 2, or 3 characters.");
 			}
 		}
-		this.rows = shape;
 
+		this.rows = shape;
 		// Remove character mappings for characters that no longer exist in the shape
 		HashMap<Character, Material> ingredientsTemp = this.ingredients;
-
 		this.ingredients = new HashMap<Character, Material>();
+
 		for (char key : ingredientsTemp.keySet()) {
 			try {
 				setIngredient(key, ingredientsTemp.get(key));
 			} catch (IllegalArgumentException e) {}
 		}
+
 		return this;
 	}
 
@@ -80,6 +82,7 @@ public class ShapedRecipe implements Recipe {
 		if (!hasKey(key)) {
 			throw new IllegalArgumentException("Symbol " + key + " does not appear in the shape.");
 		}
+
 		ingredients.put(key, ingredient);
 		return this;
 	}
@@ -92,6 +95,7 @@ public class ShapedRecipe implements Recipe {
 				return true;
 			}
 		}
+
 		return false;
 	}
 

@@ -1,7 +1,6 @@
 package net.minecraft.src;
 
 public interface IBlockAccess {
-
 	/**
 	 * Returns the block ID at coords x,y,z
 	 */

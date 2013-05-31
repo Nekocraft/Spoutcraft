@@ -49,12 +49,13 @@ public class MirrorUtils {
 		if (MirrorUtils.mirrors == null) {
 			Map<String, Integer> mirrors = getMirrors();
 			Set<Entry<String, Integer>> set = mirrors.entrySet();
-
 			ArrayList<String> goodMirrors = new ArrayList<String>(mirrors.size());
 			Iterator<Entry<String, Integer>> iterator = set.iterator();
+
 			while (iterator.hasNext()) {
 				Entry<String, Integer> e = iterator.next();
 				String mirror = "http://" + e.getKey();
+
 				if (isAddressReachable(mirror, 250)) { // Short timeout for fast mirrors
 					goodMirrors.add(e.getKey());
 				}
@@ -66,6 +67,7 @@ public class MirrorUtils {
 
 		for (String mirror : MirrorUtils.mirrors) {
 			String lookup = "http://" + mirror + "/" + mirrorURI;
+
 			if (isAddressReachable(lookup, 1000)) {
 				return lookup;
 			}
@@ -106,13 +108,14 @@ public class MirrorUtils {
 		if (!updated) {
 			try {
 				URL url = new URL("http://get.spout.org/mirrors.yml");
-				HttpURLConnection con = (HttpURLConnection) (url.openConnection());
+				HttpURLConnection con = (HttpURLConnection)(url.openConnection());
 				System.setProperty("http.agent", "");
 				con.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.100 Safari/534.30");
 				copy(con.getInputStream(), new FileOutputStream(mirrorsYML));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+
 			updated = true;
 		}
 	}
@@ -121,10 +124,12 @@ public class MirrorUtils {
 		byte[] buffer = new byte[1024 * 4];
 		long count = 0;
 		int n = 0;
+
 		while (-1 != (n = input.read(buffer))) {
 			output.write(buffer, 0, n);
 			count += n;
 		}
+
 		return count;
 	}
 
@@ -148,6 +153,7 @@ class MirrorComparator implements Comparator<String> {
 		if (values.containsKey(mirror)) {
 			return values.get(mirror);
 		}
+
 		int value = rand.nextInt(mirrors.get(mirror)) + 1;
 		values.put(mirror, value);
 		return value;

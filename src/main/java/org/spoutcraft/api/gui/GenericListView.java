@@ -28,9 +28,15 @@ public class GenericListView extends GenericListWidget implements ListWidget {
 	}
 
 	public void setModel(AbstractListModel model) {
-		if (this.model != null) this.model.removeView(this);
+		if (this.model != null) {
+			this.model.removeView(this);
+		}
+
 		this.model = model;
-		if (this.model != null) this.model.addView(this);
+
+		if (this.model != null) {
+			this.model.addView(this);
+		}
 	}
 
 	public AbstractListModel getModel() {
@@ -48,9 +54,11 @@ public class GenericListView extends GenericListWidget implements ListWidget {
 
 	public ListWidgetItem[] getItems() {
 		ListWidgetItem items[] = new ListWidgetItem[model.getSize()];
+
 		for (int i = 0; i < model.getSize(); i++) {
 			items[i] = model.getItem(i);
 		}
+
 		return items;
 	}
 
@@ -71,7 +79,10 @@ public class GenericListView extends GenericListWidget implements ListWidget {
 	}
 
 	public ListWidgetItem getSelectedItem() {
-		if (getSelectedRow() < 0 || getSelectedRow() >= getSize()) return null;
+		if (getSelectedRow() < 0 || getSelectedRow() >= getSize()) {
+			return null;
+		}
+
 		return model.getItem(getSelectedRow());
 	}
 
@@ -83,10 +94,13 @@ public class GenericListView extends GenericListWidget implements ListWidget {
 		if (n < -1) {
 			n = -1;
 		}
+
 		if (n >= model.getSize()) {
 			n = model.getSize() - 1;
 		}
+
 		selected = n;
+
 		if (n != -1) {
 			ensureVisible(getItemRect(n));
 		}
@@ -108,7 +122,10 @@ public class GenericListView extends GenericListWidget implements ListWidget {
 	}
 
 	public ListWidget shiftSelection(int n) {
-		if (selected + n < 0) n = 0;
+		if (selected + n < 0) {
+			n = 0;
+		}
+
 		setSelection(selected + n);
 		return this;
 	}
@@ -120,6 +137,7 @@ public class GenericListView extends GenericListWidget implements ListWidget {
 
 	public void sizeChanged() {
 		cachedTotalHeight = -1;
+
 		if (selected + 1 > model.getSize()) {
 			selected = model.getSize() - 1;
 			setScrollPosition(Orientation.VERTICAL, getMaximumScrollPosition(Orientation.VERTICAL));

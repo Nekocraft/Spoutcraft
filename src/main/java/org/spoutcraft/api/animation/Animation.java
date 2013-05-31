@@ -111,14 +111,17 @@ public class Animation {
 
 	public void start() {
 		this.state = State.RUNNING;
+
 		switch (direction) {
 			case FORWARD:
 				currentTime = 0;
 				break;
+
 			case BACKWARD:
 				currentTime = duration;
 				break;
 		}
+
 		timer.schedule(animator, delay, delay);
 	}
 
@@ -136,15 +139,19 @@ public class Animation {
 
 	public void stop() {
 		this.state = State.STOPPED;
+
 		switch (direction) {
 			case FORWARD:
 				this.currentTime = duration;
 				break;
+
 			case BACKWARD:
 				this.currentTime = 0;
 				break;
 		}
+
 		animator.cancel();
+
 		if (startValue != null) {
 			property.set(getCurrentValue());
 		} else {
@@ -198,17 +205,22 @@ public class Animation {
 					cancel();
 					return;
 				}
+
 				int time = animation.getCurrentTime();
 				time += delay * animation.getDirection().modifier; // For the direction
+
 				if (time >= animation.getDuration() && animation.getDirection() == Direction.FORWARD) {
 					animation.stop();
 					time = animation.getDuration();
 				}
+
 				if (time <= 0 && animation.getDirection() == Direction.BACKWARD) {
 					animation.stop();
 					time = 0;
 				}
+
 				animation.setCurrentTime(time);
+
 				if (startNumber == null) {
 					Animatable value = animation.getCurrentValue();
 					animation.getValueDelegate().set(value);
@@ -226,30 +238,37 @@ public class Animation {
 
 	public Number getCurrentValueNumber() {
 		double p = (double) currentTime / (double) duration;
+
 		if (startNumber instanceof Integer) {
 			int p1 = (Integer) startNumber, p2 = (Integer) endNumber;
-			return (int) (p1 + (p2 - p1)*p);
+			return (int)(p1 + (p2 - p1) * p);
 		}
+
 		if (startNumber instanceof Double) {
 			double p1 = (Double) startNumber, p2 = (Double) endNumber;
-			return p1 + (p2 - p1)*p;
+			return p1 + (p2 - p1) * p;
 		}
+
 		if (startNumber instanceof Long) {
 			long p1 = (Long) startNumber, p2 = (Long) endNumber;
-			return (long) (p1 + (p2 - p1)*p);
+			return (long)(p1 + (p2 - p1) * p);
 		}
+
 		if (startNumber instanceof Float) {
 			float p1 = (Float) startNumber, p2 = (Float) endNumber;
-			return (float) (p1 + (p2 - p1)*p);
+			return (float)(p1 + (p2 - p1) * p);
 		}
+
 		if (startNumber instanceof Short) {
 			short p1 = (Short) startNumber, p2 = (Short) endNumber;
-			return (short) (p1 + (p2 - p1)*p);
+			return (short)(p1 + (p2 - p1) * p);
 		}
+
 		if (startNumber instanceof Byte) {
 			byte p1 = (Byte) startNumber, p2 = (Byte) endNumber;
-			return (byte) (p1 + (p2 - p1)*p);
+			return (byte)(p1 + (p2 - p1) * p);
 		}
+
 		throw new IllegalStateException("Numbers of type " + startNumber.getClass().getSimpleName() + " cannot be used.");
 	}
 }

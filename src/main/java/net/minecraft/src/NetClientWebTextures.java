@@ -6,7 +6,6 @@ import org.spoutcraft.client.SpoutClient;
 // Spout End
 
 class NetClientWebTextures extends GuiScreen {
-
 	/** The Texture Pack's name. */
 	final String texturePackName;
 

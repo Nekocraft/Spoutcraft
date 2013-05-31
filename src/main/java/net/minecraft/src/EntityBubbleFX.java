@@ -7,6 +7,7 @@ import com.prupe.mcpatcher.mod.ColorizeBlock;
 public class EntityBubbleFX extends EntityFX {
 	public EntityBubbleFX(World par1World, double par2, double par4, double par6, double par8, double par10, double par12) {
 		super(par1World, par2, par4, par6, par8, par10, par12);
+
 		// MCPatcher Start
 		if (ColorizeBlock.computeWaterColor(this.posX, this.posY, this.posZ)) {
 			this.particleRed = ColorizeBlock.waterColor[0];
@@ -17,6 +18,7 @@ public class EntityBubbleFX extends EntityFX {
 			this.particleGreen = 1.0F;
 			this.particleBlue = 1.0F;
 		}
+
 		// MCPatcher End
 		this.setParticleTextureIndex(32);
 		this.setSize(0.02F, 0.02F);

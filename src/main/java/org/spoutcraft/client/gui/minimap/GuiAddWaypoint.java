@@ -36,7 +36,7 @@ public class GuiAddWaypoint extends GuiScreen {
 	Button done, cancel, delete;
 	TextField name;
 	private GuiScreen parent;
-	private int x,y,z;
+	private int x, y, z;
 	private Waypoint toEdit = null;
 	private boolean existed = false;
 
@@ -61,43 +61,41 @@ public class GuiAddWaypoint extends GuiScreen {
 	public void initGui() {
 		GenericLabel label = new GenericLabel("Create Waypoint");
 		int size = Spoutcraft.getMinecraftFont().getTextWidth(label.getText());
-		label.setX((int) (width / 2 - size / 2)).setY(10);
+		label.setX((int)(width / 2 - size / 2)).setY(10);
 		label.setFixed(true).setPriority(RenderPriority.Lowest);
 		getScreen().attachWidget("Spoutcraft", label);
-
 		int left = (int)(width / 2  - 155);
 		int right = (int)(width / 2 + 5);
-
 		label = new GenericLabel("Waypoint Name:");
 		size = Spoutcraft.getMinecraftFont().getTextWidth(label.getText());
 		label.setX(left).setY(70);
 		label.setFixed(true).setPriority(RenderPriority.Lowest);
 		getScreen().attachWidget("Spoutcraft", label);
-
 		name = new GenericTextField();
 		name.setHeight(20).setWidth(300).setX(left).setY(81);
 		name.setMaximumCharacters(0);
 		name.setFixed(true).setPriority(RenderPriority.Lowest);
 		name.setText(toEdit.name);
 		getScreen().attachWidget("Spoutcraft", name);
-
 		String text = "(" + x + ", " + y + ", " + z + ")";
+
 		if (!SpoutClient.getInstance().isCoordsCheat()) {
 			text = "Coords not shown";
 		}
+
 		label = new GenericLabel(text);
 		size = Spoutcraft.getMinecraftFont().getTextWidth(label.getText());
-		label.setX((int) (width / 2 - size / 2)).setY(106);
+		label.setX((int)(width / 2 - size / 2)).setY(106);
 		label.setFixed(true).setPriority(RenderPriority.Lowest);
 		getScreen().attachWidget("Spoutcraft", label);
-
 		done = new GenericButton("Create");
+
 		if (existed) {
 			done.setText("Save");
 		}
+
 		done.setWidth(150).setHeight(20).setX(right).setY(200);
 		getScreen().attachWidget("Spoutcraft", done);
-
 		cancel = new GenericButton("Cancel");
 		cancel.setWidth(150).setHeight(20).setX(left).setY(200);
 		getScreen().attachWidget("Spoutcraft", cancel);
@@ -132,18 +130,23 @@ public class GuiAddWaypoint extends GuiScreen {
 			MinimapConfig.getInstance().removeWaypoint(toEdit);
 			MinimapConfig.getInstance().save();
 			SpoutClient.getHandle().displayGuiScreen(parent);
+
 			if (toEdit == MinimapConfig.getInstance().getFocussedWaypoint()) {
 				MinimapConfig.getInstance().setFocussedWaypoint(null);
 			}
 		}
+
 		if (btn.equals(done) && done.isEnabled()) {
 			toEdit.name = name.getText();
+
 			if (!existed) {
 				MinimapConfig.getInstance().addWaypoint(MinimapUtils.getWorldName(), toEdit);
 			}
+
 			MinimapConfig.getInstance().save();
 			SpoutClient.getHandle().displayGuiScreen(parent);
 		}
+
 		if (btn.equals(cancel)) {
 			mc.displayGuiScreen(parent);
 		}

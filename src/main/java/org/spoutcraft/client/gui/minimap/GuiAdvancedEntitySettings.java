@@ -50,17 +50,18 @@ public class GuiAdvancedEntitySettings extends GuiSpoutScreen {
 		title = new GenericLabel("Filter Mobs");
 		buttonDone = new GenericButton("Done");
 		scroll = new GenericScrollArea();
-		for (Entry<Class<? extends Entity>, String> e : WatchedEntity.mobFaceTextures.entrySet()) {
+
+		for (Entry < Class <? extends Entity > , String > e : WatchedEntity.mobFaceTextures.entrySet()) {
 			EntityVisibilityCheckbox ch = new EntityVisibilityCheckbox(e.getKey(), e.getValue());
 			scroll.attachWidget("Spoutcraft", ch);
 			checks.add(ch);
 		}
+
 		Collections.sort(checks, new Comparator<EntityVisibilityCheckbox>() {
 			public int compare(EntityVisibilityCheckbox o1, EntityVisibilityCheckbox o2) {
 				return o1.getText().compareTo(o2.getText());
 			}
 		});
-
 		getScreen().attachWidgets("Spoutcraft", buttonDone, title, scroll);
 	}
 
@@ -68,35 +69,39 @@ public class GuiAdvancedEntitySettings extends GuiSpoutScreen {
 	protected void layoutWidgets() {
 		title.setX(width / 2 - SpoutClient.getHandle().fontRenderer.getStringWidth(title.getText()) / 2);
 		title.setY(10);
-
 		scroll.setGeometry(0, 25, width, height - 25 - 30);
-
 		int needed = 315;
 		int top = 5;
 		int i = 0;
 		int left = width / 2 - needed / 2;
 		int center = left + 100 + 5;
 		int right = center + 100 + 5;
+
 		for (EntityVisibilityCheckbox ch : checks) {
 			ch.setGeometry(0, top, 100, 20);
-			switch(i%3) {
+
+			switch (i % 3) {
 				case 0:
 					ch.setX(left);
 					break;
+
 				case 1:
 					ch.setX(center);
 					break;
+
 				case 2:
 					ch.setX(right);
 					break;
 			}
+
 			i++;
-			if (i%3==0) {
+
+			if (i % 3 == 0) {
 				top += 22;
 			}
 		}
-		scroll.updateInnerSize();
 
+		scroll.updateInnerSize();
 		buttonDone.setGeometry(width / 2 + 5, height - 25, 150, 20);
 	}
 

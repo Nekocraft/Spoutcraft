@@ -39,6 +39,7 @@ public class SimpleSkyManager implements SkyManager {
 		if (cloudHeight == -999) {
 			return (int)SpoutClient.getHandle().theWorld.provider.getCloudHeight();
 		}
+
 		return cloudHeight;
 	}
 
@@ -102,7 +103,9 @@ public class SimpleSkyManager implements SkyManager {
 		if (sunUrl != null) {
 			// TODO release image?
 		}
+
 		sunUrl = Url;
+
 		if (Url != null) {
 			CustomTextureManager.downloadTexture(Url);
 		}
@@ -134,7 +137,9 @@ public class SimpleSkyManager implements SkyManager {
 		if (moonUrl != null) {
 			// TODO release image?
 		}
+
 		moonUrl = Url;
+
 		if (Url != null) {
 			CustomTextureManager.downloadTexture(Url);
 		}
@@ -145,7 +150,7 @@ public class SimpleSkyManager implements SkyManager {
 	}
 
 	public void setSkyColor(Color color) {
-		if (color!=null) {
+		if (color != null) {
 			skyColor = color.clone();
 		} else {
 			skyColor = null;
@@ -156,11 +161,12 @@ public class SimpleSkyManager implements SkyManager {
 		if (skyColor == null) {
 			return null;
 		}
+
 		return skyColor.clone();
 	}
 
 	public void setFogColor(Color color) {
-		if (color!=null) {
+		if (color != null) {
 			this.fogColor = color.clone();
 		} else {
 			fogColor = null;
@@ -171,11 +177,12 @@ public class SimpleSkyManager implements SkyManager {
 		if (fogColor == null) {
 			return null;
 		}
+
 		return fogColor.clone();
 	}
 
 	public void setCloudColor(Color color) {
-		if (color!=null) {
+		if (color != null) {
 			this.cloudColor = color.clone();
 		} else {
 			cloudColor = null;

@@ -19,6 +19,6 @@
  */
 package org.spoutcraft.api.material;
 
-public interface SolidBlock extends Block{
+public interface SolidBlock extends Block {
 	public boolean isFallingBlock();
 }

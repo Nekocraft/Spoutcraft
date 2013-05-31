@@ -30,7 +30,7 @@ public class Note {
 	 * An enum holding tones.
 	 */
 	public enum Tone {
-		F((byte) -0x1, true),
+		F((byte) - 0x1, true),
 		G((byte) 0x1, true),
 		A((byte) 0x3, true),
 		B((byte) 0x5, false),
@@ -68,12 +68,13 @@ public class Note {
 		 * @return the id of this tone.
 		 */
 		public byte getId(boolean sharped) {
-			byte tempId = (byte) (sharped && sharpable ? id + 1 : id);
+			byte tempId = (byte)(sharped && sharpable ? id + 1 : id);
 
 			while (tempId < 0) {
 				tempId += TONES_COUNT;
 			}
-			return (byte) (tempId % TONES_COUNT);
+
+			return (byte)(tempId % TONES_COUNT);
 		}
 
 		/**
@@ -119,23 +120,27 @@ public class Note {
 		static {
 			byte lowest = F.id;
 			byte highest = F.id;
+
 			for (Tone tone : Tone.values()) {
 				byte id = tone.id;
 				tones.put(id, tone);
+
 				if (id < lowest) {
 					lowest = id;
 				}
+
 				if (tone.isSharpable()) {
 					id++;
 					tones.put(id, tone);
 				}
+
 				if (id > highest) {
 					highest = id;
 				}
 			}
 
-			TONES_COUNT = (byte) (highest - lowest + 1);
-			tones.put((byte) (TONES_COUNT - 1), F);
+			TONES_COUNT = (byte)(highest - lowest + 1);
+			tones.put((byte)(TONES_COUNT - 1), F);
 		}
 	}
 
@@ -152,6 +157,7 @@ public class Note {
 		if (note < 0 || note > 24) {
 			throw new IllegalArgumentException("The note value has to be between 0 and 24.");
 		}
+
 		this.note = note;
 	}
 
@@ -170,10 +176,12 @@ public class Note {
 		if (sharped && !note.isSharpable()) {
 			throw new IllegalArgumentException("This tone could not be sharped.");
 		}
+
 		if (octave < 0 || octave > 2 || (octave == 2 && !(note == Tone.F && sharped))) {
 			throw new IllegalArgumentException("Tone and octave have to be between F#0 and F#2");
 		}
-		this.note = (byte) (octave * Tone.TONES_COUNT + note.getId(sharped));
+
+		this.note = (byte)(octave * Tone.TONES_COUNT + note.getId(sharped));
 	}
 
 	/**
@@ -195,7 +203,7 @@ public class Note {
 	}
 
 	private byte getToneByte() {
-		return (byte) (note % Tone.TONES_COUNT);
+		return (byte)(note % Tone.TONES_COUNT);
 	}
 
 	/**

@@ -226,7 +226,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer {
 	 */
 	protected void keyTyped(char par1, int par2) {
 		if (selectedTabIndex != CreativeTabs.tabAllSearch.getTabIndex()) {
-			if (GameSettings.func_100015_a(this.mc.gameSettings.keyBindChat)) {
+			if (GameSettings.isKeyDown(this.mc.gameSettings.keyBindChat)) {
 				this.setCurrentCreativeTab(CreativeTabs.tabAllSearch);
 			} else {
 				super.keyTyped(par1, par2);
@@ -561,7 +561,6 @@ public class GuiContainerCreative extends InventoryEffectRenderer {
 		// Spout Start - Render ours separately
 		renderInInventory(true);
 		// Spout End
-
 		this.mc.renderEngine.bindTexture("/gui/creative_inv/" + var4.getBackgroundImageName());
 		this.drawTexturedModalRect(this.guiLeft, this.guiTop, 0, 0, this.xSize, this.ySize);
 		this.searchField.drawTextBox();
@@ -577,11 +576,12 @@ public class GuiContainerCreative extends InventoryEffectRenderer {
 
 		// Spout Start
 		renderInInventory(false); // Render ours separately
+
 		if (selectedTabIndex == 12) { // Return, useless code now
 			return;
 		}
-		// Spout End
 
+		// Spout End
 		this.renderCreativeTab(var4);
 
 		if (var4 == CreativeTabs.tabInventory) {
@@ -717,8 +717,10 @@ public class GuiContainerCreative extends InventoryEffectRenderer {
 		int var7 = guiTop;
 		int var5 = guiLeft - 26;
 		boolean inside = x >= var5 && x <= var5 + 28 && y >= var7 && y <= var7 + 32;
+
 		if (inside) {
 			drawCreativeTabHoveringText("Custom Items", x, y);
+
 			if (isClicked) {
 				selectedTabIndex = CreativeTabs.tabSpout.getTabIndex();
 				ContainerCreative var3 = (ContainerCreative)this.inventorySlots;
@@ -737,23 +739,23 @@ public class GuiContainerCreative extends InventoryEffectRenderer {
 		if (!beforeBackground && selectedTabIndex != 12) {
 			return;
 		}
+
 		this.mc.renderEngine.bindTexture(this.mc.renderEngine.getTexture("/gui/allitems.png"));
 		byte var9 = 32;
-
 		int startY = 0;
 		int diff = 75;
+
 		if (!beforeBackground) {
 			startY = 32;
-			diff=79;
+			diff = 79;
 		}
 
 		int var8 = this.guiTop;
-		int var7 = this.guiLeft-21;
-
+		int var7 = this.guiLeft - 21;
 		GL11.glDisable(GL11.GL_LIGHTING);
 		//this.drawTexturedModalRect(var7, var8, 56, 0, 28, var9);
-		this.drawTexturedModalRect(var7, var8, 56, startY, 25, var9/2);
-		this.drawTexturedModalRect(var7, var8 + var9/2, 56, startY+diff, 25, var9/2);
+		this.drawTexturedModalRect(var7, var8, 56, startY, 25, var9 / 2);
+		this.drawTexturedModalRect(var7, var8 + var9 / 2, 56, startY + diff, 25, var9 / 2);
 		this.zLevel = 100.0F;
 		itemRenderer.zLevel = 100.0F;
 		var7 += 6;
@@ -762,12 +764,14 @@ public class GuiContainerCreative extends InventoryEffectRenderer {
 		GL11.glEnable(GL12.GL_RESCALE_NORMAL);
 		// Bypass stupidity
 		ItemStack var10;
+
 		if (MaterialData.getCustomItems().length == 0) {
 			var10 = new ItemStack(Item.flint);
 		} else {
 			CustomItem cItem = MaterialData.getCustomItems()[0];
 			var10 = new ItemStack(cItem.getRawId(), 1, cItem.getRawData());
 		}
+
 		// End of stupidity
 		itemRenderer.renderItemIntoGUI(this.fontRenderer, this.mc.renderEngine, var10, var7, var8);
 		itemRenderer.renderItemOverlayIntoGUI(this.fontRenderer, this.mc.renderEngine, var10, var7, var8);

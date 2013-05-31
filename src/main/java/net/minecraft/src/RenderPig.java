@@ -13,6 +13,7 @@ public class RenderPig extends RenderLiving {
 	protected int renderSaddledPig(EntityPig par1EntityPig, int par2, float par3) {
 		// Spout Start
 		loadTexture(par1EntityPig.getCustomTexture(EntitySkinType.PIG_SADDLE, "/mob/saddle.png"));
+
 		// Spout End
 		if (par2 == 0 && par1EntityPig.getSaddled()) {
 			// Spout Start - Unused

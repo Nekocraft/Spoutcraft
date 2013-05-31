@@ -41,6 +41,7 @@ public class PacketClipboardText implements SpoutPacket {
 		if (text.length() > Short.MAX_VALUE) {
 			text = text.substring(0, Short.MAX_VALUE - 1);
 		}
+
 		output.writeString(text);
 	}
 

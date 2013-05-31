@@ -80,12 +80,15 @@ public class Shortcut extends AbstractBinding implements Serializable {
 		if (this == obj) {
 			return true;
 		}
+
 		if (obj == null) {
 			return false;
 		}
+
 		if (getClass() != obj.getClass()) {
 			return false;
 		}
+
 		return false;
 	}
 
@@ -94,11 +97,12 @@ public class Shortcut extends AbstractBinding implements Serializable {
 		new Thread() {
 			public void run() {
 				if (keyReleased && screen == 0) {
-					for (String cmd:getCommands()) {
+					for (String cmd: getCommands()) {
 						if (SpoutClient.getHandle().isMultiplayerWorld()) {
 							EntityClientPlayerMP player = (EntityClientPlayerMP)SpoutClient.getHandle().thePlayer;
 							player.sendQueue.addToSendQueue(new Packet3Chat(cmd));
 						}
+
 						if (delay > 0) {
 							try {
 								sleep(delay);
@@ -107,6 +111,6 @@ public class Shortcut extends AbstractBinding implements Serializable {
 					}
 				}
 			};
-		}.start();
+		} .start();
 	}
 }

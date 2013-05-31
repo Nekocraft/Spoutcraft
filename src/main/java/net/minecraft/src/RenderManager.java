@@ -12,7 +12,6 @@ import org.spoutcraft.client.entity.RenderTexture;
 // Spout End
 
 public class RenderManager {
-
 	/** A map of entity classes and the associated renderer. */
 	// Spout Start - private to public
 	public Map entityRenderMap = new HashMap();
@@ -104,6 +103,9 @@ public class RenderManager {
 		this.entityRenderMap.put(EntityText.class, new RenderText());
 		this.entityRenderMap.put(EntityTexture.class, new RenderTexture());
 		// Spout End
+		// ModLoader Start
+		ModLoader.addAllRenderers(this.entityRenderMap);
+		// ModLoader End
 		Iterator var1 = this.entityRenderMap.values().iterator();
 
 		while (var1.hasNext()) {
@@ -200,7 +202,7 @@ public class RenderManager {
 			var10 = this.getEntityRenderObject(par1Entity);
 
 			if (var10 != null && this.renderEngine != null) {
-				if (field_85095_o && !par1Entity.getHasActivePotion()) {
+				if (field_85095_o && !par1Entity.isInvisible()) {
 					try {
 						this.func_85094_b(par1Entity, par2, par4, par6, par8, par9);
 					} catch (Throwable var17) {
@@ -214,25 +216,26 @@ public class RenderManager {
 
 				try {
 					var10.doRender(par1Entity, par2, par4, par6, par8, par9);
-				// Spout Start - Ignore NullPointerExceptions, the old way
-				} catch(NullPointerException ignore) {
-				// Spout End
+					// Spout Start - Ignore NullPointerExceptions, the old way
+				} catch (NullPointerException ignore) {
+					// Spout End
 				} catch (Throwable var16) {
 					throw new ReportedException(CrashReport.makeCrashReport(var16, "Rendering entity in world"));
 				}
 
 				try {
 					var10.doRenderShadowAndFire(par1Entity, par2, par4, par6, par8, par9);
-				// Spout Start - Ignore NullPointerExceptions, the old way
-				} catch(NullPointerException ignore) {
-				// Spout End
+					// Spout Start - Ignore NullPointerExceptions, the old way
+				} catch (NullPointerException ignore) {
+					// Spout End
 				} catch (Throwable var15) {
 					throw new ReportedException(CrashReport.makeCrashReport(var15, "Post-rendering entity in world"));
 				}
 			}
-		// Spout Start - Ignore NullPointerExceptions, the old way
-		} catch(NullPointerException ignore) {
-		// Spout End
+
+			// Spout Start - Ignore NullPointerExceptions, the old way
+		} catch (NullPointerException ignore) {
+			// Spout End
 		} catch (Throwable var18) {
 			CrashReport var12 = CrashReport.makeCrashReport(var18, "Rendering entity in world");
 			CrashReportCategory var13 = var12.makeCategory("Entity being rendered");

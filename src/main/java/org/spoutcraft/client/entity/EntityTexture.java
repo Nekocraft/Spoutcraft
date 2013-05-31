@@ -55,6 +55,7 @@ public class EntityTexture extends Entity {
 
 	public void setUrl(String url) {
 		this.url = url;
+
 		if (getUrl() != null) {
 			CustomTextureManager.downloadTexture(url);
 		}

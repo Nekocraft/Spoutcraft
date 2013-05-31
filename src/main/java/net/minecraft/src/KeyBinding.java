@@ -27,10 +27,12 @@ public class KeyBinding {
 
 		while (i.hasNext()) {
 			KeyBinding key = (KeyBinding)i.next();
+
 			if (key.keyCode == par0) {
 				key.pressTime++;
 			}
 		}
+
 		// Spout End
 	}
 
@@ -47,10 +49,12 @@ public class KeyBinding {
 
 		while (i.hasNext()) {
 			KeyBinding key = (KeyBinding)i.next();
+
 			if (key.keyCode == par0) {
 				key.pressed = par1;
 			}
 		}
+
 		// Spout End
 	}
 

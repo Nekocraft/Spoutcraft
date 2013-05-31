@@ -40,7 +40,6 @@ public class ChunkNetCache {
 
 	static {
 		File dir = new File(FileUtil.getCacheDir(), "chunk");
-
 		dir.mkdirs();
 
 		try {
@@ -66,7 +65,7 @@ public class ChunkNetCache {
 		int c = chunks.addAndGet(numChunks);
 
 		if (c != 0) {
-			averageChunkSize.set((10 * d)/c);
+			averageChunkSize.set((10 * d) / c);
 		}
 
 		if ((decompressedSize & 0x01) == 0) {
@@ -78,15 +77,14 @@ public class ChunkNetCache {
 
 		int dataLength = PartitionChunk.getInt(chunkData, 0, decompressedSize - 5);
 		long CRC = PartitionChunk.getHash(chunkData, 0, decompressedSize - 13);
-
 		int segments = dataLength >> 11;
+
 		if ((dataLength & 0x7FF) != 0) {
 			segments++;
 		}
 
 		byte[] newChunkData = new byte[dataLength];
 		System.arraycopy(chunkData, 0, newChunkData, 0, dataLength);
-
 		int cacheHit = 0;
 
 		for (int i = 0; i < segments; i++) {
@@ -107,18 +105,23 @@ public class ChunkNetCache {
 			// Send hints to server about possible nearby hashes
 			if (hashes.add(hash)) {
 				long[] nearby = p.getNearby(hash, 1024);
+
 				if (nearby != null) {
 					for (int j = 0; j < nearby.length; j++) {
 						long nearbyHash = nearby[j];
+
 						if (nearbyHash != 0 && hashes.add(nearbyHash)) {
 							hashQueue.add(nearbyHash);
 						}
 					}
 				}
+
 				nearby = new long[hashQueue.size()];
+
 				for (int j = 0; j < nearby.length; j++) {
 					nearby[j] = hashQueue.get(j);
 				}
+
 				hashQueue.clear();
 				sendHashHints(nearby);
 			}
@@ -126,7 +129,6 @@ public class ChunkNetCache {
 
 		int h = hits.addAndGet(cacheHit);
 		updateCacheAttempts(h, segments);
-
 		long CRCNew = PartitionChunk.hash(newChunkData);
 
 		if (CRCNew != CRC) {
@@ -136,12 +138,12 @@ public class ChunkNetCache {
 		}
 
 		cacheInUse.set(true);
-
 		return newChunkData;
 	}
 
 	private static void updateCacheAttempts(int h, int segments) {
 		int a = cacheAttempts.addAndGet(segments);
+
 		if (a != 0) {
 			hitPercentage.set((100 * h) / a);
 		}
@@ -149,12 +151,15 @@ public class ChunkNetCache {
 
 	public static void sendHashHints(long[] array) {
 		int s = 0;
+
 		while (s < array.length) {
 			int hashCount = Math.min(10, array.length - s);
 			byte[] hashes = new byte[hashCount << 3];
+
 			for (int i = 0; i < hashCount; i++) {
 				PartitionChunk.setHash(hashes, i, array[i + s], 0);
 			}
+
 			SpoutClient.getInstance().getPacketManager().sendCustomPacket("ChkCache:setHash", hashes);
 			s += 10;
 		}

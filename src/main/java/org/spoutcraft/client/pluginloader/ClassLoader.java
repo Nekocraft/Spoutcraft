@@ -32,6 +32,7 @@ public class ClassLoader extends URLClassLoader {
 		if (!whitelisted(name)) {
 			throw new SecurityException("Plugin attempted to access non-whitelisted class: " + name);
 		}
+
 		return super.findClass(name);
 	}
 

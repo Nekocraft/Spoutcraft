@@ -51,7 +51,6 @@ public class EntityCamera extends EntityPlayerSP {
 		lastTickPosX = posX;
 		lastTickPosY = posY;
 		lastTickPosZ = posZ;
-
 		prevRotationYaw = rotationYaw;
 		prevRotationPitch = rotationPitch;
 		rotationYaw = yaw;

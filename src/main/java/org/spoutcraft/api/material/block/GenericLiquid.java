@@ -21,7 +21,7 @@ package org.spoutcraft.api.material.block;
 
 import org.spoutcraft.api.material.Liquid;
 
-public class GenericLiquid extends GenericBlock implements Liquid{
+public class GenericLiquid extends GenericBlock implements Liquid {
 	private final boolean flowing;
 	public GenericLiquid(String name, int id, boolean flowing) {
 		super(name, id);

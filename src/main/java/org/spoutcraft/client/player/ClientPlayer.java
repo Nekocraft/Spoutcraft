@@ -46,6 +46,7 @@ public class ClientPlayer extends SpoutPlayer {
 			instance.setPlayer(SpoutClient.getHandle().thePlayer);
 			SpoutClient.getInstance().player = (ClientPlayer) instance;
 		}
+
 		return instance;
 	}
 
@@ -85,11 +86,13 @@ public class ClientPlayer extends SpoutPlayer {
 
 	public RenderDistance getNextRenderDistance() {
 		int next = getCurrentView().getValue() + (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) ? -1 : 1);
+
 		if (next > min.getValue()) {
 			next = max.getValue();
 		} else if (next < max.getValue()) {
 			next = min.getValue();
 		}
+
 		return RenderDistance.getRenderDistanceFromValue(next);
 	}
 
@@ -159,7 +162,6 @@ public class ClientPlayer extends SpoutPlayer {
 
 	public void setExperience(int exp) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public int getLevel() {
@@ -169,7 +171,6 @@ public class ClientPlayer extends SpoutPlayer {
 
 	public void setLevel(int level) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public int getTotalExperience() {
@@ -179,7 +180,6 @@ public class ClientPlayer extends SpoutPlayer {
 
 	public void setTotalExperience(int exp) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public float getExhaustion() {
@@ -189,7 +189,6 @@ public class ClientPlayer extends SpoutPlayer {
 
 	public void setExhaustion(float value) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public float getSaturation() {
@@ -199,7 +198,6 @@ public class ClientPlayer extends SpoutPlayer {
 
 	public void setSaturation(float value) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public int getFoodLevel() {
@@ -209,7 +207,6 @@ public class ClientPlayer extends SpoutPlayer {
 
 	public void setFoodLevel(int value) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public GameMode getGameMode() {
@@ -219,24 +216,27 @@ public class ClientPlayer extends SpoutPlayer {
 
 	public void setGameMode(GameMode mode) {
 		// TODO Auto-generated method stub
-
 	}
 
 	public Screen getCurrentScreen() {
 		if (SpoutClient.getHandle().currentScreen == null) {
 			return getMainScreen();
 		}
+
 		return SpoutClient.getHandle().currentScreen.getScreen();
 	}
 
 	public ItemStack getItemStackOnCursor() {
 		ItemStack ret = new ItemStack(0);
+
 		if (SpoutClient.getHandle().thePlayer != null) {
 			net.minecraft.src.ItemStack mcStack = SpoutClient.getHandle().thePlayer.inventory.getItemStack();
+
 			if (mcStack != null) {
 				ret = new ItemStack(mcStack.itemID, mcStack.stackSize, (short) mcStack.getItemDamage());
 			}
 		}
+
 		return ret;
 	}
 
@@ -244,6 +244,7 @@ public class ClientPlayer extends SpoutPlayer {
 		if (SpoutClient.getHandle().thePlayer == null) {
 			return;
 		}
+
 		if (stack == null || stack.getTypeId() == 0) {
 			SpoutClient.getHandle().thePlayer.inventory.setItemStack(null);
 		} else {

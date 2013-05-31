@@ -42,7 +42,6 @@ public class AnimatableLocation extends MutableLocation implements Animatable, L
 		z += (p1.getZ() - p2.getZ()) * p;
 		yaw += (p1.getYaw() - p2.getYaw()) * p;
 		pitch += (p1.getPitch() - p2.getPitch()) * p;
-
 		return new AnimatableLocation(x, y, z, yaw, pitch);
 	}
 }

@@ -103,7 +103,9 @@ public class HeightMap {
 			//lastMap.file = file;
 			return lastMap;
 		}
+
 		HeightMap ret = null;
+
 		if (heightMaps.containsKey(worldName)) {
 			ret = heightMaps.get(worldName);
 			//ret.file = file;
@@ -111,11 +113,14 @@ public class HeightMap {
 			HeightMap map = new HeightMap(worldName);
 			map.file = file;
 			heightMaps.put(worldName, map);
+
 			if (file.exists()) {
 				map.load();
 			}
+
 			ret = map;
 		}
+
 		lastMap = ret;
 		return ret;
 	}
@@ -136,23 +141,29 @@ public class HeightMap {
 	public void load() {
 		synchronized (cache) {
 			clear();
+
 			try {
 				DataInputStream in = new DataInputStream(new FileInputStream(file));
-
 				int version = 0;
+
 				if (file.getAbsolutePath().endsWith(".hm2")) {
 					version = in.readInt(); // Read version
 				}
+
 				StringBuilder builder = new StringBuilder();
 				short size = in.readShort();
+
 				for (int i = 0; i < size; i++) {
 					builder.append(in.readChar());
 				}
+
 				String name = builder.toString();
+
 				if (!name.equals(getWorldName())) {
 					System.out.println("World names do not match: " + name + " [file] != " + getWorldName() + " [game]. Compensating...");
 					// TODO Compensate
 				}
+
 				minX = in.readInt();
 				maxX = in.readInt();
 				minZ = in.readInt();
@@ -160,21 +171,26 @@ public class HeightMap {
 				initBounds = true;
 				int x = minX;
 				int z = minZ;
+
 				try {
 					while (true) {
 						x = in.readInt();
 						z = in.readInt();
 						HeightChunk chunk = new HeightChunk(x, z);
+
 						for (int i = 0; i < 256; i++) {
 							chunk.heightmap[i] = in.readShort();
 							chunk.idmap[i] = in.readByte();
+
 							if (version >= 1) {
 								chunk.datamap[i] = in.readByte();
 							}
 						}
+
 						addChunk(chunk);
 					}
 				} catch (EOFException e) {}
+
 				in.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -184,33 +200,41 @@ public class HeightMap {
 				initBounds = false;
 				System.out.println("Error while loading persistent copy of the heightmap. Clearing the cache.");
 			}
+
 			File progress = new File(file.getAbsoluteFile() + ".inProgress.hm2");
+
 			if (progress.exists()) {
 				System.out.println("Found in-progress file!");
 				HeightMap progressMap = new HeightMap(getWorldName());
 				progressMap.file = progress;
 				progressMap.load();
-				for (HeightChunk chunk:progressMap.cache.valueCollection()) {
+
+				for (HeightChunk chunk: progressMap.cache.valueCollection()) {
 					if (chunk.getHeight(0, 0) != -1) {
 						addChunk(chunk);
 					}
 				}
+
 				heightMaps.remove(progressMap);
 				progress.delete();
 			}
 		}
+
 		if (file.getAbsolutePath().endsWith(".hma")) {
 			file = new File(file.getAbsolutePath().replace(".hma", ".hm2"));
 		}
+
 		dirty = false;
 	}
 
 	private void addChunk(HeightChunk chunk) {
 		dirty = true;
+
 		synchronized (cache) {
 			int x = chunk.x;
 			int z = chunk.z;
 			cache.put(x, z, chunk);
+
 			if (!initBounds) {
 				minX = x;
 				maxX = x;
@@ -231,14 +255,15 @@ public class HeightMap {
 			return;
 			// Don't need to save when not touched...
 		}
+
 		synchronized (cache) {
 			try {
 				File progress = new File(file.getAbsoluteFile() + ".inProgress.hm2");
 				DataOutputStream out = new DataOutputStream(new FileOutputStream(progress));
 				out.writeInt(1); // This is the version
-
 				String name = getWorldName();
 				out.writeShort(name.length());
+
 				for (int i = 0; i < name.length(); i++) {
 					out.writeChar(name.charAt(i));
 				}
@@ -247,12 +272,14 @@ public class HeightMap {
 				out.writeInt(maxX);
 				out.writeInt(minZ);
 				out.writeInt(maxZ);
+
 				for (HeightChunk chunk : cache.valueCollection()) {
 					if (chunk == null) {
 						continue;
 					} else {
 						out.writeInt(chunk.x);
 						out.writeInt(chunk.z);
+
 						for (int i = 0; i < 256; i++) {
 							out.writeShort(chunk.heightmap[i]);
 							out.writeByte(chunk.idmap[i]);
@@ -260,8 +287,8 @@ public class HeightMap {
 						}
 					}
 				}
-				out.close();
 
+				out.close();
 				// Make sure that we don't loose older stuff when someone quits.
 				File older = new File(file.getAbsoluteFile() + ".old");
 				file.renameTo(older);
@@ -273,6 +300,7 @@ public class HeightMap {
 				e.printStackTrace();
 			}
 		}
+
 		dirty = false;
 	}
 
@@ -285,17 +313,22 @@ public class HeightMap {
 
 	private static File getFile(String worldName) {
 		File folder = new File(FileUtil.getConfigDir(), "heightmap");
+
 		if (!folder.isDirectory()) {
 			folder.delete();
 		}
+
 		if (!folder.exists()) {
 			folder.mkdirs();
 		}
+
 		File oldFormat = new File(FileUtil.getConfigDir(), "heightmap/" + worldName + ".hma");
 		File newFormat = new File(FileUtil.getConfigDir(), "heightmap/" + worldName + ".hm2");
+
 		if (newFormat.exists() || !oldFormat.exists()) {
 			return newFormat;
 		}
+
 		return oldFormat;
 	}
 
@@ -311,15 +344,18 @@ public class HeightMap {
 
 	public HeightChunk getChunk(int x, int z, boolean force) {
 		dirty = true; // We don't know what they do with the chunk, so it could be dirtied...
+
 		if (lastChunk != null && lastChunk.x == x && lastChunk.z == z) {
 			return lastChunk;
 		} else {
 			synchronized (cache) {
 				lastChunk = cache.get(x, z);
+
 				if (lastChunk == null) {
 					lastChunk = new HeightChunk(x, z);
 					addChunk(lastChunk);
 				}
+
 				return lastChunk;
 			}
 		}
@@ -330,9 +366,11 @@ public class HeightMap {
 		int cZ = (z >> 4);
 		x &= 0xF;
 		z &= 0xF;
+
 		if (lastChunk != null && lastChunk.x == cX && lastChunk.z == cZ) {
 			return lastChunk.heightmap[z << 4 | x];
 		}
+
 		synchronized (cache) {
 			if (cache.containsKey(cX, cZ)) {
 				lastChunk = cache.get(cX, cZ);
@@ -348,9 +386,11 @@ public class HeightMap {
 		int cZ = (z >> 4);
 		x &= 0xF;
 		z &= 0xF;
+
 		if (lastChunk != null && lastChunk.x == cX && lastChunk.z == cZ) {
 			return lastChunk.idmap[z << 4 | x];
 		}
+
 		synchronized (cache) {
 			if (cache.containsKey(cX, cZ)) {
 				lastChunk = cache.get(cX, cZ);
@@ -366,9 +406,11 @@ public class HeightMap {
 		int cZ = (z >> 4);
 		x &= 0xF;
 		z &= 0xF;
+
 		if (lastChunk != null && lastChunk.x == cX && lastChunk.z == cZ) {
 			return lastChunk.datamap[z << 4 | x];
 		}
+
 		synchronized (cache) {
 			if (cache.containsKey(cX, cZ)) {
 				lastChunk = cache.get(cX, cZ);
@@ -385,6 +427,7 @@ public class HeightMap {
 		int cZ = (z >> 4);
 		x &= 0xF;
 		z &= 0xF;
+
 		synchronized (cache) {
 			if (!(lastChunk != null && lastChunk.x == cX && lastChunk.z == cZ)) {
 				if (cache.containsKey(cX, cZ)) {
@@ -398,6 +441,7 @@ public class HeightMap {
 					return;
 				}
 			}
+
 			lastChunk.heightmap[z << 4 | x] = height;
 			lastChunk.idmap[z << 4 | x] = id;
 		}

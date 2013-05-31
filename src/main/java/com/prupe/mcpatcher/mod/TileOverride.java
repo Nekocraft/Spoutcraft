@@ -95,7 +95,11 @@ abstract class TileOverride implements ITileOverride {
 							if (var3.equals("vertical")) {
 								var4 = new TileOverrideImpl$Vertical(var0, var2, var1);
 							} else if (!var3.equals("sandstone") && !var3.equals("top")) {
-								var4 = new TileOverrideImpl$Repeat(var0, var2, var1);
+								if (!var3.equals("repeat") && !var3.equals("pattern")) {
+									// do nothing
+								} else {
+									var4 = new TileOverrideImpl$Repeat(var0, var2, var1);
+								}
 							} else {
 								var4 = new TileOverrideImpl$Top(var0, var2, var1);
 							}
@@ -276,10 +280,20 @@ abstract class TileOverride implements ITileOverride {
 
 								for (int var11 = var9; var11 <= var10; ++var11) {
 									String var12 = this.texturesDirectory + "/" + var11 + ".png";
+
+									if (!this.addIcon(var12)) {
+										this.warn("could not find %s", new Object[] {var12});
+									}
 								}
 							} catch (NumberFormatException var13) {
 								var13.printStackTrace();
 							}
+						} else if (var7.startsWith("/")) {
+							if (!this.addIcon(var7)) {
+								this.warn("could not find image %s", new Object[] {var7});
+							}
+						} else if (!this.addIcon(this.texturesDirectory + "/" + var7)) {
+							this.warn("could not find image %s in %s", new Object[] {var7, this.texturesDirectory});
 						}
 					} else {
 						this.tileNames.add((Object)null);
@@ -308,6 +322,8 @@ abstract class TileOverride implements ITileOverride {
 
 						if (var11 >= 0 && var11 < var4.length) {
 							var5.add(Integer.valueOf(var11));
+						} else {
+							this.warn("%s value %d is out of range", new Object[] {var2, Integer.valueOf(var11)});
 						}
 					} catch (NumberFormatException var13) {
 						var13.printStackTrace();
@@ -319,6 +335,8 @@ abstract class TileOverride implements ITileOverride {
 							continue label53;
 						}
 					}
+
+					this.warn("unknown %s value %s", new Object[] {var2, var10});
 				}
 			}
 		}
@@ -395,6 +413,10 @@ abstract class TileOverride implements ITileOverride {
 
 	final void error(String var1, Object ... var2) {
 		this.disabled = true;
+	}
+
+	final void warn(String var1, Object ... var2) {
+		// do nothing
 	}
 
 	public final boolean isDisabled() {

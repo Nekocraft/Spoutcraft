@@ -50,8 +50,10 @@ public class Download {
 
 	public void move() {
 		File current = getTempFile();
+
 		if (current.exists()) {
 			File destination = new File(directory, filename);
+
 			try {
 				FileUtils.moveFile(current, destination);
 			} catch (IOException e) {}
@@ -72,6 +74,7 @@ public class Download {
 			Download temp = (Download)obj;
 			return temp.filename.equals(this.filename) && temp.directory.getPath().equals(this.directory.getPath()) && temp.url.equals(this.url);
 		}
+
 		return false;
 	}
 
