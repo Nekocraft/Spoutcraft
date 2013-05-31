@@ -15,7 +15,7 @@ public class GuiSelectWorld extends GuiScreen {
 	protected GuiScreen parentScreen;
 
 	/** The title string that is displayed in the top-center of the screen. */
-	protected String screenTitle = "Select world";
+	protected String screenTitle = "选择世界";
 
 	/** True if a world has been selected. */
 	private boolean selected = false;
