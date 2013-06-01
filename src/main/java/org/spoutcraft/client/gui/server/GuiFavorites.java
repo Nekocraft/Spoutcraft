@@ -262,7 +262,7 @@ public class GuiFavorites extends GuiScreen {
 		buttonEdit.setEnabled(enable);
 		buttonDelete.setEnabled(enable);
 		buttonJoin.setEnabled(enable);
-		buttonDelete.setText("Delete");
+		buttonDelete.setText("删除");
 		buttonMoveDown.setEnabled(enable);
 		buttonMoveUp.setEnabled(enable);
 		buttonAdd.setEnabled(true);

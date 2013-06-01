@@ -107,6 +107,15 @@
 					<include>LICENSE.txt</include>
 				</includes>
 			</resource>
+			<!-- /lang resources -->
+			<resource>
+				<filtering>false</filtering>
+				<targetPath>./lang</targetPath>
+				<directory>${project.basedir}/src/main/resources/lang</directory>
+				<includes>
+					<include>*</include>
+				</includes>
+			</resource>
 			<!-- /res resources -->
 			<resource>
 				<filtering>false</filtering>

@@ -59,7 +59,7 @@ public class GuiAddWaypoint extends GuiScreen {
 	}
 
 	public void initGui() {
-		GenericLabel label = new GenericLabel("Create Waypoint");
+		GenericLabel label = new GenericLabel("创建标记点");
 		int size = Spoutcraft.getMinecraftFont().getTextWidth(label.getText());
 		label.setX((int)(width / 2 - size / 2)).setY(10);
 		label.setFixed(true).setPriority(RenderPriority.Lowest);
@@ -80,7 +80,7 @@ public class GuiAddWaypoint extends GuiScreen {
 		String text = "(" + x + ", " + y + ", " + z + ")";
 
 		if (!SpoutClient.getInstance().isCoordsCheat()) {
-			text = "Coords not shown";
+			text = "坐标不能显示";
 		}
 
 		label = new GenericLabel(text);
@@ -88,10 +88,10 @@ public class GuiAddWaypoint extends GuiScreen {
 		label.setX((int)(width / 2 - size / 2)).setY(106);
 		label.setFixed(true).setPriority(RenderPriority.Lowest);
 		getScreen().attachWidget("Spoutcraft", label);
-		done = new GenericButton("Create");
+		done = new GenericButton("创建");
 
 		if (existed) {
-			done.setText("Save");
+			done.setText("保存");
 		}
 
 		done.setWidth(150).setHeight(20).setX(right).setY(200);
@@ -101,7 +101,7 @@ public class GuiAddWaypoint extends GuiScreen {
 		getScreen().attachWidget("Spoutcraft", cancel);
 
 		if (existed) {
-			delete = new GenericButton("Delete");
+			delete = new GenericButton("删除");
 			delete.setGeometry(left, 175, 150, 20);
 			getScreen().attachWidget("Spoutcraft", delete);
 		}
