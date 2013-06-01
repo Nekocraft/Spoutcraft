@@ -719,7 +719,7 @@ public class GuiContainerCreative extends InventoryEffectRenderer {
 		boolean inside = x >= var5 && x <= var5 + 28 && y >= var7 && y <= var7 + 32;
 
 		if (inside) {
-			drawCreativeTabHoveringText("Custom Items", x, y);
+			drawCreativeTabHoveringText("自定义物品", x, y);
 
 			if (isClicked) {
 				selectedTabIndex = CreativeTabs.tabSpout.getTabIndex();
