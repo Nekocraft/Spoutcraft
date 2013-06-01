@@ -63,23 +63,23 @@ public class GuiControls extends GuiSpoutScreen implements ButtonUpdater {
 	}
 
 	protected void createInstances() {
-		labelTitle = new GenericLabel("Controls");
-		buttonDone = new GenericButton("Done");
-		buttonAdd = new GenericButton("Add Shortcut");
-		buttonEdit = new GenericButton("Edit");
-		buttonEdit.setTooltip("Edit Shortcut");
+		labelTitle = new GenericLabel("控制");
+		buttonDone = new GenericButton("完成");
+		buttonAdd = new GenericButton("添加快捷键");
+		buttonEdit = new GenericButton("编辑");
+		buttonEdit.setTooltip("编辑快捷键");
 		buttonRemove = new DeleteControlButton(this);
-		buttonRemove.setTooltip("Remove Shortcut");
+		buttonRemove.setTooltip("删除快捷键");
 		labelDescription = new GenericLabel();
-		labelDescription.setText("Double-click an item, then press the key (combination).");
+		labelDescription.setText("双击一个选项, 然后按下一个按键(或组合键).");
 		labelDescription.setWrapLines(true);
 		filter = new GenericScrollArea();
 		view = new GenericListView(model);
 		model.setCurrentGui(this);
-		checkVanilla = new ControlsCheckBox(this, VANILLA_COLOR + "Minecraft Bindings");
-		checkSpoutcraft = new ControlsCheckBox(this, SPOUTCRAFT_COLOR + "Spoutcraft Bindings");
-		checkCustom = new ControlsCheckBox(this, CUSTOM_COLOR + "Custom Bindings");
-		checkShortcuts = new ControlsCheckBox(this, SHORTCUTS_COLOR + "Shortcuts");
+		checkVanilla = new ControlsCheckBox(this, VANILLA_COLOR + "Minecraft 键位");
+		checkSpoutcraft = new ControlsCheckBox(this, SPOUTCRAFT_COLOR + "Nekocraft 键位");
+		checkCustom = new ControlsCheckBox(this, CUSTOM_COLOR + "自定义键位");
+		checkShortcuts = new ControlsCheckBox(this, SHORTCUTS_COLOR + "快捷键");
 		search = new ControlsSearch(this);
 		filter.attachWidget("Spoutcraft", checkVanilla);
 		filter.attachWidget("Spoutcraft", checkSpoutcraft);

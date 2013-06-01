@@ -25,7 +25,7 @@ public class DeleteControlButton extends SafeButton {
 	private GuiControls parent;
 
 	public DeleteControlButton(GuiControls parent) {
-		setText("Delete");
+		setText("删除");
 		this.parent = parent;
 	}
 

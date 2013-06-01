@@ -88,26 +88,26 @@ public class GuiEditShortcut extends GuiScreen {
 		recordButton.setGeometry(width - 160, top - 3, 150, labelHeight);
 		getScreen().attachWidget("Spoutcraft", recordButton);
 		updateRecordButton();
-		titleLabel = new GenericLabel("Name:");
+		titleLabel = new GenericLabel("名字:");
 		titleLabel.setGeometry(left, top + 3, labelWidth, labelHeight);
 		getScreen().attachWidget("Spoutcraft", titleLabel);
 		commandName = new GenericTextField();
 		commandName.setGeometry(right, top - 1, (int)(width - right - recordButton.getWidth() - 20), 16);
 		commandName.setText(item.getTitle());
 		commandName.setMaximumCharacters(0);
-		commandName.setPlaceholder("Enter a name here");
+		commandName.setPlaceholder("在这里输入名字");
 		getScreen().attachWidget("Spoutcraft", commandName);
 		top += 23;
-		commandLabel = new GenericLabel("Command:");
+		commandLabel = new GenericLabel("指令:");
 		commandLabel.setGeometry(left, top + 3, labelWidth, labelHeight);
 		getScreen().attachWidget("Spoutcraft", commandLabel);
 		commandText = new GenericTextField();
 		commandText.setGeometry(right, top - 1, width - right - 10, 16);
 		commandText.setMaximumCharacters(0);
-		commandText.setPlaceholder("Enter new command here, then click \"Add Command\"");
+		commandText.setPlaceholder("输入一个指令, 然后按下 \"添加指令\"");
 		getScreen().attachWidget("Spoutcraft", commandText);
 		top += 23;
-		delayLabel = new GenericLabel("Delay (ms)");
+		delayLabel = new GenericLabel("延迟 (ms)");
 		delayLabel.setGeometry(left, top + 3, labelWidth, labelHeight);
 		getScreen().attachWidget("Spoutcraft", delayLabel);
 		delayText = new GenericTextField();
@@ -139,19 +139,19 @@ public class GuiEditShortcut extends GuiScreen {
 		slot = new GuiCommandsSlot(this);
 		slot.setGeometry(0, top, width, this.height - top - 30);
 		getScreen().attachWidget("Spoutcraft", slot);
-		doneButton = new GenericButton("Done");
+		doneButton = new GenericButton("完成");
 		doneButton.setHeight(20).setWidth(50);
 		doneButton.setX(10).setY(height - 25);
 		getScreen().attachWidget("Spoutcraft", doneButton);
-		addButton = new GenericButton("Add Command");
+		addButton = new GenericButton("添加指令");
 		addButton.setHeight(20).setWidth(100);
 		addButton.setX(70).setY(height - 25);
 		getScreen().attachWidget("Spoutcraft", addButton);
-		editButton = new GenericButton("Edit Command");
+		editButton = new GenericButton("编辑指令");
 		editButton.setHeight(20).setWidth(100);
 		editButton.setX(180).setY(height - 25);
 		getScreen().attachWidget("Spoutcraft", editButton);
-		removeButton = new GenericButton("Remove Command");
+		removeButton = new GenericButton("删除指令");
 		removeButton.setHeight(20).setWidth(100);
 		removeButton.setX(290).setY(height - 25);
 		getScreen().attachWidget("Spoutcraft", removeButton);
@@ -160,10 +160,10 @@ public class GuiEditShortcut extends GuiScreen {
 	}
 
 	private void updateRecordButton() {
-		String keyname = recording ? "Press a key!" : "Click Here!";
+		String keyname = recording ? "按下一个键!" : "请点击这里";
 
 		if ((item.getKey() >= 0 || item.getKey() < -1) && !recording) {
-			keyname = "Key: " + item.toString();
+			keyname = "键: " + item.toString();
 		}
 
 		String name = (recording ? "> " : "") + keyname + (recording ? " <" : "");
@@ -193,7 +193,7 @@ public class GuiEditShortcut extends GuiScreen {
 
 		if (btn.equals(addButton)) {
 			if (editingIndex != -1) {
-				addButton.setText("Add Command");
+				addButton.setText("添加指令");
 				item.setTitle(commandName.getText());
 				item.getCommands().set(editingIndex, commandText.getText());
 				editingIndex = -1;
@@ -222,7 +222,7 @@ public class GuiEditShortcut extends GuiScreen {
 		if (index != -1) {
 			editingIndex = index;
 			commandText.setText(item.getCommands().get(index));
-			addButton.setText("Finish Editing");
+			addButton.setText("完成编辑");
 		}
 	}
 
