@@ -73,22 +73,22 @@ public class PacketSkinURL implements SpoutPacket {
 
 		if (e != null) {
 			// Check if these are the Minecraft skin/cape, if so, use defaults instead
-			String mcSkin = "http://s3.amazonaws.com/MinecraftSkins/" + e.username + ".png";
-			String mcCape = "http://s3.amazonaws.com/MinecraftCloaks/" + e.username + ".png";
+			String mcSkin = "http://nekocraft.com/api/skin/" + e.username;
+			String mcCape = "http://nekocraft.com/api/cloak/" + e.username;
 
 			if (!"none".equals(this.skinURL)) {
 				//System.out.println(e.username + " is going to be sent skinURL: " + skinURL + " from SpoutPlugin's API.");
 			}
 
 			if (this.skinURL.equalsIgnoreCase(mcSkin)) {
-				this.skinURL = "http://cdn.spout.org/game/vanilla/skin/" + e.username + ".png";
+				this.skinURL = "http://nekocraft.com/api/skin/" + e.username;
 			}
 
 			if (this.cloakURL.equalsIgnoreCase(mcCape)) {
 				if (e.vip != null && e.vip.getCape() != null) {
 					this.cloakURL = e.vip.getCape();
 				} else {
-					this.cloakURL = "http://cdn.spout.org/game/vanilla/cape/" + e.username + ".png";
+					this.cloakURL = "http://nekocraft.com/api/cloak/" + e.username;
 				}
 			}
 
