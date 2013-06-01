@@ -1,3 +1,22 @@
+SpoutcraftPlus
+==========
+SpoutcraftPlus is a modified version of the Spoutcraft client, it import modloader api for minimap/worldeditcui etc.., more features is developing.
+
+> 目前完成的功能
+-----------------
+
+> ModLoader的MOD完美加载
+
+> 跨平台中文输入(使用MinecraftIM)
+
+> 兼容LiteLoader
+
+> 完整Spout支持
+
+> 部分的Spoutcraft汉化
+
+
+
 Spoutcraft
 ==========
 Spoutcraft is a Minecraft client mod and launcher that provides users with a simple and more customizable Minecraft experience. Servers running SpoutPlugin push content to Spoutcraft users as needed; such as custom items, blocks, and user skins, capes, and other accessories. Players can then enjoy custom server experiences without having to manually modify their client for each server.
