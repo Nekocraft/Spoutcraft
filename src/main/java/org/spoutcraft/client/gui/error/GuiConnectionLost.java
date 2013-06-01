@@ -46,7 +46,7 @@ public class GuiConnectionLost extends GuiScreen {
 	private String message;
 
 	public GuiConnectionLost() {
-		message = "The connection to the server has been lost!";
+		message = "与服务器的连接已中断";
 	}
 
 	public GuiConnectionLost(String message) {
@@ -58,7 +58,7 @@ public class GuiConnectionLost extends GuiScreen {
 		GenericScrollArea screen = new GenericScrollArea();
 		screen.setHeight(height - 16 - 24).setWidth(width).setY(16 + 24).setX(0);
 		getScreen().attachWidget("Spoutcraft", screen);
-		GenericLabel label = new GenericLabel("Connection Lost!");
+		GenericLabel label = new GenericLabel("连接丢失!");
 		int size = Spoutcraft.getMinecraftFont().getTextWidth(label.getText());
 		label.setX((int)(width / 2 - size / 2)).setY(16);
 		label.setFixed(true).setPriority(RenderPriority.Lowest);
@@ -76,21 +76,21 @@ public class GuiConnectionLost extends GuiScreen {
 		screen.attachWidget("Spoutcraft", texture);
 		top += 116;
 		Button button;
-		button = new ReconnectButton().setText("Attempt to Reconnect");
+		button = new ReconnectButton().setText("尝试重新连接");
 		button.setHeight(20).setWidth(200);
 		button.setX((int)(width / 2 - button.getWidth() / 2));
 		button.setY(top);
 		button.setAlign(WidgetAnchor.TOP_CENTER);
 		screen.attachWidget("Spoutcraft", button);
 		top += 26;
-		button = new ReturnToServerList().setText("Return to " + SpoutClient.getInstance().getServerManager().getJoinedFromName());
+		button = new ReturnToServerList().setText("返回 " + SpoutClient.getInstance().getServerManager().getJoinedFromName());
 		button.setHeight(20).setWidth(200);
 		button.setX((int)(width / 2 - button.getWidth() / 2));
 		button.setY(top);
 		button.setAlign(WidgetAnchor.TOP_CENTER);
 		screen.attachWidget("Spoutcraft", button);
 		top += 26;
-		button = new ReturnToMainMenu().setText("Return to Main Menu");
+		button = new ReturnToMainMenu().setText("返回标题界面");
 		button.setHeight(20).setWidth(200);
 		button.setX((int)(width / 2 - button.getWidth() / 2));
 		button.setY(top);

@@ -23,9 +23,9 @@ import org.spoutcraft.api.gui.GenericCheckBox;
 
 public class BackgroundCheckBox extends GenericCheckBox {
 	public BackgroundCheckBox() {
-		super("Background");
+		super("背景");
 		setChecked(MinimapConfig.getInstance().isShowBackground());
-		setTooltip("Background\nON - Shows the standard 'ancient map' style background\nOFF - no background for the minimap");
+		setTooltip("背景\nON - 显示 'ancient map' 样式的背景\nOFF - 没有背景");
 	}
 
 	@Override

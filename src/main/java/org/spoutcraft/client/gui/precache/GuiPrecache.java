@@ -34,7 +34,7 @@ public class GuiPrecache extends GuiScreen {
 		statusText = new GenericLabel();
 		statusText.setAnchor(WidgetAnchor.CENTER_CENTER);
 		statusText.setAlign(WidgetAnchor.CENTER_CENTER);
-		statusText.setText(ChatColor.BLUE + "Spoutcraft" + "\n" + " " + "\n" + ChatColor.WHITE + "Loading terrain and custom resources" + "\n" + "\n" + ChatColor.MAGIC + "ShowMagic");
+		statusText.setText(ChatColor.BLUE + "Nekocraft" + "\n" + " " + "\n" + ChatColor.WHITE + "加载服务器资源与设置" + "\n" + "\n" + ChatColor.MAGIC + "ShowMagic");
 		getScreen().attachWidgets("Spoutcraft", statusText);
 	}
 
