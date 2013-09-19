@@ -214,7 +214,7 @@ public class GuiServerInfo extends GuiSpoutScreen {
 			content.updateInnerSize();
 		}
 
-		textureGalleryImage.setUrl("http://cdn.spout.org/server/gallery/" + item.getDatabaseId() + "_" + image.getHash() + ".png");
+		textureGalleryImage.setUrl("http://play.nekocraft.com/server/gallery/" + item.getDatabaseId() + "_" + image.getHash() + ".png");
 		textureGalleryImage.setFinishDelegate(new ImageUpdate());
 
 		if (n == 0) {
@@ -344,7 +344,7 @@ public class GuiServerInfo extends GuiSpoutScreen {
 		}
 
 		if (btn == buttonOpenBrowser) {
-			NetworkUtils.openInBrowser("http://servers.spout.org/info/" + item.getDatabaseId());
+			NetworkUtils.openInBrowser("http://play.nekocraft.com/info/" + item.getDatabaseId());
 		}
 
 		if (btn == buttonRefresh) {

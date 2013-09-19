@@ -39,7 +39,7 @@ public class GuiDisconnected extends GuiScreen {
 		StringTranslate var1 = StringTranslate.getInstance();
 		this.buttonList.clear();
 		// Spout Start
-		this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120 + 12, "Back to " + SpoutClient.getInstance().getServerManager().getJoinedFromName()));
+		this.buttonList.add(new GuiButton(0, this.width / 2 - 100, this.height / 4 + 120 + 12, "返回" + SpoutClient.getInstance().getServerManager().getJoinedFromName()));
 
 		// Spout End
 		if (this.field_74247_c != null) {
